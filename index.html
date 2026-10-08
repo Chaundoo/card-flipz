@@ -528,13 +528,14 @@ function profitFor(c){
   var net = state.exit==="vendor" ? r.vendorNet : r.ebayNet;
   return {net:net, roi: r.cost ? net/r.cost*100 : 0, cost:r.cost, label:b[1]};
 }
-var LIMIT = 16*1000*1000, SWITCH_AT = 300, storageInfo = null;
+/* cards.json size meter: GitHub web upload takes files up to 25 MB; git/GitHub Desktop up to 100 MB */
+var LIMIT = 25*1000*1000, SLOW_AT = 10*1000*1000, storageInfo = null;
 function measureStorage(){
   try{
     var enc = new TextEncoder();
-    var total = enc.encode(buildDoc(cards)).length;
-    var base = enc.encode(buildDoc([])).length;
-    var per = cards.length ? (total-base)/cards.length : 65000;
+    var total = enc.encode(JSON.stringify({cards:cards, pairings:sharedPairs(), version:"0000000000"})).length;
+    var base = enc.encode(JSON.stringify({cards:[], pairings:sharedPairs(), version:"0000000000"})).length;
+    var per = cards.length ? (total-base)/cards.length : 1300;
     storageInfo = {total:total, per:per, cap:Math.max(cards.length, Math.floor((LIMIT-base)/per))};
   }catch(e){ storageInfo = null; }
 }
@@ -542,12 +543,12 @@ function mb(n){ return (n/1000000).toFixed(n<10000000?1:0); }
 function storageMeter(){
   if(!storageInfo) return "";
   var s = storageInfo, frac = Math.min(1, s.total/LIMIT), pctUsed = Math.round(frac*100);
-  var cls = frac>=0.9 ? "full" : (frac>=0.6 || cards.length>=SWITCH_AT) ? "warn" : "";
-  var msg = frac>=0.9 ? "Almost full. Switch the tracker to database storage now; new cards may soon fail to save."
-    : cards.length>=SWITCH_AT ? "Past "+SWITCH_AT+" cards: loading and saving will start to slow down. Time to switch to database storage."
-    : "Plan to switch to database storage at around "+SWITCH_AT+" cards, before the page gets slow.";
-  return '<div class="storage" role="status"><div class="storage-row"><span>Storage: <b class="num">'+mb(s.total)+' of 16 MB</b> used ('+pctUsed+'%)</span><span><b class="num">'+cards.length+'</b> of about <b class="num">'+s.cap+'</b> cards · ~'+Math.round(s.per/1000)+' KB per card</span></div>'+
-    '<div class="meter '+cls+'" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pctUsed+'" aria-label="Storage used"><i style="width:'+Math.max(1,pctUsed)+'%"></i></div><p>'+msg+'</p></div>';
+  var cls = frac>=0.9 ? "full" : s.total>=SLOW_AT ? "warn" : "";
+  var msg = frac>=0.9 ? "Close to GitHub's 25 MB web-upload limit. Split cards.json into smaller files (e.g. by era), or upload with GitHub Desktop, which allows up to 100 MB."
+    : s.total>=SLOW_AT ? "Over 10 MB: the site downloads the whole file on every visit, so it will feel slow on phones and show Wi-Fi. Consider splitting cards.json by era."
+    : "Loads fast. GitHub's web uploader takes files up to 25 MB; the site starts to feel slow to open past about 10 MB.";
+  return '<div class="storage" role="status"><div class="storage-row"><span>cards.json: <b class="num">'+mb(s.total)+' of 25 MB</b> GitHub upload limit ('+pctUsed+'%)</span><span><b class="num">'+cards.length+'</b> of about <b class="num">'+s.cap.toLocaleString()+'</b> cards · ~'+(s.per/1000).toFixed(1)+' KB per card</span></div>'+
+    '<div class="meter '+cls+'" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pctUsed+'" aria-label="cards.json size vs GitHub upload limit"><i style="width:'+Math.max(1,pctUsed)+'%"></i></div><p>'+msg+'</p></div>';
 }
 /* ---------- population (9s and 10s) ---------- */
 function pn(v){ return (v===null||v===undefined||v==="") ? null : Number(v); }
