@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chaundoo Card Flipz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>:root{box-sizing:border-box}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style id="app-style">
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --surface-2:#eef1f7; --ink:#141b2d; --muted:#5d6782; --line:#dde2ec;
+  --navy:#1b2540; --navy-ink:#ffffff; --gold:#e3a800; --gold-soft:#fff5d4; --gold-ink:#7a5a00;
+  --pos:#16803c; --pos-soft:#e5f4ea; --neg:#b42323; --neg-soft:#fbe9e9; --est:#eceff5;
+  --shadow:0 8px 24px rgba(20,27,45,.12);
+  --pop10:#d99c00; --pop9:#3b6fd8; --poprest:#d5dbe6;
+  --gain:#2a78d6; --loss:#e34948;
+  --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0e1322; --surface:#161d30; --surface-2:#1d2640; --ink:#e8ecf6; --muted:#9aa4c0; --line:#2a3452;
+    --navy:#243056; --navy-ink:#ffffff; --gold:#f0bd2a; --gold-soft:#3a3014; --gold-ink:#f6d677;
+    --pos:#4fcf7d; --pos-soft:#15301f; --neg:#ff7a7a; --neg-soft:#3a1a1d; --est:#262f49;
+    --shadow:0 8px 24px rgba(0,0,0,.4);
+    --pop10:#b8870c; --pop9:#5b8cf0; --poprest:#2f3a5a;
+    --gain:#3987e5; --loss:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0e1322; --surface:#161d30; --surface-2:#1d2640; --ink:#e8ecf6; --muted:#9aa4c0; --line:#2a3452;
+  --navy:#243056; --navy-ink:#ffffff; --gold:#f0bd2a; --gold-soft:#3a3014; --gold-ink:#f6d677;
+  --pos:#4fcf7d; --pos-soft:#15301f; --neg:#ff7a7a; --neg-soft:#3a1a1d; --est:#262f49;
+  --shadow:0 8px 24px rgba(0,0,0,.4);
+  --pop10:#b8870c; --pop9:#5b8cf0; --poprest:#2f3a5a;
+    --gain:#3987e5; --loss:#e66767;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+#root{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;padding:22px 0 16px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:40px;height:40px;border-radius:50%;background:linear-gradient(180deg,var(--gold) 0 46%,var(--ink) 46% 54%,var(--surface) 54%);border:3px solid var(--ink);position:relative;flex:none}
+.mark:after{content:"";position:absolute;inset:50% auto auto 50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--surface);border:3px solid var(--ink)}
+.brand h1{font-size:28px;font-weight:800;letter-spacing:-.02em}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.settings{display:flex;flex-wrap:wrap;gap:8px}
+.set-chip{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:12px;color:var(--muted)}
+.set-chip input{width:62px;border:none;background:var(--surface-2);border-radius:5px;padding:3px 5px;text-align:right;color:var(--ink);font-weight:600}
+.set-chip.gold{background:var(--gold-soft);border-color:transparent;color:var(--gold-ink)}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 0}
+.search{flex:1 1 220px;display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:0 12px}
+.search input{border:none;background:transparent;padding:10px 4px;width:100%;outline:none}
+.toolbar select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.btn{border:none;border-radius:10px;padding:10px 16px;font-weight:600;background:var(--surface);border:1px solid var(--line)}
+.btn.primary{background:var(--gold);color:#1b1400;border-color:transparent}
+.btn.dark{background:var(--navy);color:var(--navy-ink);border-color:transparent}
+.btn.danger{background:var(--neg);color:#fff;border-color:transparent}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:default}
+.readonly-note{font-size:13px;color:var(--muted)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;text-align:left;transition:transform .15s,box-shadow .15s}
+.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.tile .art{aspect-ratio:63/88;border-radius:9px;overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center;max-width:100%}
+.tile .art img{width:100%;height:100%;object-fit:cover;display:block}
+.tile .art img:not([src]){visibility:hidden}
+.more-row{display:flex;flex-direction:column;align-items:center;gap:8px;margin:22px 0 4px}
+.more-row .btn{min-width:200px;padding:12px 20px}
+.tile h3{font-size:17px;font-weight:700}
+.sub{color:var(--muted);font-size:12.5px}
+.tile .prices{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kv{background:var(--surface-2);border-radius:7px;padding:6px 8px}
+.kv span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.kv b{font-size:15px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.pill.v-grade{background:var(--pos-soft);color:var(--pos)}
+.pill.v-sel{background:var(--gold-soft);color:var(--gold-ink)}
+.pill.v-no{background:var(--neg-soft);color:var(--neg)}
+.pill.v-hold{background:var(--est);color:var(--muted)}
+.pill.pos{background:var(--pos-soft);color:var(--pos)}
+.pill.neg{background:var(--neg-soft);color:var(--neg)}
+.pill.est{background:var(--est);color:var(--muted);font-weight:600}
+.profit-kv b{margin-right:4px}
+.profit-kv .pill{display:inline-block;text-transform:none;letter-spacing:0;font-size:11px}
+.popbox{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px}
+.pophead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;margin-bottom:10px}
+.pophead span{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.pophead small{font-size:12px;color:var(--muted)}
+.popgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.popcard{border-radius:10px;background:var(--surface-2);padding:12px}
+.popcard-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.popcard-top b{font-family:var(--display);font-size:18px;font-weight:800;letter-spacing:.02em}
+.popcard-top span{font-size:12.5px;color:var(--muted)}
+.pop-hero{margin:6px 0 10px;font-size:13.5px}
+.pop-hero b{font-family:var(--display);font-size:26px;font-weight:800;margin-right:4px;font-variant-numeric:tabular-nums}
+.popbar{display:flex;gap:2px;height:14px;border-radius:4px;overflow:hidden;background:var(--surface)}
+.popbar i{display:block;height:100%;min-width:3px}
+.popbar .s10{background:var(--pop10)} .popbar .s9{background:var(--pop9)} .popbar .srest{background:var(--poprest);flex:1 1 auto}
+.poplegend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
+.poplegend div{font-size:11.5px;color:var(--muted);line-height:1.3}
+.poplegend div b{display:block;color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums}
+.poplegend em{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0;font-style:normal}
+.poplegend .k10{background:var(--pop10)} .poplegend .k9{background:var(--pop9)} .poplegend .krest{background:var(--poprest)}
+.popcard.none{display:flex;flex-direction:column;justify-content:center;gap:4px;color:var(--muted);font-size:13px;background:transparent;border:1px dashed var(--line)}
+.popcard.none b{color:var(--ink);font-family:var(--display);font-size:18px}
+.flipline{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;margin-top:5px;padding:5px 7px;border-radius:6px}
+.flipline .fl-route{flex:1 0 100%}
+.flipline.best{background:var(--surface)}
+.flipline .fl-route{font-size:11.5px;color:var(--muted);text-transform:none;letter-spacing:0;font-weight:600;line-height:1.25}
+.flipline .fl-route em{font-style:normal;color:var(--muted);opacity:.8}
+.flipline b{font-size:15px}
+.flipline .pill{font-size:10.5px;padding:2px 6px}
+.gapbar{height:6px;border-radius:99px;background:var(--surface);margin-top:7px;overflow:hidden}
+.gapbar i{display:block;height:100%;border-radius:99px;background:var(--pos)}
+.gapkv.warn .gapbar i{background:var(--gold)} .gapkv.neg .gapbar i{background:var(--neg)}
+.bekv b{font-size:17px;margin-right:4px}
+.bekv .pill{display:inline-block;text-transform:none;letter-spacing:0;font-size:11px}
+.bekv.none b{font-size:13px;color:var(--muted)}
+.conds{display:flex;flex-wrap:wrap;gap:4px}
+.conds span{background:var(--surface-2);border-radius:6px;padding:3px 6px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.conds i{font-style:normal;font-size:10px;letter-spacing:.06em;color:var(--muted);margin-right:2px}
+.bestflip{border-radius:10px;padding:9px 10px;background:var(--pos-soft)}
+.bestflip.warn{background:var(--gold-soft)} .bestflip.neg,.bestflip.none{background:var(--surface-2)}
+.bestflip .lbl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.bf-main{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
+.bf-main b{font-family:var(--display);font-size:24px;font-weight:800;line-height:1.1}
+.bestflip.pos .bf-main b{color:var(--pos)} .bestflip.warn .bf-main b{color:var(--gold-ink)} .bestflip.neg .bf-main b{color:var(--neg)}
+.bestflip.none b{font-size:13px;color:var(--muted)}
+.bf-route{font-size:12.5px;font-weight:600;margin-top:3px}
+.bf-route em{font-style:normal;color:var(--muted);font-weight:500}
+.advbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.advbtn i{width:32px;height:18px;border-radius:99px;background:var(--poprest);position:relative;flex:none;transition:background .15s}
+.advbtn i:after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.advbtn[aria-checked="true"]{color:var(--ink)}
+.advbtn[aria-checked="true"] i{background:var(--pos)}
+.advbtn[aria-checked="true"] i:after{left:16px}
+tr.bestrow td{background:color-mix(in srgb,var(--pos-soft) 70%,transparent)}
+.prow2.bestrow{background:color-mix(in srgb,var(--pos-soft) 60%,transparent)}
+.poptile{margin-top:-4px;display:flex;align-items:center;gap:5px}
+.poptile em{width:8px;height:8px;border-radius:2px;background:var(--pop10);flex:none}
+.storage{margin-top:36px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;color:var(--muted)}
+.storage-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;margin-bottom:8px}
+.storage-row b{color:var(--ink)}
+.meter{height:10px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:99px;background:var(--pos)}
+.meter.warn i{background:var(--gold)}
+.meter.full i{background:var(--neg)}
+.storage p{margin:8px 0 0}
+.tile-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--surface);border-radius:14px;border:1px dashed var(--line)}
+
+/* detail */
+.back{margin:16px 0 8px}
+.detail-head{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:start}
+.detail-head .art{border-radius:12px;overflow:hidden;box-shadow:var(--shadow);max-width:100%}
+.detail-head .art img{display:block;width:100%}
+.title-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px}
+.title-row h2{font-size:34px;font-weight:800;letter-spacing:-.02em}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.kpi span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.kpi b{font-family:var(--display);font-size:24px;font-weight:800}
+.kpi small{display:block;color:var(--muted);font-size:12px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.fact span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;margin-bottom:2px}
+section.block{margin-top:26px}
+section.block h3{font-size:13px;font-family:var(--body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:640px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--surface-2);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right}
+td.g{font-weight:700;white-space:nowrap}
+th.v{background:var(--gold-soft);color:var(--gold-ink)}
+td.v{background:color-mix(in srgb,var(--gold-soft) 55%,transparent)}
+.pos-t{color:var(--pos);font-weight:700}.neg-t{color:var(--neg);font-weight:700}
+.verdict{margin-top:14px;background:var(--navy);color:var(--navy-ink);border-radius:12px;padding:14px 16px}
+.verdict .tag{display:inline-block;background:var(--gold);color:#1b1400;font-weight:800;padding:3px 9px;border-radius:5px;margin-right:8px;font-size:13px}
+.verdict p{margin:8px 0 0;opacity:.88}
+.note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.tcglink{color:var(--pop9);font-weight:600;text-decoration:none;white-space:nowrap}
+.tcglink:hover{text-decoration:underline}
+
+/* editor */
+.sheet-bg{position:fixed;inset:0;background:rgba(10,14,26,.55);display:flex;justify-content:flex-end;z-index:20}
+.sheet{background:var(--bg);width:min(720px,100%);height:100%;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 18px) 18px calc(env(safe-area-inset-bottom,0px) + 90px)}
+.sheet h2{font-size:24px;font-weight:800;margin-bottom:4px}
+fieldset{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 14px;margin:14px 0 0}
+legend{font-weight:700;font-size:13px;padding:0 6px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.frow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);font-weight:600}
+label.f input,label.f select,label.f textarea{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px 9px;color:var(--ink);font-weight:400;font-size:14px}
+label.f textarea{min-height:64px;resize:vertical}
+.prow{display:grid;grid-template-columns:110px 100px 1fr 120px 56px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:none}
+.prow.g{grid-template-columns:110px 100px 1fr 56px}
+.prow b{font-size:13px}
+.prow input{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:7px 8px;width:100%;min-width:0}
+.prow .chk{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted)}
+.phead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.drop{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.drop .preview{width:110px;aspect-ratio:63/88;border-radius:8px;border:2px dashed var(--line);background:var(--surface-2);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--muted);font-size:12px;text-align:center;padding:4px;flex:none}
+.drop .preview img{width:100%;height:100%;object-fit:cover}
+.sheet-actions{position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--bg);padding:14px 0;margin-top:16px;border-top:1px solid var(--line)}
+.msg{font-size:13px}
+.msg.err{color:var(--neg)} .msg.ok{color:var(--pos)}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}
+
+@media (max-width:700px){
+  .detail-head{grid-template-columns:1fr}
+  .detail-head .art{width:200px;margin:0 auto}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .facts{grid-template-columns:1fr}
+  .title-row h2{font-size:28px}
+  .prow,.prow.g{grid-template-columns:1fr 1fr}
+  .prow b{grid-column:1/-1}
+  .phead{display:none}
+}
+/* view chooser */
+.chooser-bg{position:fixed;inset:0;background:rgba(10,14,26,.6);display:flex;align-items:center;justify-content:center;z-index:30;padding:16px}
+.chooser{background:var(--surface);border-radius:16px;padding:22px;max-width:420px;width:100%;box-shadow:var(--shadow);text-align:center}
+.chooser h2{font-size:22px;font-weight:800;margin-bottom:6px}
+.chooser p{margin:0 0 16px;color:var(--muted);font-size:14px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.choice{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 10px;border-radius:12px;border:2px solid var(--line);background:var(--surface-2);font-weight:700;font-size:16px}
+.choice.suggest{border-color:var(--gold)}
+.choice small{font-weight:500;color:var(--muted);font-size:12px}
+.ico-desk{width:52px;height:34px;border:3px solid var(--ink);border-radius:4px;position:relative;margin-bottom:6px}
+.ico-desk:after{content:"";position:absolute;left:14px;right:14px;bottom:-9px;height:4px;background:var(--ink);border-radius:2px}
+.ico-phone{width:24px;height:42px;border:3px solid var(--ink);border-radius:6px;position:relative}
+.ico-phone:after{content:"";position:absolute;left:50%;bottom:3px;width:6px;height:3px;margin-left:-3px;background:var(--ink);border-radius:2px}
+.viewbtn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--muted);font-weight:600}
+.fees{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:0}
+.fees summary{padding:10px 12px;font-size:14px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+.fees summary::-webkit-details-marker{display:none}
+.fees[open] summary{border-bottom:1px solid var(--line)}
+.fees .settings{padding:10px 12px}
+.plist{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.prow2{padding:12px 14px;border-bottom:1px solid var(--line)}
+.prow2:last-child{border-bottom:none}
+.prow2 .top2{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.prow2 .top2 b{font-size:16px}
+.prow2 .top2 .price{font-family:var(--display);font-size:20px;font-weight:800}
+.prow2 .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.prow2 .nets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.prow2 .net{border-radius:9px;padding:8px 10px;background:var(--surface-2)}
+.prow2 .net.v{background:var(--gold-soft)}
+.prow2 .net span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.prow2 .net b{font-size:18px}
+.prow2 .net small{display:block;font-size:12px;color:var(--muted)}
+
+/* phone layout */
+body.phone{font-size:16px}
+body.phone #root{max-width:560px;padding:0 14px 40px}
+body.phone .top{flex-direction:column;align-items:stretch;padding:14px 0 12px;gap:12px}
+body.phone .brand h1{font-size:23px}
+body.phone .brand p{display:none}
+body.phone .brand{justify-content:space-between}
+body.phone .mark{width:32px;height:32px}
+body.phone .set-chip{flex:1 1 45%;justify-content:space-between;font-size:14px;padding:8px 10px}
+body.phone .set-chip input{width:70px;font-size:16px;padding:6px}
+body.phone .toolbar{gap:8px;padding:12px 0}
+body.phone .search{flex:1 1 100%}
+body.phone .search input{font-size:16px;padding:12px 4px}
+body.phone .toolbar select{flex:1 1 45%;min-width:0;font-size:15px;padding:11px 10px}
+body.phone .toolbar .btn.primary{flex:1 1 100%;padding:13px;font-size:16px}
+body.phone .advbtn{flex:1 1 100%;justify-content:center;padding:11px;font-size:15px}
+body.phone .bf-main b{font-size:20px}
+body.phone .conds span{font-size:11px;padding:2px 5px}
+body.phone .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+body.phone .tile{padding:8px;gap:8px;border-radius:12px}
+body.phone .tile:hover{transform:none;box-shadow:none}
+body.phone .tile h3{font-size:15px}
+body.phone .tile .sub{font-size:12px}
+body.phone .tile .prices{gap:5px}
+body.phone .kv{padding:5px 7px}
+body.phone .kv span{font-size:10px}
+body.phone .kv b{font-size:14px}
+body.phone .tile-foot .sub{display:none}
+body.phone .pill{font-size:11px;white-space:normal}
+body.phone .back{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin:0 -14px;padding:8px 14px;border-bottom:1px solid var(--line)}
+body.phone .back .btn{padding:8px 0;font-size:16px}
+body.phone .detail-head{grid-template-columns:1fr;gap:14px;margin-top:12px}
+body.phone .detail-head .art{width:180px;margin:0 auto}
+body.phone .title-row{flex-direction:column}
+body.phone .title-row h2{font-size:26px}
+body.phone .title-row .btn{width:100%;padding:12px}
+body.phone .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+body.phone .kpi b{font-size:21px}
+body.phone .facts{grid-template-columns:1fr}
+body.phone section.block{margin-top:20px}
+body.phone .verdict{font-size:15px}
+body.phone .note{font-size:13px}
+body.phone .storage-row{flex-direction:column}
+body.phone .prow,body.phone .prow.g{grid-template-columns:1fr 1fr}
+body.phone .prow b{grid-column:1/-1}
+body.phone .phead{display:none}
+body.phone .prow input,body.phone label.f input,body.phone label.f select,body.phone label.f textarea{font-size:16px}
+body.phone .sheet-actions .confirm{width:100%}
+body.phone .sheet-actions .btn{flex:1}
+/* card pairings */
+.tabs{display:flex;gap:4px;background:var(--surface-2);border-radius:12px;padding:4px;margin-top:14px;width:max-content;max-width:100%}
+.tab{white-space:nowrap;border:none;background:transparent;border-radius:9px;padding:8px 16px;font-weight:700;color:var(--muted)}
+.tab.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.tab .count{display:inline-block;min-width:20px;padding:0 6px;border-radius:99px;background:var(--gold);color:#1b1400;font-size:12px;margin-left:4px;text-align:center}
+.tile{position:relative}
+.tile .check{position:absolute;top:18px;left:18px;width:30px;height:30px;border-radius:50%;background:var(--surface);border:2px solid var(--line);display:none;align-items:center;justify-content:center;font-weight:800;color:#fff;z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.grid.selecting .tile .check{display:flex}
+.grid.selecting .tile:hover{transform:none}
+.tile.picked{outline:3px solid var(--pos);outline-offset:-2px}
+.tile.picked .check{background:var(--pos);border-color:var(--pos)}
+.actionbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:15;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;background:var(--navy);color:var(--navy-ink);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow);width:min(700px,calc(100% - 32px))}
+.actionbar b{flex:1 1 auto;font-size:15px}
+.actionbar select{background:var(--surface);color:var(--ink);border:none;border-radius:9px;padding:9px 10px;flex:1 1 160px;min-width:0}
+.actionbar .btn:not(.primary){background:transparent;color:var(--navy-ink);border-color:rgba(255,255,255,.35)}
+.actionbar .msg{flex:1 1 100%;font-size:13px;opacity:.9}
+body.has-bar #root{padding-bottom:130px}
+.pair-intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin:20px 0 14px}
+.pair-intro h2{font-size:26px;font-weight:800}
+.pair-intro p{margin:4px 0 0;max-width:620px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.ptile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;text-align:left;transition:transform .15s,box-shadow .15s}
+.ptile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.ptile h3{font-size:18px;font-weight:800}
+.ptile .bf-main b{font-size:28px}
+.pthumbs{display:flex;height:66px;align-items:center;padding-left:12px}
+.pthumb{width:47px;height:66px;border-radius:5px;overflow:hidden;background:var(--surface-2);border:2px solid var(--surface);margin-left:-12px;box-shadow:0 1px 4px rgba(0,0,0,.25);flex:none}
+.pthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.pair-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:6px}
+.pname{display:flex;flex-direction:column;flex:1 1 300px;min-width:0}
+.pname input{font-family:var(--display);font-size:28px;font-weight:800;border:1px solid transparent;background:transparent;border-radius:8px;padding:2px 6px;margin-left:-7px;width:100%;max-width:560px}
+.pname input:hover,.pname input:focus{border-color:var(--line);background:var(--surface)}
+.psum{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}
+.psum-main{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px}
+.psum-main .lbl{flex:1 0 100%;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.psum-main b{font-family:var(--display);font-size:44px;font-weight:800;line-height:1.05}
+.psum-main .pill{font-size:13px;padding:4px 10px}
+.psum-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 10px}
+.psum-stats>div{background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.psum-stats>div.v{background:var(--gold-soft)}
+.psum-stats span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.psum-stats>div.v span,.psum-stats>div.v small{color:var(--gold-ink)}
+.psum-stats b{font-family:var(--display);font-size:24px;font-weight:800}
+.psum-stats small{display:block;font-size:12px;color:var(--muted)}
+.psum-stats input{width:62px;border:none;background:var(--surface);border-radius:5px;padding:2px 5px;text-align:right;color:var(--ink);font-weight:700}
+.psum p{margin:0}
+.ccell{display:flex;gap:10px;align-items:center;min-width:0}
+.ccell b{display:block;font-size:14px}
+.pmini{width:34px;height:47px;border-radius:4px;overflow:hidden;background:var(--surface-2);flex:none}
+.pmini img{width:100%;height:100%;object-fit:cover;display:block}
+.pitems select,.pitems input{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:6px 7px;min-width:0}
+.pitems input.paid{width:100px;text-align:right}
+.pitems td{vertical-align:middle}
+.xbtn{border:none;background:transparent;color:var(--muted);font-size:20px;line-height:1;padding:4px 9px;border-radius:6px}
+.xbtn:hover{background:var(--neg-soft);color:var(--neg)}
+.pfields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pfields label.pf-paid{grid-column:1/-1}
+.pfields label{display:flex;flex-direction:column;gap:3px;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.pfields select,.pfields input{width:100%;font-size:16px}
+.padd{margin-top:14px}
+.padd-res{display:grid;gap:6px;margin-top:8px}
+.padd-res button{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.padd-res button:hover{border-color:var(--pos)}
+.notice{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--gold-soft);color:var(--gold-ink);font-size:13.5px}
+body.phone .psum-main b{font-size:34px}
+body.phone .psum-stats{grid-template-columns:1fr;gap:8px}
+body.phone .psum-stats>div{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0 10px}
+body.phone .psum-stats small{flex:1 0 100%}
+body.phone .pname input{font-size:22px}
+body.phone .pitems input.paid{width:100%;text-align:left}
+body.phone .pgrid{grid-template-columns:1fr}
+body.phone .actionbar .btn{flex:1 1 auto}
+body.phone .tabs{width:100%} body.phone .tab{flex:1;padding:8px 8px;font-size:15px}
+/* profit log */
+.log-hero{margin-top:6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px}
+.log-hero .lbl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.log-hero b{display:block;font-family:var(--body);font-size:52px;font-weight:700;line-height:1.1;margin:2px 0;color:var(--ink)}
+.log-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.log-tiles>div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.log-tiles span{display:block;font-size:12.5px;color:var(--muted);font-weight:600}
+.log-tiles b{display:block;font-size:26px;font-weight:700;margin:2px 0}
+.log-tiles small{color:var(--muted);font-size:12px}
+.c-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.c-head h3{margin:0!important}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:9px;padding:3px}
+.seg button{border:none;background:transparent;border-radius:7px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chart-box{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 6px 2px;overflow:hidden}
+.chart-box svg{display:block;max-width:100%}
+.c-grid{stroke:var(--line);stroke-width:1}
+.c-zero{stroke:var(--muted);stroke-width:1;opacity:.6}
+.c-tick{fill:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+.c-label{fill:var(--ink);font-size:12px;font-weight:700}
+.c-gain{fill:var(--gain)} .c-loss{fill:var(--loss)} .c-flat{fill:var(--muted)}
+.c-line{fill:none;stroke:var(--gain);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.c-area{fill:var(--gain);opacity:.1}
+.c-dot{fill:var(--gain);stroke:var(--surface);stroke-width:2}
+.c-cross{stroke:var(--muted);stroke-width:1}
+.c-hit{fill:transparent;cursor:pointer}
+.c-hit.on{fill:var(--ink);opacity:.05}
+.c-tip{position:absolute;pointer-events:none;background:var(--navy);color:var(--navy-ink);border-radius:10px;padding:8px 10px;font-size:12.5px;display:flex;flex-direction:column;gap:1px;box-shadow:var(--shadow);min-width:150px;z-index:2}
+.c-tip[hidden]{display:none}
+.c-tip b{font-weight:700}
+.show-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid var(--line);padding:12px 14px}
+.show-row:last-child{border-bottom:none}
+.show-row:hover{background:var(--surface-2)}
+.show-date{font-size:12.5px;color:var(--muted);font-weight:600;width:84px;flex:none;font-variant-numeric:tabular-nums}
+.show-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.show-num{display:flex;flex-direction:column;align-items:flex-end;flex:none}
+.show-num b{font-size:17px}
+.show-fields{display:grid;grid-template-columns:repeat(2,minmax(0,220px));gap:10px;margin-top:10px}
+.show-fields input{width:100%;min-width:0}
+.bk-due{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.bk-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.bk-due .bk-acts{margin-top:0}
+.bk-panel{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.bk-panel p{margin:0}
+.bk-panel textarea{width:100%;font:12px ui-monospace,Menlo,monospace;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:8px;color:var(--ink)}
+.bk-panel label.btn{align-self:flex-start;cursor:pointer}
+.bk-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bk-choice{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:var(--surface-2);border:2px solid transparent;border-radius:10px;padding:12px}
+.bk-choice:hover:not(:disabled){border-color:var(--gold)}
+.bk-choice b{font-size:15px}
+.bk-choice:disabled{opacity:.55;cursor:default}
+body.phone .bk-choices{grid-template-columns:1fr}
+.ok-note{background:var(--pos-soft);color:var(--pos)}
+.bk-foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:28px;padding-top:12px;border-top:1px solid var(--line)}
+.bk-foot .sub{flex:1 1 auto}
+.log-empty{line-height:1.7}
+.pair-import{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pair-import select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px;flex:1 1 200px;min-width:0}
+.plog{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.plog select{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 9px;flex:1 1 180px;min-width:0}
+body.phone .log-hero b{font-size:44px}
+body.phone .show-fields{grid-template-columns:1fr 1fr}
+body.phone .show-date{width:auto}
+body.phone .show-row{flex-wrap:wrap;gap:4px 12px}
+body.phone .show-row .show-date{flex:1 0 100%}
+body.phone .tab{padding:8px 4px;font-size:14px}
+.noimg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px;text-align:center}.noimg b{font-family:var(--display);font-size:24px;font-weight:800;line-height:1.1;word-break:break-all}.noimg small{font-size:12px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
+
+.localnote{max-width:1180px;margin:10px auto 0;padding:10px 14px;border-radius:10px;background:var(--gold-soft);color:var(--gold-ink);font-size:13.5px}.localnote button{margin-left:8px;border:1px solid currentColor;background:transparent;border-radius:7px;padding:3px 8px;font-size:12.5px;color:inherit}
+</style>
+</head><body>
+<div id="root"><p style="padding:40px;text-align:center;font-family:sans-serif">Loading cards…</p></div>
+<script type="application/json" id="app-data"></script>
+<script type="text/plain" id="app-js">
+(function(){
+"use strict";
+var SKEL = "<!doctype html><html><head><meta charset=utf8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n";
+var DATA = JSON.parse(document.getElementById("app-data").textContent);
+var cards = DATA.cards || [];
+var RAW = [["nm","Near Mint (NM)"],["lp","Lightly Played (LP)"],["mp","Moderately Played (MP)"],["dmg","Damaged (DMG)"]];
+var GRADED = [["psa10","PSA 10","psa"],["cgc10","CGC 10","cgc"],["pristine","CGC 10 Pristine","cgc"],["g9","Grade 9","psa"],["g8","Grade 8","psa"],["g7","Grade 7","psa"]];
+var VERDICTS = ["Grade it","Grade selectively","Grade clean copies only","Sell raw","Hold","Pass"];
+var root = document.getElementById("root");
+var artifactApi = null, canWrite = null, apiChecked = false; // null = unknown yet
+var state = {view:"list", id:null, q:"", set:"", sort:"gap", basis:"psa10", exit:"ebay", editing:null, saving:false, msg:"", msgType:"", confirmDel:false, shown:40};
+var PAGE = 40, imgObserver = null;
+
+function load(k, d){ try{ var v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+var S = load("flipdesk.settings", {vendor:75, psa:75, cgc:35, ebay:13.25});
+var VIEW = load("flipdesk.view", null);
+var ADV = load("flipdesk.adv", false) === true; /* Advanced analytics (grading, pop, break-even): off by default */
+var ADV_SORTS = ["profit","roi","psa10","breakeven"];
+function setAdv(on){ ADV = !!on; save("flipdesk.adv", ADV); if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap"; render(); }
+function applyView(){ document.body.classList.toggle("phone", VIEW==="phone"); }
+function setView(v){ VIEW = v; save("flipdesk.view", v); applyView(); var ch=document.getElementById("chooser"); if(ch) ch.remove(); render(); }
+function showChooser(){
+  if(document.getElementById("chooser")) return;
+  var small = window.innerWidth < 700;
+  var d = document.createElement("div"); d.className="chooser-bg"; d.id="chooser";
+  d.innerHTML = '<div class="chooser" role="dialog" aria-modal="true" aria-labelledby="ch-t"><h2 id="ch-t">How are you viewing this?</h2><p>Pick a layout. You can switch anytime from the top of the page.</p><div class="choices">'+
+    '<button class="choice'+(small?'':' suggest')+'" id="ch-desk"><i class="ico-desk" aria-hidden="true"></i>Desktop<small>Wide tables, more detail</small></button>'+
+    '<button class="choice'+(small?' suggest':'')+'" id="ch-phone"><i class="ico-phone" aria-hidden="true"></i>Phone<small>Bigger text, easy scrolling</small></button></div></div>';
+  document.body.appendChild(d);
+  document.getElementById("ch-desk").addEventListener("click", function(){ setView("desktop"); });
+  document.getElementById("ch-phone").addEventListener("click", function(){ setView("phone"); });
+  (small ? document.getElementById("ch-phone") : document.getElementById("ch-desk")).focus();
+}
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function money(n, dec){ if(n==null||n===""||isNaN(n)) return "—"; var d = dec!=null?dec:(Math.abs(n)<100 && n%1!==0?2:0); return "$"+Number(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function signed(n){ return (n>=0?"+":"−")+money(Math.abs(n),0); }
+function pct(n){ return (n>=0?"+":"−")+Math.abs(Math.round(n)).toLocaleString("en-US")+"%"; }
+function title(c){ return c.name + (c.variant ? " ("+c.variant+")" : ""); }
+function buyOf(c){ var p = c.raw && c.raw.nm && Number(c.raw.nm.price); return p>0 ? p : 0; }
+function vClass(v){ return v==="Grade it"?"v-grade":(v==="Pass"||v==="Sell raw")?"v-no":v==="Hold"?"v-hold":"v-sel"; }
+function fmtDate(d){ if(!d) return "—"; var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(d); if(!m) return esc(d); return m[3] ? m[2]+"/"+m[3]+"/"+m[1] : m[2]+"/"+m[1]; }
+
+function calc(c, key, kind){
+  var g = c.graded && c.graded[key]; var sale = g && Number(g.price);
+  if(!(sale>0)) return null;
+  var buy = buyOf(c), fee = kind==="cgc" ? S.cgc : S.psa;
+  var cost = buy + fee, sellFee = Math.round(sale*S.ebay/100);
+  var ebayNet = sale - sellFee - cost, vendorBuy = sale*S.vendor/100, vendorNet = vendorBuy - cost;
+  return {sale:sale, fee:fee, cost:cost, sellFee:sellFee, ebayNet:ebayNet, ebayM:cost?ebayNet/cost*100:0, vendorBuy:vendorBuy, vendorNet:vendorNet, vendorM:cost?vendorNet/cost*100:0};
+}
+function breakEven(c){
+  var order = [["g7","7"],["g8","8"],["g9","9"],["psa10","10"]];
+  for(var i=0;i<order.length;i++){ var r = calc(c, order[i][0], "psa"); if(r && r.ebayNet>=0) return {grade:order[i][1], net:r.ebayNet}; }
+  return null;
+}
+
+var BASIS = [["psa10","PSA 10","psa"],["cgc10","CGC 10","cgc"],["g9","Grade 9","psa"],["g8","Grade 8","psa"]];
+function profitFor(c){
+  var b = BASIS.find(function(x){return x[0]===state.basis;}) || BASIS[0];
+  var r = calc(c, b[0], b[2]);
+  if(!r) return null;
+  var net = state.exit==="vendor" ? r.vendorNet : r.ebayNet;
+  return {net:net, roi: r.cost ? net/r.cost*100 : 0, cost:r.cost, label:b[1]};
+}
+var LIMIT = 16*1000*1000, SWITCH_AT = 300, storageInfo = null;
+function measureStorage(){
+  try{
+    var enc = new TextEncoder();
+    var total = enc.encode(buildDoc(cards)).length;
+    var base = enc.encode(buildDoc([])).length;
+    var per = cards.length ? (total-base)/cards.length : 65000;
+    storageInfo = {total:total, per:per, cap:Math.max(cards.length, Math.floor((LIMIT-base)/per))};
+  }catch(e){ storageInfo = null; }
+}
+function mb(n){ return (n/1000000).toFixed(n<10000000?1:0); }
+function storageMeter(){
+  if(!storageInfo) return "";
+  var s = storageInfo, frac = Math.min(1, s.total/LIMIT), pctUsed = Math.round(frac*100);
+  var cls = frac>=0.9 ? "full" : (frac>=0.6 || cards.length>=SWITCH_AT) ? "warn" : "";
+  var msg = frac>=0.9 ? "Almost full. Switch the tracker to database storage now; new cards may soon fail to save."
+    : cards.length>=SWITCH_AT ? "Past "+SWITCH_AT+" cards: loading and saving will start to slow down. Time to switch to database storage."
+    : "Plan to switch to database storage at around "+SWITCH_AT+" cards, before the page gets slow.";
+  return '<div class="storage" role="status"><div class="storage-row"><span>Storage: <b class="num">'+mb(s.total)+' of 16 MB</b> used ('+pctUsed+'%)</span><span><b class="num">'+cards.length+'</b> of about <b class="num">'+s.cap+'</b> cards · ~'+Math.round(s.per/1000)+' KB per card</span></div>'+
+    '<div class="meter '+cls+'" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pctUsed+'" aria-label="Storage used"><i style="width:'+Math.max(1,pctUsed)+'%"></i></div><p>'+msg+'</p></div>';
+}
+/* ---------- population (9s and 10s) ---------- */
+function pn(v){ return (v===null||v===undefined||v==="") ? null : Number(v); }
+function fmtN(v){ return v==null ? "—" : Number(v).toLocaleString("en-US"); }
+function pct1(n){ return n<10 ? n.toFixed(1) : String(Math.round(n)); }
+function popCard(label, n10, n9, tot){
+  if(n10==null && n9==null && tot==null) return '<div class="popcard none"><b>'+label+'</b>No '+label+' population data yet for this card.</div>';
+  n10 = n10||0; n9 = n9||0; tot = tot || (n10+n9);
+  var rest = Math.max(0, tot-n10-n9), s10 = tot? n10/tot*100 : 0, s9 = tot? n9/tot*100 : 0;
+  var hero = n10>0 ? '<b>'+pct1(s10)+'%</b> of graded copies are 10s'+(s10<50?' · about 1 in '+Math.max(2,Math.round(100/s10)):'') : '<b>0</b> tens graded so far';
+  function seg(cls,n,share,what){ return n>0 ? '<i class="'+cls+'" style="flex:0 0 '+share.toFixed(2)+'%" title="'+what+': '+fmtN(n)+' ('+pct1(share)+'%)"></i>' : ''; }
+  return '<div class="popcard"><div class="popcard-top"><b>'+label+'</b><span>'+fmtN(tot)+' graded</span></div>'+
+    '<div class="pop-hero">'+hero+'</div>'+
+    '<div class="popbar" role="img" aria-label="'+label+': '+fmtN(n10)+' tens, '+fmtN(n9)+' nines, '+fmtN(rest)+' 8 or lower, of '+fmtN(tot)+'">'+
+      seg("s10",n10,s10,"10s")+seg("s9",n9,s9,"9s")+'<i class="srest" title="8 or lower: '+fmtN(rest)+'"></i></div>'+
+    '<div class="poplegend"><div><em class="k10"></em>10s<b>'+fmtN(n10)+'</b></div><div><em class="k9"></em>9s<b>'+fmtN(n9)+'</b></div><div><em class="krest"></em>8 or lower<b>'+fmtN(rest)+'</b></div></div></div>';
+}
+function popBlock(c){
+  var p = c.pop; if(!p) return "";
+  return '<div class="popbox"><div class="pophead"><span>Population report · 9s and 10s</span><small>'+esc(p.src||"")+(p.date?' · '+fmtDate(p.date):'')+'</small></div>'+
+    '<div class="popgrid">'+popCard("PSA", pn(p.psa10), pn(p.psa9), pn(p.psaTotal))+popCard("CGC", pn(p.cgc10), pn(p.cgc9), pn(p.cgcTotal))+'</div></div>';
+}
+function popTile(c){
+  var p = c.pop; if(!p) return "";
+  var a = [];
+  if(pn(p.psa10)!=null) a.push("PSA "+fmtN(pn(p.psa10)));
+  if(pn(p.cgc10)!=null) a.push("CGC "+fmtN(pn(p.cgc10)));
+  return a.length ? '<div class="sub poptile"><em aria-hidden="true"></em>10s: '+a.join(" · ")+'</div>' : "";
+}
+/* ---------- condition gap + break-even ---------- */
+var COND_Q = {nm:"Near+Mint", lp:"Lightly+Played", mp:"Moderately+Played", dmg:"Damaged"};
+function tcgUrl(c, k){ var id = String(c.tcgId||"").replace(/\D/g,""); if(!id) return ""; return "https://www.tcgplayer.com/product/"+id+"?Language=English"+(k&&COND_Q[k]?"&Condition="+COND_Q[k]:""); }
+function tcgLink(c, k, label){ var u = tcgUrl(c,k); return u ? '<a class="tcglink" href="'+u+'" target="_blank" rel="noopener">'+(label||"TCGplayer listings")+' <span aria-hidden="true">↗</span></a>' : ''; }
+/* Condition flip: buy a lower condition, resell one condition up (after the eBay fee). */
+/* Routes: buy one condition at market, resell one step up. Exit = eBay (minus fee) or a vendor (vendor % of market). */
+var FLIPS = [["dmg","mp","DMG","MP"],["mp","lp","MP","LP"],["lp","nm","LP","NM"]];
+function exitText(exit){ exit = exit||state.exit; return exit==="vendor" ? "selling to a vendor at "+S.vendor+"%" : "selling on eBay after the "+S.ebay+"% fee"; }
+function condGap(c, exit){
+  exit = exit||state.exit;
+  function px(k){ var x = c.raw && c.raw[k]; var v = x && Number(x.price); return v>0 ? {p:v, est:!!x.est} : null; }
+  var keep = exit==="vendor" ? S.vendor/100 : 1 - S.ebay/100;
+  var routes = FLIPS.map(function(f){
+    var b = px(f[0]), s = px(f[1]); if(!b || !s) return null;
+    var net = s.p*keep - b.p;
+    return {fk:f[0], tk:f[1], from:f[2], to:f[3], buy:b.p, sell:s.p, net:net, roi:net/b.p*100, est:b.est||s.est};
+  }).filter(Boolean);
+  if(!routes.length) return null;
+  var best = routes.reduce(function(x,y){ return y.net > x.net ? y : x; });
+  return {routes:routes, best:best, score:best.net};
+}
+function flipLevel(net){ return net>=50 ? "pos" : net>0 ? "warn" : "neg"; }
+function bestFlipTile(c){
+  var g = condGap(c);
+  if(!g) return '<div class="bestflip none"><span class="lbl">Best flip</span><b>Needs two neighboring condition prices</b></div>';
+  var f = g.best;
+  return '<div class="bestflip '+flipLevel(f.net)+'"><span class="lbl">Best flip · '+(state.exit==="vendor"?'sell to vendor':'sell on eBay')+'</span>'+
+    '<div class="bf-main"><b class="num">'+signed(f.net)+'</b><span class="pill '+(f.net>0?'pos':'neg')+'">'+pct(f.roi)+'</span></div>'+
+    '<div class="bf-route">Buy '+f.from+' '+money(f.buy)+' → sell '+f.to+' '+money(f.sell)+(f.est?' <em>est.</em>':'')+'</div></div>';
+}
+function condLine(c){
+  return '<div class="conds">'+RAW.map(function(r){ var x = c.raw && c.raw[r[0]]; var p = x && Number(x.price); return '<span><i>'+r[0].toUpperCase()+'</i>'+(p>0?money(p,0):'—')+'</span>'; }).join("")+'</div>';
+}
+function flipSection(c){
+  var e = condGap(c,"ebay"), v = condGap(c,"vendor");
+  var h = '<section class="block"><h3>Condition flip profits</h3>';
+  if(!e) return h+'<div class="empty">Add prices for at least two neighboring conditions (like LP and NM) to see flip profits.</div></section>';
+  var bestKey = (state.exit==="vendor" ? v : e).best.fk;
+  function cls(n){ return n>=0 ? 'pos-t' : 'neg-t'; }
+  if(VIEW==="phone"){
+    h += '<div class="plist">'+e.routes.map(function(r,i){ var rv = v.routes[i], best = r.fk===bestKey;
+      return '<div class="prow2'+(best?' bestrow':'')+'"><div class="top2"><b>Buy '+r.from+' → sell '+r.to+'</b>'+(best?'<span class="pill pos">Best</span>':'')+'</div>'+
+        '<div class="meta">Buy '+money(r.buy)+' · resell '+money(r.sell)+(r.est?' · <span class="pill est">est.</span>':'')+'</div>'+
+        (tcgUrl(c,r.fk)?'<div class="meta">'+tcgLink(c,r.fk,"Find "+r.from+" copies on TCGplayer")+'</div>':'')+
+        '<div class="nets"><div class="net"><span>eBay profit</span><b class="num '+cls(r.net)+'">'+signed(r.net)+'</b><small>'+pct(r.roi)+' return</small></div>'+
+        '<div class="net v"><span>Vendor profit</span><b class="num '+cls(rv.net)+'">'+signed(rv.net)+'</b><small>'+pct(rv.roi)+' return</small></div></div></div>'; }).join("")+'</div>';
+  } else {
+    h += '<div class="tbl-wrap"><table><tr><th>Flip</th><th class="r">Buy at</th><th class="r">Resell at</th><th>Find copies</th><th class="r">eBay profit</th><th class="r">eBay return</th><th class="r v">Vendor profit</th><th class="r v">Vendor return</th></tr>'+
+      e.routes.map(function(r,i){ var rv = v.routes[i], best = r.fk===bestKey;
+        return '<tr'+(best?' class="bestrow"':'')+'><td class="g">'+r.from+' → '+r.to+(best?' <span class="pill pos">Best</span>':'')+'</td><td class="r num">'+money(r.buy)+'</td><td class="r num">'+money(r.sell)+(r.est?' <span class="pill est">est.</span>':'')+'</td>'+
+          '<td>'+(tcgLink(c,r.fk,r.from+" on TCGplayer")||'—')+'</td>'+
+          '<td class="r num '+cls(r.net)+'">'+signed(r.net)+'</td><td class="r"><span class="pill '+(r.net>=0?'pos':'neg')+'">'+pct(r.roi)+'</span></td>'+
+          '<td class="r v num '+cls(rv.net)+'">'+signed(rv.net)+'</td><td class="r v"><span class="pill '+(rv.net>=0?'pos':'neg')+'">'+pct(rv.roi)+'</span></td></tr>'; }).join("")+
+    '</table></div>';
+  }
+  return h+'<p class="note">eBay profit = resale price − the '+S.ebay+'% eBay fee − what you paid. Vendor profit = '+S.vendor+'% of the resale price − what you paid. Check a copy in hand before you relist it one grade up.</p></section>';
+}
+function beTile(c){
+  var be = breakEven(c);
+  if(!be) return '<div class="kv bekv none"><span>Break-even grade</span><b>None: loses at every grade</b></div>';
+  return '<div class="kv bekv"><span>Break-even grade</span><b class="num">PSA '+be.grade+'</b> <span class="pill pos">'+signed(be.net)+' at a '+be.grade+'</span></div>';
+}
+/* ---------- list ---------- */
+var searchTimer = null;
+/* Photos load only when a tile is about to scroll into view (~600px ahead). */
+function watchImages(){
+  var imgs = root.querySelectorAll("img[data-img]");
+  var byId = {}; cards.forEach(function(c){ byId[c.id] = c; });
+  function show(img){ var c = byId[img.getAttribute("data-img")]; if(c && c.image) img.src = c.image; img.removeAttribute("data-img"); }
+  if(imgObserver) imgObserver.disconnect();
+  if(!("IntersectionObserver" in window)){ imgs.forEach(show); return; }
+  imgObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ imgObserver.unobserve(en.target); show(en.target); } });
+  }, {rootMargin:"600px 0px"});
+  imgs.forEach(function(img){ imgObserver.observe(img); });
+}
+function renderList(){
+  var sets = Array.from(new Set(cards.map(function(c){return c.set;}))).sort();
+  var q = state.q.trim().toLowerCase();
+  var list = cards.filter(function(c){
+    if(state.set && c.set!==state.set) return false;
+    if(!q) return true;
+    return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(q)>=0;
+  });
+  if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap";
+  var gaps = {}; list.forEach(function(c){ gaps[c.id] = condGap(c); });
+  list.sort(function(a,b){
+    if(state.sort==="psa10") return (Number(b.graded.psa10&&b.graded.psa10.price)||0)-(Number(a.graded.psa10&&a.graded.psa10.price)||0);
+    if(state.sort==="raw") return buyOf(b)-buyOf(a);
+    if(state.sort==="profit"||state.sort==="roi"){
+      var pa = profitFor(a), pb = profitFor(b);
+      if(!pa && !pb) return title(a).localeCompare(title(b));
+      if(!pa) return 1; if(!pb) return -1;
+      return state.sort==="profit" ? pb.net-pa.net : pb.roi-pa.roi;
+    }
+    if(state.sort==="updated") return String(b.updated).localeCompare(String(a.updated));
+    if(state.sort==="gap"||state.sort==="fliproi"){
+      var ga = gaps[a.id], gb = gaps[b.id];
+      if(!ga && !gb) return title(a).localeCompare(title(b));
+      if(!ga) return 1; if(!gb) return -1;
+      return state.sort==="gap" ? gb.score-ga.score : gb.best.roi-ga.best.roi;
+    }
+    if(state.sort==="breakeven"){
+      var ba = breakEven(a), bb = breakEven(b);
+      if(!ba && !bb) return title(a).localeCompare(title(b));
+      if(!ba) return 1; if(!bb) return -1;
+      if(ba.grade!==bb.grade) return Number(ba.grade)-Number(bb.grade);
+      return bb.net-ba.net;
+    }
+    return title(a).localeCompare(title(b));
+  });
+  var total = list.length; if(!(state.shown>=PAGE)) state.shown = PAGE;
+  list = list.slice(0, state.shown);
+  var h = header();
+  h += '<div class="toolbar">'+
+    '<label class="search"><span class="sub">Search</span><input id="q" type="search" placeholder="Card, set or number" value="'+esc(state.q)+'"></label>'+
+    '<select id="setf" aria-label="Filter by set"><option value="">All sets</option>'+sets.map(function(s){return '<option'+(s===state.set?' selected':'')+'>'+esc(s)+'</option>';}).join("")+'</select>'+
+    '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
+      (ADV ? '<optgroup label="Advanced: grading"><option value="profit">Grading profit ($)</option><option value="roi">Grading return (%)</option><option value="psa10">PSA 10 price</option><option value="breakeven">Lowest break-even grade</option></optgroup>' : '')+'</select>'+
+    '<select id="exitf" aria-label="Sell to"><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option></select>'+
+    (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
+    '<button class="btn'+(state.selecting?' dark':'')+'" id="selbtn" aria-pressed="'+!!state.selecting+'">'+(state.selecting?'Done selecting':'Select cards')+'</button>'+
+    '<button class="advbtn" id="advbtn" role="switch" aria-checked="'+ADV+'" title="Show grading values, population counts and break-even grades"><i aria-hidden="true"></i>Advanced analytics</button>'+
+    (canWrite!==false && artifactApi ? '<button class="btn primary" id="add">+ Add card</button>' : (apiChecked ? '<span class="readonly-note">View only: ask the owner for edit access to add cards.</span>' : ''))+
+  '</div>';
+  if(state.sort==="profit"||state.sort==="roi"){ h += '<p class="note" style="margin:-6px 0 12px">'+(state.sort==="profit"?'Ranked by dollar profit':'Ranked by profit ÷ total cost (raw NM buy + grading fee)')+' if the card grades '+esc((BASIS.find(function(b){return b[0]===state.basis;})||BASIS[0])[1])+' and you sell '+(state.exit==="vendor"?'to a vendor at '+S.vendor+'%':'on eBay after the '+S.ebay+'% fee')+'. This assumes that grade; most copies grade lower.</p>'; }
+  if(state.sort==="gap"||state.sort==="fliproi"){ h += '<p class="note" style="margin:-6px 0 12px">Each card shows its best flip: buy one condition and resell it one step up (DMG → MP, MP → LP or LP → NM), '+exitText()+'. Ranked by '+(state.sort==="gap"?'dollar profit':'return on what you paid')+'. Look for copies listed below their true condition, and check them in hand before relisting.</p>'; }
+  if(state.sort==="breakeven"){ h += '<p class="note" style="margin:-6px 0 12px">Ranked by the lowest PSA grade that still makes money after the eBay fee ('+S.ebay+'%), the PSA fee ($'+S.psa+') and the raw NM buy. Ties go to the bigger profit at that grade. Cards that lose money at every grade are last.</p>'; }
+  if(!list.length){ h += '<div class="empty">'+(cards.length?'No cards match that search.':'No cards yet. Add your first card to start tracking.')+'</div>'; }
+  else {
+    if(state.selecting) h += '<p class="note" style="margin:-6px 0 12px"><b>Select the cards you’re selling together</b>, then add them to a pairing with the bar at the bottom.</p>';
+    h += '<div class="grid'+(state.selecting?' selecting':'')+'">'+list.map(function(c){
+      var picked = selected.indexOf(c.id)>=0;
+      var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+
+        '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
+        '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
+        condLine(c)+bestFlipTile(c);
+      if(ADV){
+        var be = breakEven(c); var p10 = c.graded && c.graded.psa10 && c.graded.psa10.price;
+        tile += '<div class="prices"><div class="kv"><span>Raw NM</span><b class="num">'+money(buyOf(c))+'</b></div><div class="kv"><span>PSA 10</span><b class="num">'+money(p10,0)+'</b></div></div>'+popTile(c)+
+          ((state.sort==="profit"||state.sort==="roi") ? (function(){ var pf = profitFor(c); return pf ? '<div class="kv profit-kv"><span>Profit at '+esc(pf.label)+'</span><b class="num '+(pf.net>=0?'pos-t':'neg-t')+'">'+signed(pf.net)+'</b> <span class="pill '+(pf.net>=0?'pos':'neg')+'">'+pct(pf.roi)+' return</span></div>' : '<div class="kv"><span>Profit</span><b>No price for that grade</b></div>'; })() : '')+
+          (state.sort==="breakeven" ? beTile(c) : '')+
+          '<div class="tile-foot"><span class="pill '+vClass(c.verdict)+'">'+esc(c.verdict||"No verdict")+'</span><span class="sub">'+(be?'Profit from '+(be.grade==="10"?"a 10":"grade "+be.grade):'No profitable grade')+'</span></div>';
+      }
+      return tile+'</button>';
+    }).join("")+'</div>';
+    if(total > list.length){
+      var more = Math.min(PAGE, total-list.length);
+      h += '<div class="more-row"><span class="sub">Showing '+list.length+' of '+total+' cards</span><button class="btn dark" id="more">Show '+more+' more</button></div>';
+    }
+  }
+  h += storageMeter();
+  root.innerHTML = h;
+  var sortSel = document.getElementById("sortf"); sortSel.value = state.sort;
+  bindHeader();
+  var qi = document.getElementById("q");
+  qi.addEventListener("input", function(){
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function(){ state.q = qi.value; state.shown = PAGE; var pos = qi.selectionStart; renderList(); var n=document.getElementById("q"); n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){} }, 180);
+  });
+  document.getElementById("setf").addEventListener("change", function(e){ state.set = e.target.value; state.shown = PAGE; renderList(); });
+  sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
+  var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
+  var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; state.shown = PAGE; renderList(); });
+  document.getElementById("advbtn").addEventListener("click", function(){ setAdv(!ADV); var n = document.getElementById("advbtn"); if(n) n.focus(); });
+  var mb2 = document.getElementById("more"); if(mb2) mb2.addEventListener("click", function(){ var y = window.scrollY; state.shown += PAGE; renderList(); window.scrollTo(0, y); });
+  watchImages();
+  var add = document.getElementById("add"); if(add) add.addEventListener("click", function(){ openEditor(null); });
+  root.querySelectorAll("[data-open]").forEach(function(b){ b.addEventListener("click", function(){
+    var id = b.getAttribute("data-open");
+    if(!state.selecting){ go(id); return; }
+    var k = selected.indexOf(id); if(k>=0) selected.splice(k,1); else selected.push(id);
+    b.classList.toggle("picked", k<0); b.setAttribute("aria-pressed", String(k<0));
+    var cnt = document.getElementById("sel-count"); if(cnt) cnt.textContent = selected.length+" selected";
+    var sa = document.getElementById("sel-add"); if(sa) sa.disabled = !selected.length;
+  }); });
+  document.getElementById("selbtn").addEventListener("click", function(){ state.selecting = !state.selecting; if(!state.selecting) selected = []; var y = window.scrollY; render(); window.scrollTo(0,y); });
+}
+
+function header(){
+  var phone = VIEW==="phone";
+  var chips = chip("vendor","Vendor buys at","%",true)+chip("ebay","eBay fee","%")+(ADV ? chip("psa","PSA fee","$")+chip("cgc","CGC fee","$") : '');
+  var toggle = '<button class="viewbtn" id="viewbtn" title="Change layout">'+(phone?'Phone view · switch':'Desktop view · switch')+'</button>';
+  return '<header class="top"><div class="brand"><div style="display:flex;align-items:center;gap:12px"><div class="mark" aria-hidden="true"></div><div><h1>Chaundoo Card Flipz</h1><p>Buy a card in one condition, resell it one step up. Prices from recent sales.</p></div></div>'+(phone?toggle:'')+'</div>'+
+  (phone ? '<details class="fees"'+(state.feesOpen?' open':'')+' id="fees"><summary><span>Fees &amp; vendor %</span><span class="sub">Vendor '+S.vendor+'% · eBay '+S.ebay+'%'+(ADV?' · PSA $'+S.psa:'')+'</span></summary><div class="settings">'+chips+'</div></details>'
+         : '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">'+toggle+'<div class="settings" title="Your settings. They only change what you see.">'+chips+'</div></div>')+
+  '</header>'+tabs();
+}
+function chip(k,label,unit,gold){ return '<label class="set-chip'+(gold?' gold':'')+'">'+label+' <input id="s-'+k+'" type="number" step="0.25" min="0" value="'+S[k]+'"> '+unit+'</label>'; }
+function bindHeader(){
+  var vb = document.getElementById("viewbtn"); if(vb) vb.addEventListener("click", showChooser);
+  var tc = document.getElementById("tab-cards"); if(tc) tc.addEventListener("click", function(){ state.notice = ""; go(null); });
+  var tp = document.getElementById("tab-pairs"); if(tp) tp.addEventListener("click", function(){ state.notice = ""; goPairs(null); });
+  var tl = document.getElementById("tab-log"); if(tl) tl.addEventListener("click", function(){ state.notice = ""; goLog(null); });
+  var fe = document.getElementById("fees"); if(fe) fe.addEventListener("toggle", function(){ state.feesOpen = fe.open; });
+  ["vendor","psa","cgc","ebay"].forEach(function(k){
+    var el = document.getElementById("s-"+k); if(!el) return;
+    el.addEventListener("change", function(){ var v = parseFloat(el.value); if(!isNaN(v)&&v>=0){ S[k]=v; save("flipdesk.settings",S); render(); } });
+  });
+}
+
+/* ---------- detail ---------- */
+function renderDetail(){
+  var c = cards.find(function(x){return x.id===state.id;});
+  if(!c){ state.view="list"; return renderList(); }
+  var be = breakEven(c), buy = buyOf(c), p10 = calc(c,"psa10","psa");
+  var h = header();
+  h += '<div class="back"><button class="btn ghost" id="back">← All cards</button></div>';
+  h += '<div class="detail-head"><div class="art">'+(c.image?'<img src="'+c.image+'" alt="'+esc(title(c))+'">':'')+'</div><div>'+
+    '<div class="title-row"><div><h2>'+esc(title(c))+'</h2><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · Updated '+fmtDate(c.updated)+'</div></div>'+
+    '<div class="confirm"><select id="addpair" class="btn" aria-label="Add this card to a pairing"><option value="">+ Add to pairing</option><option value="__new">New pairing</option>'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>'; }).join("")+'</select>'+
+    (canWrite!==false && artifactApi ? '<button class="btn dark" id="edit">Edit card</button>' : '')+'</div></div>'+
+    (function(){ var g = condGap(c), f = g && g.best;
+      return '<div class="kpis">'+
+        kpi("Raw NM", money(buy), "Near Mint market")+
+        kpi("Best flip", f?signed(f.net):"—", f?"Buy "+f.from+" → sell "+f.to:"Needs more prices")+
+        kpi("Flip return", f?pct(f.roi):"—", f?(state.exit==="vendor"?"Selling to a vendor":"Selling on eBay"):"")+
+        kpi("Vendor NM buy", money(buy*S.vendor/100), S.vendor+"% of market")+
+      '</div>'; })()+
+    (ADV ? '<div class="kpis">'+
+      kpi("PSA 10", p10?money(p10.sale,0):"—", p10?signed(p10.ebayNet)+" on eBay":"")+
+      kpi("Break-even", be?(be.grade==="10"?"10 only":"PSA "+be.grade):"None", be?signed(be.net)+" on eBay":"No grade profits")+
+    '</div>' : '')+
+    '<div class="facts">'+(ADV?'<div class="fact"><span>Gem rate / population</span>'+esc(c.gem||"—")+'</div>':'')+'<div class="fact"><span>Sales volume</span>'+esc(c.liquidity||"—")+'</div></div>'+
+    (ADV ? popBlock(c) : '')+
+  '</div></div>';
+
+  if(VIEW==="phone"){
+    h += '<section class="block"><h3>Raw condition prices</h3><div class="plist">'+RAW.map(function(r,i){ var x=c.raw[r[0]]||{}; var p=Number(x.price);
+      return '<div class="prow2"><div class="top2"><b>'+r[1]+'</b><span class="price num">'+(p>0?money(p):"—")+'</span></div>'+
+        '<div class="meta">'+(x.est?'<span class="pill est">est.</span> ':'')+fmtDate(x.date)+(x.src?' · '+esc(x.src):'')+'</div>'+
+        (tcgUrl(c,r[0])?'<div class="meta">'+tcgLink(c,r[0],"See "+r[0].toUpperCase()+" listings on TCGplayer")+'</div>':'')+
+        (p>0?'<div class="meta">Vendors buy at <b class="num" style="color:var(--gold-ink)">'+money(p*S.vendor/100,2)+'</b>'+(i>0?' · '+money(buy-p)+' below NM':'')+'</div>':'')+'</div>'; }).join("")+'</div></section>';
+    h += flipSection(c);
+    if(ADV) h += '<section class="block"><h3>Graded values &amp; profit</h3><div class="plist">'+GRADED.map(function(g){ var x=c.graded[g[0]]||{}; var r=calc(c,g[0],g[2]);
+      if(!r) return '<div class="prow2"><div class="top2"><b>'+g[1]+'</b><span class="price">—</span></div><div class="meta">'+esc(x.src||"No data")+'</div></div>';
+      return '<div class="prow2"><div class="top2"><b>'+g[1]+'</b><span class="price num">'+money(r.sale,r.sale<100&&r.sale%1?2:0)+'</span></div>'+
+        '<div class="meta">'+(x.est?'<span class="pill est">est.</span> ':'')+esc(x.src||"")+'</div>'+
+        '<div class="nets"><div class="net"><span>eBay profit</span><b class="num '+(r.ebayNet>=0?'pos-t':'neg-t')+'">'+signed(r.ebayNet)+'</b><small>'+pct(r.ebayM)+' return</small></div>'+
+        '<div class="net v"><span>Vendor profit</span><b class="num '+(r.vendorNet>=0?'pos-t':'neg-t')+'">'+signed(r.vendorNet)+'</b><small>'+pct(r.vendorM)+' return</small></div></div>'+
+        '<div class="meta" style="margin-top:6px">Cost '+money(r.cost)+' (raw '+money(buy)+' + grading '+money(r.fee)+')</div></div>'; }).join("")+
+      '</div><p class="note">eBay profit subtracts the '+S.ebay+'% fee. Vendor profit assumes a shop pays '+S.vendor+'% of the sale price.</p></section>';
+  } else {
+  h += '<section class="block"><h3>Raw condition market values</h3><div class="tbl-wrap"><table><tr><th>Condition</th><th class="r">Market sale</th><th>Sale date</th><th>Source</th><th class="r">Jump to NM</th><th>Listings</th><th class="r v">Vendor @ '+S.vendor+'%</th></tr>'+
+    RAW.map(function(r,i){ var x = c.raw[r[0]]||{}; var p = Number(x.price);
+      return '<tr><td class="g">'+r[1]+'</td><td class="r num">'+(p>0?money(p):"—")+(x.est?' <span class="pill est">est.</span>':'')+'</td><td class="num">'+fmtDate(x.date)+'</td><td>'+esc(x.src||"")+'</td><td class="r num">'+(i===0||!(p>0)?"—":"+"+money(buy-p))+'</td><td>'+(tcgLink(c,r[0],"TCGplayer")||'—')+'</td><td class="r v num"><b>'+(p>0?money(p*S.vendor/100,2):"—")+'</b></td></tr>'; }).join("")+
+  '</table></div></section>';
+
+  h += flipSection(c);
+  if(ADV) h += '<section class="block"><h3>Graded values &amp; profit: eBay vs. selling to a vendor</h3><div class="tbl-wrap"><table><tr><th>Grade</th><th class="r">Market sale</th><th>Source</th><th class="r">Grading fee</th><th class="r">Total cost</th><th class="r">eBay net</th><th class="r">eBay margin</th><th class="r v">Vendor net</th><th class="r v">Vendor margin</th></tr>'+
+    GRADED.map(function(g){ var x = c.graded[g[0]]||{}; var r = calc(c,g[0],g[2]);
+      if(!r) return '<tr><td class="g">'+g[1]+'</td><td class="r">—</td><td>'+esc(x.src||"No data")+'</td><td colspan="6"></td></tr>';
+      return '<tr><td class="g">'+g[1]+'</td><td class="r num"><b>'+money(r.sale,r.sale<100&&r.sale%1?2:0)+'</b>'+(x.est?' <span class="pill est">est.</span>':'')+'</td><td>'+esc(x.src||"")+'</td><td class="r num">'+money(r.fee)+'</td><td class="r num">'+money(r.cost)+'</td>'+
+        '<td class="r num '+(r.ebayNet>=0?'pos-t':'neg-t')+'">'+signed(r.ebayNet)+'</td><td class="r"><span class="pill '+(r.ebayNet>=0?'pos':'neg')+'">'+pct(r.ebayM)+'</span></td>'+
+        '<td class="r v num '+(r.vendorNet>=0?'pos-t':'neg-t')+'">'+signed(r.vendorNet)+'</td><td class="r v"><span class="pill '+(r.vendorNet>=0?'pos':'neg')+'">'+pct(r.vendorM)+'</span></td></tr>'; }).join("")+
+  '</table></div><p class="note">Profit = sale − eBay fee ('+S.ebay+'%) − raw buy ('+money(buy)+') − grading fee. Vendor profit = '+S.vendor+'% of sale − raw buy − grading fee. Change the fees at the top; your settings only affect your view.</p></section>';
+  }
+
+  if(ADV) h += '<div class="verdict"><span class="tag">'+esc((c.verdict||"No verdict").toUpperCase())+'</span>'+(c.notes?'<p>'+esc(c.notes)+'</p>':'')+'</div>';
+  root.innerHTML = h;
+  bindHeader();
+  document.getElementById("back").addEventListener("click", function(){ go(null); });
+  var ed = document.getElementById("edit"); if(ed) ed.addEventListener("click", function(){ openEditor(c); });
+  var ap = document.getElementById("addpair"); ap.addEventListener("change", function(){ if(!ap.value) return; var p = addCards(ap.value, [c.id]); goPairs(p.id); });
+}
+function kpi(l,v,s){ return '<div class="kpi"><span>'+l+'</span><b class="num">'+v+'</b><small>'+esc(s||"")+'</small></div>'; }
+
+/* ---------- editor ---------- */
+function blankCard(){
+  var raw={}, graded={};
+  RAW.forEach(function(r){ raw[r[0]]={price:"",date:"",src:"",est:false}; });
+  GRADED.forEach(function(g){ graded[g[0]]={price:"",src:"",est:false}; });
+  return {id:"",name:"",variant:"",set:"",number:"",image:"",updated:new Date().toISOString().slice(0,10),raw:raw,graded:graded,gem:"",liquidity:"",verdict:"",notes:""};
+}
+function openEditor(c){
+  state.editing = JSON.parse(JSON.stringify(c || blankCard()));
+  state.isNew = !c; state.msg=""; state.confirmDel=false;
+  renderEditor();
+}
+function closeEditor(){ state.editing=null; var s=document.getElementById("sheet"); if(s) s.remove(); document.body.style.overflow=""; }
+function renderEditor(){
+  var e = state.editing; var old = document.getElementById("sheet"); if(old) old.remove();
+  var wrap = document.createElement("div"); wrap.className="sheet-bg"; wrap.id="sheet";
+  var h = '<form class="sheet" id="edform" novalidate><h2>'+(state.isNew?'Add a card':'Edit '+esc(title(e)))+'</h2><p class="sub">Use recent SOLD prices in this order: 1. TCGplayer · 2. eBay Sold · 3. PriceCharting · 4. Collectr · 5. other sites. If one source is thin, use the next or average a few. Tick "est." for anything estimated.</p>';
+  h += '<fieldset><legend>Card</legend><div class="drop"><div class="preview" id="pv">'+(e.image?'<img src="'+e.image+'" alt="">':'Card image')+'</div>'+
+       '<div style="flex:1;min-width:200px"><label class="f">Card image<input type="file" id="f-img" accept="image/*"></label><p class="sub" style="margin:6px 0 0">A photo, scan or screenshot. It is resized to keep the page fast. You can also paste an image here.</p></div></div>'+
+       '<div class="frow" style="margin-top:10px">'+
+       field("f-name","Card name",e.name,"e.g. Reshiram")+field("f-variant","Variant",e.variant,"e.g. Radiant Collection")+
+       field("f-set","Set",e.set,"e.g. Legendary Treasures")+field("f-number","Card number",e.number,"e.g. RC22/RC25")+field("f-tcg","TCGplayer link or product ID",e.tcgId||"","Paste the TCGplayer product URL")+
+       '<label class="f">Last updated<input id="f-updated" type="date" value="'+esc(e.updated)+'"></label></div></fieldset>';
+  h += '<fieldset><legend>Raw condition prices</legend><div class="prow phead"><span></span><span>Price $</span><span>Source</span><span>Sale date</span><span>Est.</span></div>'+
+    RAW.map(function(r){ var x=e.raw[r[0]]||{}; return '<div class="prow"><b>'+r[1]+'</b><input id="r-'+r[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="r-'+r[0]+'-src" placeholder="Source" value="'+esc(x.src)+'"><input id="r-'+r[0]+'-date" placeholder="YYYY-MM-DD" value="'+esc(x.date)+'"><label class="chk"><input type="checkbox" id="r-'+r[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
+    '<p class="note">Flip profits compare each condition with the next one up. Fill in all four conditions if you can.</p></fieldset>';
+  h += '<div'+(ADV?'':' hidden')+'><p class="note" style="margin-top:14px">Advanced: grading data. Not needed for condition flips.</p><fieldset><legend>Graded prices</legend><div class="prow g phead"><span></span><span>Price $</span><span>Source &amp; date</span><span>Est.</span></div>'+
+    GRADED.map(function(g){ var x=e.graded[g[0]]||{}; return '<div class="prow g"><b>'+g[1]+'</b><input id="g-'+g[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="g-'+g[0]+'-src" placeholder="e.g. eBay Sold 09/14/26" value="'+esc(x.src)+'"><label class="chk"><input type="checkbox" id="g-'+g[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
+  '</fieldset>';
+  var pp = e.pop || {};
+  function pf(k,label){ return '<label class="f">'+label+'<input id="p-'+k+'" type="number" min="0" step="1" inputmode="numeric" value="'+esc(pp[k]==null?"":pp[k])+'"></label>'; }
+  h += '<fieldset><legend>Population (9s &amp; 10s)</legend><div class="frow">'+pf("psa10","PSA 10s")+pf("psa9","PSA 9s")+pf("psaTotal","PSA total graded")+'</div>'+
+       '<div class="frow" style="margin-top:10px">'+pf("cgc10","CGC 10s")+pf("cgc9","CGC 9s")+pf("cgcTotal","CGC total graded")+'</div>'+
+       '<div class="frow" style="margin-top:10px">'+field("p-src","Source",pp.src||"","e.g. Collectr pop report")+'</div><p class="note">Source order: Collectr first, then PriceCharting. Leave blank if unknown.</p></fieldset>'+
+       '<fieldset><legend>Grading analysis</legend><div class="frow">'+field("f-gem","Gem rate / population",e.gem,"e.g. ~2.4% (22 of 917)")+
+       '<label class="f">Verdict<select id="f-verdict"><option value="">No verdict</option>'+VERDICTS.map(function(v){return '<option'+(v===e.verdict?' selected':'')+'>'+v+'</option>';}).join("")+'</select></label></div></fieldset></div>';
+  h += '<fieldset><legend>Notes</legend><div class="frow">'+field("f-liq","Sales volume",e.liquidity,"e.g. Raw ~2 sales/week")+'</div>'+
+       '<label class="f" style="margin-top:10px">Notes<textarea id="f-notes" placeholder="Condition tips, what to look for, how fast it sells...">'+esc(e.notes)+'</textarea></label></fieldset>';
+  h += '<div class="sheet-actions"><div class="confirm" id="delzone">'+(state.isNew?'':(state.confirmDel?'<span>Delete this card for everyone?</span><button type="button" class="btn danger" id="del-yes">Delete</button><button type="button" class="btn" id="del-no">Keep</button>':'<button type="button" class="btn ghost" id="del">Delete card</button>'))+'</div>'+
+       '<div class="confirm"><span class="msg '+state.msgType+'" id="msg">'+esc(state.msg)+'</span><button type="button" class="btn" id="cancel">Cancel</button><button type="submit" class="btn primary" id="savebtn"'+(state.saving?' disabled':'')+'>'+(state.saving?'Saving…':'Save card')+'</button></div></div>';
+  h += '</form>';
+  wrap.innerHTML = h; document.body.appendChild(wrap); document.body.style.overflow="hidden";
+  wrap.addEventListener("click", function(ev){ if(ev.target===wrap && !state.saving) closeEditor(); });
+  document.getElementById("cancel").addEventListener("click", function(){ if(!state.saving) closeEditor(); });
+  document.getElementById("f-img").addEventListener("change", function(ev){ var f=ev.target.files&&ev.target.files[0]; if(f) readImage(f); });
+  wrap.addEventListener("paste", function(ev){ var items=(ev.clipboardData&&ev.clipboardData.files)||[]; if(items.length&&/^image\//.test(items[0].type)){ ev.preventDefault(); readImage(items[0]); } });
+  var d=document.getElementById("del"); if(d) d.addEventListener("click", function(){ collect(); state.confirmDel=true; renderEditor(); });
+  var dn=document.getElementById("del-no"); if(dn) dn.addEventListener("click", function(){ collect(); state.confirmDel=false; renderEditor(); });
+  var dy=document.getElementById("del-yes"); if(dy) dy.addEventListener("click", function(){ doDelete(); });
+  document.getElementById("edform").addEventListener("submit", function(ev){ ev.preventDefault(); doSave(); });
+}
+function field(id,label,val,ph){ return '<label class="f">'+label+'<input id="'+id+'" value="'+esc(val)+'" placeholder="'+esc(ph||"")+'"></label>'; }
+function readImage(file){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var img = new Image();
+    img.onload = function(){
+      var w = Math.min(200, img.naturalWidth), h = Math.round(img.naturalHeight*w/img.naturalWidth);
+      var cv = document.createElement("canvas"); cv.width=w; cv.height=h;
+      var ctx = cv.getContext("2d"); ctx.fillStyle="#fff"; ctx.fillRect(0,0,w,h); ctx.drawImage(img,0,0,w,h);
+      state.editing.image = cv.toDataURL("image/jpeg",0.6);
+      document.getElementById("pv").innerHTML = '<img src="'+state.editing.image+'" alt="">';
+    };
+    img.onerror = function(){ setMsg("That file isn't an image this browser can read. Try a JPG or PNG.","err"); };
+    img.src = fr.result;
+  };
+  fr.readAsDataURL(file);
+}
+function val(id){ var el=document.getElementById(id); return el? el.value.trim() : ""; }
+function num(id){ var v = parseFloat(val(id)); return isNaN(v) ? "" : v; }
+function chk(id){ var el=document.getElementById(id); return !!(el&&el.checked); }
+function collect(){
+  var e = state.editing;
+  e.name=val("f-name"); e.variant=val("f-variant"); e.set=val("f-set"); e.number=val("f-number"); e.updated=val("f-updated");
+  var tm = /product\/(\d+)/.exec(val("f-tcg")) || /^(\d+)$/.exec(val("f-tcg")); if(tm) e.tcgId = Number(tm[1]); else if(!val("f-tcg")) delete e.tcgId;
+  RAW.forEach(function(r){ e.raw[r[0]]={price:num("r-"+r[0]+"-price"),src:val("r-"+r[0]+"-src"),date:val("r-"+r[0]+"-date"),est:chk("r-"+r[0]+"-est")}; });
+  GRADED.forEach(function(g){ e.graded[g[0]]={price:num("g-"+g[0]+"-price"),src:val("g-"+g[0]+"-src"),est:chk("g-"+g[0]+"-est")}; });
+  var np = {}, anyPop = false;
+  ["psa10","psa9","psaTotal","cgc10","cgc9","cgcTotal"].forEach(function(k){ var v = num("p-"+k); np[k] = v==="" ? null : Math.round(v); if(np[k]!=null) anyPop = true; });
+  np.src = val("p-src");
+  var old = e.pop || {}, changed = ["psa10","psa9","psaTotal","cgc10","cgc9","cgcTotal"].some(function(k){ return (old[k]==null?null:old[k]) !== np[k]; });
+  np.date = changed ? new Date().toISOString().slice(0,10) : (old.date || "");
+  if(anyPop) e.pop = np; else delete e.pop;
+  e.gem=val("f-gem"); e.liquidity=val("f-liq"); e.verdict=val("f-verdict"); e.notes=val("f-notes");
+  return e;
+}
+function setMsg(t,type){ state.msg=t; state.msgType=type||""; var m=document.getElementById("msg"); if(m){ m.textContent=t; m.className="msg "+(type||""); } }
+function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60) || "card"; }
+/* Duplicate guard: same name + set + card number (+ variant) = same card, ignoring case, spacing, punctuation and leading zeros. */
+function normTxt(s){ return String(s||"").toLowerCase().replace(/pok[eé]mon/g,"").replace(/\b(holo rare|holo)\b/g,"holo").replace(/[^a-z0-9]+/g,""); }
+function normNum(s){ var p=String(s||"").toLowerCase().split("/")[0].replace(/[^a-z0-9]/g,""); return p.replace(/^([a-z]*)0+(?=\d)/,"$1"); }
+function cardKey(c){ return [normTxt(c.name), normTxt(c.set), normNum(c.number), normTxt(c.variant)].join("|"); }
+function findDuplicate(e, skipId){
+  var k = cardKey(e);
+  for(var i=0;i<cards.length;i++){ var c=cards[i]; if(c.id!==skipId && cardKey(c)===k) return c; }
+  return null;
+}
+function doSave(){
+  var e = collect();
+  if(!e.name){ setMsg("Add a card name before saving.","err"); return; }
+  if(!e.set){ setMsg("Add the set name before saving.","err"); return; }
+  if(!(Number(e.raw.nm.price)>0)){ setMsg("Add a Near Mint price. It's the buy price for every profit calculation.","err"); return; }
+  var dup = findDuplicate(e, state.isNew ? null : e.id);
+  if(dup){
+    setMsg("This card is already in the tracker: "+dup.name+(dup.variant?" ("+dup.variant+")":"")+" · "+dup.set+" "+(dup.number||"")+". It wasn't added again. ","err");
+    var m=document.getElementById("msg");
+    if(m){ var a=document.createElement("button"); a.type="button"; a.className="btn ghost"; a.style.padding="2px 6px"; a.textContent="Open existing card";
+      a.onclick=function(){ closeEditor(); go(dup.id); }; m.appendChild(a); }
+    return;
+  }
+  var next = cards.slice();
+  if(state.isNew){
+    var base = slug(e.name+"-"+e.variant+"-"+e.number), id = base, n = 2;
+    while(next.some(function(c){return c.id===id;})) id = base+"-"+(n++);
+    e.id = id; next.push(e);
+  } else {
+    next = next.map(function(c){ return c.id===e.id ? e : c; });
+  }
+  publishCards(next, e.id);
+}
+function doDelete(){ var id = state.editing.id; publishCards(cards.filter(function(c){return c.id!==id;}), null); }
+
+function buildDoc(list){
+  var style = document.getElementById("app-style").textContent;
+  var js = document.getElementById("app-js").textContent;
+  var fonts = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap">';
+  var json = JSON.stringify({cards:list, pairings:sharedPairs()}).replace(/</g,"\\u003c");
+  var S1 = "<scr"+"ipt", S2 = "</scr"+"ipt>";
+  return SKEL + '<title>Chaundoo Card Flipz</title>\n' + fonts + '\n<style id="app-style">' + style + '</style>\n<div id="root"></div>\n' +
+    S1 + ' type="application/json" id="app-data">' + json + S2 + '\n' + S1 + ' id="app-js">' + js + S2 + '\n</body></html>';
+}
+function publishCards(list, openId){
+  if(!artifactApi){ setMsg("Saving isn't available in this view.","err"); return; }
+  state.saving = true; var b=document.getElementById("savebtn"); if(b){ b.disabled=true; b.textContent="Saving…"; }
+  setMsg("Saving…","");
+  try{ sessionStorage.setItem("flipdesk.open", openId||""); }catch(err){}
+  artifactApi.publish(buildDoc(list)).then(function(){
+    state.published = true; state.dirty = false;
+    setMsg("Saved. Reloading…","ok");
+  }).catch(function(err){
+    state.saving=false; if(b){ b.disabled=false; b.textContent="Save card"; }
+    var code = err && err.code;
+    if(code==="conflict") setMsg("Someone else just saved a change. The page is reloading with their version; re-enter your edit after it loads.","err");
+    else if(code==="not_writer"||code==="not_granted"||code==="consent_required"||code==="capability_disabled"||code==="not_declared"){ canWrite=false; setMsg("You have view-only access, so this can't be saved. Ask the owner for edit access.","err"); }
+    else if(code==="too_large") setMsg("The tracker is too big to save. Use a smaller image or remove a card.","err");
+    else if(code==="rate_limited") setMsg("Too many saves in a row. Wait a minute, then save again.","err");
+    else setMsg("Couldn't save right now. Check your connection and try again.","err");
+  });
+}
+
+/* ---------- card pairings (batch selling to a vendor) ---------- */
+var CONDS = [["nm","NM"],["lp","LP"],["mp","MP"],["dmg","DMG"]];
+var pairs = [], selected = [];
+function clone(o){ return JSON.parse(JSON.stringify(o)); }
+function strip(p){ var q = clone(p); delete q.local; return q; }
+function sharedPairs(){ return pairs.filter(function(p){ return !p.local; }).map(strip); }
+function saveLocalPairs(){ save("flipdesk.localpairs", pairs.filter(function(p){ return p.local; }).map(strip)); }
+function localPairsFromStore(){ var l = load("flipdesk.localpairs", []); if(!Array.isArray(l)) l = []; l.forEach(function(p){ p.local = true; if(!Array.isArray(p.items)) p.items = []; }); return l; }
+function initPairs(){
+  var shared = (DATA.pairings||[]).map(clone);
+  try{ var d = sessionStorage.getItem("flipdesk.pairdraft"); if(d){ sessionStorage.removeItem("flipdesk.pairdraft"); var dp = JSON.parse(d); if(Array.isArray(dp)){ shared = dp; state.dirty = true; } } }catch(e){}
+  pairs = shared.concat(localPairsFromStore());
+}
+function keepDraft(){ if(state.dirty && !state.published){ try{ sessionStorage.setItem("flipdesk.pairdraft", JSON.stringify(sharedPairs())); }catch(e){} } }
+window.addEventListener("pagehide", keepDraft);
+window.addEventListener("beforeunload", keepDraft);
+function cardById(id){ for(var i=0;i<cards.length;i++){ if(cards[i].id===id) return cards[i]; } return null; }
+function pairById(id){ for(var i=0;i<pairs.length;i++){ if(pairs[i].id===id) return pairs[i]; } return null; }
+function priceAt(c,k){ var x = c && c.raw && c.raw[k]; var v = x && Number(x.price); return v>0 ? v : 0; }
+function localOnly(){ return canWrite===false || (apiChecked && !artifactApi); }
+function newPairing(){
+  var d = new Date();
+  var p = {id:"p"+Date.now().toString(36)+Math.floor(Math.random()*1000), name:"Batch "+(d.getMonth()+1)+"/"+d.getDate(), created:d.toISOString().slice(0,10), items:[]};
+  if(localOnly()) p.local = true;
+  pairs.unshift(p); return p;
+}
+/* New cards start on their best vendor flip: bought one condition down, sold one step up. */
+function defaultItem(c){ var g = condGap(c,"vendor"); return {cardId:c.id, bought:g?g.best.fk:"nm", sellAs:g?g.best.tk:"nm", paid:""}; }
+function itemCalc(it){
+  var c = cardById(it.cardId); if(!c) return {missing:true};
+  var mv = priceAt(c, it.sellAs), mkt = priceAt(c, it.bought);
+  var hasPaid = it.paid!=="" && it.paid!=null && !isNaN(Number(it.paid));
+  var cost = hasPaid ? Number(it.paid) : mkt;
+  var payout = mv*S.vendor/100;
+  return {c:c, mv:mv, mkt:mkt, cost:cost, payout:payout, profit:payout-cost, ebayProfit:mv*(1-S.ebay/100)-cost, noPrice:!(mv>0) || !(cost>0 || hasPaid)};
+}
+function pairTotals(p){
+  var t = {n:0, mv:0, cost:0, payout:0, profit:0, ebayProfit:0, gaps:0};
+  p.items.forEach(function(it){ var r = itemCalc(it); if(r.missing || r.noPrice){ t.gaps++; return; } t.n++; t.mv+=r.mv; t.cost+=r.cost; t.payout+=r.payout; t.profit+=r.profit; t.ebayProfit+=r.ebayProfit; });
+  t.roi = t.cost ? t.profit/t.cost*100 : 0; return t;
+}
+function changed(p){ if(p.local) saveLocalPairs(); else state.dirty = true; }
+function addCards(target, ids){
+  var p = target==="__new" || !target ? newPairing() : pairById(target);
+  if(!p) p = newPairing();
+  ids.forEach(function(id){ var c = cardById(id); if(c) p.items.push(defaultItem(c)); });
+  changed(p); return p;
+}
+function tabs(){
+  var v = state.view, cur = (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+'</nav>';
+}
+function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
+
+/* bottom bar: card selection, or unsaved shared pairing changes */
+function selectBar(){
+  return '<div class="actionbar" role="region" aria-label="Selected cards"><b id="sel-count">'+selected.length+' selected</b>'+
+    '<select id="sel-target" aria-label="Add to which pairing"><option value="__new">New pairing</option>'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>'; }).join("")+'</select>'+
+    '<button class="btn primary" id="sel-add"'+(selected.length?'':' disabled')+'>Add to pairing</button><button class="btn" id="sel-cancel">Cancel</button></div>';
+}
+function pairBar(){
+  if(state.selecting && state.view==="list") return selectBar();
+  if(!state.dirty) return '';
+  var dis = state.pairSaving ? ' disabled' : '';
+  return '<div class="actionbar" role="region" aria-label="Unsaved pairing changes"><b>Unsaved pairing changes</b>'+
+    '<button class="btn" id="pb-discard"'+dis+'>Discard</button><button class="btn primary" id="pb-save"'+dis+'>'+(state.pairSaving?'Saving…':'Save pairings')+'</button>'+
+    (state.pairMsg?'<span class="msg" role="status">'+esc(state.pairMsg)+'</span>':'')+'</div>';
+}
+function mountBar(){
+  var old = document.querySelector(".actionbar"); if(old) old.remove();
+  var html = pairBar(); document.body.classList.toggle("has-bar", !!html);
+  if(!html) return;
+  var w = document.createElement("div"); w.innerHTML = html; var bar = w.firstChild; document.body.appendChild(bar);
+  var sa = document.getElementById("sel-add"); if(sa) sa.addEventListener("click", function(){
+    if(!selected.length) return; var p = addCards(document.getElementById("sel-target").value, selected.slice()); goPairs(p.id); });
+  var sc = document.getElementById("sel-cancel"); if(sc) sc.addEventListener("click", function(){ state.selecting = false; selected = []; render(); });
+  var ps = document.getElementById("pb-save"); if(ps) ps.addEventListener("click", savePairs);
+  var pd = document.getElementById("pb-discard"); if(pd) pd.addEventListener("click", function(){
+    pairs = (DATA.pairings||[]).map(clone).concat(localPairsFromStore()); state.dirty = false; state.pairMsg = "";
+    if(state.view==="pairing" && !pairById(state.pid)) state.view = "pairings"; render(); });
+}
+function savePairs(){
+  if(!artifactApi){ denied(); return; }
+  state.pairSaving = true; state.pairMsg = "Saving…"; mountBar();
+  try{ sessionStorage.setItem("flipdesk.open", state.view==="pairing" ? "pairing:"+state.pid : state.view==="pairings" ? "pairings" : (state.view==="detail" ? state.id : "")); }catch(e){}
+  artifactApi.publish(buildDoc(cards)).then(function(){ state.published = true; state.pairMsg = "Saved. Reloading…"; mountBar(); })
+  .catch(function(err){
+    state.pairSaving = false; var code = err && err.code;
+    if(code==="not_writer"||code==="not_granted"||code==="consent_required"||code==="capability_disabled"||code==="not_declared"){ canWrite = false; denied(); return; }
+    state.pairMsg = code==="conflict" ? "Someone else just saved a change. The page is reloading with their version; your pairing changes are kept." :
+      code==="rate_limited" ? "Too many saves in a row. Wait a minute, then save again." :
+      code==="too_large" ? "The tracker is too big to save. Remove a card image or two." : "Couldn't save right now. Check your connection and try again.";
+    mountBar();
+  });
+}
+/* View-only visitors: keep their new pairings on this device instead. */
+function denied(){
+  var sharedIds = (DATA.pairings||[]).map(function(p){ return p.id; });
+  pairs.forEach(function(p){ if(!p.local && sharedIds.indexOf(p.id)<0) p.local = true; });
+  var locals = pairs.filter(function(p){ return p.local; });
+  pairs = (DATA.pairings||[]).map(clone).concat(locals); saveLocalPairs();
+  state.dirty = false; state.pairMsg = "";
+  state.notice = "You have view-only access, so shared pairings can't be changed. Your new pairings are saved on this device only.";
+  if(state.view==="pairing" && !pairById(state.pid)) state.view = "pairings";
+  render();
+}
+
+function renderPairings(){
+  var h = header();
+  h += '<div class="pair-intro"><div><h2>Card Pairings</h2><p class="sub">Group the cards you plan to sell together to a vendor at a show or shop, and see what the whole batch pays. Totals use the vendor rate at the top ('+S.vendor+'%).</p></div><button class="btn primary" id="newpair">+ New pairing</button></div>';
+  if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
+  if(!pairs.length) h += '<div class="empty">No pairings yet. Open <b>Cards</b>, tap <b>Select cards</b>, pick the cards you’re selling together, then add them to a new pairing.</div>';
+  else h += '<div class="pgrid">'+pairs.map(function(p){
+    var t = pairTotals(p);
+    var thumbs = p.items.slice(0,6).map(function(it){ var c = cardById(it.cardId); return '<span class="pthumb">'+(c&&c.image?'<img src="'+c.image+'" alt="">':'')+'</span>'; }).join("");
+    return '<button class="ptile" data-pair="'+esc(p.id)+'"><div class="pthumbs">'+(thumbs||'<span class="sub">No cards yet</span>')+'</div>'+
+      '<div><h3>'+esc(p.name)+'</h3><div class="sub">'+p.items.length+' card'+(p.items.length===1?'':'s')+(p.local?' · saved on this device':'')+'</div></div>'+
+      '<div class="bf-main"><b class="num '+(t.profit>=0?'pos-t':'neg-t')+'">'+signed(t.profit)+'</b><span class="sub">batch profit</span></div>'+
+      '<div class="sub">Vendor pays <b class="num" style="color:var(--ink)">'+money(t.payout,0)+'</b> for '+money(t.mv,0)+' of market value</div></button>'; }).join("")+'</div>';
+  root.innerHTML = h; bindHeader();
+  document.getElementById("newpair").addEventListener("click", function(){ var p = newPairing(); changed(p); goPairs(p.id); });
+  root.querySelectorAll("[data-pair]").forEach(function(b){ b.addEventListener("click", function(){ goPairs(b.getAttribute("data-pair")); }); });
+}
+function condSel(i, field, val, c, label){
+  return '<select class="csel" data-i="'+i+'" data-f="'+field+'" aria-label="'+label+'">'+CONDS.map(function(k){ var pr = priceAt(c,k[0]); return '<option value="'+k[0]+'"'+(k[0]===val?' selected':'')+'>'+k[1]+' · '+(pr?money(pr,0):'no price')+'</option>'; }).join("")+'</select>';
+}
+function renderPairing(){
+  var p = pairById(state.pid); if(!p){ state.view = "pairings"; return renderPairings(); }
+  var t = pairTotals(p), phone = VIEW==="phone";
+  var h = header();
+  h += '<div class="back"><button class="btn ghost" id="pback">← All pairings</button></div>';
+  h += '<div class="pair-head"><label class="pname"><span class="sub">Pairing name</span><input id="pname" value="'+esc(p.name)+'" maxlength="60"></label><div class="confirm">'+
+    (state.confirmPairDel ? '<span>Delete this pairing?</span><button class="btn danger" id="pdel-yes">Delete</button><button class="btn" id="pdel-no">Keep</button>' : '<button class="btn ghost" id="pdel">Delete pairing</button>')+'</div></div>';
+  if(p.local) h += '<p class="note">Saved on this device only.</p>';
+  if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
+  var good = t.profit>=0;
+  h += '<div class="psum" aria-live="polite"><div class="psum-main"><span class="lbl">Batch profit · selling all '+t.n+' to a vendor</span><b class="num '+(good?'pos-t':'neg-t')+'">'+signed(t.profit)+'</b>'+(t.cost?'<span class="pill '+(good?'pos':'neg')+'">'+pct(t.roi)+' return</span>':'')+'</div>'+
+    '<div class="psum-stats"><div><span>Market value</span><b class="num">'+money(t.mv,0)+'</b><small>At the conditions you’ll sell</small></div>'+
+    '<div class="v"><span>Vendor pays</span><b class="num">'+money(t.payout,2)+'</b><small><label>At <input id="pvendor" type="number" step="0.25" min="0" max="100" value="'+S.vendor+'" aria-label="Vendor buy rate percent">% of market</label></small></div>'+
+    '<div><span>You paid</span><b class="num">'+money(t.cost,0)+'</b><small>Market price unless you enter what you paid</small></div></div>'+
+    '<p class="sub">Selling them one by one on eBay instead: <b class="num '+(t.ebayProfit>=0?'pos-t':'neg-t')+'">'+signed(t.ebayProfit)+'</b> after the '+S.ebay+'% fee.'+(t.gaps?' <b>'+t.gaps+' card'+(t.gaps===1?' is':'s are')+' left out</b> because '+(t.gaps===1?'it has':'they have')+' no price for the chosen condition.':'')+'</p></div>';
+  if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
+  h += '<section class="block"><h3>Cards in this pairing ('+p.items.length+')</h3>';
+  if(!p.items.length) h += '<div class="empty">No cards yet. Search below, or select cards on the Cards tab.</div>';
+  else if(phone){
+    h += '<div class="plist pitems">'+p.items.map(function(it,i){ var r = itemCalc(it);
+      if(r.missing) return '<div class="prow2"><div class="top2"><span class="sub">This card was removed from the tracker.</span><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></div></div>';
+      return '<div class="prow2"><div class="top2"><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+r.c.image+'" alt="">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+'</span></span></span><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'+
+        '<div class="pfields"><label>Bought as'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</label><label class="pf-paid">Paid (blank = market price)<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'"></label></div>'+
+        '<div class="meta">'+(r.noPrice?'No price for that condition':'Vendor pays <b class="num" style="color:var(--gold-ink)">'+money(r.payout,2)+'</b> · profit <b class="num '+(r.profit>=0?'pos-t':'neg-t')+'">'+signed(r.profit)+'</b>')+'</div></div>'; }).join("")+'</div>';
+  } else {
+    h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th>Bought as</th><th class="r">Paid</th><th>Sells as</th><th class="r">Market</th><th class="r v">Vendor pays</th><th class="r">Profit</th><th></th></tr>'+
+      p.items.map(function(it,i){ var r = itemCalc(it);
+        if(r.missing) return '<tr><td colspan="7" class="sub">This card was removed from the tracker.</td><td><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></td></tr>';
+        return '<tr><td><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+r.c.image+'" alt="">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></span></span></td>'+
+          '<td>'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</td>'+
+          '<td class="r"><input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Price paid"></td>'+
+          '<td>'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</td>'+
+          '<td class="r num">'+(r.mv?money(r.mv,0):'—')+'</td><td class="r v num"><b>'+(r.noPrice?'—':money(r.payout,2))+'</b></td>'+
+          '<td class="r num '+(r.profit>=0?'pos-t':'neg-t')+'">'+(r.noPrice?'—':signed(r.profit))+'</td><td><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></td></tr>'; }).join("")+
+      '</table></div>';
+  }
+  h += '<p class="note">Bought as: the condition you bought it in (sets the default price paid). Sells as: the condition you’ll sell it as, so the vendor pays '+S.vendor+'% of that market price. Leave Paid blank to use the market price.</p></section>';
+  h += '<div class="padd"><label class="search"><span class="sub">Add a card</span><input id="padd-q" type="search" placeholder="Search your cards by name, set or number" autocomplete="off"></label><div class="padd-res" id="padd-res"></div></div>';
+  root.innerHTML = h; bindHeader();
+  document.getElementById("pback").addEventListener("click", function(){ goPairs(null); });
+  var lg = document.getElementById("plog-go"); if(lg) lg.addEventListener("click", function(){ var to = document.getElementById("plog-to").value; var sh = to==="__new" ? newShow("Card show") : showById(to); if(!sh) return; addPairingToShow(p, sh); goLog(sh.id); });
+  var pn2 = document.getElementById("pname"); pn2.addEventListener("change", function(){ p.name = pn2.value.trim() || "Untitled pairing"; changed(p); mountBar(); });
+  var pv = document.getElementById("pvendor"); pv.addEventListener("change", function(){ var v = parseFloat(pv.value); if(!isNaN(v) && v>=0){ S.vendor = v; save("flipdesk.settings", S); render(); } });
+  var d = document.getElementById("pdel"); if(d) d.addEventListener("click", function(){ state.confirmPairDel = true; render(); });
+  var dn = document.getElementById("pdel-no"); if(dn) dn.addEventListener("click", function(){ state.confirmPairDel = false; render(); });
+  var dy = document.getElementById("pdel-yes"); if(dy) dy.addEventListener("click", function(){ pairs = pairs.filter(function(x){ return x !== p; }); if(p.local) saveLocalPairs(); else state.dirty = true; goPairs(null); });
+  root.querySelectorAll(".csel").forEach(function(s){ s.addEventListener("change", function(){ p.items[+s.getAttribute("data-i")][s.getAttribute("data-f")] = s.value; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
+  root.querySelectorAll("input.paid").forEach(function(inp){ inp.addEventListener("change", function(){ var v = parseFloat(inp.value); p.items[+inp.getAttribute("data-i")].paid = isNaN(v)||v<0 ? "" : v; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
+  root.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ p.items.splice(+b.getAttribute("data-x"),1); changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
+  var q = document.getElementById("padd-q"), res = document.getElementById("padd-res");
+  q.addEventListener("input", function(){
+    var s = q.value.trim().toLowerCase(); if(!s){ res.innerHTML = ""; return; }
+    var hits = cards.filter(function(c){ return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(s)>=0; }).slice(0,8);
+    res.innerHTML = hits.length ? hits.map(function(c){ return '<button data-add="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("") : '<p class="sub">No cards match.</p>';
+    res.querySelectorAll("[data-add]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-add")); if(!c) return; p.items.push(defaultItem(c)); changed(p); render(); var n = document.getElementById("padd-q"); if(n) n.focus(); }); });
+  });
+}
+
+/* ---------- profit log: private to this device (localStorage) ---------- */
+var LOG = loadLog(), downloadsApi = null, logStorageOk = true, chartMode = "show", resizeTimer = null;
+(function(){ try{ localStorage.setItem("flipdesk.t","1"); localStorage.removeItem("flipdesk.t"); }catch(e){ logStorageOk = false; } })();
+function loadLog(){
+  var l = load("flipdesk.profitlog", null);
+  if(!l || !Array.isArray(l.shows)) l = {shows:[], lastBackup:""};
+  l.shows.forEach(function(s){ if(!Array.isArray(s.sales)) s.sales = []; });
+  return l;
+}
+function saveLog(){ save("flipdesk.profitlog", LOG); }
+function todayStr(){ var d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function uid(p){ return p+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
+function showById(id){ for(var i=0;i<LOG.shows.length;i++) if(LOG.shows[i].id===id) return LOG.shows[i]; return null; }
+function isNum(v){ return v!=="" && v!=null && !isNaN(Number(v)); }
+function saleName(r){ var c = r.cardId ? cardById(r.cardId) : null; return c ? title(c) : (r.label || "Card"); }
+function showStats(sh){
+  var t = {spent:0, got:0, profit:0, sold:0, unsold:0, unsoldCost:0, hours:Number(sh.hours)||0};
+  sh.sales.forEach(function(r){ var b = Number(r.bought)||0; t.spent += b;
+    if(isNum(r.sold)){ t.sold++; t.got += Number(r.sold); t.profit += Number(r.sold) - b; } else { t.unsold++; t.unsoldCost += b; } });
+  t.perHour = t.hours > 0 ? t.profit/t.hours : null; return t;
+}
+function logStats(){
+  var t = {profit:0, hours:0, hProfit:0, shows:LOG.shows.length, sold:0};
+  LOG.shows.forEach(function(sh){ var s = showStats(sh); t.profit += s.profit; t.sold += s.sold; if(s.hours > 0){ t.hours += s.hours; t.hProfit += s.profit; } });
+  t.perHour = t.hours > 0 ? t.hProfit/t.hours : null; t.avg = t.shows ? t.profit/t.shows : null; return t;
+}
+function sortedShows(asc){ return LOG.shows.slice().sort(function(a,b){ var c = String(a.date).localeCompare(String(b.date)); return asc ? c : -c; }); }
+function perHr(n){ return n==null ? "—" : (n<0?"−":"")+"$"+Math.abs(n).toFixed(Math.abs(n)<100?2:0).replace(/\.00$/,"")+"/hr"; }
+function backupDue(){
+  if(!LOG.shows.length) return false;
+  try{ if(sessionStorage.getItem("flipdesk.backupSnooze")===todayStr()) return false; }catch(e){}
+  var last = LOG.lastBackup; if(!last) return true;
+  var days = (new Date(todayStr()) - new Date(last))/864e5;
+  return days >= 7 || (new Date().getDay()===5 && last !== todayStr());
+}
+function goLog(showId){ state.view = showId ? "show" : "log"; state.showId = showId||null; state.selecting = false; selected = []; state.logConfirm = null; state.backupPanel = null;
+  try{ history.replaceState(null,"","#"+(showId?"show:"+showId:"log")); }catch(e){} window.scrollTo(0,0); render(); }
+function newShow(name){
+  var sh = {id:uid("s"), name:name||"Card show", date:todayStr(), hours:"", sales:[]};
+  LOG.shows.push(sh); saveLog(); return sh;
+}
+
+/* --- chart: one series (profit per show, or running total); gains blue above zero, losses red below --- */
+function niceTicks(lo, hi){
+  if(lo===hi){ hi = lo + 10; }
+  var span = hi - lo, step = Math.pow(10, Math.floor(Math.log10(span/4))), err = span/4/step;
+  step *= err >= 7.5 ? 10 : err >= 3.5 ? 5 : err >= 1.5 ? 2 : 1;
+  var a = Math.floor(lo/step)*step, b = Math.ceil(hi/step)*step, out = [];
+  for(var v=a; v<=b+step/2; v+=step) out.push(Math.round(v*100)/100);
+  return out;
+}
+function tickLabel(v){ var a = Math.abs(v); return (v<0?"−":"")+"$"+(a>=1000 ? (a/1000).toFixed(a%1000?1:0)+"k" : a); }
+function drawChart(){
+  var box = document.getElementById("pchart"); if(!box) return;
+  var shows = sortedShows(true); if(!shows.length) return;
+  var W = Math.max(280, box.clientWidth), H = 230, padL = 48, padR = 14, padT = 16, padB = 30, pw = W-padL-padR, ph = H-padT-padB;
+  var run = 0, pts = shows.map(function(sh){ var s = showStats(sh); run += s.profit; return {sh:sh, s:s, v:chartMode==="run" ? run : s.profit}; });
+  var lo = Math.min(0, Math.min.apply(null, pts.map(function(p){ return p.v; }))), hi = Math.max(0, Math.max.apply(null, pts.map(function(p){ return p.v; })));
+  var ticks = niceTicks(lo, hi); lo = ticks[0]; hi = ticks[ticks.length-1];
+  function y(v){ return padT + (hi - v)/(hi - lo)*ph; }
+  var n = pts.length, band = pw/n, h = '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(chartMode==="run"?"Running total of profit":"Profit for each card show")+'">';
+  ticks.forEach(function(t){ var yy = Math.round(y(t))+0.5; h += '<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+yy+'" y2="'+yy+'" class="'+(t===0?'c-zero':'c-grid')+'"/><text x="'+(padL-8)+'" y="'+(yy+4)+'" class="c-tick" text-anchor="end">'+tickLabel(t)+'</text>'; });
+  var every = Math.max(1, Math.ceil(n/7));
+  pts.forEach(function(p,i){ var cx = padL + band*i + band/2;
+    if(i % every === 0 || i === n-1){ var m = /^\d{4}-(\d{2})-(\d{2})$/.exec(p.sh.date||""); h += '<text x="'+cx+'" y="'+(H-10)+'" class="c-tick" text-anchor="middle">'+(m ? (+m[1])+"/"+(+m[2]) : "")+'</text>'; } });
+  if(chartMode==="show"){
+    var bw = Math.min(24, band*0.6), r = Math.min(4, bw/2), y0 = y(0);
+    pts.forEach(function(p,i){ var x = padL + band*i + (band-bw)/2, yv = y(p.v), up = p.v >= 0, hgt = Math.abs(y0 - yv);
+      if(hgt < 1) h += '<rect x="'+x+'" y="'+(y0-1)+'" width="'+bw+'" height="2" class="c-flat"/>';
+      else { var rr = Math.min(r, hgt);
+        h += up ? '<path class="c-gain" d="M'+x+','+y0+'V'+(yv+rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv+rr)+'V'+y0+'Z"/>'
+                : '<path class="c-loss" d="M'+x+','+y0+'V'+(yv-rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv-rr)+'V'+y0+'Z"/>'; }
+    });
+    var last = pts[n-1], lx = padL + band*(n-1) + band/2, ly = y(last.v);
+    h += '<text x="'+lx+'" y="'+(last.v>=0 ? ly-7 : ly+15)+'" class="c-label" text-anchor="middle">'+signed(last.v)+'</text>';
+  } else {
+    var xs = pts.map(function(p,i){ return padL + band*i + band/2; });
+    var line = pts.map(function(p,i){ return (i?'L':'M')+xs[i]+','+y(p.v); }).join('');
+    h += '<path class="c-area" d="'+line+'L'+xs[n-1]+','+y(0)+'L'+xs[0]+','+y(0)+'Z"/><path class="c-line" d="'+line+'"/>';
+    var ex = xs[n-1], ey = y(pts[n-1].v);
+    h += '<circle cx="'+ex+'" cy="'+ey+'" r="5" class="c-dot"/><text x="'+Math.min(ex, W-padR-4)+'" y="'+(ey-10)+'" class="c-label" text-anchor="end">'+signed(pts[n-1].v)+'</text>';
+    h += '<line id="c-cross" x1="0" x2="0" y1="'+padT+'" y2="'+(padT+ph)+'" class="c-cross" style="display:none"/>';
+  }
+  pts.forEach(function(p,i){ h += '<rect class="c-hit" data-i="'+i+'" x="'+(padL+band*i)+'" y="'+padT+'" width="'+band+'" height="'+ph+'"/>'; });
+  h += '</svg><div class="c-tip" id="c-tip" role="status" hidden></div>';
+  box.innerHTML = h;
+  var tip = document.getElementById("c-tip"), cross = document.getElementById("c-cross");
+  function show(i){ var p = pts[i], cx = padL + band*i + band/2;
+    tip.innerHTML = '<b>'+esc(p.sh.name||"Card show")+'</b><span>'+fmtDate(p.sh.date)+'</span><span>Profit <b class="num">'+signed(p.s.profit)+'</b></span>'+
+      (chartMode==="run" ? '<span>Running total <b class="num">'+signed(p.v)+'</b></span>' : '')+
+      '<span>'+(p.s.perHour!=null ? perHr(p.s.perHour) : 'No hours logged')+' · '+p.s.sold+' sold</span>';
+    tip.hidden = false; var tw = tip.offsetWidth; tip.style.left = Math.max(4, Math.min(W - tw - 4, cx - tw/2))+"px"; tip.style.top = "4px";
+    if(cross){ cross.setAttribute("x1",cx); cross.setAttribute("x2",cx); cross.style.display = ""; }
+    box.querySelectorAll(".c-hit").forEach(function(r){ r.classList.toggle("on", +r.getAttribute("data-i")===i); }); }
+  function hide(){ tip.hidden = true; if(cross) cross.style.display = "none"; box.querySelectorAll(".c-hit.on").forEach(function(r){ r.classList.remove("on"); }); }
+  box.querySelectorAll(".c-hit").forEach(function(r){ var i = +r.getAttribute("data-i");
+    r.addEventListener("pointerenter", function(){ show(i); }); r.addEventListener("pointerdown", function(){ show(i); }); });
+  box.querySelector("svg").addEventListener("pointerleave", function(e){ if(e.pointerType==="mouse") hide(); });
+}
+window.addEventListener("resize", function(){ clearTimeout(resizeTimer); resizeTimer = setTimeout(function(){ if(state.view==="log") drawChart(); }, 150); });
+
+/* --- backup / restore (plain text file the owner can read, with restore data at the bottom) --- */
+var BK_MARK = "----- RESTORE DATA (keep this line and everything below it) -----";
+function backupText(){
+  var t = logStats(), L = [];
+  L.push("CHAUNDOO CARD FLIPZ — PROFIT LOG BACKUP", "Saved: "+todayStr(), "");
+  L.push("Total profit: "+signed(t.profit)+"   Card shows: "+t.shows+"   Hours: "+t.hours+"   Per hour: "+perHr(t.perHour)+"   Average per show: "+(t.avg==null?"—":signed(t.avg)), "");
+  sortedShows(false).forEach(function(sh){ var s = showStats(sh);
+    L.push(sh.date+" · "+(sh.name||"Card show")+" · "+(s.hours||"?")+" h · profit "+signed(s.profit)+(s.perHour!=null?" · "+perHr(s.perHour):""));
+    sh.sales.forEach(function(r){ L.push("   "+saleName(r)+" | bought $"+(Number(r.bought)||0)+" | "+(isNum(r.sold) ? "sold $"+Number(r.sold)+" | "+signed(Number(r.sold)-(Number(r.bought)||0)) : "not sold yet")); });
+    L.push("");
+  });
+  L.push(BK_MARK, JSON.stringify({v:1, shows:LOG.shows}));
+  return L.join("\n");
+}
+function markBackedUp(){ LOG.lastBackup = todayStr(); saveLog(); }
+function saveBackup(){ state.backupPanel = {mode:"choose"}; render(); window.scrollTo(0,0); }
+function downloadBackup(){
+  var txt = backupText(), fn = "chaundoo-profit-log-"+todayStr()+".txt";
+  if(!downloadsApi){ state.backupPanel = {mode:"copy", text:txt, forced:true}; render(); return; }
+  downloadsApi.save({filename:fn, data:txt}).then(function(){ markBackedUp(); state.backupPanel = {mode:"done"}; render(); })
+    .catch(function(e){ var c = e && e.code; if(c==="declined"){ state.backupPanel = null; render(); return; }
+      if(c==="rate_limited"){ state.backupPanel = {mode:"msg", msg:"A save window is already open. Finish that one first."}; render(); return; }
+      state.backupPanel = {mode:"copy", text:txt, forced:true}; render(); });
+}
+function parseBackup(text){
+  var i = String(text||"").indexOf(BK_MARK), json = i>=0 ? text.slice(i+BK_MARK.length) : text;
+  try{ var d = JSON.parse(json.trim()); if(d && Array.isArray(d.shows)) return d.shows.filter(function(s){ return s && typeof s==="object"; }).map(function(s){ return {id:String(s.id||uid("s")), name:String(s.name||"Card show"), date:String(s.date||""), hours:isNum(s.hours)?Number(s.hours):"", sales:Array.isArray(s.sales)?s.sales.map(function(r){ return {id:String(r.id||uid("r")), cardId:r.cardId||null, label:String(r.label||""), bought:isNum(r.bought)?Number(r.bought):"", sold:isNum(r.sold)?Number(r.sold):""}; }):[]}; }); }catch(e){}
+  return null;
+}
+function restoreFrom(text){
+  var shows = parseBackup(text);
+  if(!shows){ state.backupPanel = {mode:"msg", msg:"That doesn’t look like a profit log backup. Use the .txt file from “Save backup”."}; render(); return; }
+  if(LOG.shows.length){ state.backupPanel = {mode:"confirm", shows:shows}; render(); return; }
+  LOG.shows = shows; markBackedUp(); state.backupPanel = {mode:"msg", msg:"Restored "+shows.length+" card show"+(shows.length===1?"":"s")+"."}; render();
+}
+
+/* --- views --- */
+function renderLog(){
+  var t = logStats(), h = header();
+  h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Saved privately on this device.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
+  if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so the log can’t be kept after you close it. Save a backup before leaving.</p>';
+  if(backupDue() && !state.backupPanel) h += '<div class="notice bk-due"><span><b>'+(new Date().getDay()===5?'It’s Friday: save':'Time to save')+' a backup of your profit log.</b> If you lose your phone or clear your browser, this file brings it back.</span><span class="bk-acts"><button class="btn primary" id="bk-now">Save backup</button><button class="btn ghost" id="bk-snooze">Not now</button></span></div>';
+  h += backupPanelHtml();
+  if(!LOG.shows.length){
+    h += '<div class="empty log-empty"><b>No card shows logged yet.</b><br>Tap <b>Log a card show</b>, add the cards you bought and what they sold for, and your profit, money per hour and chart show up here.<br><span class="sub">Tip: in <b>Card Pairings</b>, “Log as sold” adds a whole batch at once.</span></div>';
+  } else {
+    h += '<div class="log-hero"><span class="lbl">Total profit</span><b class="'+(t.profit>=0?'':'neg-t')+'">'+signed(t.profit)+'</b><span class="sub">from '+t.sold+' card'+(t.sold===1?'':'s')+' sold</span></div>';
+    h += '<div class="log-tiles"><div><span>Money per hour</span><b>'+perHr(t.perHour)+'</b><small>'+(t.hours? t.hours+' hours logged' : 'Add hours to a show to see this')+'</small></div>'+
+      '<div><span>Average per show</span><b>'+(t.avg==null?'—':signed(t.avg))+'</b><small>'+t.shows+' card show'+(t.shows===1?'':'s')+'</small></div></div>';
+    h += '<section class="block"><div class="c-head"><h3>'+(chartMode==="run"?'Running total':'Profit by show')+'</h3><div class="seg" role="group" aria-label="Chart view"><button id="cm-show" aria-pressed="'+(chartMode==="show")+'">Each show</button><button id="cm-run" aria-pressed="'+(chartMode==="run")+'">Running total</button></div></div><div class="chart-box" id="pchart"></div></section>';
+    h += '<section class="block"><h3>Card shows</h3><div class="plist">'+sortedShows(false).map(function(sh){ var s = showStats(sh);
+      return '<button class="show-row" data-show="'+esc(sh.id)+'"><span class="show-date">'+fmtDate(sh.date)+'</span><span class="show-main"><b>'+esc(sh.name||"Card show")+'</b><span class="sub">'+(s.hours? s.hours+' h · ' : '')+s.sold+' sold'+(s.unsold? ' · '+s.unsold+' not sold yet':'')+'</span></span>'+
+        '<span class="show-num"><b class="num '+(s.profit>=0?'':'neg-t')+'">'+signed(s.profit)+'</b><span class="sub">'+(s.perHour!=null?perHr(s.perHour):'')+'</span></span></button>'; }).join("")+'</div></section>';
+  }
+  h += '<div class="bk-foot"><span class="sub">Backup: '+(LOG.lastBackup ? 'last saved '+fmtDate(LOG.lastBackup) : 'never saved')+'</span><button class="btn ghost" id="bk-save">Save backup</button><button class="btn ghost" id="bk-restore">Restore</button></div>';
+  root.innerHTML = h; bindHeader();
+  document.getElementById("newshow").addEventListener("click", function(){ var sh = newShow(); goLog(sh.id); });
+  bindBackup();
+  root.querySelectorAll("[data-show]").forEach(function(b){ b.addEventListener("click", function(){ goLog(b.getAttribute("data-show")); }); });
+  var a = document.getElementById("cm-show"), b = document.getElementById("cm-run");
+  if(a){ a.addEventListener("click", function(){ chartMode = "show"; render(); }); b.addEventListener("click", function(){ chartMode = "run"; render(); }); }
+  drawChart();
+}
+function backupPanelHtml(){
+  var P = state.backupPanel; if(!P) return '';
+  if(P.mode==="done") return '<p class="notice ok-note" role="status">Backup saved. Keep the file somewhere safe (email it to yourself or save it to cloud storage).</p>';
+  if(P.mode==="msg") return '<p class="notice" role="status">'+esc(P.msg)+'</p>';
+  if(P.mode==="choose") return '<div class="bk-panel"><b>How do you want to save your backup?</b><p class="sub">Both have the same log sheet, and either one can be used to restore your log later.</p>'+
+    '<div class="bk-choices"><button class="bk-choice" id="bk-dl"'+(downloadsApi?'':' disabled')+'><b>Text file</b><span class="sub">'+(downloadsApi?'Saves a .txt file to your device':'Not available in this view')+'</span></button>'+
+    '<button class="bk-choice" id="bk-copytxt"><b>Copy and paste</b><span class="sub">Shows the text to paste into Notes, a message or an email</span></button></div>'+
+    '<div class="bk-acts"><button class="btn ghost" id="bk-close">Cancel</button></div></div>';
+  if(P.mode==="copy") return '<div class="bk-panel"><b>Copy your backup</b><p class="sub">'+(P.forced?'Saving a file isn’t available here, so copy':'Copy')+' this text and paste it into Notes or an email to yourself. To restore later, paste it back in with Restore.</p><textarea id="bk-text" readonly rows="6">'+esc(P.text)+'</textarea><div class="bk-acts"><button class="btn primary" id="bk-copy">Copy text</button><button class="btn ghost" id="bk-close">Done</button></div></div>';
+  if(P.mode==="restore") return '<div class="bk-panel"><b>Restore from a backup</b><p class="sub">Choose the backup .txt file, or paste the backup text below.</p><label class="btn">Choose file<input type="file" id="bk-file" accept=".txt,text/plain,.json" hidden></label><textarea id="bk-paste" rows="4" placeholder="…or paste the backup text here"></textarea><div class="bk-acts"><button class="btn primary" id="bk-paste-go">Restore pasted text</button><button class="btn ghost" id="bk-close">Cancel</button></div></div>';
+  if(P.mode==="confirm") return '<div class="bk-panel"><b>Replace your current log?</b><p class="sub">This device has '+LOG.shows.length+' card show'+(LOG.shows.length===1?'':'s')+'. The backup has '+P.shows.length+'. Restoring replaces what’s here.</p><div class="bk-acts"><button class="btn danger" id="bk-replace">Replace with backup</button><button class="btn ghost" id="bk-close">Cancel</button></div></div>';
+  return '';
+}
+function bindBackup(){
+  function on(id, fn){ var el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
+  on("bk-now", saveBackup); on("bk-save", saveBackup); on("bk-dl", downloadBackup);
+  on("bk-copytxt", function(){ state.backupPanel = {mode:"copy", text:backupText()}; render(); });
+  on("bk-snooze", function(){ try{ sessionStorage.setItem("flipdesk.backupSnooze", todayStr()); }catch(e){} render(); });
+  on("bk-restore", function(){ state.backupPanel = {mode:"restore"}; render(); window.scrollTo(0,0); });
+  on("bk-close", function(){ state.backupPanel = null; render(); });
+  on("bk-copy", function(){ var ta = document.getElementById("bk-text"), btn = document.getElementById("bk-copy");
+    function done(){ markBackedUp(); btn.textContent = "Copied"; }
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, function(){ ta.select(); try{ if(document.execCommand("copy")) done(); }catch(e){} });
+    else { ta.select(); try{ if(document.execCommand("copy")) done(); }catch(e){} } });
+  on("bk-replace", function(){ LOG.shows = state.backupPanel.shows; markBackedUp(); state.backupPanel = {mode:"msg", msg:"Restored "+LOG.shows.length+" card shows from the backup."}; render(); });
+  on("bk-paste-go", function(){ restoreFrom(document.getElementById("bk-paste").value); });
+  var f = document.getElementById("bk-file"); if(f) f.addEventListener("change", function(){ var file = f.files && f.files[0]; if(!file) return; var fr = new FileReader(); fr.onload = function(){ restoreFrom(String(fr.result)); }; fr.readAsText(file); });
+}
+function renderShow(){
+  var sh = showById(state.showId); if(!sh){ state.view = "log"; return renderLog(); }
+  var s = showStats(sh), phone = VIEW==="phone", h = header();
+  h += '<div class="back"><button class="btn ghost" id="sback">← All card shows</button></div>';
+  h += '<div class="pair-head"><label class="pname"><span class="sub">Show name</span><input id="sname" value="'+esc(sh.name||"")+'" maxlength="60" placeholder="e.g. Ontario Card Show"></label><div class="confirm">'+
+    (state.logConfirm==="del" ? '<span>Delete this show and its log?</span><button class="btn danger" id="sdel-yes">Delete</button><button class="btn" id="sdel-no">Keep</button>' : '<button class="btn ghost" id="sdel">Delete show</button>')+'</div></div>';
+  h += '<div class="show-fields"><label class="f">Date<input type="date" id="sdate" value="'+esc(sh.date||"")+'"></label><label class="f">Hours at the show<input type="number" id="shours" min="0" step="0.25" inputmode="decimal" placeholder="e.g. 5.5" value="'+esc(isNum(sh.hours)?sh.hours:"")+'"></label></div>';
+  h += '<div class="psum"><div class="psum-main"><span class="lbl">Profit from this show</span><b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b>'+(s.perHour!=null?'<span class="pill pos">'+perHr(s.perHour)+'</span>':'')+'</div>'+
+    '<div class="psum-stats"><div><span>You paid</span><b class="num">'+money(s.spent,0)+'</b><small>'+sh.sales.length+' card'+(sh.sales.length===1?'':'s')+'</small></div><div class="v"><span>You sold for</span><b class="num">'+money(s.got,0)+'</b><small>'+s.sold+' sold</small></div><div><span>Not sold yet</span><b class="num">'+s.unsold+'</b><small>'+(s.unsold? money(s.unsoldCost,0)+' paid, not counted yet' : 'Everything sold')+'</small></div></div>'+
+    (s.hours ? '' : '<p class="sub">Add your hours above to see money per hour.</p>')+'</div>';
+  h += '<section class="block"><h3>Cards ('+sh.sales.length+')</h3>';
+  if(!sh.sales.length) h += '<div class="empty">No cards yet. Add the cards you bought or sold at this show below.</div>';
+  else if(phone){
+    h += '<div class="plist pitems">'+sh.sales.map(function(r,i){ var p = isNum(r.sold) ? Number(r.sold)-(Number(r.bought)||0) : null;
+      return '<div class="prow2"><div class="top2"><b>'+esc(saleName(r))+'</b><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></div>'+
+        '<div class="pfields"><label>Bought for<input class="sb" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'"></label><label>Sold for<input class="ss" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Not sold yet" value="'+esc(isNum(r.sold)?r.sold:"")+'"></label></div>'+
+        '<div class="meta">'+(p==null?'Not sold yet':'Profit <b class="num '+(p>=0?'pos-t':'neg-t')+'">'+signed(p)+'</b>')+'</div></div>'; }).join("")+'</div>';
+  } else {
+    h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th class="r">Bought for</th><th class="r">Sold for</th><th class="r">Profit</th><th></th></tr>'+
+      sh.sales.map(function(r,i){ var p = isNum(r.sold) ? Number(r.sold)-(Number(r.bought)||0) : null; var c = r.cardId ? cardById(r.cardId) : null;
+        return '<tr><td><span class="ccell">'+(c&&c.image?'<span class="pmini"><img src="'+c.image+'" alt=""></span>':'')+'<b>'+esc(saleName(r))+'</b></span></td>'+
+          '<td class="r"><input class="sb paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'" aria-label="Bought for"></td>'+
+          '<td class="r"><input class="ss paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Not sold" value="'+esc(isNum(r.sold)?r.sold:"")+'" aria-label="Sold for"></td>'+
+          '<td class="r num '+(p==null?'':(p>=0?'pos-t':'neg-t'))+'">'+(p==null?'<span class="sub">not sold</span>':signed(p))+'</td><td><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></td></tr>'; }).join("")+'</table></div>';
+  }
+  h += '<p class="note">Leave “Sold for” blank until it sells. Unsold cards don’t count toward profit yet.</p></section>';
+  h += '<div class="padd"><label class="search"><span class="sub">Add a card</span><input id="sadd-q" type="search" placeholder="Search your site, or type any card name" autocomplete="off"></label><div class="padd-res" id="sadd-res"></div></div>';
+  if(pairs.length) h += '<div class="padd pair-import"><span class="sub">Or add a whole pairing:</span><select id="spair" aria-label="Pairing to add">'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+' ('+p.items.length+')</option>'; }).join("")+'</select><button class="btn" id="spair-go">Add pairing</button></div>';
+  root.innerHTML = h; bindHeader();
+  function redraw(){ saveLog(); var y = window.scrollY; render(); window.scrollTo(0,y); }
+  document.getElementById("sback").addEventListener("click", function(){ goLog(null); });
+  var nm = document.getElementById("sname"); nm.addEventListener("change", function(){ sh.name = nm.value.trim() || "Card show"; saveLog(); });
+  var dt = document.getElementById("sdate"); dt.addEventListener("change", function(){ sh.date = dt.value; saveLog(); });
+  var hr = document.getElementById("shours"); hr.addEventListener("change", function(){ var v = parseFloat(hr.value); sh.hours = isNaN(v)||v<0 ? "" : v; redraw(); });
+  var d1 = document.getElementById("sdel"); if(d1) d1.addEventListener("click", function(){ state.logConfirm = "del"; render(); });
+  var d2 = document.getElementById("sdel-no"); if(d2) d2.addEventListener("click", function(){ state.logConfirm = null; render(); });
+  var d3 = document.getElementById("sdel-yes"); if(d3) d3.addEventListener("click", function(){ LOG.shows = LOG.shows.filter(function(x){ return x!==sh; }); saveLog(); goLog(null); });
+  root.querySelectorAll("input.sb, input.ss").forEach(function(inp){ inp.addEventListener("change", function(){ var r = sh.sales[+inp.getAttribute("data-i")], v = parseFloat(inp.value), val = isNaN(v)||v<0 ? "" : v;
+    if(inp.classList.contains("sb")) r.bought = val; else r.sold = val; redraw(); }); });
+  root.querySelectorAll("[data-sx]").forEach(function(b){ b.addEventListener("click", function(){ sh.sales.splice(+b.getAttribute("data-sx"),1); redraw(); }); });
+  var q = document.getElementById("sadd-q"), res = document.getElementById("sadd-res");
+  function addRow(row){ sh.sales.push(row); saveLog(); render(); var n = document.getElementById("sadd-q"); if(n) n.focus(); }
+  q.addEventListener("input", function(){
+    var raw = q.value.trim(), s2 = raw.toLowerCase(); if(!s2){ res.innerHTML = ""; return; }
+    var hits = cards.filter(function(c){ return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(s2)>=0; }).slice(0,6);
+    res.innerHTML = hits.map(function(c){ return '<button data-sadd="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("")+
+      '<button data-snew="1"><span>Add “<b>'+esc(raw)+'</b>” (not on the site)</span><span class="sub">+ Add</span></button>';
+    res.querySelectorAll("[data-sadd]").forEach(function(b){ b.addEventListener("click", function(){ addRow({id:uid("r"), cardId:b.getAttribute("data-sadd"), label:"", bought:"", sold:""}); }); });
+    res.querySelector("[data-snew]").addEventListener("click", function(){ addRow({id:uid("r"), cardId:null, label:raw.slice(0,80), bought:"", sold:""}); });
+  });
+  var pg = document.getElementById("spair-go"); if(pg) pg.addEventListener("click", function(){ var p = pairById(document.getElementById("spair").value); if(!p) return; addPairingToShow(p, sh); render(); });
+}
+/* A pairing sold to a vendor: each card's cost is what you paid (or market), its sale is the vendor payout. */
+function addPairingToShow(p, sh){
+  p.items.forEach(function(it){ var r = itemCalc(it); if(r.missing) return;
+    sh.sales.push({id:uid("r"), cardId:it.cardId, label:"", bought:Math.round(r.cost*100)/100, sold:r.noPrice ? "" : Math.round(r.payout*100)/100}); });
+  saveLog();
+}
+
+/* ---------- routing ---------- */
+function go(id){ state.view = id ? "detail" : "list"; state.id = id; state.selecting = false; selected = []; try{ history.replaceState(null,"", id ? "#"+id : location.pathname); }catch(e){} window.scrollTo(0,0); render(); }
+function render(){
+  if(state.view==="detail") renderDetail();
+  else if(state.view==="pairings") renderPairings();
+  else if(state.view==="pairing") renderPairing();
+  else if(state.view==="log") renderLog();
+  else if(state.view==="show") renderShow();
+  else renderList();
+  mountBar();
+}
+
+(function init(){
+  var start = null;
+  try{ start = sessionStorage.getItem("flipdesk.open"); sessionStorage.removeItem("flipdesk.open"); }catch(e){}
+  var hash = (location.hash||"").slice(1);
+  var id = start || hash;
+  initPairs();
+  if(id==="pairings"){ state.view="pairings"; }
+  else if(id==="log"){ state.view="log"; }
+  else if(id && id.indexOf("show:")===0){ state.view="show"; state.showId=id.slice(5); }
+  else if(id && id.indexOf("pairing:")===0){ state.view="pairing"; state.pid=id.slice(8); }
+  else if(id && cards.some(function(c){return c.id===id;})){ state.view="detail"; state.id=id; }
+  measureStorage();
+  applyView();
+  render();
+  if(VIEW!=="phone" && VIEW!=="desktop") showChooser();
+  if(window.claude && typeof window.claude.use==="function"){
+    window.claude.use("downloads").then(function(api){ downloadsApi = api || null; }).catch(function(){});
+    window.claude.use("artifact").then(function(api){ artifactApi = api; apiChecked = true; if(!state.editing) render(); }).catch(function(){ apiChecked = true; if(!state.editing) render(); });
+  } else { apiChecked = true; }
+})();
+})();
+</script>
+<script>
+(function(){
+var LKEY="cfz.local";
+function download(name,text){ var b=new Blob([text],{type:"application/json"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},1500); }
+var REMOTE_VERSION="";
+window.claude={use:function(name){
+  if(name==="downloads") return Promise.resolve({save:function(o){ var b=new Blob([o.data],{type:"text/plain"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=o.filename; document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},1500); return Promise.resolve(); }});
+  if(name==="artifact") return Promise.resolve({publish:function(doc){
+    var m=/id="app-data">([\s\S]*?)<\/scr/.exec(doc); if(!m) return Promise.reject({code:"bad_doc"});
+    var d=JSON.parse(m[1]); d.version=String(Math.floor(Date.now()/1000));
+    try{ localStorage.setItem(LKEY, JSON.stringify({base:REMOTE_VERSION,data:d})); }catch(e){ return Promise.reject({code:"too_large"}); }
+    download("cards.json", JSON.stringify(d));
+    setTimeout(function(){ location.reload(); }, 1200);
+    return Promise.resolve();
+  }});
+  return Promise.resolve(null);
+}};
+document.addEventListener("error",function(e){ var t=e.target; if(t&&t.tagName==="IMG"&&t.closest(".art")){ t.closest(".art").innerHTML='<span class="sub">No image</span>'; } },true);
+function notice(){ var n=document.createElement("div"); n.className="localnote"; n.innerHTML='You have card edits saved only on this device. To share them, upload the <b>cards.json</b> file that downloaded when you saved (GitHub → card-flipz → Add file → Upload files). <button type="button">Discard my local edits</button>'; n.querySelector("button").onclick=function(){ if(confirm("Discard the edits saved on this device and go back to the shared list?")){ try{localStorage.removeItem(LKEY);}catch(e){} location.reload(); } }; document.body.insertBefore(n,document.body.firstChild); }
+fetch("cards.json?v="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); }).then(function(remote){
+  REMOTE_VERSION=remote.version||"";
+  var data=remote, local=null;
+  try{ local=JSON.parse(localStorage.getItem(LKEY)||"null"); }catch(e){}
+  if(local && local.base===REMOTE_VERSION && local.data){ data=local.data; notice(); }
+  else if(local){ try{localStorage.removeItem(LKEY);}catch(e){} }
+  document.getElementById("app-data").textContent=JSON.stringify(data);
+  var s=document.createElement("script"); s.textContent=document.getElementById("app-js").textContent; document.body.appendChild(s);
+}).catch(function(err){ document.getElementById("root").innerHTML='<p style="padding:40px;text-align:center">Couldn\'t load the card list (cards.json). Make sure cards.json is uploaded next to index.html. ('+err.message+')</p>'; });
+})();
+</script>
+</body></html>
