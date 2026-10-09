@@ -669,9 +669,7 @@ function watchImages(){
   }, {rootMargin:"600px 0px"});
   imgs.forEach(function(img){ imgObserver.observe(img); });
 }
-function renderList(){
-  var sets = Array.from(new Set(cards.filter(function(c){ return !state.era || c.era===state.era; }).map(function(c){return c.set;}))).sort();
-  if(state.set && sets.indexOf(state.set)<0) state.set = "";
+function filteredList(){
   var q = state.q.trim().toLowerCase();
   var list = cards.filter(function(c){
     if(state.era && c.era!==state.era) return false;
@@ -706,8 +704,11 @@ function renderList(){
     }
     return title(a).localeCompare(title(b));
   });
-  var total = list.length; if(!(state.shown>=PAGE)) state.shown = PAGE;
-  list = list.slice(0, state.shown);
+  return list;
+}
+function renderList(){
+  var sets = Array.from(new Set(cards.filter(function(c){ return !state.era || c.era===state.era; }).map(function(c){return c.set;}))).sort();
+  if(state.set && sets.indexOf(state.set)<0) state.set = "";
   var h = header();
   h += '<div class="toolbar">'+
     '<label class="search"><span class="sub">Search</span><input id="q" type="search" placeholder="Card, set or number" value="'+esc(state.q)+'"></label>'+
@@ -721,6 +722,35 @@ function renderList(){
     '<button class="advbtn" id="advbtn" role="switch" aria-checked="'+ADV+'" title="Show grading values, population counts and break-even grades"><i aria-hidden="true"></i>Advanced analytics</button>'+
     (canWrite!==false && artifactApi ? '<button class="btn primary" id="add">+ Add card</button>' : (apiChecked ? '<span class="readonly-note">View only: ask the owner for edit access to add cards.</span>' : ''))+
   '</div>';
+  h += '<div id="results">'+resultsHTML()+'</div>';
+  h += storageMeter();
+  root.innerHTML = h;
+  var sortSel = document.getElementById("sortf"); sortSel.value = state.sort;
+  bindHeader();
+  var qi = document.getElementById("q");
+  qi.addEventListener("input", function(e){
+    if(e.isComposing) return;
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function(){ if(state.q === qi.value) return; state.q = qi.value; state.shown = PAGE; updateResults(); }, 250);
+  });
+  qi.addEventListener("compositionend", function(){ qi.dispatchEvent(new Event("input")); });
+  document.getElementById("setf").addEventListener("change", function(e){ state.set = e.target.value; state.shown = PAGE; renderList(); });
+  var eraSel = document.getElementById("eraf"); if(eraSel) eraSel.addEventListener("change", function(e){ state.era = e.target.value; state.set = ""; state.shown = PAGE; renderList(); });
+  sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
+  var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
+  var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; state.shown = PAGE; renderList(); });
+  document.getElementById("advbtn").addEventListener("click", function(){ setAdv(!ADV); var n = document.getElementById("advbtn"); if(n) n.focus(); });
+  var add = document.getElementById("add"); if(add) add.addEventListener("click", function(){ openEditor(null); });
+  document.getElementById("selbtn").addEventListener("click", function(){ state.selecting = !state.selecting; if(!state.selecting) selected = []; var y = window.scrollY; render(); window.scrollTo(0,y); });
+  bindResults();
+}
+/* Search only redraws the card grid, so the search box (and the phone keyboard) is never rebuilt while typing. */
+function updateResults(){ var r = document.getElementById("results"); if(!r){ renderList(); return; } r.innerHTML = resultsHTML(); bindResults(); }
+function resultsHTML(){
+  var list = filteredList();
+  var total = list.length; if(!(state.shown>=PAGE)) state.shown = PAGE;
+  list = list.slice(0, state.shown);
+  var h = '';
   if(state.sort==="profit"||state.sort==="roi"){ h += '<p class="note" style="margin:-6px 0 12px">'+(state.sort==="profit"?'Ranked by dollar profit':'Ranked by profit ÷ total cost (raw NM buy + grading fee)')+' if the card grades '+esc((BASIS.find(function(b){return b[0]===state.basis;})||BASIS[0])[1])+' and you sell '+(state.exit==="vendor"?'to a vendor at '+S.vendor+'%':'on eBay after the '+S.ebay+'% fee')+'. This assumes that grade; most copies grade lower.</p>'; }
   if(state.sort==="gap"||state.sort==="fliproi"){ h += '<p class="note" style="margin:-6px 0 12px">Each card shows its best flip: buy one condition and resell it one step up (DMG → MP, MP → LP or LP → NM), '+exitText()+'. Ranked by '+(state.sort==="gap"?'dollar profit':'return on what you paid')+'. Look for copies listed below their true condition, and check them in hand before relisting.</p>'; }
   if(state.sort==="breakeven"){ h += '<p class="note" style="margin:-6px 0 12px">Ranked by the lowest PSA grade that still makes money after the eBay fee ('+S.ebay+'%), the PSA fee ($'+S.psa+') and the raw NM buy. Ties go to the bigger profit at that grade. Cards that lose money at every grade are last.</p>'; }
@@ -747,25 +777,12 @@ function renderList(){
       h += '<div class="more-row"><span class="sub">Showing '+list.length+' of '+total+' cards</span><button class="btn dark" id="more">Show '+more+' more</button></div>';
     }
   }
-  h += storageMeter();
-  root.innerHTML = h;
-  var sortSel = document.getElementById("sortf"); sortSel.value = state.sort;
-  bindHeader();
-  var qi = document.getElementById("q");
-  qi.addEventListener("input", function(){
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(function(){ state.q = qi.value; state.shown = PAGE; var pos = qi.selectionStart; renderList(); var n=document.getElementById("q"); n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){} }, 180);
-  });
-  document.getElementById("setf").addEventListener("change", function(e){ state.set = e.target.value; state.shown = PAGE; renderList(); });
-  var eraSel = document.getElementById("eraf"); if(eraSel) eraSel.addEventListener("change", function(e){ state.era = e.target.value; state.set = ""; state.shown = PAGE; renderList(); });
-  sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
-  var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
-  var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; state.shown = PAGE; renderList(); });
-  document.getElementById("advbtn").addEventListener("click", function(){ setAdv(!ADV); var n = document.getElementById("advbtn"); if(n) n.focus(); });
-  var mb2 = document.getElementById("more"); if(mb2) mb2.addEventListener("click", function(){ var y = window.scrollY; state.shown += PAGE; renderList(); window.scrollTo(0, y); });
+  return h;
+}
+function bindResults(){
+  var mb2 = document.getElementById("more"); if(mb2) mb2.addEventListener("click", function(){ var y = window.scrollY; state.shown += PAGE; updateResults(); window.scrollTo(0, y); });
   watchImages();
-  var add = document.getElementById("add"); if(add) add.addEventListener("click", function(){ openEditor(null); });
-  root.querySelectorAll("[data-open]").forEach(function(b){ b.addEventListener("click", function(){
+  document.getElementById("results").querySelectorAll("[data-open]").forEach(function(b){ b.addEventListener("click", function(){
     var id = b.getAttribute("data-open");
     if(!state.selecting){ go(id); return; }
     var k = selected.indexOf(id); if(k>=0) selected.splice(k,1); else selected.push(id);
@@ -773,7 +790,6 @@ function renderList(){
     var cnt = document.getElementById("sel-count"); if(cnt) cnt.textContent = selected.length+" selected";
     var sa = document.getElementById("sel-add"); if(sa) sa.disabled = !selected.length;
   }); });
-  document.getElementById("selbtn").addEventListener("click", function(){ state.selecting = !state.selecting; if(!state.selecting) selected = []; var y = window.scrollY; render(); window.scrollTo(0,y); });
 }
 
 function header(){
