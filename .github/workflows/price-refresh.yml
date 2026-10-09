@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Refresh raw prices from TCGplayer
         id: run
@@ -61,13 +61,13 @@ jobs:
           [ -f run_report.md ] || echo "## ❌ The refresh script crashed. Open the Actions run for details." > run_report.md
           echo "" >> run_report.md
           echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
-          gh label create price-refresh --color 1f6feb --description "Weekly price refresh results" 2>/dev/null || true
-          num=$(gh issue list --label price-refresh --state open --limit 1 --json number -q '.[0].number')
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Weekly price refresh log") | .number' | head -n 1)
           if [ -z "$num" ]; then
-            gh issue create --title "Weekly price refresh log" --label price-refresh \
-              --body "Each Friday's price refresh posts its result here as a comment. GitHub emails you every new comment (and notifies the GitHub app if you have it)."
-            num=$(gh issue list --label price-refresh --state open --limit 1 --json number -q '.[0].number')
+            url=$(gh issue create --title "Weekly price refresh log" \
+              --body "Each Friday's price refresh posts its result here as a comment. GitHub emails you every new comment (and notifies the GitHub app if you have it).")
+            num="${url##*/}"
           fi
+          echo "Posting to issue #$num"
           gh issue comment "$num" --body-file run_report.md
 
       - name: Mark the run as failed if TCGplayer blocked it
