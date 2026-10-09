@@ -820,14 +820,14 @@ function renderDetail(){
       kpi("PSA 10", p10?money(p10.sale,0):"—", p10?signed(p10.ebayNet)+" on eBay":"")+
       kpi("Break-even", be?(be.grade==="10"?"10 only":"PSA "+be.grade):"None", be?signed(be.net)+" on eBay":"No grade profits")+
     '</div>' : '')+
-    '<div class="facts">'+(ADV?'<div class="fact"><span>Gem rate / population</span>'+esc(c.gem||"—")+'</div>':'')+'<div class="fact"><span>Sales volume</span>'+esc(c.liquidity||"—")+'</div></div>'+
+    (ADV?'<div class="facts"><div class="fact"><span>Gem rate / population</span>'+esc(c.gem||"—")+'</div></div>':'')+
     (ADV ? popBlock(c) : '')+
   '</div></div>';
 
   if(VIEW==="phone"){
     h += '<section class="block"><h3>Raw condition prices</h3><div class="plist">'+RAW.map(function(r,i){ var x=c.raw[r[0]]||{}; var p=Number(x.price);
       return '<div class="prow2"><div class="top2"><b>'+r[1]+'</b><span class="price num">'+(p>0?money(p):"—")+'</span></div>'+
-        '<div class="meta">'+(x.est?'<span class="pill est">est.</span> ':'')+fmtDate(x.date)+(x.src?' · '+esc(x.src):'')+'</div>'+
+        '<div class="meta">'+(x.est?'<span class="pill est">est.</span> ':'')+esc(x.src||"")+'</div>'+
         (tcgUrl(c,r[0])?'<div class="meta">'+tcgLink(c,r[0],"See "+r[0].toUpperCase()+" listings on TCGplayer")+'</div>':'')+
         (p>0?'<div class="meta">Vendors buy at <b class="num" style="color:var(--gold-ink)">'+money(p*S.vendor/100,2)+'</b>'+(i>0?' · '+money(buy-p)+' below NM':'')+'</div>':'')+'</div>'; }).join("")+'</div></section>';
     h += flipSection(c);
@@ -840,9 +840,9 @@ function renderDetail(){
         '<div class="meta" style="margin-top:6px">Cost '+money(r.cost)+' (raw '+money(buy)+' + grading '+money(r.fee)+')</div></div>'; }).join("")+
       '</div><p class="note">eBay profit subtracts the '+S.ebay+'% fee. Vendor profit assumes a shop pays '+S.vendor+'% of the sale price.</p></section>';
   } else {
-  h += '<section class="block"><h3>Raw condition market values</h3><div class="tbl-wrap"><table><tr><th>Condition</th><th class="r">Market sale</th><th>Sale date</th><th>Source</th><th class="r">Jump to NM</th><th>Listings</th><th class="r v">Vendor @ '+S.vendor+'%</th></tr>'+
+  h += '<section class="block"><h3>Raw condition market values</h3><div class="tbl-wrap"><table><tr><th>Condition</th><th class="r">Market sale</th><th>Source</th><th class="r">Jump to NM</th><th>Listings</th><th class="r v">Vendor @ '+S.vendor+'%</th></tr>'+
     RAW.map(function(r,i){ var x = c.raw[r[0]]||{}; var p = Number(x.price);
-      return '<tr><td class="g">'+r[1]+'</td><td class="r num">'+(p>0?money(p):"—")+(x.est?' <span class="pill est">est.</span>':'')+'</td><td class="num">'+fmtDate(x.date)+'</td><td>'+esc(x.src||"")+'</td><td class="r num">'+(i===0||!(p>0)?"—":"+"+money(buy-p))+'</td><td>'+(tcgLink(c,r[0],"TCGplayer")||'—')+'</td><td class="r v num"><b>'+(p>0?money(p*S.vendor/100,2):"—")+'</b></td></tr>'; }).join("")+
+      return '<tr><td class="g">'+r[1]+'</td><td class="r num">'+(p>0?money(p):"—")+(x.est?' <span class="pill est">est.</span>':'')+'</td><td>'+esc(x.src||"")+'</td><td class="r num">'+(i===0||!(p>0)?"—":"+"+money(buy-p))+'</td><td>'+(tcgLink(c,r[0],"TCGplayer")||'—')+'</td><td class="r v num"><b>'+(p>0?money(p*S.vendor/100,2):"—")+'</b></td></tr>'; }).join("")+
   '</table></div></section>';
 
   h += flipSection(c);
@@ -889,7 +889,7 @@ function renderEditor(){
        (ERAS.length ? '<label class="f">Era (which file it’s saved in)<select id="f-era">'+ERAS.map(function(x){ return '<option value="'+esc(x.id)+'"'+(x.id===(e.era||guessEra(e.set))?' selected':'')+'>'+esc(x.name)+' ('+esc(x.years)+')</option>'; }).join("")+'</select></label>' : '')+
        field("f-number","Card number",e.number,"e.g. RC22/RC25")+field("f-tcg","TCGplayer link or product ID",e.tcgId||"","Paste the TCGplayer product URL")+
        '<label class="f">Last updated<input id="f-updated" type="date" value="'+esc(e.updated)+'"></label></div></fieldset>';
-  h += '<fieldset><legend>Raw condition prices</legend><div class="prow phead"><span></span><span>Price $</span><span>Source</span><span>Sale date</span><span>Est.</span></div>'+
+  h += '<fieldset><legend>Raw condition prices</legend><div class="prow phead"><span></span><span>Price $</span><span>Source</span><span>Price date</span><span>Est.</span></div>'+
     RAW.map(function(r){ var x=e.raw[r[0]]||{}; return '<div class="prow"><b>'+r[1]+'</b><input id="r-'+r[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="r-'+r[0]+'-src" placeholder="Source" value="'+esc(x.src)+'"><input id="r-'+r[0]+'-date" placeholder="YYYY-MM-DD" value="'+esc(x.date)+'"><label class="chk"><input type="checkbox" id="r-'+r[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
     '<p class="note">Flip profits compare each condition with the next one up. Fill in all four conditions if you can.</p></fieldset>';
   h += '<div'+(ADV?'':' hidden')+'><p class="note" style="margin-top:14px">Advanced: grading data. Not needed for condition flips.</p><fieldset><legend>Graded prices</legend><div class="prow g phead"><span></span><span>Price $</span><span>Source &amp; date</span><span>Est.</span></div>'+
