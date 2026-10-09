@@ -6,20 +6,24 @@ history and refreshes ONLY raw.nm / raw.lp / raw.mp / raw.dmg, plus the
 "TCGplayer sales (90 days)" liquidity line and "updated". Everything else
 (graded, pop, gem, verdict, notes, images, pairings) is left exactly as is.
 
+Cards are stored one file per era: eras/<id>/<id>.json, listed in
+eras/eras.json. Only the era files that actually changed are rewritten.
+
 It also records how every request went (ok / no sales / blocked / error),
 writes PRICE_LOG.md and run_report.md, and exits with code 1 when TCGplayer
 blocked requests, so GitHub emails you.
 
 Settings (environment variables):
   LIMIT    only check the first N cards (0 = all)   default 0
-  DRY_RUN  "true" = check prices but don't save cards.json
+  DRY_RUN  "true" = check prices but don't save the card files
 """
 import json, os, sys, time, random, threading, datetime, re
 import urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CARDS = os.path.join(ROOT, "cards.json")
+ERAS_DIR = os.path.join(ROOT, "eras")
+MANIFEST = os.path.join(ERAS_DIR, "eras.json")
 LOG = os.path.join(ROOT, "PRICE_LOG.md")
 REPORT = os.path.join(ROOT, "run_report.md")
 
@@ -175,8 +179,21 @@ def build_raw(info):
 
 # ---------------------------------------------------------------- main
 def main():
-    data = json.load(open(CARDS, encoding="utf-8"))
-    cards = [c for c in data["cards"] if c.get("tcgId")]
+    manifest = json.load(open(MANIFEST, encoding="utf-8"))
+    files = []      # [(path, data)]
+    file_of = {}    # card id -> index in files
+    all_cards = []
+    for era in manifest["eras"]:
+        path = os.path.join(ERAS_DIR, era["id"], era["id"] + ".json")
+        if not os.path.exists(path):
+            continue
+        data = json.load(open(path, encoding="utf-8"))
+        files.append((path, data))
+        for c in data.get("cards", []):
+            file_of[c["id"]] = len(files) - 1
+            all_cards.append(c)
+    dirty = set()
+    cards = [c for c in all_cards if c.get("tcgId")]
     if LIMIT:
         cards = cards[:LIMIT]
     results = {}
@@ -254,6 +271,7 @@ def main():
         card["tcgVariant"] = v
         if changed:
             card["updated"] = TODAY.isoformat()
+            dirty.add(file_of[card["id"]])
             stats["updated"] += 1
         else:
             stats["nosales"] += 1
@@ -270,9 +288,12 @@ def main():
     saved = (status != "BLOCKED") and not DRY_RUN and stats["updated"] > 0
 
     if saved:
-        data["version"] = int(time.time())
-        with open(CARDS, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+        stamp = str(int(time.time()))
+        for i in sorted(dirty):
+            path, data = files[i]
+            data["version"] = stamp
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
 
     # ---- report
     head = {
@@ -292,7 +313,7 @@ def main():
              ]
     if stats["skipped"]:
         lines.append(f"- ⏹️ Not checked (run stopped early): {stats['skipped']}")
-    lines.append(f"- cards.json saved: **{'yes' if saved else 'no'}**")
+    lines.append(f"- Era files saved: **{len(dirty) if saved else 'none'}**" + (f" of {len(files)}" if saved else ""))
     if moves:
         moves.sort(key=lambda m: -abs(m[2] - m[1]) / m[1])
         lines += ["", "**Biggest NM moves (15%+):**"] + [f"- {n}: {money(o)} → {money(nw)}" for n, o, nw in moves[:10]]

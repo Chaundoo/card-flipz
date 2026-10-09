@@ -10,7 +10,7 @@ on:
         description: "Only check the first N cards (0 = all cards)"
         default: "0"
       dry_run:
-        description: "Test run: check TCGplayer but don't save cards.json"
+        description: "Test run: check TCGplayer but don't save the card files"
         type: boolean
         default: false
 
@@ -37,18 +37,18 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: python3 scripts/refresh_prices.py
 
-      - name: Save cards.json and the log
+      - name: Save the era card files and the log
         if: always() && github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add cards.json PRICE_LOG.md
+          git add eras PRICE_LOG.md
           if git diff --cached --quiet; then
             echo "Nothing to save."
           else
             git commit -m "Weekly price refresh $(date -u +%Y-%m-%d) (${{ steps.run.outputs.status }})"
             if ! git push; then
-              printf '\n**⚠️ Could not save:** cards.json changed on GitHub while this ran (someone uploaded a new copy). Nothing was overwritten. Re-run this job from the Actions tab.\n' >> run_report.md
+              printf '\n**⚠️ Could not save:** a card file changed on GitHub while this ran (someone uploaded a new copy). Nothing was overwritten. Re-run this job from the Actions tab.\n' >> run_report.md
               exit 1
             fi
           fi

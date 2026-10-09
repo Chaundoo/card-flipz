@@ -467,12 +467,23 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 var SKEL = "<!doctype html><html><head><meta charset=utf8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n";
 var DATA = JSON.parse(document.getElementById("app-data").textContent);
 var cards = DATA.cards || [];
+/* Eras: each era's cards are saved in their own file (eras/<id>/<id>.json). */
+var ERAS = DATA.eras || [];
+var ERA_RULES = ERAS.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ try{ return new RegExp(p,"i"); }catch(err){ return /(?!)/; } })}; });
+function eraName(id){ var e = ERAS.find(function(x){return x.id===id;}); return e ? e.name : (id||"Other"); }
+/* A set already on the site keeps its era; a brand-new set is guessed from its name. */
+function guessEra(set){
+  set = String(set||"").trim();
+  var hit = cards.find(function(c){ return c.set===set && c.era; }); if(hit) return hit.era;
+  for(var i=0;i<ERA_RULES.length;i++){ if(ERA_RULES[i].res.some(function(r){return r.test(set);})) return ERA_RULES[i].id; }
+  return ERAS.length ? ERAS[ERAS.length-1].id : "other";
+}
 var RAW = [["nm","Near Mint (NM)"],["lp","Lightly Played (LP)"],["mp","Moderately Played (MP)"],["dmg","Damaged (DMG)"]];
 var GRADED = [["psa10","PSA 10","psa"],["cgc10","CGC 10","cgc"],["pristine","CGC 10 Pristine","cgc"],["g9","Grade 9","psa"],["g8","Grade 8","psa"],["g7","Grade 7","psa"]];
 var VERDICTS = ["Grade it","Grade selectively","Grade clean copies only","Sell raw","Hold","Pass"];
 var root = document.getElementById("root");
 var artifactApi = null, canWrite = null, apiChecked = false; // null = unknown yet
-var state = {view:"list", id:null, q:"", set:"", sort:"gap", basis:"psa10", exit:"ebay", editing:null, saving:false, msg:"", msgType:"", confirmDel:false, shown:40};
+var state = {view:"list", id:null, q:"", set:"", era:"", sort:"gap", basis:"psa10", exit:"ebay", editing:null, saving:false, msg:"", msgType:"", confirmDel:false, shown:40};
 var PAGE = 40, imgObserver = null;
 
 function load(k, d){ try{ var v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } }
@@ -528,27 +539,31 @@ function profitFor(c){
   var net = state.exit==="vendor" ? r.vendorNet : r.ebayNet;
   return {net:net, roi: r.cost ? net/r.cost*100 : 0, cost:r.cost, label:b[1]};
 }
-/* cards.json size meter: GitHub web upload takes files up to 25 MB; git/GitHub Desktop up to 100 MB */
+/* Storage meter: cards are saved one file per era. GitHub's web upload takes files up to 25 MB each,
+   so the limit that matters is the BIGGEST era file, not the total. */
 var LIMIT = 25*1000*1000, SLOW_AT = 10*1000*1000, storageInfo = null;
 function measureStorage(){
   try{
-    var enc = new TextEncoder();
-    var total = enc.encode(JSON.stringify({cards:cards, pairings:sharedPairs(), version:"0000000000"})).length;
-    var base = enc.encode(JSON.stringify({cards:[], pairings:sharedPairs(), version:"0000000000"})).length;
-    var per = cards.length ? (total-base)/cards.length : 1300;
-    storageInfo = {total:total, per:per, cap:Math.max(cards.length, Math.floor((LIMIT-base)/per))};
+    var enc = new TextEncoder(), by = {};
+    ERAS.forEach(function(e){ by[e.id] = []; });
+    cards.forEach(function(c){ var k = by[c.era] ? c.era : (ERAS.length ? ERAS[ERAS.length-1].id : "other"); (by[k] = by[k] || []).push(c); });
+    var sizes = Object.keys(by).map(function(k){ return {id:k, n:by[k].length, bytes:enc.encode(JSON.stringify({era:k, version:"0000000000", cards:by[k]})).length}; });
+    var total = sizes.reduce(function(t,x){ return t+x.bytes; }, 0);
+    var big = sizes.reduce(function(m,x){ return x.bytes>m.bytes ? x : m; }, sizes[0]||{id:"", n:0, bytes:0});
+    var per = cards.length ? total/cards.length : 1300;
+    storageInfo = {total:total, big:big, per:per, files:sizes.filter(function(x){return x.n;}).length, room:Math.max(0, Math.floor((LIMIT-big.bytes)/per))};
   }catch(e){ storageInfo = null; }
 }
 function mb(n){ return (n/1000000).toFixed(n<10000000?1:0); }
 function storageMeter(){
   if(!storageInfo) return "";
-  var s = storageInfo, frac = Math.min(1, s.total/LIMIT), pctUsed = Math.round(frac*100);
-  var cls = frac>=0.9 ? "full" : s.total>=SLOW_AT ? "warn" : "";
-  var msg = frac>=0.9 ? "Close to GitHub's 25 MB web-upload limit. Split cards.json into smaller files (e.g. by era), or upload with GitHub Desktop, which allows up to 100 MB."
-    : s.total>=SLOW_AT ? "Over 10 MB: the site downloads the whole file on every visit, so it will feel slow on phones and show Wi-Fi. Consider splitting cards.json by era."
-    : "Loads fast. GitHub's web uploader takes files up to 25 MB; the site starts to feel slow to open past about 10 MB.";
-  return '<div class="storage" role="status"><div class="storage-row"><span>cards.json: <b class="num">'+mb(s.total)+' of 25 MB</b> GitHub upload limit ('+pctUsed+'%)</span><span><b class="num">'+cards.length+'</b> of about <b class="num">'+s.cap.toLocaleString()+'</b> cards · ~'+(s.per/1000).toFixed(1)+' KB per card</span></div>'+
-    '<div class="meter '+cls+'" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pctUsed+'" aria-label="cards.json size vs GitHub upload limit"><i style="width:'+Math.max(1,pctUsed)+'%"></i></div><p>'+msg+'</p></div>';
+  var s = storageInfo, frac = Math.min(1, s.big.bytes/LIMIT), pctUsed = Math.round(frac*100);
+  var cls = frac>=0.9 ? "full" : s.big.bytes>=SLOW_AT ? "warn" : "";
+  var msg = frac>=0.9 ? "The "+eraName(s.big.id)+" file is close to GitHub's 25 MB web-upload limit. Split that era into two (add a new era in eras/eras.json), or upload it with GitHub Desktop, which allows up to 100 MB."
+    : s.big.bytes>=SLOW_AT ? "The "+eraName(s.big.id)+" file is over 10 MB. Saving a card in that era means uploading a big file; consider splitting the era in two."
+    : "Plenty of room. Each era is its own file, and GitHub's web uploader takes up to 25 MB per file. Your phone only re-downloads an era's file when it has changed.";
+  return '<div class="storage" role="status"><div class="storage-row"><span>Biggest era file ('+esc(eraName(s.big.id))+'): <b class="num">'+mb(s.big.bytes)+' of 25 MB</b> ('+pctUsed+'%)</span><span><b class="num">'+cards.length.toLocaleString()+'</b> cards in '+s.files+' era files · '+mb(s.total)+' MB total · room for about <b class="num">'+s.room.toLocaleString()+'</b> more in that era</span></div>'+
+    '<div class="meter '+cls+'" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pctUsed+'" aria-label="Biggest era file vs GitHub upload limit"><i style="width:'+Math.max(1,pctUsed)+'%"></i></div><p>'+msg+'</p></div>';
 }
 /* ---------- population (9s and 10s) ---------- */
 function pn(v){ return (v===null||v===undefined||v==="") ? null : Number(v); }
@@ -655,9 +670,11 @@ function watchImages(){
   imgs.forEach(function(img){ imgObserver.observe(img); });
 }
 function renderList(){
-  var sets = Array.from(new Set(cards.map(function(c){return c.set;}))).sort();
+  var sets = Array.from(new Set(cards.filter(function(c){ return !state.era || c.era===state.era; }).map(function(c){return c.set;}))).sort();
+  if(state.set && sets.indexOf(state.set)<0) state.set = "";
   var q = state.q.trim().toLowerCase();
   var list = cards.filter(function(c){
+    if(state.era && c.era!==state.era) return false;
     if(state.set && c.set!==state.set) return false;
     if(!q) return true;
     return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(q)>=0;
@@ -694,6 +711,7 @@ function renderList(){
   var h = header();
   h += '<div class="toolbar">'+
     '<label class="search"><span class="sub">Search</span><input id="q" type="search" placeholder="Card, set or number" value="'+esc(state.q)+'"></label>'+
+    (ERAS.length ? '<select id="eraf" aria-label="Filter by era"><option value="">All eras</option>'+ERAS.map(function(e){ var n = cards.filter(function(c){return c.era===e.id;}).length; return n ? '<option value="'+esc(e.id)+'"'+(e.id===state.era?' selected':'')+'>'+esc(e.name)+' ('+n+')</option>' : ''; }).join("")+'</select>' : '')+
     '<select id="setf" aria-label="Filter by set"><option value="">All sets</option>'+sets.map(function(s){return '<option'+(s===state.set?' selected':'')+'>'+esc(s)+'</option>';}).join("")+'</select>'+
     '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
       (ADV ? '<optgroup label="Advanced: grading"><option value="profit">Grading profit ($)</option><option value="roi">Grading return (%)</option><option value="psa10">PSA 10 price</option><option value="breakeven">Lowest break-even grade</option></optgroup>' : '')+'</select>'+
@@ -739,6 +757,7 @@ function renderList(){
     searchTimer = setTimeout(function(){ state.q = qi.value; state.shown = PAGE; var pos = qi.selectionStart; renderList(); var n=document.getElementById("q"); n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){} }, 180);
   });
   document.getElementById("setf").addEventListener("change", function(e){ state.set = e.target.value; state.shown = PAGE; renderList(); });
+  var eraSel = document.getElementById("eraf"); if(eraSel) eraSel.addEventListener("change", function(e){ state.era = e.target.value; state.set = ""; state.shown = PAGE; renderList(); });
   sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
   var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
   var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; state.shown = PAGE; renderList(); });
@@ -866,7 +885,9 @@ function renderEditor(){
        '<div style="flex:1;min-width:200px"><label class="f">Card image<input type="file" id="f-img" accept="image/*"></label><p class="sub" style="margin:6px 0 0">A photo, scan or screenshot. It is resized to keep the page fast. You can also paste an image here.</p></div></div>'+
        '<div class="frow" style="margin-top:10px">'+
        field("f-name","Card name",e.name,"e.g. Reshiram")+field("f-variant","Variant",e.variant,"e.g. Radiant Collection")+
-       field("f-set","Set",e.set,"e.g. Legendary Treasures")+field("f-number","Card number",e.number,"e.g. RC22/RC25")+field("f-tcg","TCGplayer link or product ID",e.tcgId||"","Paste the TCGplayer product URL")+
+       field("f-set","Set",e.set,"e.g. Legendary Treasures")+
+       (ERAS.length ? '<label class="f">Era (which file it’s saved in)<select id="f-era">'+ERAS.map(function(x){ return '<option value="'+esc(x.id)+'"'+(x.id===(e.era||guessEra(e.set))?' selected':'')+'>'+esc(x.name)+' ('+esc(x.years)+')</option>'; }).join("")+'</select></label>' : '')+
+       field("f-number","Card number",e.number,"e.g. RC22/RC25")+field("f-tcg","TCGplayer link or product ID",e.tcgId||"","Paste the TCGplayer product URL")+
        '<label class="f">Last updated<input id="f-updated" type="date" value="'+esc(e.updated)+'"></label></div></fieldset>';
   h += '<fieldset><legend>Raw condition prices</legend><div class="prow phead"><span></span><span>Price $</span><span>Source</span><span>Sale date</span><span>Est.</span></div>'+
     RAW.map(function(r){ var x=e.raw[r[0]]||{}; return '<div class="prow"><b>'+r[1]+'</b><input id="r-'+r[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="r-'+r[0]+'-src" placeholder="Source" value="'+esc(x.src)+'"><input id="r-'+r[0]+'-date" placeholder="YYYY-MM-DD" value="'+esc(x.date)+'"><label class="chk"><input type="checkbox" id="r-'+r[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
@@ -895,6 +916,12 @@ function renderEditor(){
   var dn=document.getElementById("del-no"); if(dn) dn.addEventListener("click", function(){ collect(); state.confirmDel=false; renderEditor(); });
   var dy=document.getElementById("del-yes"); if(dy) dy.addEventListener("click", function(){ doDelete(); });
   document.getElementById("edform").addEventListener("submit", function(ev){ ev.preventDefault(); doSave(); });
+  /* Typing the set picks the era automatically, until you choose an era yourself. */
+  var eraEl = document.getElementById("f-era"), setEl = document.getElementById("f-set");
+  if(eraEl && setEl){
+    eraEl.addEventListener("change", function(){ eraEl.setAttribute("data-picked","1"); });
+    setEl.addEventListener("input", function(){ if(!eraEl.getAttribute("data-picked") && !(state.editing && state.editing.era && !state.isNew)) eraEl.value = guessEra(setEl.value); });
+  }
 }
 function field(id,label,val,ph){ return '<label class="f">'+label+'<input id="'+id+'" value="'+esc(val)+'" placeholder="'+esc(ph||"")+'"></label>'; }
 function readImage(file){
@@ -919,6 +946,7 @@ function chk(id){ var el=document.getElementById(id); return !!(el&&el.checked);
 function collect(){
   var e = state.editing;
   e.name=val("f-name"); e.variant=val("f-variant"); e.set=val("f-set"); e.number=val("f-number"); e.updated=val("f-updated");
+  if(document.getElementById("f-era")) e.era = val("f-era") || guessEra(e.set); else if(!e.era) e.era = guessEra(e.set);
   var tm = /product\/(\d+)/.exec(val("f-tcg")) || /^(\d+)$/.exec(val("f-tcg")); if(tm) e.tcgId = Number(tm[1]); else if(!val("f-tcg")) delete e.tcgId;
   RAW.forEach(function(r){ e.raw[r[0]]={price:num("r-"+r[0]+"-price"),src:val("r-"+r[0]+"-src"),date:val("r-"+r[0]+"-date"),est:chk("r-"+r[0]+"-est")}; });
   GRADED.forEach(function(g){ e.graded[g[0]]={price:num("g-"+g[0]+"-price"),src:val("g-"+g[0]+"-src"),est:chk("g-"+g[0]+"-est")}; });
@@ -1466,33 +1494,107 @@ function render(){
 })();
 </script>
 <script>
+/* ---------- Loader / saver for the per-era files ----------
+   eras/eras.json            list of eras (+ set-name patterns for guessing a new set's era)
+   eras/<id>/<id>.json       {era, version, cards:[...]}  one file per era
+   pairings.json             {version, pairings:[...]}
+   Files are fetched with cache:"no-cache": the browser asks GitHub "changed?" and only
+   re-downloads files that actually changed, which saves mobile data. */
 (function(){
-var LKEY="cfz.local";
+var LKEY="cfz.local.eras", OLD_LKEY="cfz.local";
+var MAN=null, REMOTE={}, CUR={}, PENDING=[];   /* REMOTE[key]=version on GitHub; CUR[key]=JSON string of what's on screen */
+function fileOf(key){ return key==="pairings" ? "pairings.json" : "eras/"+key+"/"+key+".json"; }
+function nameOf(key){ return key==="pairings" ? "pairings.json" : key+".json"; }
+function whereOf(key){ return key==="pairings" ? "card-flipz (main folder)" : "card-flipz → eras → "+key; }
+function getJSON(url, fallback){
+  return fetch(url,{cache:"no-cache"}).then(function(r){
+    if(r.status===404 && fallback!==undefined) return fallback;
+    if(!r.ok) throw new Error(url+" ("+r.status+")"); return r.json(); });
+}
 function download(name,text){ var b=new Blob([text],{type:"application/json"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},1500); }
+function downloadAll(list){ list.forEach(function(it,i){ setTimeout(function(){ download(it.name, it.text); }, i*600); }); }
+function readLocal(){ try{ return JSON.parse(localStorage.getItem(LKEY)||"null")||{}; }catch(e){ return {}; } }
+function writeLocal(o){ localStorage.setItem(LKEY, JSON.stringify(o)); }
+var rules=[];
+function guessEra(set){ set=String(set||"").trim(); for(var i=0;i<rules.length;i++){ if(rules[i].res.some(function(r){return r.test(set);})) return rules[i].id; } return "other"; }
+function eraOfCard(c, setEra){ if(c.era && MAN.eras.some(function(e){return e.id===c.era;})) return c.era; return setEra[c.set] || guessEra(c.set); }
+function strip(c){ var o={}; for(var k in c){ if(k!=="era") o[k]=c[k]; } return o; }
+/* split a full {cards, pairings} into per-file JSON strings */
+function split(cards, pairings){
+  var setEra={}; cards.forEach(function(c){ if(c.era && !setEra[c.set]) setEra[c.set]=c.era; });
+  var out={}; MAN.eras.forEach(function(e){ out[e.id]=[]; });
+  cards.forEach(function(c){ var e=eraOfCard(c,setEra); (out[e]||out.other||out[MAN.eras[MAN.eras.length-1].id]).push(strip(c)); });
+  var res={}; for(var k in out) res[k]=JSON.stringify(out[k]); res.pairings=JSON.stringify(pairings||[]); return res;
+}
 var REMOTE_VERSION="";
 window.claude={use:function(name){
   if(name==="downloads") return Promise.resolve({save:function(o){ var b=new Blob([o.data],{type:"text/plain"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=o.filename; document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},1500); return Promise.resolve(); }});
   if(name==="artifact") return Promise.resolve({publish:function(doc){
     var m=/id="app-data">([\s\S]*?)<\/scr/.exec(doc); if(!m) return Promise.reject({code:"bad_doc"});
-    var d=JSON.parse(m[1]); d.version=String(Math.floor(Date.now()/1000));
-    try{ localStorage.setItem(LKEY, JSON.stringify({base:REMOTE_VERSION,data:d})); }catch(e){ return Promise.reject({code:"too_large"}); }
-    download("cards.json", JSON.stringify(d));
-    setTimeout(function(){ location.reload(); }, 1200);
+    var d=JSON.parse(m[1]), parts=split(d.cards||[], d.pairings), stamp=String(Math.floor(Date.now()/1000));
+    var local=readLocal(), files=[];
+    Object.keys(parts).forEach(function(key){
+      if(parts[key]===CUR[key]) return;
+      var obj = key==="pairings" ? {version:stamp, pairings:JSON.parse(parts[key])} : {era:key, version:stamp, cards:JSON.parse(parts[key])};
+      local[key]={base:REMOTE[key]||"", data:obj};
+      files.push({key:key, name:nameOf(key), text:JSON.stringify(obj)});
+    });
+    if(!files.length){ setTimeout(function(){ location.reload(); }, 300); return Promise.resolve(); }
+    try{ writeLocal(local); }catch(e){ return Promise.reject({code:"too_large"}); }
+    downloadAll(files);
+    setTimeout(function(){ location.reload(); }, 900+files.length*600);
     return Promise.resolve();
   }});
   return Promise.resolve(null);
 }};
 document.addEventListener("error",function(e){ var t=e.target; if(t&&t.tagName==="IMG"&&t.closest(".art")){ t.closest(".art").innerHTML='<span class="sub">No image</span>'; } },true);
-function notice(){ var n=document.createElement("div"); n.className="localnote"; n.innerHTML='You have card edits saved only on this device. To share them, upload the <b>cards.json</b> file that downloaded when you saved (GitHub → card-flipz → Add file → Upload files). <button type="button">Discard my local edits</button>'; n.querySelector("button").onclick=function(){ if(confirm("Discard the edits saved on this device and go back to the shared list?")){ try{localStorage.removeItem(LKEY);}catch(e){} location.reload(); } }; document.body.insertBefore(n,document.body.firstChild); }
-fetch("cards.json?v="+Date.now(),{cache:"no-store"}).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); }).then(function(remote){
-  REMOTE_VERSION=remote.version||"";
-  var data=remote, local=null;
-  try{ local=JSON.parse(localStorage.getItem(LKEY)||"null"); }catch(e){}
-  if(local && local.base===REMOTE_VERSION && local.data){ data=local.data; notice(); }
-  else if(local){ try{localStorage.removeItem(LKEY);}catch(e){} }
-  document.getElementById("app-data").textContent=JSON.stringify(data);
+function notice(dropped){
+  var n=document.createElement("div"); n.className="localnote";
+  var h='';
+  if(PENDING.length){
+    h+='You have card edits saved only on this device. To share them, upload '+(PENDING.length>1?'these files':'this file')+' (they downloaded when you saved; tap <b>Download again</b> below if you don’t have them). In GitHub open each folder below, then <b>Add file → Upload files</b>:<ul style="margin:6px 0 6px 18px;padding:0">'+
+      PENDING.map(function(k){ return '<li><b>'+nameOf(k)+'</b> → '+whereOf(k)+'</li>'; }).join("")+'</ul>'+
+      '<button type="button" data-redl>Download '+(PENDING.length>1?'them':'it')+' again</button> <button type="button" data-discard>Discard my local edits</button>';
+  }
+  if(dropped.length) h+=(h?'<br>':'')+'Heads up: GitHub got a newer copy of '+dropped.map(nameOf).join(", ")+' (e.g. the Friday price refresh), so the unsaved edits you had on this device for '+(dropped.length>1?'those files':'that file')+' were dropped. Re-enter them if they weren’t uploaded.';
+  if(!h) return;
+  n.innerHTML=h;
+  var rd=n.querySelector("[data-redl]"); if(rd) rd.onclick=function(){ var l=readLocal(); downloadAll(PENDING.filter(function(k){return l[k];}).map(function(k){ return {name:nameOf(k), text:JSON.stringify(l[k].data)}; })); };
+  var ds=n.querySelector("[data-discard]"); if(ds) ds.onclick=function(){ if(confirm("Discard the edits saved on this device and go back to the shared list?")){ try{localStorage.removeItem(LKEY);}catch(e){} location.reload(); } };
+  document.body.insertBefore(n,document.body.firstChild);
+}
+getJSON("eras/eras.json").then(function(man){
+  MAN=man; rules=man.eras.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ return new RegExp(p,"i"); })}; });
+  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]})]));
+}).then(function(files){
+  var data={}, local=readLocal(), dropped=[], changedLocal=false;
+  MAN.eras.forEach(function(e,i){ data[e.id]=files[i]; });
+  data.pairings=files[files.length-1];
+  Object.keys(data).forEach(function(k){ REMOTE[k]=String(data[k].version||""); });
+  /* One-time: edits saved on this device under the old single cards.json */
+  var old=null; try{ old=JSON.parse(localStorage.getItem(OLD_LKEY)||"null"); }catch(e){}
+  if(old){
+    if(old.base===MAN.legacyVersion && old.data){
+      var remoteParts={}; Object.keys(data).forEach(function(k){ remoteParts[k]=JSON.stringify(k==="pairings"?data[k].pairings:data[k].cards); });
+      var p=split(old.data.cards||[], old.data.pairings), stamp=String(Math.floor(Date.now()/1000));
+      Object.keys(p).forEach(function(k){ if(p[k]!==remoteParts[k] && !local[k]){ local[k]={base:REMOTE[k], data:k==="pairings"?{version:stamp,pairings:JSON.parse(p[k])}:{era:k,version:stamp,cards:JSON.parse(p[k])}}; changedLocal=true; } });
+    }
+    try{ localStorage.removeItem(OLD_LKEY); }catch(e){}
+  }
+  Object.keys(local).forEach(function(k){
+    var l=local[k];
+    if(data[k] && l && l.base===REMOTE[k] && l.data){ data[k]=l.data; PENDING.push(k); }
+    else { if(l && l.data && String(l.data.version)!==REMOTE[k]) dropped.push(k); delete local[k]; changedLocal=true; }
+  });
+  if(changedLocal){ try{ if(Object.keys(local).length) writeLocal(local); else localStorage.removeItem(LKEY); }catch(e){} }
+  var cards=[];
+  MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
+  var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
+  var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], eras:eras});
+  notice(dropped);
   var s=document.createElement("script"); s.textContent=document.getElementById("app-js").textContent; document.body.appendChild(s);
-}).catch(function(err){ document.getElementById("root").innerHTML='<p style="padding:40px;text-align:center">Couldn\'t load the card list (cards.json). Make sure cards.json is uploaded next to index.html. ('+err.message+')</p>'; });
+}).catch(function(err){ document.getElementById("root").innerHTML='<p style="padding:40px;text-align:center">Couldn\'t load the card list. Make sure the <b>eras</b> folder (with eras.json and one folder per era) is uploaded next to index.html. ('+err.message+')</p>'; });
 })();
 </script>
 </body></html>
