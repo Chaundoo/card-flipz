@@ -1,0 +1,26 @@
+{
+  "about": "List of eras for Chaundoo Card Flipz. Each era's cards live in eras/<id>/<id>.json. 'match' = set-name patterns (checked top to bottom, ignoring case) that the site uses to guess the era of a NEW set. Cards whose set is already on the site stay with that set's era. Add a new era by adding an entry here (above 'other') and creating its folder + file.",
+  "legacyVersion": "1791507558",
+  "eras": [
+    {"id": "wotc", "name": "Wizards of the Coast", "years": "1999–2003",
+     "match": ["^Base Set( \\(Shadowless\\)| 2)?$", "^Jungle$", "^Fossil$", "^Team Rocket$", "^Gym (Heroes|Challenge)$", "^Neo ", "^Legendary Collection$", "^Expedition", "^Aquapolis$", "^Skyridge$", "^Southern Islands$", "^WoTC", "^Wizards", "^Best of", "^Burger King"]},
+    {"id": "ex", "name": "EX", "years": "2003–2007",
+     "match": ["^EX[ :]", "^POP Series [1-5]$"]},
+    {"id": "dp-hgss", "name": "Diamond & Pearl / HeartGold SoulSilver", "years": "2007–2011",
+     "match": ["^Diamond", "^DP", "^Mysterious Treasures$", "^Secret Wonders$", "^Great Encounters$", "^Majestic Dawn$", "^Legends Awakened$", "^Stormfront$", "^Platinum", "^Rising Rivals$", "^Supreme Victors$", "^Arceus$", "^POP Series [6-9]$", "^Rumble$", "^HeartGold", "^HGSS", "^HS ", "^Unleashed$", "^Undaunted$", "^Triumphant$", "^Call of Legends$"]},
+    {"id": "bw", "name": "Black & White", "years": "2011–2013",
+     "match": ["^Black (and|&) White", "^BW", "^Emerging Powers$", "^Noble Victories$", "^Next Destinies$", "^Dark Explorers$", "^Dragons Exalted$", "^Dragon Vault$", "^Boundaries Crossed$", "^Plasma ", "^Legendary Treasures", "^McDonald's.*201[1-3]"]},
+    {"id": "xy", "name": "XY", "years": "2014–2016",
+     "match": ["^XY", "^Flashfire$", "^Furious Fists$", "^Phantom Forces$", "^Primal Clash$", "^Double Crisis$", "^Roaring Skies$", "^Ancient Origins$", "^BREAK", "^Generations", "^Fates Collide$", "^Steam Siege$", "^Evolutions$", "^McDonald's.*201[4-6]"]},
+    {"id": "sm", "name": "Sun & Moon", "years": "2017–2019",
+     "match": ["^SM", "^Sun (and|&) Moon", "^Guardians Rising$", "^Burning Shadows$", "^Shining Legends$", "^Crimson Invasion$", "^Ultra Prism$", "^Forbidden Light$", "^Celestial Storm$", "^Dragon Majesty$", "^Lost Thunder$", "^Team Up$", "^Detective Pikachu$", "^Unbroken Bonds$", "^Unified Minds$", "^Hidden Fates", "^Cosmic Eclipse$", "^McDonald's.*201[7-9]"]},
+    {"id": "swsh", "name": "Sword & Shield", "years": "2020–2023",
+     "match": ["^SWSH", "^Sword (and|&) Shield", "^Rebel Clash$", "^Darkness Ablaze$", "^Champion's Path$", "^Vivid Voltage$", "^Shining Fates", "^Battle Styles$", "^Chilling Reign$", "^Evolving Skies$", "^Celebrations", "^Fusion Strike$", "^Brilliant Stars$", "^Astral Radiance$", "^Pok[eé]mon GO$", "^Lost Origin", "^Silver Tempest", "^Crown Zenith", "^McDonald's.*202[0-2]"]},
+    {"id": "sv", "name": "Scarlet & Violet", "years": "2023–2025",
+     "match": ["^SV", "^Scarlet (and|&) Violet", "^Paldea Evolved$", "^Obsidian Flames$", "^151$", "^Paradox Rift$", "^Paldean Fates$", "^Temporal Forces$", "^Twilight Masquerade$", "^Shrouded Fable$", "^Stellar Crown$", "^Surging Sparks$", "^Prismatic Evolutions$", "^Journey Together$", "^Destined Rivals$", "^Black Bolt$", "^White Flare$", "^McDonald's.*202[3-4]"]},
+    {"id": "me", "name": "Mega Evolution", "years": "2025–",
+     "match": ["^Mega Evolution", "^ME[ :0-9]", "^McDonald's.*202[5-9]"]},
+    {"id": "other", "name": "Other promos & products", "years": "any",
+     "match": []}
+  ]
+}
