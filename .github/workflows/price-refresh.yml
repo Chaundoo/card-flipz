@@ -1,0 +1,77 @@
+name: Weekly price refresh
+
+on:
+  schedule:
+    # Fridays 14:17 UTC = 7:17 am Pacific (6:17 am in winter). GitHub can start scheduled runs a bit late.
+    - cron: "17 14 * * 5"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Only check the first N cards (0 = all cards)"
+        default: "0"
+      dry_run:
+        description: "Test run: check TCGplayer but don't save cards.json"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: price-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh raw prices from TCGplayer
+        id: run
+        continue-on-error: true
+        env:
+          LIMIT: ${{ github.event.inputs.limit || '0' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: python3 scripts/refresh_prices.py
+
+      - name: Save cards.json and the log
+        if: always() && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cards.json PRICE_LOG.md
+          if git diff --cached --quiet; then
+            echo "Nothing to save."
+          else
+            git commit -m "Weekly price refresh $(date -u +%Y-%m-%d) (${{ steps.run.outputs.status }})"
+            if ! git push; then
+              printf '\n**⚠️ Could not save:** cards.json changed on GitHub while this ran (someone uploaded a new copy). Nothing was overwritten. Re-run this job from the Actions tab.\n' >> run_report.md
+              exit 1
+            fi
+          fi
+
+      - name: Post the result to the "Weekly price refresh log" issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ The refresh script crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          gh label create price-refresh --color 1f6feb --description "Weekly price refresh results" 2>/dev/null || true
+          num=$(gh issue list --label price-refresh --state open --limit 1 --json number -q '.[0].number')
+          if [ -z "$num" ]; then
+            gh issue create --title "Weekly price refresh log" --label price-refresh \
+              --body "Each Friday's price refresh posts its result here as a comment. GitHub emails you every new comment (and notifies the GitHub app if you have it)."
+            num=$(gh issue list --label price-refresh --state open --limit 1 --json number -q '.[0].number')
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if TCGplayer blocked it
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see run_report / the log issue."
+          exit 1
