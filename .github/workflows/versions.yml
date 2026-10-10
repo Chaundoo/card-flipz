@@ -1,0 +1,37 @@
+name: Update versions.json
+
+# Keeps versions.json (the site's "what changed" list) right after files are uploaded through
+# GitHub's website. The bot jobs update it themselves when they save.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "eras/**"
+      - "pairings.json"
+      - "profitlog.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: versions
+  cancel-in-progress: false
+
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for try in 1 2 3; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python3 scripts/build_versions.py
+            git add versions.json
+            git diff --cached --quiet && break
+            git commit -q -m "Update versions.json"
+            git push -q && break
+            sleep $((try * 10))
+          done

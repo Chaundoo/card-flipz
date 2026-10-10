@@ -33,7 +33,8 @@ jobs:
             python3 scripts/add_card.py || true
             status=$(grep -o 'status=.*' "$GITHUB_OUTPUT" | tail -n 1 | cut -d= -f2)
             [ "$status" = "added" ] || break
-            git add eras scripts/tcgpl_state.json
+            python3 scripts/build_versions.py
+            git add eras versions.json scripts/tcgpl_state.json
             git commit -q -m "Add card from TCGplayer link (#${{ github.event.issue.number }})"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
