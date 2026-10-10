@@ -1,0 +1,58 @@
+name: Add card from TCGplayer link
+
+# Runs when you (or a collaborator) open an issue titled "Add card: ..." — the site's
+# "+ Add from TCGplayer link" button fills it in. Issues from anyone else are ignored.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add:
+    if: startsWith(github.event.issue.title, 'Add card') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Look the card up and add it
+        id: add
+        env:
+          TCGPL_API_KEY: ${{ secrets.TCGPL_API_KEY }}
+          PAUSE_MIN: "3.5"
+          PAUSE_MAX: "5"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Retry if the daily price update (or another add) saved at the same moment.
+          for try in 1 2 3; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python3 scripts/add_card.py || true
+            status=$(grep -o 'status=.*' "$GITHUB_OUTPUT" | tail -n 1 | cut -d= -f2)
+            [ "$status" = "added" ] || break
+            git add eras scripts/tcgpl_state.json
+            git commit -q -m "Add card from TCGplayer link (#${{ github.event.issue.number }})"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            [ "$try" = "3" ] && printf '\n\n⚠️ Could not save after 3 tries because other updates kept saving at the same time. Open a new Add card issue to try again.\n' >> run_report.md
+            sleep $((try * 10))
+          done
+
+      - name: Reply on the issue and close it
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          [ -f run_report.md ] || echo "❌ The add-card script crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          gh issue comment "$NUM" --body-file run_report.md
+          if [ "${{ steps.add.outputs.status }}" = "added" ] || [ "${{ steps.add.outputs.status }}" = "duplicate" ]; then
+            gh issue close "$NUM" --reason completed
+          else
+            gh issue close "$NUM" --reason "not planned"
+          fi
