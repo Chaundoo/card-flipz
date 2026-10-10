@@ -8,8 +8,8 @@ the site's "TCGplayer" listing links are plain links built from each card's tcgI
 How the week is spread out
   * Every day the job updates about 1/7 of the cards (DAILY_SHARE), oldest first:
     cards that have never been synced come first, then the ones synced longest ago.
-  * It never uses more than DAILY_REQUESTS API requests (default 90 of the free
-    plan's 100/day) and also stops when the API says the daily quota is used up.
+  * It never uses more than DAILY_REQUESTS API requests (default 80 of the free
+    plan's 100/day, leaving room for adding cards) and also stops when the API says the daily quota is used up.
   * Requests are spaced several seconds apart to respect the burst limit.
 
 Only raw.nm / raw.lp / raw.mp / raw.dmg and "updated" are changed on a card.
@@ -20,7 +20,7 @@ Matching cards to TCG Price Lookup is remembered in scripts/tcgpl_state.json
 
 Settings (environment variables):
   TCGPL_API_KEY   your API key (GitHub secret)                       required
-  DAILY_REQUESTS  max API requests per run                           default 90
+  DAILY_REQUESTS  max API requests per run                           default 80
   DAILY_SHARE     cards per run (0 = total cards / 7, rounded up)    default 0
   DRY_RUN         "true" = fetch prices but don't save anything      default false
   TCGPL_BASE      API base URL (only for testing)
@@ -37,7 +37,7 @@ REPORT = os.path.join(ROOT, "run_report.md")
 
 API_KEY = (os.environ.get("TCGPL_API_KEY") or "").strip()
 BASE = (os.environ.get("TCGPL_BASE") or "https://api.tcgpricelookup.com/v1").rstrip("/")
-DAILY_REQUESTS = int(os.environ.get("DAILY_REQUESTS") or 90)
+DAILY_REQUESTS = int(os.environ.get("DAILY_REQUESTS") or 80)   # leaves ~20/day for adding cards
 DAILY_SHARE = int(os.environ.get("DAILY_SHARE") or 0)
 DRY_RUN = (os.environ.get("DRY_RUN") or "").lower() == "true"
 PAUSE = (float(os.environ.get("PAUSE_MIN") or 4), float(os.environ.get("PAUSE_MAX") or 8))
