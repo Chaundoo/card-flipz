@@ -1,4 +1,4 @@
-name: One-time cleanup (remove sales counts and sale dates)
+name: One-time patch (site + bot updates)
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  cleanup:
+  patch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -15,5 +15,5 @@ jobs:
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add eras index.html
-          git diff --cached --quiet && echo "Nothing to change." || (git commit -m "Remove sales counts and sale dates" && git push)
+          git add eras index.html scripts/refresh_prices.py
+          git diff --cached --quiet && echo "Nothing to change." || (git commit -m "Add the Add-from-TCGplayer-link button; leave API room for adds" && git push)
