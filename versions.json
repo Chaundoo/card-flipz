@@ -1,0 +1,17 @@
+{
+ "files": {
+  "eras/bw/bw.json": "1097b78807c4",
+  "eras/dp-hgss/dp-hgss.json": "74b12bb9baa5",
+  "eras/eras.json": "69305f4aa2b7",
+  "eras/ex/ex.json": "5e216b37469b",
+  "eras/me/me.json": "6b5f06232ea6",
+  "eras/other/other.json": "ea9ba37bc29f",
+  "eras/sm/sm.json": "3c4cd370ef58",
+  "eras/sv/sv.json": "bc0368488ccf",
+  "eras/swsh/swsh.json": "9dfdb6805ae7",
+  "eras/wotc/wotc.json": "8a5e9655ad7b",
+  "eras/xy/xy.json": "1932d5b443d2",
+  "pairings.json": "e147388cc152",
+  "profitlog.json": "25d668079ef1"
+ }
+}

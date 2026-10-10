@@ -1056,13 +1056,81 @@ function sharedPairs(){ return pairs.filter(function(p){ return !p.local; }).map
 function saveLocalPairs(){ save("flipdesk.localpairs", pairs.filter(function(p){ return p.local; }).map(strip)); }
 function localPairsFromStore(){ var l = load("flipdesk.localpairs", []); if(!Array.isArray(l)) l = []; l.forEach(function(p){ p.local = true; if(!Array.isArray(p.items)) p.items = []; }); return l; }
 function initPairs(){
-  var shared = (DATA.pairings||[]).map(clone);
-  try{ var d = sessionStorage.getItem("flipdesk.pairdraft"); if(d){ sessionStorage.removeItem("flipdesk.pairdraft"); var dp = JSON.parse(d); if(Array.isArray(dp)){ shared = dp; state.dirty = true; } } }catch(e){}
+  var shared = applyDraft(REMOTE_PAIRS, SYNC.pairings);
+  /* edits made with the old "download pairings.json" saving: pick them up once */
+  if(Array.isArray(DATA.pairingsDraft)) shared = DATA.pairingsDraft.map(normPair);
   pairs = shared.concat(localPairsFromStore());
 }
-function keepDraft(){ if(state.dirty && !state.published){ try{ sessionStorage.setItem("flipdesk.pairdraft", JSON.stringify(sharedPairs())); }catch(e){} } }
-window.addEventListener("pagehide", keepDraft);
-window.addEventListener("beforeunload", keepDraft);
+
+/* ---------- saving pairings + profit log to GitHub ----------
+   Every change is kept on this device right away (localStorage), as a list of what differs from GitHub.
+   "Save to GitHub" opens a ready-made GitHub issue holding just those changes; the "Save pairings &
+   profit log" GitHub job writes them into pairings.json / profitlog.json and closes the issue.
+   When the page next loads and GitHub has the same data, the pending changes clear themselves. */
+var SYNC_KEY = "cfz.sync", DATA_REPO = "Chaundoo/card-flipz";
+var REMOTE_PAIRS = (DATA.pairings||[]).map(normPair), REMOTE_SHOWS = (DATA.shows||[]).map(normShow);
+function emptyDiff(){ return {up:{}, del:{}}; }
+var SYNC = (function(){ var s = load(SYNC_KEY, null);
+  if(!s || typeof s!=="object") s = {};
+  ["pairings","shows"].forEach(function(k){ if(!s[k] || typeof s[k].up!=="object" || typeof s[k].del!=="object") s[k] = emptyDiff(); });
+  return s; })();
+function numOr(v){ return v!=="" && v!=null && !isNaN(Number(v)) && Number(v)>=0 ? Number(v) : ""; }
+function normPair(p){ p = p||{}; return {id:String(p.id||uid("p")), name:String(p.name||"Untitled pairing").slice(0,60), created:String(p.created||"").slice(0,10),
+  items:(Array.isArray(p.items)?p.items:[]).map(function(it){ it = it||{}; return {cardId:String(it.cardId||""), bought:String(it.bought||"nm"), sellAs:String(it.sellAs||"nm"), paid:numOr(it.paid)}; })}; }
+function normShow(s){ s = s||{}; return {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours),
+  sales:(Array.isArray(s.sales)?s.sales:[]).map(function(r){ r = r||{}; return {id:String(r.id||uid("r")), cardId:r.cardId?String(r.cardId):null, label:String(r.label||"").slice(0,80), bought:numOr(r.bought), sold:numOr(r.sold)}; })}; }
+function canon(o){
+  if(Array.isArray(o)) return "["+o.map(canon).join(",")+"]";
+  if(o && typeof o==="object") return "{"+Object.keys(o).sort().map(function(k){ return JSON.stringify(k)+":"+canon(o[k]); }).join(",")+"}";
+  return JSON.stringify(o==null ? null : o);
+}
+function applyDraft(remote, d){
+  var out = [], seen = {};
+  remote.forEach(function(x){ seen[x.id] = 1; if(d.del[x.id]) return; out.push(clone(d.up[x.id] || x)); });
+  Object.keys(d.up).forEach(function(id){ if(!seen[id]) out.unshift(clone(d.up[id])); });
+  return out;
+}
+function diffList(remote, cur, norm){
+  var d = emptyDiff(), rm = {}, ids = {};
+  remote.forEach(function(x){ rm[x.id] = canon(x); });
+  cur.forEach(function(x){ var c = norm(x); ids[c.id] = 1; if(rm[c.id] !== canon(c)) d.up[c.id] = c; });
+  remote.forEach(function(x){ if(!ids[x.id]) d.del[x.id] = 1; });
+  return d;
+}
+function pendingCount(){ var n = 0; ["pairings","shows"].forEach(function(k){ n += Object.keys(SYNC[k].up).length + Object.keys(SYNC[k].del).length; }); return n; }
+function syncSave(){
+  SYNC.pairings = diffList(REMOTE_PAIRS, sharedPairs(), normPair);
+  if(typeof LOG!=="undefined") SYNC.shows = diffList(REMOTE_SHOWS, LOG.shows, normShow);
+  if(!pendingCount()) delete SYNC.sentAt;
+  save(SYNC_KEY, SYNC);
+}
+function syncSummary(){
+  var p = Object.keys(SYNC.pairings.up).length + Object.keys(SYNC.pairings.del).length;
+  var s = Object.keys(SYNC.shows.up).length + Object.keys(SYNC.shows.del).length, a = [];
+  if(p) a.push(p+" pairing"+(p===1?"":"s")); if(s) a.push(s+" card show"+(s===1?"":"s"));
+  return a.join(" + ");
+}
+function copyText(t){
+  if(navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t);
+  var ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); }catch(e){} ta.remove(); return Promise.resolve();
+}
+function pushToGitHub(){
+  syncSave(); if(!pendingCount()) return;
+  function vals(o){ return Object.keys(o).map(function(k){ return o[k]; }); }
+  var payload = {v:1, pairings:{up:vals(SYNC.pairings.up), del:Object.keys(SYNC.pairings.del)}, shows:{up:vals(SYNC.shows.up), del:Object.keys(SYNC.shows.del)}};
+  var title = "Save data: "+syncSummary();
+  var body = "Sent from the Card Flipz site. Press **Create**: the bot saves this and closes the issue in about a minute.\n\n```json\n"+JSON.stringify(payload)+"\n```";
+  var base = "https://github.com/"+DATA_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body=";
+  var url = base+encodeURIComponent(body);
+  if(url.length > 7600){ /* too long for a link: copy it so it can be pasted into the issue */
+    copyText(body);
+    url = base+encodeURIComponent("Delete this line, then paste (the site copied your changes), then press Create.");
+    state.pairMsg = "That's a lot of changes, so they were copied instead of filled in. In GitHub, clear the description box, paste, then press Create.";
+  } else state.pairMsg = "";
+  window.open(url, "_blank", "noopener");
+  SYNC.sentAt = Date.now(); save(SYNC_KEY, SYNC); mountBar();
+}
 function cardById(id){ for(var i=0;i<cards.length;i++){ if(cards[i].id===id) return cards[i]; } return null; }
 function pairById(id){ for(var i=0;i<pairs.length;i++){ if(pairs[i].id===id) return pairs[i]; } return null; }
 function priceAt(c,k){ var x = c && c.raw && c.raw[k]; var v = x && Number(x.price); return v>0 ? v : 0; }
@@ -1088,7 +1156,7 @@ function pairTotals(p){
   p.items.forEach(function(it){ var r = itemCalc(it); if(r.missing || r.noPrice){ t.gaps++; return; } t.n++; t.mv+=r.mv; t.cost+=r.cost; t.payout+=r.payout; t.profit+=r.profit; t.ebayProfit+=r.ebayProfit; });
   t.roi = t.cost ? t.profit/t.cost*100 : 0; return t;
 }
-function changed(p){ if(p.local) saveLocalPairs(); else state.dirty = true; }
+function changed(p){ if(p.local) saveLocalPairs(); else syncSave(); }
 function addCards(target, ids){
   var p = target==="__new" || !target ? newPairing() : pairById(target);
   if(!p) p = newPairing();
@@ -1110,11 +1178,16 @@ function selectBar(){
 }
 function pairBar(){
   if(state.selecting && state.view==="list") return selectBar();
-  if(!state.dirty) return '';
-  var dis = state.pairSaving ? ' disabled' : '';
-  return '<div class="actionbar" role="region" aria-label="Unsaved pairing changes"><b>Unsaved pairing changes</b>'+
-    '<button class="btn" id="pb-discard"'+dis+'>Discard</button><button class="btn primary" id="pb-save"'+dis+'>'+(state.pairSaving?'Saving…':'Save pairings')+'</button>'+
-    (state.pairMsg?'<span class="msg" role="status">'+esc(state.pairMsg)+'</span>':'')+'</div>';
+  var n = pendingCount(); if(!n) return '';
+  var sent = SYNC.sentAt ? (Date.now()-SYNC.sentAt)/60000 : null, status;
+  if(state.pairMsg) status = state.pairMsg;
+  else if(sent!=null && sent < 10) status = 'Sent to GitHub. Press Create there if you haven’t, then tap Check in about a minute.';
+  else if(sent!=null) status = 'Not on GitHub yet. If you pressed Create, <a href="https://github.com/'+DATA_REPO+'/issues?q=is%3Aissue+%22Save+data%22" target="_blank" rel="noopener">see what the bot said</a>; otherwise save again.';
+  else status = 'Saved on this phone. Save to GitHub so everyone sees '+(n===1?'it':'them')+'.';
+  return '<div class="actionbar" role="region" aria-label="Changes not on GitHub yet"><b>'+esc(syncSummary())+' not on GitHub yet</b>'+
+    '<button class="btn" id="pb-discard">Discard</button>'+(sent!=null?'<button class="btn" id="pb-check">Check</button>':'')+
+    '<button class="btn primary" id="pb-save">'+(sent!=null?'Save again':'Save to GitHub')+'</button>'+
+    '<span class="msg" role="status">'+status+'</span></div>';
 }
 function mountBar(){
   var old = document.querySelector(".actionbar"); if(old) old.remove();
@@ -1124,27 +1197,22 @@ function mountBar(){
   var sa = document.getElementById("sel-add"); if(sa) sa.addEventListener("click", function(){
     if(!selected.length) return; var p = addCards(document.getElementById("sel-target").value, selected.slice()); goPairs(p.id); });
   var sc = document.getElementById("sel-cancel"); if(sc) sc.addEventListener("click", function(){ state.selecting = false; selected = []; render(); });
-  var ps = document.getElementById("pb-save"); if(ps) ps.addEventListener("click", savePairs);
+  var ps = document.getElementById("pb-save"); if(ps) ps.addEventListener("click", pushToGitHub);
+  var pk = document.getElementById("pb-check"); if(pk) pk.addEventListener("click", function(){ remember(); location.reload(); });
   var pd = document.getElementById("pb-discard"); if(pd) pd.addEventListener("click", function(){
-    pairs = (DATA.pairings||[]).map(clone).concat(localPairsFromStore()); state.dirty = false; state.pairMsg = "";
-    if(state.view==="pairing" && !pairById(state.pid)) state.view = "pairings"; render(); });
+    if(!confirm("Throw away the "+syncSummary()+" changes that aren't on GitHub yet?")) return;
+    pairs = REMOTE_PAIRS.map(clone).concat(localPairsFromStore()); LOG.shows = REMOTE_SHOWS.map(clone);
+    SYNC = {pairings:emptyDiff(), shows:emptyDiff()}; save(SYNC_KEY, SYNC); state.pairMsg = "";
+    if(state.view==="pairing" && !pairById(state.pid)) state.view = "pairings";
+    if(state.view==="show" && !showById(state.showId)) state.view = "log"; render(); });
 }
-function savePairs(){
-  if(!artifactApi){ denied(); return; }
-  state.pairSaving = true; state.pairMsg = "Saving…"; mountBar();
-  try{ sessionStorage.setItem("flipdesk.open", state.view==="pairing" ? "pairing:"+state.pid : state.view==="pairings" ? "pairings" : (state.view==="detail" ? state.id : "")); }catch(e){}
-  artifactApi.publish(buildDoc(cards)).then(function(){ state.published = true; state.pairMsg = "Saved. Reloading…"; mountBar(); })
-  .catch(function(err){
-    state.pairSaving = false; var code = err && err.code;
-    if(code==="not_writer"||code==="not_granted"||code==="consent_required"||code==="capability_disabled"||code==="not_declared"){ canWrite = false; denied(); return; }
-    state.pairMsg = code==="conflict" ? "Someone else just saved a change. The page is reloading with their version; your pairing changes are kept." :
-      code==="rate_limited" ? "Too many saves in a row. Wait a minute, then save again." :
-      code==="too_large" ? "The tracker is too big to save. Remove a card image or two." : "Couldn't save right now. Check your connection and try again.";
-    mountBar();
-  });
+/* reopen the same screen after a reload */
+function remember(){
+  var v = state.view, o = v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
+  try{ sessionStorage.setItem("flipdesk.open", o); }catch(e){}
 }
 /* View-only visitors: keep their new pairings on this device instead. */
-function denied(){
+function denied(){ /* (Claude-artifact version only) */
   var sharedIds = (DATA.pairings||[]).map(function(p){ return p.id; });
   pairs.forEach(function(p){ if(!p.local && sharedIds.indexOf(p.id)<0) p.local = true; });
   var locals = pairs.filter(function(p){ return p.local; });
@@ -1219,7 +1287,7 @@ function renderPairing(){
   var pv = document.getElementById("pvendor"); pv.addEventListener("change", function(){ var v = parseFloat(pv.value); if(!isNaN(v) && v>=0){ S.vendor = v; save("flipdesk.settings", S); render(); } });
   var d = document.getElementById("pdel"); if(d) d.addEventListener("click", function(){ state.confirmPairDel = true; render(); });
   var dn = document.getElementById("pdel-no"); if(dn) dn.addEventListener("click", function(){ state.confirmPairDel = false; render(); });
-  var dy = document.getElementById("pdel-yes"); if(dy) dy.addEventListener("click", function(){ pairs = pairs.filter(function(x){ return x !== p; }); if(p.local) saveLocalPairs(); else state.dirty = true; goPairs(null); });
+  var dy = document.getElementById("pdel-yes"); if(dy) dy.addEventListener("click", function(){ pairs = pairs.filter(function(x){ return x !== p; }); if(p.local) saveLocalPairs(); else syncSave(); goPairs(null); });
   root.querySelectorAll(".csel").forEach(function(s){ s.addEventListener("change", function(){ p.items[+s.getAttribute("data-i")][s.getAttribute("data-f")] = s.value; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
   root.querySelectorAll("input.paid").forEach(function(inp){ inp.addEventListener("change", function(){ var v = parseFloat(inp.value); p.items[+inp.getAttribute("data-i")].paid = isNaN(v)||v<0 ? "" : v; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
   root.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ p.items.splice(+b.getAttribute("data-x"),1); changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
@@ -1232,16 +1300,23 @@ function renderPairing(){
   });
 }
 
-/* ---------- profit log: private to this device (localStorage) ---------- */
+/* ---------- profit log: shared on GitHub (profitlog.json); changes wait on this device until saved ---------- */
 var LOG = loadLog(), downloadsApi = null, logStorageOk = true, chartMode = "show", resizeTimer = null;
 (function(){ try{ localStorage.setItem("flipdesk.t","1"); localStorage.removeItem("flipdesk.t"); }catch(e){ logStorageOk = false; } })();
 function loadLog(){
-  var l = load("flipdesk.profitlog", null);
-  if(!l || !Array.isArray(l.shows)) l = {shows:[], lastBackup:""};
-  l.shows.forEach(function(s){ if(!Array.isArray(s.sales)) s.sales = []; });
-  return l;
+  var shows = applyDraft(REMOTE_SHOWS, SYNC.shows), last = load("flipdesk.lastBackup", "");
+  /* One-time move: a log that was kept only on this device joins the shared log (as unsaved changes) */
+  var old = load("flipdesk.profitlog", null);
+  if(old && Array.isArray(old.shows)){
+    var have = {}; shows.forEach(function(s){ have[s.id] = 1; });
+    old.shows.forEach(function(s){ s = normShow(s); if(!have[s.id]) shows.push(s); });
+    if(old.lastBackup && !last){ last = old.lastBackup; save("flipdesk.lastBackup", last); }
+    save("flipdesk.profitlog.old", old);
+    try{ localStorage.removeItem("flipdesk.profitlog"); }catch(e){}
+  }
+  return {shows:shows, lastBackup:last};
 }
-function saveLog(){ save("flipdesk.profitlog", LOG); }
+function saveLog(){ syncSave(); mountBar(); }
 function todayStr(){ var d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function uid(p){ return p+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
 function showById(id){ for(var i=0;i<LOG.shows.length;i++) if(LOG.shows[i].id===id) return LOG.shows[i]; return null; }
@@ -1261,6 +1336,7 @@ function logStats(){
 function sortedShows(asc){ return LOG.shows.slice().sort(function(a,b){ var c = String(a.date).localeCompare(String(b.date)); return asc ? c : -c; }); }
 function perHr(n){ return n==null ? "—" : (n<0?"−":"")+"$"+Math.abs(n).toFixed(Math.abs(n)<100?2:0).replace(/\.00$/,"")+"/hr"; }
 function backupDue(){
+  return false; /* the log lives on GitHub now; backups are optional (Save backup at the bottom) */
   if(!LOG.shows.length) return false;
   try{ if(sessionStorage.getItem("flipdesk.backupSnooze")===todayStr()) return false; }catch(e){}
   var last = LOG.lastBackup; if(!last) return true;
@@ -1347,7 +1423,7 @@ function backupText(){
   L.push(BK_MARK, JSON.stringify({v:1, shows:LOG.shows}));
   return L.join("\n");
 }
-function markBackedUp(){ LOG.lastBackup = todayStr(); saveLog(); }
+function markBackedUp(){ LOG.lastBackup = todayStr(); save("flipdesk.lastBackup", LOG.lastBackup); }
 function saveBackup(){ state.backupPanel = {mode:"choose"}; render(); window.scrollTo(0,0); }
 function downloadBackup(){
   var txt = backupText(), fn = "chaundoo-profit-log-"+todayStr()+".txt";
@@ -1366,15 +1442,16 @@ function restoreFrom(text){
   var shows = parseBackup(text);
   if(!shows){ state.backupPanel = {mode:"msg", msg:"That doesn’t look like a profit log backup. Use the .txt file from “Save backup”."}; render(); return; }
   if(LOG.shows.length){ state.backupPanel = {mode:"confirm", shows:shows}; render(); return; }
-  LOG.shows = shows; markBackedUp(); state.backupPanel = {mode:"msg", msg:"Restored "+shows.length+" card show"+(shows.length===1?"":"s")+"."}; render();
+  LOG.shows = shows; markBackedUp(); saveLog(); state.backupPanel = {mode:"msg", msg:"Restored "+shows.length+" card show"+(shows.length===1?"":"s")+"."}; render();
 }
 
 /* --- views --- */
 function renderLog(){
   var t = logStats(), h = header();
-  h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Saved privately on this device.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
-  if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so the log can’t be kept after you close it. Save a backup before leaving.</p>';
+  h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Changes save on your phone right away; tap <b>Save to GitHub</b> to share them. Note: the GitHub repo is public, so anyone with the link can see this log.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
+  if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so unsaved changes are lost if you close it. Tap Save to GitHub before leaving.</p>';
   if(backupDue() && !state.backupPanel) h += '<div class="notice bk-due"><span><b>'+(new Date().getDay()===5?'It’s Friday: save':'Time to save')+' a backup of your profit log.</b> If you lose your phone or clear your browser, this file brings it back.</span><span class="bk-acts"><button class="btn primary" id="bk-now">Save backup</button><button class="btn ghost" id="bk-snooze">Not now</button></span></div>';
+  if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
   h += backupPanelHtml();
   if(!LOG.shows.length){
     h += '<div class="empty log-empty"><b>No card shows logged yet.</b><br>Tap <b>Log a card show</b>, add the cards you bought and what they sold for, and your profit, money per hour and chart show up here.<br><span class="sub">Tip: in <b>Card Pairings</b>, “Log as sold” adds a whole batch at once.</span></div>';
@@ -1420,7 +1497,7 @@ function bindBackup(){
     function done(){ markBackedUp(); btn.textContent = "Copied"; }
     if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, function(){ ta.select(); try{ if(document.execCommand("copy")) done(); }catch(e){} });
     else { ta.select(); try{ if(document.execCommand("copy")) done(); }catch(e){} } });
-  on("bk-replace", function(){ LOG.shows = state.backupPanel.shows; markBackedUp(); state.backupPanel = {mode:"msg", msg:"Restored "+LOG.shows.length+" card shows from the backup."}; render(); });
+  on("bk-replace", function(){ LOG.shows = state.backupPanel.shows; markBackedUp(); saveLog(); state.backupPanel = {mode:"msg", msg:"Restored "+LOG.shows.length+" card shows from the backup."}; render(); });
   on("bk-paste-go", function(){ restoreFrom(document.getElementById("bk-paste").value); });
   var f = document.getElementById("bk-file"); if(f) f.addEventListener("change", function(){ var file = f.files && f.files[0]; if(!file) return; var fr = new FileReader(); fr.onload = function(){ restoreFrom(String(fr.result)); }; fr.readAsText(file); });
 }
@@ -1553,6 +1630,8 @@ function render(){
   var hash = (location.hash||"").slice(1);
   var id = start || hash;
   initPairs();
+  var wasSent = !!SYNC.sentAt; syncSave();
+  if(wasSent && !pendingCount()) state.notice = "Saved to GitHub. Everyone now sees your pairings and profit log changes.";
   if(id==="pairings"){ state.view="pairings"; }
   else if(id==="log"){ state.view="log"; }
   else if(id && id.indexOf("show:")===0){ state.view="show"; state.showId=id.slice(5); }
@@ -1573,7 +1652,8 @@ function render(){
 /* ---------- Loader / saver for the per-era files ----------
    eras/eras.json            list of eras (+ set-name patterns for guessing a new set's era)
    eras/<id>/<id>.json       {era, version, cards:[...]}  one file per era
-   pairings.json             {version, pairings:[...]}
+   pairings.json             {version, pairings:[...]}   saved by the "Save pairings & profit log" GitHub job
+   profitlog.json            {version, shows:[...]}      saved by the same job
    Files are fetched with cache:"no-cache": the browser asks GitHub "changed?" and only
    re-downloads files that actually changed, which saves mobile data. */
 (function(){
@@ -1582,8 +1662,18 @@ var MAN=null, REMOTE={}, CUR={}, PENDING=[];   /* REMOTE[key]=version on GitHub;
 function fileOf(key){ return key==="pairings" ? "pairings.json" : "eras/"+key+"/"+key+".json"; }
 function nameOf(key){ return key==="pairings" ? "pairings.json" : key+".json"; }
 function whereOf(key){ return key==="pairings" ? "card-flipz (main folder)" : "card-flipz → eras → "+key; }
+/* versions.json lists a short id for every data file. Files are then asked for as file.json?v=<id>:
+   the phone keeps each one and only downloads a file again when its id changes, so a normal visit
+   is one tiny request instead of a dozen. Without versions.json it falls back to asking for each file. */
+var VERS=null, FROM_PHONE=false;
+function getVersions(){
+  return fetch("versions.json?t="+Date.now(),{cache:"no-store"}).then(function(r){
+    if(!r.ok) return null; FROM_PHONE = r.headers.get("X-From-Phone")==="1"; return r.json(); })
+  .then(function(v){ return v && v.files ? v : null; }).catch(function(){ return null; });
+}
 function getJSON(url, fallback){
-  return fetch(url,{cache:"no-cache"}).then(function(r){
+  var v = VERS && VERS.files[url];
+  return fetch(v ? url+"?v="+v : url, v ? {} : {cache:"no-cache"}).then(function(r){
     if(r.status===404 && fallback!==undefined) return fallback;
     if(!r.ok) throw new Error(url+" ("+r.status+")"); return r.json(); });
 }
@@ -1610,7 +1700,7 @@ window.claude={use:function(name){
     var d=JSON.parse(m[1]), parts=split(d.cards||[], d.pairings), stamp=String(Math.floor(Date.now()/1000));
     var local=readLocal(), files=[];
     Object.keys(parts).forEach(function(key){
-      if(parts[key]===CUR[key]) return;
+      if(key==="pairings" || parts[key]===CUR[key]) return;  /* pairings save through GitHub issues now */
       var obj = key==="pairings" ? {version:stamp, pairings:JSON.parse(parts[key])} : {era:key, version:stamp, cards:JSON.parse(parts[key])};
       local[key]={base:REMOTE[key]||"", data:obj};
       files.push({key:key, name:nameOf(key), text:JSON.stringify(obj)});
@@ -1639,13 +1729,14 @@ function notice(dropped){
   var ds=n.querySelector("[data-discard]"); if(ds) ds.onclick=function(){ if(confirm("Discard the edits saved on this device and go back to the shared list?")){ try{localStorage.removeItem(LKEY);}catch(e){} location.reload(); } };
   document.body.insertBefore(n,document.body.firstChild);
 }
-getJSON("eras/eras.json").then(function(man){
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
+getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).then(function(man){
   MAN=man; rules=man.eras.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ return new RegExp(p,"i"); })}; });
-  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]})]));
+  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]})]));
 }).then(function(files){
   var data={}, local=readLocal(), dropped=[], changedLocal=false;
   MAN.eras.forEach(function(e,i){ data[e.id]=files[i]; });
-  data.pairings=files[files.length-1];
+  var log=files[files.length-1]; data.pairings=files[files.length-2];
   Object.keys(data).forEach(function(k){ REMOTE[k]=String(data[k].version||""); });
   /* One-time: edits saved on this device under the old single cards.json */
   var old=null; try{ old=JSON.parse(localStorage.getItem(OLD_LKEY)||"null"); }catch(e){}
@@ -1657,6 +1748,9 @@ getJSON("eras/eras.json").then(function(man){
     }
     try{ localStorage.removeItem(OLD_LKEY); }catch(e){}
   }
+  /* Pairing edits saved on this device by the old download-and-upload saving: hand them to the app once */
+  var pairingsDraft=null;
+  if(local.pairings){ if(local.pairings.base===REMOTE.pairings && local.pairings.data && Array.isArray(local.pairings.data.pairings)) pairingsDraft=local.pairings.data.pairings; delete local.pairings; changedLocal=true; }
   Object.keys(local).forEach(function(k){
     var l=local[k];
     if(data[k] && l && l.base===REMOTE[k] && l.data){ data[k]=l.data; PENDING.push(k); }
@@ -1667,8 +1761,9 @@ getJSON("eras/eras.json").then(function(man){
   MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
   var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
   var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
-  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], eras:eras});
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:(log&&log.shows)||[], pairingsDraft:pairingsDraft, eras:eras});
   notice(dropped);
+  if(FROM_PHONE){ var off=document.createElement("div"); off.className="localnote"; off.textContent="No connection right now, so this is the card data saved on your phone. It updates on its own next time you have signal."; document.body.insertBefore(off,document.body.firstChild); }
   var s=document.createElement("script"); s.textContent=document.getElementById("app-js").textContent; document.body.appendChild(s);
 }).catch(function(err){ document.getElementById("root").innerHTML='<p style="padding:40px;text-align:center">Couldn\'t load the card list. Make sure the <b>eras</b> folder (with eras.json and one folder per era) is uploaded next to index.html. ('+err.message+')</p>'; });
 })();

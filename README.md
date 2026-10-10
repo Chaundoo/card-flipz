@@ -18,12 +18,19 @@ eras/sv/sv.json           Scarlet & Violet (2023–2025)
 eras/me/me.json           Mega Evolution (2025–)
 eras/other/other.json     other promos & products
 pairings.json             saved pairings
+profitlog.json            saved profit log (card shows)
 ```
 
 ## Saving edits from the site
 When you save a card, the site downloads only the era file(s) that changed (e.g. `sv.json`).
 Upload each one into its own folder: **eras → sv → Add file → Upload files**.
-Pairings download as `pairings.json` and go in the main folder.
+
+## Saving pairings and the profit log
+Pairings and the profit log save from the site, no downloading needed. Every change is kept on the
+phone right away; tap **Save to GitHub** in the bar at the bottom and press **Create** on the GitHub
+page that opens. `.github/workflows/save-data.yml` (`scripts/save_data.py`) writes the changes into
+`pairings.json` / `profitlog.json` and closes the issue (about a minute). Only you and collaborators
+can save this way. The repo is public, so the saved pairings and profit log are public too.
 
 ## Adding a new era later
 Add an entry to `eras/eras.json` above `"other"` (id, name, years, set-name patterns), then create
