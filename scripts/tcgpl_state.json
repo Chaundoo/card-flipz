@@ -401,6 +401,11 @@
 "synced": "2026-10-10",
 "variant": "Reverse Holofoil"
 },
+"cinccino-rc19-rc25-84321": {
+"id": "019c978e-e788-7d3c-8aa5-ff350a4909cb",
+"synced": "2026-10-10",
+"variant": "Holofoil"
+},
 "claydol-5-107-84334-revers": {
 "id": "019c975d-6080-7991-ad87-73e4e70306ae",
 "synced": "2026-10-10",
@@ -2804,6 +2809,7 @@
 "Gym Heroes": "pokemon--gym-heroes",
 "Jungle": "pokemon--jungle",
 "Legendary Collection": "pokemon--legendary-collection",
+"Legendary Treasures: Radiant Collection": "pokemon--legendary-treasures-radiant-collection",
 "Neo Destiny": "pokemon--neo-destiny",
 "Neo Discovery": "pokemon--neo-discovery",
 "Neo Genesis": "pokemon--neo-genesis",
