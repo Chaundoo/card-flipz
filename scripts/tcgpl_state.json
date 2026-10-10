@@ -811,6 +811,11 @@
 "synced": "2026-10-09",
 "variant": "Unlimited Holofoil"
 },
+"luxray-gl-lv-x-109-111-86952": {
+"id": "019c976e-bcf0-782a-b391-38e29e1669e5",
+"synced": "2026-10-10",
+"variant": "Holofoil"
+},
 "machamp-016-165-86960-revers": {
 "id": "019c976e-bcfd-781c-98b0-f51980a707c9",
 "synced": "2026-10-09",
@@ -1397,6 +1402,7 @@
 "Neo Discovery": "pokemon--neo-discovery",
 "Neo Genesis": "pokemon--neo-genesis",
 "Neo Revelation": "pokemon--neo-revelation",
+"Rising Rivals": "pokemon--rising-rivals",
 "Southern Islands": "pokemon--southern-islands",
 "Team Rocket": "pokemon--team-rocket"
 }
