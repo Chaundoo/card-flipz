@@ -664,10 +664,12 @@ function beTile(c){
 /* ---------- list ---------- */
 var searchTimer = null;
 /* Photos load only when a tile is about to scroll into view (~600px ahead). */
+/* Lists use TCGplayer's 200px-wide image (~70% less data); the card's own page keeps the 400px one. */
+function thumb(c){ var u = c && c.image || ""; return /^https:\/\/tcgplayer-cdn\.tcgplayer\.com\/product\/\d+_400w\.jpg$/.test(u) ? u.replace("_400w.jpg","_200w.jpg") : u; }
 function watchImages(){
   var imgs = root.querySelectorAll("img[data-img]");
   var byId = {}; cards.forEach(function(c){ byId[c.id] = c; });
-  function show(img){ var c = byId[img.getAttribute("data-img")]; if(c && c.image) img.src = c.image; img.removeAttribute("data-img"); }
+  function show(img){ var c = byId[img.getAttribute("data-img")]; if(c && c.image){ img.setAttribute("data-full", c.image); img.src = thumb(c); } img.removeAttribute("data-img"); }
   if(imgObserver) imgObserver.disconnect();
   if(!("IntersectionObserver" in window)){ imgs.forEach(show); return; }
   imgObserver = new IntersectionObserver(function(entries){
@@ -1230,7 +1232,7 @@ function renderPairings(){
   if(!pairs.length) h += '<div class="empty">No pairings yet. Open <b>Cards</b>, tap <b>Select cards</b>, pick the cards you’re selling together, then add them to a new pairing.</div>';
   else h += '<div class="pgrid">'+pairs.map(function(p){
     var t = pairTotals(p);
-    var thumbs = p.items.slice(0,6).map(function(it){ var c = cardById(it.cardId); return '<span class="pthumb">'+(c&&c.image?'<img src="'+c.image+'" alt="">':'')+'</span>'; }).join("");
+    var thumbs = p.items.slice(0,6).map(function(it){ var c = cardById(it.cardId); return '<span class="pthumb">'+(c&&c.image?'<img src="'+thumb(c)+'" alt="" loading="lazy">':'')+'</span>'; }).join("");
     return '<button class="ptile" data-pair="'+esc(p.id)+'"><div class="pthumbs">'+(thumbs||'<span class="sub">No cards yet</span>')+'</div>'+
       '<div><h3>'+esc(p.name)+'</h3><div class="sub">'+p.items.length+' card'+(p.items.length===1?'':'s')+(p.local?' · saved on this device':'')+'</div></div>'+
       '<div class="bf-main"><b class="num '+(t.profit>=0?'pos-t':'neg-t')+'">'+signed(t.profit)+'</b><span class="sub">batch profit</span></div>'+
@@ -1263,14 +1265,14 @@ function renderPairing(){
   else if(phone){
     h += '<div class="plist pitems">'+p.items.map(function(it,i){ var r = itemCalc(it);
       if(r.missing) return '<div class="prow2"><div class="top2"><span class="sub">This card was removed from the tracker.</span><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></div></div>';
-      return '<div class="prow2"><div class="top2"><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+r.c.image+'" alt="">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+'</span></span></span><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'+
+      return '<div class="prow2"><div class="top2"><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+'</span></span></span><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'+
         '<div class="pfields"><label>Bought as'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</label><label class="pf-paid">Paid (blank = market price)<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'"></label></div>'+
         '<div class="meta">'+(r.noPrice?'No price for that condition':'Vendor pays <b class="num" style="color:var(--gold-ink)">'+money(r.payout,2)+'</b> · profit <b class="num '+(r.profit>=0?'pos-t':'neg-t')+'">'+signed(r.profit)+'</b>')+'</div></div>'; }).join("")+'</div>';
   } else {
     h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th>Bought as</th><th class="r">Paid</th><th>Sells as</th><th class="r">Market</th><th class="r v">Vendor pays</th><th class="r">Profit</th><th></th></tr>'+
       p.items.map(function(it,i){ var r = itemCalc(it);
         if(r.missing) return '<tr><td colspan="7" class="sub">This card was removed from the tracker.</td><td><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></td></tr>';
-        return '<tr><td><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+r.c.image+'" alt="">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></span></span></td>'+
+        return '<tr><td><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></span></span></td>'+
           '<td>'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</td>'+
           '<td class="r"><input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Price paid"></td>'+
           '<td>'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</td>'+
@@ -1521,7 +1523,7 @@ function renderShow(){
   } else {
     h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th class="r">Bought for</th><th class="r">Sold for</th><th class="r">Profit</th><th></th></tr>'+
       sh.sales.map(function(r,i){ var p = isNum(r.sold) ? Number(r.sold)-(Number(r.bought)||0) : null; var c = r.cardId ? cardById(r.cardId) : null;
-        return '<tr><td><span class="ccell">'+(c&&c.image?'<span class="pmini"><img src="'+c.image+'" alt=""></span>':'')+'<b>'+esc(saleName(r))+'</b></span></td>'+
+        return '<tr><td><span class="ccell">'+(c&&c.image?'<span class="pmini"><img src="'+thumb(c)+'" alt="" loading="lazy"></span>':'')+'<b>'+esc(saleName(r))+'</b></span></td>'+
           '<td class="r"><input class="sb paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'" aria-label="Bought for"></td>'+
           '<td class="r"><input class="ss paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Not sold" value="'+esc(isNum(r.sold)?r.sold:"")+'" aria-label="Sold for"></td>'+
           '<td class="r num '+(p==null?'':(p>=0?'pos-t':'neg-t'))+'">'+(p==null?'<span class="sub">not sold</span>':signed(p))+'</td><td><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></td></tr>'; }).join("")+'</table></div>';
@@ -1713,7 +1715,7 @@ window.claude={use:function(name){
   }});
   return Promise.resolve(null);
 }};
-document.addEventListener("error",function(e){ var t=e.target; if(t&&t.tagName==="IMG"&&t.closest(".art")){ t.closest(".art").innerHTML='<span class="sub">No image</span>'; } },true);
+document.addEventListener("error",function(e){ var t=e.target; if(t&&t.tagName==="IMG"&&t.dataset.full&&t.src!==t.dataset.full){ t.src=t.dataset.full; return; } if(t&&t.tagName==="IMG"&&t.closest(".art")){ t.closest(".art").innerHTML='<span class="sub">No image</span>'; } },true);
 function notice(dropped){
   var n=document.createElement("div"); n.className="localnote";
   var h='';
