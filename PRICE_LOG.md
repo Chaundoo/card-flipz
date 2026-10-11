@@ -2,6 +2,38 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-10-11
+
+- Cards checked today: **273** (daily share 266 of 1862) in 6m 31s
+- API requests used: **67** of 80 (API says 33 left today)
+- ✅ Prices changed: **267**
+- ➖ Checked, prices unchanged: 0
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match the card (retried in 7 days): 6
+- ⚠️ Errors: 0
+- Cards never synced yet: **1038** · oldest sync: 2026-10-09
+- Era files saved: **2**
+
+**Biggest NM moves (15%+):**
+- Mudkip (Reverse Holo) — EX Dragon 65/97: $77.99 → $178.66
+- Gengar LV.X (Holo Rare) — Arceus 97/99: $389.58 → $707.08
+- Haunter (Reverse Holo) — EX Legend Maker 35/92: $227.18 → $121.54
+- Pikachu (Holo) — POP Series 4 013/017: $253.03 → $369.63
+- Dustox ex (Holo) — EX Legend Maker 86/92: $57.50 → $82.50
+- Mewtwo (Holo · Delta Species) — EX Delta Species 12/113: $531.84 → $746.84
+- Latios (Delta Species · Reverse Holo) — EX Holon Phantoms 22/110: $369.99 → $499.99
+- Garchomp C Lv.X (Holo) — Supreme Victors 145: $161.01 → $217.12
+- Deoxys (Holo · Delta Species) — POP Series 4 002/017: $267.00 → $350.00
+- Machamp LV.X (Holo) — Stormfront 98/100: $147.23 → $187.84
+
+**Problem cards (6):**
+- nomatch: Deoxys (Delta Species · Holo) — EX Holon Phantoms 5/110 — couldn't find this card on TCG Price Lookup
+- nomatch: Kabutops (Delta Species · Holo) — EX Holon Phantoms 9/110 — couldn't find this card on TCG Price Lookup
+- nomatch: Latios (Delta Species · Holo) — EX Delta Species 9/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Tyranitar (Delta Species · Reverse Holo) — EX Delta Species 16/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Metagross (Delta Species · Holo) — EX Delta Species 11/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Mew (Holo · Delta Species) — POP Series 5 003/017 — couldn't find this card on TCG Price Lookup
+
 ## ✅ OK — price update 2026-10-10
 
 - Cards checked today: **279** (daily share 266 of 1861) in 5m 20s
