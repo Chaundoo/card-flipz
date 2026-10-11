@@ -724,14 +724,87 @@ function watchImages(){
   }, {rootMargin:"600px 0px"});
   imgs.forEach(function(img){ imgObserver.observe(img); });
 }
+/* Smart search: words can be in any order, a bare number matches the card number ("charizard 4" finds 004/102),
+   and small typos still find the card ("charzard", "pikahcu"). Exact matches show first; close matches only
+   show when nothing matches exactly. */
+function sFold(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+function sWords(s){ return sFold(s).replace(/['’.]/g,"").split(/[^a-z0-9]+/).filter(Boolean); }
+var sCache = typeof WeakMap!=="undefined" ? new WeakMap() : null;
+function sIndex(c){
+  var key = c.name+"|"+(c.variant||"")+"|"+c.set+"|"+c.number, hit = sCache && sCache.get(c);
+  if(hit && hit.key===key) return hit;
+  var words = sWords(title(c)+" "+c.set), parts = String(c.number||"").split("/");
+  var ix = { key:key, words:words, flat:words.join(""), num:normNum(parts[0]), den:parts[1]?normNum(parts[1]):"", raw:sFold(c.number).replace(/[^a-z0-9]/g,"") };
+  if(sCache) sCache.set(c, ix);
+  return ix;
+}
+function sDist(a, b, max){
+  if(Math.abs(a.length-b.length)>max) return max+1;
+  var prev2 = null, prev = [], i, j;
+  for(j=0;j<=b.length;j++) prev[j] = j;
+  for(i=1;i<=a.length;i++){
+    var cur = [i], best = i;
+    for(j=1;j<=b.length;j++){
+      var cost = a[i-1]===b[j-1]?0:1;
+      var v = Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
+      if(prev2 && i>1 && j>1 && a[i-1]===b[j-2] && a[i-2]===b[j-1]) v = Math.min(v, prev2[j-2]+1);
+      cur[j] = v; if(v<best) best = v;
+    }
+    if(best>max) return max+1;
+    prev2 = prev; prev = cur;
+  }
+  return prev[b.length];
+}
+function sAllow(len){ return len<4 ? 0 : len<7 ? 1 : 2; }
+function sParse(q){
+  return sFold(q).replace(/#/g," ").split(/\s+/).filter(Boolean).map(function(t){
+    var m = /^([a-z]*\d+[a-z]*)\/([a-z]*\d+[a-z]*)$/.exec(t);
+    if(m) return {num:normNum(m[1]), den:normNum(m[2])};
+    if(/\d/.test(t) && /^[a-z]{0,5}\d+[a-z]?$/.test(t)) return {num:normNum(t), raw:t};
+    var w = t.replace(/['’.]/g,"").replace(/[^a-z0-9]+/g,"");
+    return w ? {w:w} : null;
+  }).filter(Boolean);
+}
+/* 0 = exact, 1 = close (typo), -1 = no match */
+function sTok(t, ix){
+  if(t.num!==undefined){
+    if(t.den!==undefined) return (ix.num===t.num && (!ix.den || ix.den.indexOf(t.den)===0)) ? 0 : -1;
+    if(ix.num===t.num || ix.raw===t.raw) return 0;
+    for(var k=0;k<ix.words.length;k++) if(ix.words[k]===t.raw) return 0;
+    return -1;
+  }
+  var w = t.w, i;
+  for(i=0;i<ix.words.length;i++) if(ix.words[i].indexOf(w)>=0) return 0;
+  if(ix.flat.indexOf(w)>=0) return 0;
+  var max = sAllow(w.length); if(!max) return -1;
+  for(i=0;i<ix.words.length;i++){
+    var word = ix.words[i];
+    if(sDist(w, word, max)<=max) return 1;
+    if(word.length>w.length && sDist(w, word.slice(0, w.length), max)<=max) return 1;
+  }
+  if(sDist(w, ix.flat.slice(0, w.length), max)<=max) return 1;
+  return -1;
+}
+function sScore(toks, c){
+  var ix = sIndex(c), worst = 0;
+  for(var i=0;i<toks.length;i++){ var r = sTok(toks[i], ix); if(r<0) return -1; if(r>worst) worst = r; }
+  return worst;
+}
+/* Returns {list, fuzzy}: the exact matches, or the close matches when nothing matched exactly. */
+function smartSearch(list, q){
+  var toks = sParse(q); if(!toks.length) return {list:list, fuzzy:false};
+  var exact = [], close = [];
+  list.forEach(function(c){ var s = sScore(toks, c); if(s===0) exact.push(c); else if(s===1) close.push(c); });
+  return exact.length ? {list:exact, fuzzy:false} : {list:close, fuzzy:close.length>0};
+}
+var lastFuzzy = false;
 function filteredList(){
-  var q = state.q.trim().toLowerCase();
   var list = cards.filter(function(c){
     if(state.era && c.era!==state.era) return false;
     if(state.set && c.set!==state.set) return false;
-    if(!q) return true;
-    return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(q)>=0;
+    return true;
   });
+  var sr = smartSearch(list, state.q); list = sr.list; lastFuzzy = sr.fuzzy;
   if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap";
   var gaps = {}; list.forEach(function(c){ gaps[c.id] = condGap(c); });
   list.sort(function(a,b){
@@ -811,6 +884,7 @@ function resultsHTML(){
   if(state.sort==="profit"||state.sort==="roi"){ h += '<p class="note" style="margin:-6px 0 12px">'+(state.sort==="profit"?'Ranked by dollar profit':'Ranked by profit ÷ total cost (raw NM buy + grading fee)')+' if the card grades '+esc((BASIS.find(function(b){return b[0]===state.basis;})||BASIS[0])[1])+' and you sell '+(state.exit==="vendor"?'to a vendor at '+S.vendor+'%':'on eBay after the '+S.ebay+'% fee')+'. This assumes that grade; most copies grade lower.</p>'; }
   if(state.sort==="gap"||state.sort==="fliproi"){ h += '<p class="note" style="margin:-6px 0 12px">Each card shows its best flip: buy one condition and resell it one step up (DMG → MP, MP → LP or LP → NM), '+exitText()+'. Ranked by '+(state.sort==="gap"?'dollar profit':'return on what you paid')+'. Look for copies listed below their true condition, and check them in hand before relisting.</p>'; }
   if(state.sort==="breakeven"){ h += '<p class="note" style="margin:-6px 0 12px">Ranked by the lowest PSA grade that still makes money after the eBay fee ('+S.ebay+'%), the PSA fee ($'+S.psa+') and the raw NM buy. Ties go to the bigger profit at that grade. Cards that lose money at every grade are last.</p>'; }
+  if(lastFuzzy && list.length) h += '<p class="note" style="margin:-6px 0 12px">No exact match for “'+esc(state.q.trim())+'”. Showing close matches.</p>';
   if(!list.length){ h += '<div class="empty">'+(cards.length?'No cards match that search.':'No cards yet. Add your first card to start tracking.')+'</div>'; }
   else {
     if(state.selecting) h += '<p class="note" style="margin:-6px 0 12px"><b>Select the cards you’re selling together</b>, then add them to a pairing with the bar at the bottom.</p>';
@@ -1389,8 +1463,8 @@ function renderPairing(){
     var ns = {}; Object.keys(psel).forEach(function(k){ k = +k; if(k<i) ns[k] = true; else if(k>i) ns[k-1] = true; }); psel = ns; changed(p); rerender(); }); });
   var q = document.getElementById("padd-q"), res = document.getElementById("padd-res");
   q.addEventListener("input", function(){
-    var s = q.value.trim().toLowerCase(); if(!s){ res.innerHTML = ""; return; }
-    var hits = cards.filter(function(c){ return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(s)>=0; }).slice(0,8);
+    var s = q.value.trim(); if(!s){ res.innerHTML = ""; return; }
+    var hits = smartSearch(cards, s).list.slice(0,8);
     res.innerHTML = hits.length ? hits.map(function(c){ return '<button data-add="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("") : '<p class="sub">No cards match.</p>';
     res.querySelectorAll("[data-add]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-add")); if(!c) return; p.items.push(defaultItem(c)); changed(p); rerender(); var n = document.getElementById("padd-q"); if(n) n.focus(); }); });
   });
@@ -1641,7 +1715,7 @@ function renderShow(){
   function addRow(row){ sh.sales.push(row); saveLog(); render(); var n = document.getElementById("sadd-q"); if(n) n.focus(); }
   q.addEventListener("input", function(){
     var raw = q.value.trim(), s2 = raw.toLowerCase(); if(!s2){ res.innerHTML = ""; return; }
-    var hits = cards.filter(function(c){ return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(s2)>=0; }).slice(0,6);
+    var hits = smartSearch(cards, raw).list.slice(0,6);
     res.innerHTML = hits.map(function(c){ return '<button data-sadd="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("")+
       '<button data-snew="1"><span>Add “<b>'+esc(raw)+'</b>” (not on the site)</span><span class="sub">+ Add</span></button>';
     res.querySelectorAll("[data-sadd]").forEach(function(b){ b.addEventListener("click", function(){ addRow({id:uid("r"), cardId:b.getAttribute("data-sadd"), label:"", bought:"", sold:""}); }); });
