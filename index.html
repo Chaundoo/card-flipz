@@ -336,7 +336,9 @@ body.phone .sheet-actions .btn{flex:1}
 .actionbar select{background:var(--surface);color:var(--ink);border:none;border-radius:9px;padding:9px 10px;flex:1 1 160px;min-width:0}
 .actionbar .btn:not(.primary){background:transparent;color:var(--navy-ink);border-color:rgba(255,255,255,.35)}
 .actionbar .msg{flex:1 1 100%;font-size:13px;opacity:.9}
-body.has-bar #root{padding-bottom:130px}
+body.has-bar #root{padding-bottom:calc(var(--barh,130px) + env(safe-area-inset-bottom,0px) + 40px)}
+body.typing .actionbar{display:none}
+.actionbar #pb-save{flex:1 1 auto}
 .pair-intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin:20px 0 14px}
 .pair-intro h2{font-size:26px;font-weight:800}
 .pair-intro p{margin:4px 0 0;max-width:620px}
@@ -385,6 +387,51 @@ body.has-bar #root{padding-bottom:130px}
 .padd-res button:hover{border-color:var(--pos)}
 .notice{margin:12px 0 0;padding:10px 12px;border-radius:10px;background:var(--gold-soft);color:var(--gold-ink);font-size:13.5px}
 body.phone .psum-main b{font-size:34px}
+.psum-line{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 8px;font-size:14px;color:var(--muted)}
+.psum-line b{color:var(--ink);font-size:16px}
+.psum-line .v{color:var(--gold-ink);background:var(--gold-soft);border-radius:8px;padding:3px 8px}
+.psum-line .v b{color:var(--gold-ink)}
+.psum-line input{width:58px;border:none;background:var(--surface);border-radius:5px;padding:2px 5px;text-align:right;color:var(--ink);font-weight:700;font-size:15px}
+.btn.sm{padding:5px 10px;font-size:13px}
+.pitems2{display:grid;gap:8px}
+.pi{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px}
+.pi.on{border-color:var(--pos);box-shadow:inset 0 0 0 1px var(--pos)}
+.pi .pick{display:flex;align-items:center;padding-top:12px}
+.pi .pick input{width:20px;height:20px;accent-color:var(--pos)}
+.pi .pmini{margin-top:2px}
+.pi-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.pi-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cname{border:none;background:none;padding:0;text-align:left;color:inherit;min-width:0;cursor:pointer}
+.cname b{display:block;font-size:15px;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.cname:hover b{text-decoration-color:currentColor}
+.cname .sub{display:block;font-size:12px}
+.pi-profit{font-weight:800;font-size:17px;white-space:nowrap}
+.pi-f{display:grid;grid-template-columns:1fr 1fr 84px;gap:6px;max-width:520px}
+@media (max-width:480px){.pi .pmini{display:none}.pi-f{grid-template-columns:1fr 1fr 64px}.pi-f select,.pi-f input{padding:6px 3px;font-size:16px}.pi{gap:8px;padding:10px 8px}}
+.pi-f label{display:flex;flex-direction:column;gap:2px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;min-width:0}
+.pi-f select,.pi-f input{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:6px 7px;min-width:0;color:var(--ink);font-size:14px}
+.pi-f select,.pi-f input{width:100%}
+.padd input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-size:15px}
+.padd{margin:0 0 10px}
+.psplit{position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:4;background:var(--navy);color:var(--navy-ink);border-radius:12px;padding:10px 12px;margin-bottom:10px;box-shadow:var(--shadow)}
+.ps-top{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:14px}
+.ps-top .pos-t,.ps-top .neg-t{filter:brightness(1.25)}
+.ps-act{display:flex;gap:6px;margin-top:8px}
+.ps-act .btn{background:transparent;color:var(--navy-ink);border-color:rgba(255,255,255,.35);flex:1 1 0;padding:7px 6px;font-size:13px;min-width:0}
+.ps-act select{background:var(--surface);color:var(--ink);border:none;border-radius:9px;padding:7px 6px;flex:1 1 0;min-width:0;font-size:13px}
+.cstats{text-align:left;position:relative;max-height:calc(100vh - 32px);overflow-y:auto}
+.cs-x{position:absolute;top:8px;right:8px}
+.cs-head{display:flex;gap:12px;align-items:flex-start;padding-right:24px}
+.cs-head img{width:84px;border-radius:6px;flex:none}
+.cs-head h2{font-size:19px;margin-bottom:2px}
+.cs-tbl{min-width:0;width:100%;margin:12px 0;border-collapse:collapse;font-size:14px}
+.cs-tbl th,.cs-tbl td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+.cs-tbl .r{text-align:right}
+.cs-tbl .v{color:var(--gold-ink)}
+.cs-flip{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:14px;display:grid;gap:3px}
+.cs-flip>span{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.cstats .row{display:flex;gap:8px;margin-top:14px}
+.cstats .row .btn{flex:1}
 body.phone .psum-stats{grid-template-columns:1fr;gap:8px}
 body.phone .psum-stats>div{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:0 10px}
 body.phone .psum-stats small{flex:1 0 100%}
@@ -830,7 +877,8 @@ function renderDetail(){
   if(!c){ state.view="list"; return renderList(); }
   var be = breakEven(c), buy = buyOf(c), p10 = calc(c,"psa10","psa");
   var h = header();
-  h += '<div class="back"><button class="btn ghost" id="back">← All cards</button></div>';
+  var fromP = state.fromPair && pairById(state.fromPair);
+  h += '<div class="back"><button class="btn ghost" id="back">'+(fromP?'← Back to '+esc(fromP.name):'← All cards')+'</button></div>';
   h += '<div class="detail-head"><div class="art">'+(c.image?'<img src="'+c.image+'" alt="'+esc(title(c))+'">':'')+'</div><div>'+
     '<div class="title-row"><div><h2>'+esc(title(c))+'</h2><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · Updated '+fmtDate(c.updated)+'</div></div>'+
     '<div class="confirm"><select id="addpair" class="btn" aria-label="Add this card to a pairing"><option value="">+ Add to pairing</option><option value="__new">New pairing</option>'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>'; }).join("")+'</select>'+
@@ -884,7 +932,7 @@ function renderDetail(){
   if(ADV) h += '<div class="verdict"><span class="tag">'+esc((c.verdict||"No verdict").toUpperCase())+'</span>'+(c.notes?'<p>'+esc(c.notes)+'</p>':'')+'</div>';
   root.innerHTML = h;
   bindHeader();
-  document.getElementById("back").addEventListener("click", function(){ go(null); });
+  document.getElementById("back").addEventListener("click", function(){ if(fromP){ var id = fromP.id; state.fromPair = null; goPairs(id); } else go(null); });
   var ed = document.getElementById("edit"); if(ed) ed.addEventListener("click", function(){ openEditor(c); });
   var ap = document.getElementById("addpair"); ap.addEventListener("change", function(){ if(!ap.value) return; var p = addCards(ap.value, [c.id]); goPairs(p.id); });
 }
@@ -1185,17 +1233,18 @@ function pairBar(){
   if(state.pairMsg) status = state.pairMsg;
   else if(sent!=null && sent < 10) status = 'Sent to GitHub. Press Create there if you haven’t, then tap Check in about a minute.';
   else if(sent!=null) status = 'Not on GitHub yet. If you pressed Create, <a href="https://github.com/'+DATA_REPO+'/issues?q=is%3Aissue+%22Save+data%22" target="_blank" rel="noopener">see what the bot said</a>; otherwise save again.';
-  else status = 'Saved on this phone. Save to GitHub so everyone sees '+(n===1?'it':'them')+'.';
+  else status = '';
   return '<div class="actionbar" role="region" aria-label="Changes not on GitHub yet"><b>'+esc(syncSummary())+' not on GitHub yet</b>'+
     '<button class="btn" id="pb-discard">Discard</button>'+(sent!=null?'<button class="btn" id="pb-check">Check</button>':'')+
     '<button class="btn primary" id="pb-save">'+(sent!=null?'Save again':'Save to GitHub')+'</button>'+
-    '<span class="msg" role="status">'+status+'</span></div>';
+    (status?'<span class="msg" role="status">'+status+'</span>':'')+'</div>';
 }
 function mountBar(){
   var old = document.querySelector(".actionbar"); if(old) old.remove();
   var html = pairBar(); document.body.classList.toggle("has-bar", !!html);
   if(!html) return;
   var w = document.createElement("div"); w.innerHTML = html; var bar = w.firstChild; document.body.appendChild(bar);
+  document.body.style.setProperty("--barh", bar.offsetHeight+"px");
   var sa = document.getElementById("sel-add"); if(sa) sa.addEventListener("click", function(){
     if(!selected.length) return; var p = addCards(document.getElementById("sel-target").value, selected.slice()); goPairs(p.id); });
   var sc = document.getElementById("sel-cancel"); if(sc) sc.addEventListener("click", function(){ state.selecting = false; selected = []; render(); });
@@ -1241,64 +1290,109 @@ function renderPairings(){
   document.getElementById("newpair").addEventListener("click", function(){ var p = newPairing(); changed(p); goPairs(p.id); });
   root.querySelectorAll("[data-pair]").forEach(function(b){ b.addEventListener("click", function(){ goPairs(b.getAttribute("data-pair")); }); });
 }
+/* picked cards in the open pairing (index -> true): used to split, move or remove some of them */
+var psel = {}, pselPid = null;
+function pickedIdx(p){ if(pselPid!==p.id){ psel = {}; pselPid = p.id; } return Object.keys(psel).map(Number).filter(function(i){ return i < p.items.length; }).sort(function(a,b){ return a-b; }); }
+function subTotals(p, idx){ return pairTotals({items:idx.map(function(i){ return p.items[i]; })}); }
+function moveItems(p, idx, target){
+  var moving = idx.map(function(i){ return clone(p.items[i]); });
+  p.items = p.items.filter(function(_,i){ return idx.indexOf(i)<0; });
+  var dest = null;
+  if(target==="__split"){ dest = newPairing(); dest.name = (p.name+" (split)").slice(0,60); }
+  else if(target && target!=="__remove") dest = pairById(target);
+  if(dest){ dest.items = dest.items.concat(moving); changed(dest); }
+  changed(p); psel = {}; return dest;
+}
+/* tap a card's name in a pairing: its main stats in a pop-up */
+function showCardStats(c, pid){
+  var old = document.getElementById("cstats"); if(old) old.remove();
+  var gv = condGap(c,"vendor"), ge = condGap(c,"ebay");
+  var d = document.createElement("div"); d.className = "chooser-bg"; d.id = "cstats";
+  d.innerHTML = '<div class="chooser cstats" role="dialog" aria-modal="true" aria-labelledby="cs-t">'+
+    '<button class="xbtn cs-x" id="cs-close" aria-label="Close">×</button>'+
+    '<div class="cs-head">'+(c.image?'<img src="'+thumb(c)+'" alt="">':'')+'<div><h2 id="cs-t">'+esc(title(c))+'</h2><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div><div class="sub">Prices updated '+fmtDate(c.updated)+'</div>'+(tcgUrl(c)?'<div style="margin-top:6px">'+tcgLink(c)+'</div>':'')+'</div></div>'+
+    '<table class="cs-tbl"><tr><th>Condition</th><th class="r">Market</th><th class="r v">Vendor pays</th></tr>'+
+      RAW.map(function(r){ var p = priceAt(c, r[0]), x = c.raw && c.raw[r[0]] || {};
+        return '<tr><td>'+r[0].toUpperCase()+'</td><td class="r num">'+(p?money(p):'—')+(x.est?' <span class="pill est">est.</span>':'')+'</td><td class="r v num"><b>'+(p?money(p*S.vendor/100,2):'—')+'</b></td></tr>'; }).join("")+'</table>'+
+    (gv ? '<div class="cs-flip"><span>Best flip</span><b>Buy '+gv.best.from+' → sell '+gv.best.to+'</b>'+
+      '<div>Vendor ('+S.vendor+'%): <b class="num '+(gv.best.net>=0?'pos-t':'neg-t')+'">'+signed(gv.best.net)+'</b> <span class="pill '+(gv.best.net>=0?'pos':'neg')+'">'+pct(gv.best.roi)+'</span></div>'+
+      (ge?'<div>eBay (after '+S.ebay+'% fee): <b class="num '+(ge.best.net>=0?'pos-t':'neg-t')+'">'+signed(ge.best.net)+'</b> · buy '+ge.best.from+' → sell '+ge.best.to+'</div>':'')+'</div>'
+      : '<p class="sub">Needs two neighboring condition prices to show a flip.</p>')+
+    '<div class="row"><button class="btn" id="cs-done">Close</button><button class="btn primary" id="cs-open">Full card page</button></div></div>';
+  document.body.appendChild(d);
+  function close(){ d.remove(); }
+  d.addEventListener("click", function(e){ if(e.target===d) close(); });
+  document.getElementById("cs-close").addEventListener("click", close);
+  document.getElementById("cs-done").addEventListener("click", close);
+  document.getElementById("cs-open").addEventListener("click", function(){ close(); state.fromPair = pid||null; go(c.id); });
+  document.getElementById("cs-done").focus();
+}
 function condSel(i, field, val, c, label){
-  return '<select class="csel" data-i="'+i+'" data-f="'+field+'" aria-label="'+label+'">'+CONDS.map(function(k){ var pr = priceAt(c,k[0]); return '<option value="'+k[0]+'"'+(k[0]===val?' selected':'')+'>'+k[1]+' · '+(pr?money(pr,0):'no price')+'</option>'; }).join("")+'</select>';
+  return '<select class="csel" data-i="'+i+'" data-f="'+field+'" aria-label="'+label+'">'+CONDS.map(function(k){ var pr = priceAt(c,k[0]); return '<option value="'+k[0]+'"'+(k[0]===val?' selected':'')+'>'+k[1]+' '+(pr?money(pr,0):'(no price)')+'</option>'; }).join("")+'</select>';
 }
 function renderPairing(){
   var p = pairById(state.pid); if(!p){ state.view = "pairings"; return renderPairings(); }
-  var t = pairTotals(p), phone = VIEW==="phone";
+  var t = pairTotals(p), idx = pickedIdx(p), good = t.profit>=0;
   var h = header();
   h += '<div class="back"><button class="btn ghost" id="pback">← All pairings</button></div>';
   h += '<div class="pair-head"><label class="pname"><span class="sub">Pairing name</span><input id="pname" value="'+esc(p.name)+'" maxlength="60"></label><div class="confirm">'+
     (state.confirmPairDel ? '<span>Delete this pairing?</span><button class="btn danger" id="pdel-yes">Delete</button><button class="btn" id="pdel-no">Keep</button>' : '<button class="btn ghost" id="pdel">Delete pairing</button>')+'</div></div>';
   if(p.local) h += '<p class="note">Saved on this device only.</p>';
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
-  var good = t.profit>=0;
-  h += '<div class="psum" aria-live="polite"><div class="psum-main"><span class="lbl">Batch profit · selling all '+t.n+' to a vendor</span><b class="num '+(good?'pos-t':'neg-t')+'">'+signed(t.profit)+'</b>'+(t.cost?'<span class="pill '+(good?'pos':'neg')+'">'+pct(t.roi)+' return</span>':'')+'</div>'+
-    '<div class="psum-stats"><div><span>Market value</span><b class="num">'+money(t.mv,0)+'</b><small>At the conditions you’ll sell</small></div>'+
-    '<div class="v"><span>Vendor pays</span><b class="num">'+money(t.payout,2)+'</b><small><label>At <input id="pvendor" type="number" step="0.25" min="0" max="100" value="'+S.vendor+'" aria-label="Vendor buy rate percent">% of market</label></small></div>'+
-    '<div><span>You paid</span><b class="num">'+money(t.cost,0)+'</b><small>Market price unless you enter what you paid</small></div></div>'+
-    '<p class="sub">Selling them one by one on eBay instead: <b class="num '+(t.ebayProfit>=0?'pos-t':'neg-t')+'">'+signed(t.ebayProfit)+'</b> after the '+S.ebay+'% fee.'+(t.gaps?' <b>'+t.gaps+' card'+(t.gaps===1?' is':'s are')+' left out</b> because '+(t.gaps===1?'it has':'they have')+' no price for the chosen condition.':'')+'</p></div>';
-  if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
-  h += '<section class="block"><h3>Cards in this pairing ('+p.items.length+')</h3>';
-  if(!p.items.length) h += '<div class="empty">No cards yet. Search below, or select cards on the Cards tab.</div>';
-  else if(phone){
-    h += '<div class="plist pitems">'+p.items.map(function(it,i){ var r = itemCalc(it);
-      if(r.missing) return '<div class="prow2"><div class="top2"><span class="sub">This card was removed from the tracker.</span><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></div></div>';
-      return '<div class="prow2"><div class="top2"><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+'</span></span></span><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'+
-        '<div class="pfields"><label>Bought as'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</label><label class="pf-paid">Paid (blank = market price)<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'"></label></div>'+
-        '<div class="meta">'+(r.noPrice?'No price for that condition':'Vendor pays <b class="num" style="color:var(--gold-ink)">'+money(r.payout,2)+'</b> · profit <b class="num '+(r.profit>=0?'pos-t':'neg-t')+'">'+signed(r.profit)+'</b>')+'</div></div>'; }).join("")+'</div>';
-  } else {
-    h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th>Bought as</th><th class="r">Paid</th><th>Sells as</th><th class="r">Market</th><th class="r v">Vendor pays</th><th class="r">Profit</th><th></th></tr>'+
-      p.items.map(function(it,i){ var r = itemCalc(it);
-        if(r.missing) return '<tr><td colspan="7" class="sub">This card was removed from the tracker.</td><td><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></td></tr>';
-        return '<tr><td><span class="ccell"><span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span><span><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></span></span></td>'+
-          '<td>'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</td>'+
-          '<td class="r"><input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?r.mkt.toFixed(2):'')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Price paid"></td>'+
-          '<td>'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</td>'+
-          '<td class="r num">'+(r.mv?money(r.mv,0):'—')+'</td><td class="r v num"><b>'+(r.noPrice?'—':money(r.payout,2))+'</b></td>'+
-          '<td class="r num '+(r.profit>=0?'pos-t':'neg-t')+'">'+(r.noPrice?'—':signed(r.profit))+'</td><td><button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></td></tr>'; }).join("")+
-      '</table></div>';
+  /* summary: the profit to aim for, then one line of the numbers behind it */
+  h += '<div class="psum" aria-live="polite"><div class="psum-main"><span class="lbl">Profit to aim for · vendor buys all '+t.n+'</span><b class="num '+(good?'pos-t':'neg-t')+'">'+signed(t.profit)+'</b>'+(t.cost?'<span class="pill '+(good?'pos':'neg')+'">'+pct(t.roi)+' return</span>':'')+'</div>'+
+    '<div class="psum-line"><span class="v">Vendor pays <b class="num">'+money(t.payout,2)+'</b> at <input id="pvendor" type="number" step="0.25" min="0" max="100" value="'+S.vendor+'" aria-label="Vendor buy rate percent">%</span>'+
+    '<span>You paid <b class="num">'+money(t.cost,0)+'</b></span><span>Market <b class="num">'+money(t.mv,0)+'</b></span></div>'+
+    '<p class="sub">eBay one by one instead: <b class="num '+(t.ebayProfit>=0?'pos-t':'neg-t')+'">'+signed(t.ebayProfit)+'</b> after the '+S.ebay+'% fee.'+(t.gaps?' <b>'+t.gaps+' card'+(t.gaps===1?' is':'s are')+' left out</b> (no price for the chosen condition).':'')+'</p></div>';
+  h += '<section class="block"><div class="c-head"><h3>Cards ('+p.items.length+')</h3>'+(p.items.length?'<button class="btn ghost sm" id="pall">'+(idx.length===p.items.length?'Clear picks':'Pick all')+'</button>':'')+'</div>';
+  h += '<div class="padd"><input id="padd-q" type="search" placeholder="+ Add a card: search name, set or number" autocomplete="off" aria-label="Add a card"><div class="padd-res" id="padd-res"></div></div>';
+  if(idx.length){
+    var s = subTotals(p, idx), others = pairs.filter(function(x){ return x!==p; });
+    h += '<div class="psplit" role="region" aria-label="Picked cards"><div class="ps-top"><b>'+idx.length+' picked</b><span>If the vendor only takes these: pays <b class="num">'+money(s.payout,2)+'</b> · profit <b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b></span></div>'+
+      '<div class="ps-act"><button class="btn" id="ps-split">Split off</button>'+
+      (others.length?'<select id="ps-move" aria-label="Move picked cards to"><option value="">Move to…</option>'+others.map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>'; }).join("")+'</select>':'')+
+      '<button class="btn" id="ps-rm">Remove</button></div></div>';
   }
-  h += '<p class="note">Bought as: the condition you bought it in (sets the default price paid). Sells as: the condition you’ll sell it as, so the vendor pays '+S.vendor+'% of that market price. Leave Paid blank to use the market price.</p></section>';
-  h += '<div class="padd"><label class="search"><span class="sub">Add a card</span><input id="padd-q" type="search" placeholder="Search your cards by name, set or number" autocomplete="off"></label><div class="padd-res" id="padd-res"></div></div>';
+  if(!p.items.length) h += '<div class="empty">No cards yet. Search above, or select cards on the Cards tab.</div>';
+  else h += '<div class="pitems2">'+p.items.map(function(it,i){ var r = itemCalc(it), on = !!psel[i];
+    var pick = '<label class="pick"><input type="checkbox" data-pk="'+i+'"'+(on?' checked':'')+' aria-label="Pick this card"></label>';
+    if(r.missing) return '<div class="pi'+(on?' on':'')+'">'+pick+'<span class="sub">This card was removed from the tracker.</span><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></div>';
+    return '<div class="pi'+(on?' on':'')+'">'+pick+
+      '<span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span>'+
+      '<div class="pi-main"><div class="pi-top"><button class="cname" data-cs="'+esc(r.c.id)+'"><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></button>'+
+        '<span class="pi-profit num '+(r.noPrice?'':(r.profit>=0?'pos-t':'neg-t'))+'">'+(r.noPrice?'—':signed(r.profit))+'</span></div>'+
+      '<div class="pi-f"><label>Bought'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</label>'+
+        '<label>Paid<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?money(r.mkt,0):'')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Price paid (blank = market)"></label></div>'+
+      '<div class="sub">'+(r.noPrice?'No price for that condition':'Vendor pays <b class="num" style="color:var(--gold-ink)">'+money(r.payout,2)+'</b>')+'</div></div>'+
+      '<button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'; }).join("")+'</div>';
+  if(p.items.length) h += '<p class="note">Bought → sells as. Leave Paid blank to use the market price for the bought condition. Tick cards to see what just those pay, or to split, move or remove them. Tap a name for its stats.</p>';
+  h += '</section>';
+  if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
   root.innerHTML = h; bindHeader();
-  document.getElementById("pback").addEventListener("click", function(){ goPairs(null); });
+  function rerender(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
+  document.getElementById("pback").addEventListener("click", function(){ state.notice = ""; goPairs(null); });
   var lg = document.getElementById("plog-go"); if(lg) lg.addEventListener("click", function(){ var to = document.getElementById("plog-to").value; var sh = to==="__new" ? newShow("Card show") : showById(to); if(!sh) return; addPairingToShow(p, sh); goLog(sh.id); });
   var pn2 = document.getElementById("pname"); pn2.addEventListener("change", function(){ p.name = pn2.value.trim() || "Untitled pairing"; changed(p); mountBar(); });
-  var pv = document.getElementById("pvendor"); pv.addEventListener("change", function(){ var v = parseFloat(pv.value); if(!isNaN(v) && v>=0){ S.vendor = v; save("flipdesk.settings", S); render(); } });
+  var pv = document.getElementById("pvendor"); pv.addEventListener("change", function(){ var v = parseFloat(pv.value); if(!isNaN(v) && v>=0){ S.vendor = v; save("flipdesk.settings", S); rerender(); } });
   var d = document.getElementById("pdel"); if(d) d.addEventListener("click", function(){ state.confirmPairDel = true; render(); });
   var dn = document.getElementById("pdel-no"); if(dn) dn.addEventListener("click", function(){ state.confirmPairDel = false; render(); });
   var dy = document.getElementById("pdel-yes"); if(dy) dy.addEventListener("click", function(){ pairs = pairs.filter(function(x){ return x !== p; }); if(p.local) saveLocalPairs(); else syncSave(); goPairs(null); });
-  root.querySelectorAll(".csel").forEach(function(s){ s.addEventListener("change", function(){ p.items[+s.getAttribute("data-i")][s.getAttribute("data-f")] = s.value; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
-  root.querySelectorAll("input.paid").forEach(function(inp){ inp.addEventListener("change", function(){ var v = parseFloat(inp.value); p.items[+inp.getAttribute("data-i")].paid = isNaN(v)||v<0 ? "" : v; changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
-  root.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ p.items.splice(+b.getAttribute("data-x"),1); changed(p); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
+  var pa = document.getElementById("pall"); if(pa) pa.addEventListener("click", function(){ if(idx.length===p.items.length) psel = {}; else p.items.forEach(function(_,i){ psel[i] = true; }); rerender(); });
+  root.querySelectorAll("[data-pk]").forEach(function(b){ b.addEventListener("change", function(){ var i = +b.getAttribute("data-pk"); if(b.checked) psel[i] = true; else delete psel[i]; rerender(); }); });
+  root.querySelectorAll("[data-cs]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-cs")); if(c) showCardStats(c, p.id); }); });
+  var sp = document.getElementById("ps-split"); if(sp) sp.addEventListener("click", function(){ var n = moveItems(p, idx, "__split"); state.notice = "Split "+idx.length+" card"+(idx.length===1?"":"s")+" into “"+n.name+"”."; goPairs(n.id); });
+  var mv = document.getElementById("ps-move"); if(mv) mv.addEventListener("change", function(){ if(!mv.value) return; var n = moveItems(p, idx, mv.value); state.notice = "Moved "+idx.length+" card"+(idx.length===1?"":"s")+" to “"+(n?n.name:"")+"”."; rerender(); });
+  var rm = document.getElementById("ps-rm"); if(rm) rm.addEventListener("click", function(){ moveItems(p, idx, "__remove"); rerender(); });
+  root.querySelectorAll(".csel").forEach(function(s){ s.addEventListener("change", function(){ p.items[+s.getAttribute("data-i")][s.getAttribute("data-f")] = s.value; changed(p); rerender(); }); });
+  root.querySelectorAll("input.paid").forEach(function(inp){ inp.addEventListener("change", function(){ var v = parseFloat(inp.value); p.items[+inp.getAttribute("data-i")].paid = isNaN(v)||v<0 ? "" : v; changed(p); rerender(); }); });
+  root.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ var i = +b.getAttribute("data-x"); p.items.splice(i,1);
+    var ns = {}; Object.keys(psel).forEach(function(k){ k = +k; if(k<i) ns[k] = true; else if(k>i) ns[k-1] = true; }); psel = ns; changed(p); rerender(); }); });
   var q = document.getElementById("padd-q"), res = document.getElementById("padd-res");
   q.addEventListener("input", function(){
     var s = q.value.trim().toLowerCase(); if(!s){ res.innerHTML = ""; return; }
     var hits = cards.filter(function(c){ return (title(c)+" "+c.set+" "+c.number).toLowerCase().indexOf(s)>=0; }).slice(0,8);
     res.innerHTML = hits.length ? hits.map(function(c){ return '<button data-add="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("") : '<p class="sub">No cards match.</p>';
-    res.querySelectorAll("[data-add]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-add")); if(!c) return; p.items.push(defaultItem(c)); changed(p); render(); var n = document.getElementById("padd-q"); if(n) n.focus(); }); });
+    res.querySelectorAll("[data-add]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-add")); if(!c) return; p.items.push(defaultItem(c)); changed(p); rerender(); var n = document.getElementById("padd-q"); if(n) n.focus(); }); });
   });
 }
 
@@ -1615,7 +1709,7 @@ function showAddLink(){
 }
 
 /* ---------- routing ---------- */
-function go(id){ state.view = id ? "detail" : "list"; state.id = id; state.selecting = false; selected = []; try{ history.replaceState(null,"", id ? "#"+id : location.pathname); }catch(e){} window.scrollTo(0,0); render(); }
+function go(id){ if(!id) state.fromPair = null; state.view = id ? "detail" : "list"; state.id = id; state.selecting = false; selected = []; try{ history.replaceState(null,"", id ? "#"+id : location.pathname); }catch(e){} window.scrollTo(0,0); render(); }
 function render(){
   if(state.view==="detail") renderDetail();
   else if(state.view==="pairings") renderPairings();
@@ -1626,6 +1720,9 @@ function render(){
   mountBar();
 }
 
+/* hide the bottom bar while typing or picking in a field, so it never covers what you're filling in */
+document.addEventListener("focusin", function(e){ var t = e.target; if(t && t.matches && t.matches("#root input:not([type=checkbox]), #root select, #root textarea")) document.body.classList.add("typing"); });
+document.addEventListener("focusout", function(){ setTimeout(function(){ var a = document.activeElement; if(!(a && a.matches && a.matches("#root input:not([type=checkbox]), #root select, #root textarea"))) document.body.classList.remove("typing"); }, 50); });
 (function init(){
   var start = null;
   try{ start = sessionStorage.getItem("flipdesk.open"); sessionStorage.removeItem("flipdesk.open"); }catch(e){}
