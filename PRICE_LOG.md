@@ -2,6 +2,30 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-10-12
+
+- Cards checked today: **285** (daily share 267 of 1865) in 4m 17s
+- API requests used: **45** of 80 (API says 55 left today)
+- ✅ Prices changed: **285**
+- ➖ Checked, prices unchanged: 0
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match the card (retried in 7 days): 0
+- ⚠️ Errors: 0
+- Cards never synced yet: **753** · oldest sync: 2026-10-09
+- Era files saved: **1**
+
+**Biggest NM moves (15%+):**
+- Sceptile (Reverse Holo) — Great Encounters 8/106: $7.47 → $21.96
+- Minun (Holo) — HGSS Promos HGSS17: $36.50 → $79.95
+- Arceus LV.X (Promo · Holo) — Diamond and Pearl Promos DP53: $262.50 → $557.50
+- Lucario (Reverse Holo) — Platinum 53/127: $13.82 → $23.53
+- Zapdos (Reverse Holo) — Majestic Dawn 14/100: $104.20 → $166.92
+- Mewtwo LV.X (Promo · Holo) — Diamond and Pearl Promos DP28: $155.03 → $245.09
+- Snorlax (Reverse Holo) — Call of Legends 33/95: $123.33 → $190.00
+- Lugia (Promo · Holo) — HGSS Promos HGSS02: $296.33 → $435.28
+- Groudon (Reverse Holo) — Legends Awakened 29/146: $60.81 → $83.11
+- Gliscor (Holo) — Undaunted 4/90: $13.16 → $17.56
+
 ## ✅ OK — price update 2026-10-11
 
 - Cards checked today: **273** (daily share 266 of 1862) in 6m 31s
