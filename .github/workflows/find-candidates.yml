@@ -1,0 +1,97 @@
+name: Flip Finder (look for new flip cards)
+
+# Searches TCG Price Lookup for NEW cards with a good condition flip and lists them on the site's
+# "Flip Finder" tab for you to approve. Runs Monday-Thursday only (your no-show days), after the daily
+# price update (13:23 UTC), so it uses requests that update and your show-day card adds don't need.
+# It never adds cards to the site by itself.
+on:
+  schedule:
+    # 14:47 UTC = 6:47 am Pacific (7:47 am in summer), Monday-Thursday
+    - cron: "47 14 * * 1-4"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Test run: look and report, but save nothing"
+        type: boolean
+        default: true
+      force:
+        description: "Run even on Friday-Sunday (uses show-day requests, so a bigger reserve is kept)"
+        type: boolean
+        default: false
+      requests:
+        description: "Max API requests this run (blank = the setting in discovery_config.json)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: flip-finder
+  cancel-in-progress: false
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Search for flip candidates
+        id: run
+        continue-on-error: true
+        env:
+          TCGPL_API_KEY: ${{ secrets.TCGPL_API_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          FORCE: ${{ github.event.inputs.force || 'false' }}
+          DISC_REQUESTS: ${{ github.event.inputs.requests || '' }}
+        run: python3 scripts/discover_candidates.py
+
+      - name: Save the candidate list
+        if: always() && steps.run.outputs.saved == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp candidates.json scripts/discovery_state.json /tmp/keep/
+          # Retry if the price update or an add job saved at the same moment.
+          for try in 1 2 3; do
+            python3 scripts/build_versions.py
+            git add candidates.json scripts/discovery_state.json versions.json
+            git diff --cached --quiet && { echo "Nothing to save."; break; }
+            git commit -q -m "Flip Finder $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} candidates (${{ steps.run.outputs.new }} new)"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            git fetch -q origin main && git reset -q --hard origin/main
+            cp /tmp/keep/candidates.json candidates.json
+            cp /tmp/keep/discovery_state.json scripts/discovery_state.json
+            sleep $((try * 10))
+          done
+
+      - name: Which weekday is it
+        id: dow
+        if: always()
+        run: echo "dow=$(date -u +%u)" >> "$GITHUB_OUTPUT"
+
+      # GitHub emails you each comment, so only post when something needs a look,
+      # on Thursdays (the week's wrap-up) and for runs you start by hand.
+      - name: Post the result to the "Flip Finder log" issue
+        if: always() && (steps.run.outputs.status != 'OK' && steps.run.outputs.status != 'SKIPPED' || github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && steps.run.outputs.status == 'OK' && steps.dow.outputs.dow == '4' && steps.run.outputs.total != '0') || failure())
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ The Flip Finder crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) · open the site's **Flip Finder** tab to review the list" >> run_report.md
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Flip Finder log") | .number' | head -n 1)
+          if [ -z "$num" ]; then
+            url=$(gh issue create --title "Flip Finder log" \
+              --body "The Flip Finder posts here when it finds new cards, when something needs a look, and whenever you run it by hand. GitHub emails you each new comment.")
+            num="${url##*/}"
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if the search had problems
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
+          exit 1

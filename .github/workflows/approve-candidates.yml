@@ -1,0 +1,60 @@
+name: Add Flip Finder cards
+
+# Runs when you (or a collaborator) open an issue titled "Add candidates: ..." — the Flip Finder tab's
+# "Add to site" / "Hide" buttons fill it in. Issues from anyone else are ignored.
+# Uses no TCG Price Lookup requests: the prices were saved when the card was found.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: approve-candidates
+  cancel-in-progress: false
+
+jobs:
+  approve:
+    if: startsWith(github.event.issue.title, 'Add candidates') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Add the picked cards
+        id: add
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Retry if the price update or another job saved at the same moment.
+          for try in 1 2 3; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            python3 scripts/approve_candidates.py || true
+            status=$(grep -o 'status=.*' "$GITHUB_OUTPUT" | tail -n 1 | cut -d= -f2)
+            [ "$status" = "added" ] || break
+            python3 scripts/build_versions.py
+            git add eras candidates.json versions.json scripts/tcgpl_state.json scripts/discovery_state.json
+            git commit -q -m "Add Flip Finder cards (#${{ github.event.issue.number }})"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            [ "$try" = "3" ] && printf '\n\n⚠️ Could not save after 3 tries because other updates kept saving at the same time. Pick the cards again on the Flip Finder tab.\n' >> run_report.md
+            sleep $((try * 10))
+          done
+
+      - name: Reply on the issue and close it
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          [ -f run_report.md ] || echo "❌ The add script crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          gh issue comment "$NUM" --body-file run_report.md
+          if [ "${{ steps.add.outputs.status }}" = "added" ] || [ "${{ steps.add.outputs.status }}" = "nothing" ]; then
+            gh issue close "$NUM" --reason completed
+          else
+            gh issue close "$NUM" --reason "not planned"
+          fi
