@@ -2,6 +2,37 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-10-13
+
+Stopped early: daily request budget used.
+
+- Cards checked today: **186** (daily share 267 of 1865) in 7m 43s
+- API requests used: **80** of 80 (API says 20 left today)
+- ✅ Prices changed: **183**
+- ➖ Checked, prices unchanged: 0
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match the card (retried in 7 days): 3
+- ⚠️ Errors: 0
+- Cards never synced yet: **570** · oldest sync: 2026-10-09
+- Era files saved: **3**
+
+**Biggest NM moves (15%+):**
+- Empoleon (Reverse Holo) — Legendary Treasures 35/113: $8.98 → $31.29
+- Reshiram EX (Full Art) — Next Destinies 95/99: $209.99 → $444.99
+- Lugia EX (Full Art) — Plasma Storm 134/135: $796.17 → $1,344.24
+- Lugia EX (Team Plasma · Holo) — Plasma Storm 108/135: $89.56 → $146.13
+- Moltres EX (Team Plasma) — Plasma Storm 14/135: $12.87 → $18.89
+- Articuno EX (Team Plasma · Holo) — Plasma Storm 25/135: $24.05 → $30.53
+- Lugia EX (Promo · Team Plasma · Holo) — Black and White Promos BW83: $52.80 → $65.91
+- Glaceon (Holo) — Black and White Promos BW90: $77.75 → $91.64
+- Dialga EX (Team Plasma · Full Art · Holo) — Plasma Blast 99/101: $372.63 → $431.01
+- Arcanine (Reverse Holo) — Secret Wonders 22/132: $36.83 → $42.40
+
+**Problem cards (3):**
+- nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup
+
 ## ✅ OK — price update 2026-10-12
 
 - Cards checked today: **285** (daily share 267 of 1865) in 4m 17s

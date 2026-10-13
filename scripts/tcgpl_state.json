@@ -11,6 +11,11 @@
 "synced": "2026-10-11",
 "variant": "Normal"
 },
+"absol-67-116-83455": {
+"id": "019c9759-269b-7431-90f2-8e7c2e913f02",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "absol-91-102-83454": {
 "id": "019c9759-269a-73d7-a813-92234d2aea17",
 "synced": "2026-10-12",
@@ -126,6 +131,11 @@
 "synced": "2026-10-10",
 "variant": "Holofoil"
 },
+"ampharos-001-017-83542-holofo": {
+"id": "019c978d-e4df-745f-8985-9f63e3498098",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "ampharos-001-111-83534-unlimi": {
 "id": "019c9759-2756-7a88-961f-a54b484c9f87",
 "synced": "2026-10-09",
@@ -151,6 +161,11 @@
 "synced": "2026-10-12",
 "variant": "Reverse Holofoil"
 },
+"ampharos-1-132-83541-holofo": {
+"id": "019c9759-2767-7a1c-91b8-df49c7d8bd94",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "ampharos-105-123-83545-holofo": {
 "id": "019c9759-278f-7231-ae7f-8dc4a517e409",
 "synced": "2026-10-12",
@@ -175,6 +190,16 @@
 "id": "019c9759-2813-7201-b2c7-cb95a4ed48fa",
 "synced": "2026-10-12",
 "variant": "Holofoil"
+},
+"arcanine-12-99-230421": {
+"id": "019c97ee-0ced-7b55-89e0-378e7d387245",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"arcanine-22-132-83584-revers": {
+"id": "019c9759-2810-7bf1-b2a7-dfc312634838",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "arcanine-g-15-83591-normal": {
 "id": "019c9759-281b-7e73-a412-8e716abc5aa9",
@@ -286,6 +311,16 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"articuno-ex-25-135-83656": {
+"id": "019c9759-2875-79bd-ae34-b6b66865dfbf",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"axew-012-012-83673-holofo": {
+"id": "019c978d-e5e1-790c-9bd7-ed75706aca3a",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "azelf-19-146-83675-revers": {
 "id": "019c9759-288f-7526-898e-944bb09d02b4",
 "synced": "2026-10-12",
@@ -386,6 +421,11 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"black-kyurem-bw58-83852-holo": {
+"id": "019c975b-485f-7446-9127-08377d05d9c9",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "blaine-s-charizard-002-132-83861-unlimi": {
 "id": "019c975b-4879-7a47-8b45-4e20a1acd195",
 "synced": "2026-10-09",
@@ -436,6 +476,16 @@
 "synced": "2026-10-09",
 "variant": "Normal"
 },
+"blastoise-13-95-83895-revers": {
+"id": "019c978e-2449-7511-92a0-01c48aeb4856",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"blastoise-16-101-83898": {
+"id": "019c975b-48e8-77d8-b90a-3b3984955282",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "blastoise-2-100-83899": {
 "id": "019c978e-2451-7458-89c2-0b396a6992ce",
 "synced": "2026-10-10",
@@ -445,6 +495,11 @@
 "id": "019c975b-48e0-7f16-a902-3218d83548ac",
 "synced": "2026-10-12",
 "variant": "Reverse Holofoil"
+},
+"blastoise-2-132-83893": {
+"id": "019c975b-48dc-70e9-b76a-b253b30d293e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "blastoise-2-base-set": {
 "id": "019c9751-afa8-7dd7-a737-f65268c05e50",
@@ -456,6 +511,11 @@
 "synced": "2026-10-09",
 "variant": "Holofoil"
 },
+"blastoise-31-149-83896": {
+"id": "019c975b-48e4-7cce-ac84-aa75d781eea4",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "blaziken-001-017-83905-holofo": {
 "id": "019c978e-245e-7132-a91b-ba6b0439c53e",
 "synced": "2026-10-11",
@@ -464,6 +524,11 @@
 "blaziken-1-106-83909": {
 "id": "019c975b-48ff-7b34-9e6a-743be4528d3b",
 "synced": "2026-10-12",
+"variant": "Reverse Holofoil"
+},
+"blaziken-17-108-83911-revers": {
+"id": "019c975b-4904-7f22-b696-0e2cde35c2ae",
+"synced": "2026-10-13",
 "variant": "Reverse Holofoil"
 },
 "blaziken-3-109-83903": {
@@ -706,6 +771,16 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"charizard-20-149-84192-holo": {
+"id": "019c975d-5f75-76da-9bcf-0aca92f482e1",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"charizard-3-132-84189-revers": {
+"id": "019c975d-5f6f-7d73-8c75-d6e4eed8ec3e",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "charizard-4-base-set-2": {
 "id": "019c9745-2512-7252-9fe8-43f99f515845",
 "synced": "2026-10-09",
@@ -715,6 +790,9 @@
 "id": "019c975d-5f69-7414-a2a1-48188460ac4a",
 "synced": "2026-10-10",
 "variant": "Holofoil"
+},
+"charizard-cosmos-19": {
+"failed": "2026-10-13"
 },
 "charizard-g-20-147-84200": {
 "id": "019c975d-5f7f-75ed-8ba7-4183060135ec",
@@ -729,6 +807,11 @@
 "charizard-g-lv-x-dp45-84202": {
 "id": "019c978e-889e-7208-9f5e-c84279836efa",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"charizard-holo-19": {
+"id": "019c975d-5f79-7828-aa9c-9dc12a1b1cc4",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "charizard-stormfront-103": {
@@ -1251,6 +1334,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"darkrai-bw73-84703": {
+"id": "019c975f-7904-7f1a-8439-62023bf820bc",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "darkrai-cresselia-legend-99-102-84705-holofo": {
 "id": "019c975f-7906-78e0-8e36-67081e6ceb23",
 "synced": "2026-10-12",
@@ -1264,6 +1352,26 @@
 "darkrai-dp52-84702": {
 "id": "019c978f-643c-7a95-ba88-4ac998c8d83d",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"darkrai-ex-63-108-84706-holofo": {
+"id": "019c975f-7907-7a45-8a7d-e85d2d980527",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"darkrai-ex-88-113-84708": {
+"id": "019c975f-790a-785e-b470-8580fe0a35fc",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"darkrai-ex-bw46-84707": {
+"id": "019c975f-7908-7fbe-9039-b2b16a80ab3b",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"darkrai-ex-full-art-107": {
+"id": "019c975f-790b-7c4a-93f1-d8576b0b0f83",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "darkrai-g-3-111-84710-holo": {
@@ -1354,6 +1462,21 @@
 "synced": "2026-10-12",
 "variant": "Normal"
 },
+"deoxys-ex-111-116-84777": {
+"id": "019c9761-977d-77bc-bd35-85435f366a83",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"deoxys-ex-53-116-84775-holofo": {
+"id": "019c9761-977a-78f1-847d-9301b585373b",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"deoxys-ex-bw82-84776": {
+"id": "019c9761-977c-7cef-afcc-b2c7429f6d08",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "deoxys-normal-forme-1-146-84778": {
 "id": "019c9761-977e-76f3-a335-5fed58d649e0",
 "synced": "2026-10-12",
@@ -1407,6 +1530,16 @@
 "dialga-dp49-84805-holofo": {
 "id": "019c978f-6513-7a1f-94b2-208337ff14d7",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"dialga-ex-65-101-84808": {
+"id": "019c9761-97dc-7693-90ee-41185518715a",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"dialga-ex-99-101-84809": {
+"id": "019c9761-97de-77f5-846f-8f20710bcb00",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "dialga-g-7-127-84810-holofo": {
@@ -1564,6 +1697,16 @@
 "synced": "2026-10-09",
 "variant": "Unlimited Holofoil"
 },
+"dragonite-5-20-84915-holofo": {
+"id": "019c978f-b756-7ca7-bd15-351bd33c4190",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"dragonite-83-116-84916-holo": {
+"id": "019c9761-98c6-7eea-ab5b-783cded47756",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "dragonite-ex-90-97-84918-holofo": {
 "id": "019c978f-b75a-743f-8791-4ae0d89606f8",
 "synced": "2026-10-11",
@@ -1583,6 +1726,11 @@
 "id": "019c9761-98fa-7ba6-a96a-7badec9ec744",
 "synced": "2026-10-10",
 "variant": "Reverse Holofoil"
+},
+"druddigon-bw80-84983-holofo": {
+"id": "019c9761-9950-735f-8ff0-3ab5727d5a80",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "dugtrio-019-102-107014-stedit": {
 "id": "019c97a1-f258-7374-81dd-2fe909349f4f",
@@ -1654,6 +1802,16 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"eevee-bw94-85095": {
+"id": "019c9761-9a4c-7e23-8e96-2169b39eae0c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"eevee-rc14": {
+"id": "019c978f-b90d-789f-a6e9-75b8b3dec2d7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "electabuzz-020-102-107015-unlimi": {
 "id": "019c97a1-f25c-7d9d-8d18-5c3d8d07e195",
 "synced": "2026-10-10",
@@ -1709,10 +1867,25 @@
 "synced": "2026-10-09",
 "variant": "1st Edition"
 },
+"emboar-27-113-85186-revers": {
+"id": "019c9763-bf38-7eeb-bc0a-4de71218bfc3",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"emolga-rc23": {
+"id": "019c9790-037f-7697-8dc4-c236bfc434fa",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "empoleon-2-100-85199-holofo": {
 "id": "019c9763-bf50-7086-8c8a-ed08ea8f4b85",
 "synced": "2026-10-11",
 "variant": "Holofoil"
+},
+"empoleon-35-113-85204-revers": {
+"id": "019c9763-bf5c-7694-bdbf-2431b56dd1c9",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "empoleon-4-130-85197": {
 "id": "019c9763-bf4b-7e40-a896-c5c626abce23",
@@ -1749,9 +1922,24 @@
 "synced": "2026-10-10",
 "variant": "Reverse Holofoil"
 },
+"entei-4-132-85272-revers": {
+"id": "019c9763-bfc7-78cc-8bd7-312f708ef25f",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "entei-hgss20-85273": {
 "id": "019c9790-0405-73ca-877d-b4a3aa585bb5",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"entei-raikou-legend-90-95-85277-holofo": {
+"id": "019c9790-0409-76d6-aa7f-749146e53ecc",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"entei-raikou-legend-91-95-85276-holo-b": {
+"id": "019c9790-0408-7e78-b980-e396eed8ccae",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "erika-s-clefable-003-132-85287-unlimi": {
@@ -1837,6 +2025,11 @@
 "espeon-81-90-85323-holofo": {
 "id": "019c9790-0460-7fe6-bd8f-adbed08e157f",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"espeon-bw92-85326": {
+"id": "019c9763-c02d-748e-b11e-b888ed3d479e",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "espeon-neo-discovery-1-unl": {
@@ -1934,10 +2127,20 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"flareon-bw88-91599-holo": {
+"id": "019c9785-bf39-7ac2-a83b-3c1d08f75426",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "flygon-003-017-85524-holofo": {
 "id": "019c9790-639f-7e57-9557-4c9c5bf08c52",
 "synced": "2026-10-11",
 "variant": "Holofoil"
+},
+"flygon-5-132-85525-revers": {
+"id": "019c9765-d94e-79b1-9ace-e688dd672aa8",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "flygon-7-110-85529-holofo": {
 "id": "019c9765-d956-7afd-b870-06ec8e0d522a",
@@ -1969,6 +2172,21 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"gallade-002-017-85605-normal": {
+"id": "019c9790-6448-785f-bef0-6d910c1a048a",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
+"gallade-6-132-85604-revers": {
+"id": "019c9765-d9ee-7bf9-83d1-976180115d07",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"garchomp-001-017-85622-normal": {
+"id": "019c9790-6469-7c7d-a6bd-93bbf65f109e",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "garchomp-5-147-85623": {
 "id": "019c9765-da23-774d-8cac-92306ffa2a10",
 "synced": "2026-10-11",
@@ -1978,6 +2196,11 @@
 "id": "019c9765-da1d-727b-8477-b6366fa16799",
 "synced": "2026-10-12",
 "variant": "Holofoil"
+},
+"garchomp-90-124-85624-revers": {
+"id": "019c9765-da27-73c1-b1e9-64c0a381be04",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "garchomp-c-60-85628-revers": {
 "id": "019c9765-da31-74c2-be22-65ac35ad6510",
@@ -1999,6 +2222,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"gardevoir-57-99-85637-holofo": {
+"id": "019c9765-da4a-71d1-853d-963eb20bae0a",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "gardevoir-6-113-85640-holofo": {
 "id": "019c9765-da51-78c7-a176-496a6d6407d2",
 "synced": "2026-10-11",
@@ -2012,6 +2240,11 @@
 "gardevoir-7-125139-holofo": {
 "id": "019c97ae-8b1e-77a0-8f71-aa8381566441",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"gardevoir-7-132-85635-holo": {
+"id": "019c9765-da3f-71f0-8b7d-5ccf72363486",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "gardevoir-8-127-85636": {
@@ -2029,10 +2262,35 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"gardevoir-lv-x-131-132-85643-holofo": {
+"id": "019c9765-da55-76c9-8fdb-d631bc02112e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"gardevoir-rc10": {
+"id": "019c9790-648b-748c-9e43-85d72b3b81cc",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "gastly-065-105-85647-stedit": {
 "id": "019c9765-da5c-70ba-8754-1fc77db4abf1",
 "synced": "2026-10-10",
 "variant": "1st Edition"
+},
+"gastrodon-west-sea-9-132-85659-revers": {
+"id": "019c9765-da8a-7f36-9e5e-9d898fb9e93b",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"genesect-ex-11-101-85665-holofo": {
+"id": "019c9765-da96-715e-9f91-d5c3b414f7cf",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"genesect-ex-full-art-97": {
+"id": "019c9765-da97-779e-9a4d-811889acd6c4",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "gengar-011-110-85670-holofo": {
 "id": "019c9765-da9d-7b7d-ab18-410c72bcae07",
@@ -2149,9 +2407,29 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"giratina-62-135-85738": {
+"id": "019c9765-db42-7038-9f8e-07720893acac",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "giratina-9-127-85737": {
 "id": "019c9765-db3e-7540-9eb4-d2a05f741524",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"giratina-bw74-85739": {
+"id": "019c9765-db44-7202-ae4f-f6fa74c52fb7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"giratina-ex-124-124-85741": {
+"id": "019c9765-db46-7298-813c-283aafefeaac",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"giratina-ex-92-124-85740-holo": {
+"id": "019c9765-db45-766f-a100-edd6f8e7533b",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "giratina-lv-x-124-127-85742": {
@@ -2177,6 +2455,11 @@
 "glaceon-5-100-85744": {
 "id": "019c9790-c262-73cb-9b15-4431fe2a053b",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"glaceon-bw90-85748-holo": {
+"id": "019c9765-db51-78b2-83b7-fedb139ac556",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "glameow-dp23-85761-holofo": {
@@ -2249,6 +2532,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"growlithe-rc4": {
+"id": "019c9790-c4e6-7a8a-b342-3368f18270c2",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "grumpig-6-97-85964-holo": {
 "id": "019c9790-c4e7-7cd3-8a97-dc5188ce7060",
 "synced": "2026-10-11",
@@ -2288,6 +2576,11 @@
 "id": "019c9768-6e6b-7d26-84fb-a7c87941cec0",
 "synced": "2026-10-12",
 "variant": "Normal"
+},
+"gyarados-30-30-85998-holofo": {
+"id": "019c9791-3302-7295-bb82-c02502808c6c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "gyarados-32-97-85990-non-ho": {
 "id": "019c9790-c51f-7341-8fd2-373a5a446667",
@@ -2354,10 +2647,20 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"haxorus-bw57-86035-holo": {
+"id": "019c9768-6ed0-7023-a043-f22a65ecbac4",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "heat-rotom-rt3-86043": {
 "id": "019c9768-6ee2-7ee9-97cd-a5206b33098e",
 "synced": "2026-10-12",
 "variant": "Reverse Holofoil"
+},
+"heatran-ex-13-116-86052-holofo": {
+"id": "019c9768-6ef3-7970-938e-284c49a6bd93",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "heatran-lv-x-dp31-86055": {
 "id": "019c9791-33b8-783a-9c92-24780e025199",
@@ -2464,6 +2767,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"ho-oh-10-132-86124-revers": {
+"id": "019c9768-6fa4-7697-baf2-83ed5ae014f8",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "ho-oh-18-64-86119": {
 "id": "019c9791-3445-71fe-939b-a8de9276ca95",
 "synced": "2026-10-09",
@@ -2484,6 +2792,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"ho-oh-ex-119": {
+"id": "019c9768-6faf-7e20-8d8d-269ffa029bba",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "ho-oh-hgss01-86125-holo": {
 "id": "019c9791-3452-7c79-b8cb-19c8a2043692",
 "synced": "2026-10-12",
@@ -2502,6 +2815,11 @@
 "ho-oh-sl5-86127-holofo": {
 "id": "019c9768-6faa-7738-bb0a-84732cec908e",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"honchkrow-lv-x-132-132-86165-holo": {
+"id": "019c976a-88da-77e7-aec3-7d5889192132",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "houndoom-015-147-86203-non-ho": {
@@ -2529,6 +2847,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"houndoom-56-101-86213-revers": {
+"id": "019c976a-8964-7764-a197-0eeae5f84395",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "houndoom-7-115-86206-holofo": {
 "id": "019c976a-894b-7e69-bd1f-cd6603215176",
 "synced": "2026-10-11",
@@ -2554,6 +2877,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"hydreigon-79-101-86239-holofo": {
+"id": "019c976a-89bc-7030-83a0-5bab52128acd",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "hypno-08-62-106524-stedit": {
 "id": "019c97a1-f1e5-7072-9d23-49d365a29ccb",
 "synced": "2026-10-09",
@@ -2568,6 +2896,11 @@
 "id": "019c976a-89fc-73bf-a4d5-8fbd631c0b83",
 "synced": "2026-10-12",
 "variant": "Normal"
+},
+"infernape-17-135-86278-revers": {
+"id": "019c976a-8a33-7bde-a7bd-7be99dca7a24",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "infernape-22-100-86275-revers": {
 "id": "019c976a-8a29-7763-9b1c-665c3cd8ba56",
@@ -2629,6 +2962,11 @@
 "synced": "2026-10-11",
 "variant": "Normal"
 },
+"jirachi-1-95-86330": {
+"id": "019c9791-8369-7498-ba30-a1d904a98a1a",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "jirachi-31-146-86328-revers": {
 "id": "019c976a-8a8d-7f3b-956d-9c9d51edd53e",
 "synced": "2026-10-12",
@@ -2654,9 +2992,19 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"jirachi-ex-60-101-86333-holo": {
+"id": "019c976a-8a94-7fe9-9261-ca0d5d1481a6",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "jirachi-ex-94-100-86332-holofo": {
 "id": "019c9791-836d-7db9-8228-e5d579c24ff0",
 "synced": "2026-10-10",
+"variant": "Holofoil"
+},
+"jirachi-ex-98-101-86334": {
+"id": "019c976a-8a95-7ab5-b3be-1a77dedf782c",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "jolteon-003-017-86342-normal": {
@@ -2678,6 +3026,11 @@
 "id": "019c97a1-f209-7e47-8ed9-91e0002c9f5e",
 "synced": "2026-10-10",
 "variant": "Unlimited"
+},
+"jolteon-37-108-86347-revers": {
+"id": "019c976a-8aac-7c0f-8d95-5fb57b965f94",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "jolteon-45-95-86346-revers": {
 "id": "019c976a-8aa9-70ee-8c95-e43cddb4b3b1",
@@ -2757,6 +3110,11 @@
 "synced": "2026-10-10",
 "variant": "Unlimited Holofoil"
 },
+"keldeo-ex-full-art-142": {
+"id": "019c976a-8b89-7580-8ed7-a4e6a0afdbd7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "kingdra-008-111-86440-unlimi": {
 "id": "019c976a-8b8d-706f-b4eb-daa2ed46dffc",
 "synced": "2026-10-09",
@@ -2765,6 +3123,11 @@
 "kingdra-10-110-86450-holofo": {
 "id": "019c976a-8ba5-7706-bde4-7bef83a6c92e",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"kingdra-85-95-86448-holo-p": {
+"id": "019c9791-8480-72b5-b626-54fd372766b2",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "kingdra-ex-92-97-86451-holofo": {
@@ -2787,6 +3150,11 @@
 "synced": "2026-10-09",
 "variant": "1st Edition"
 },
+"krookodile-127-124-86544-holofo": {
+"id": "019c976c-9efb-7527-bc24-5a7ff5daa9c3",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "kyogre-12-95-86550": {
 "id": "019c976c-9f0c-76aa-bb64-f1283d6a9c95",
 "synced": "2026-10-12",
@@ -2805,6 +3173,31 @@
 "kyogre-sl6-86551": {
 "id": "019c976c-9f0d-7f4d-89e8-c85d96836edb",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"kyurem-21-20-86563-holofo": {
+"id": "019c9791-e3b3-7365-ac25-b3f9f125a69d",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"kyurem-ex-full-art-96": {
+"id": "019c976c-9f21-7541-8ace-3f2484dc3be6",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"landorus-bw43-86592-holo": {
+"id": "019c976c-9f4b-7f62-9e46-434d79c3364e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"landorus-ex-full-art-144": {
+"id": "019c976c-9f50-7b37-a7eb-2b5f5e2016a5",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"lanturn-86-95-86611-holo-p": {
+"id": "019c9791-e424-7425-b388-a6aa82931097",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "lapras-10-62-44419-unlimi": {
@@ -2842,6 +3235,11 @@
 "synced": "2026-10-10",
 "variant": "1st Edition"
 },
+"latias-003-017-86652-holofo": {
+"id": "019c9791-e47f-72d7-9905-29f16cefcc3c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "latias-11-110-86656-holo-d": {
 "id": "019c976c-9fbb-7fe3-b9cf-b82cd5d769eb",
 "synced": "2026-10-11",
@@ -2862,6 +3260,16 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"latias-9-20-86654": {
+"id": "019c9791-e483-77d7-b1cb-db3696264ca9",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"latias-ex-85-116-86660": {
+"id": "019c976c-9fc4-78cc-9fdb-5cc716fa94f2",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "latias-ex-93-97-86659-holofo": {
 "id": "019c9791-e48d-7b27-9cd3-dcbba6b3e60b",
 "synced": "2026-10-11",
@@ -2877,6 +3285,16 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"latios-004-017-86666-holofo": {
+"id": "019c9791-e496-7c7b-bab6-ded69eff82d4",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"latios-10-20-86668": {
+"id": "019c9791-e49c-72a0-8d51-1a7cc12bfd24",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "latios-12-110-86670-holofo": {
 "id": "019c976c-9fcc-7324-ae2f-63cf7db738ad",
 "synced": "2026-10-11",
@@ -2890,10 +3308,20 @@
 "latios-9-113-86669": {
 "failed": "2026-10-11"
 },
+"latios-ex-86-116-86674-holo": {
+"id": "019c976c-9fd2-755b-ac0b-801cef0af99d",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "latios-hgss11-86667": {
 "id": "019c9791-e499-70db-9337-34bb00886cbb",
 "synced": "2026-10-12",
 "variant": "Holofoil"
+},
+"leafeon-11-116-86683-revers": {
+"id": "019c976c-9fe4-76bd-b3a2-3a537fb239ca",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "leafeon-13-95-86681-holofo": {
 "id": "019c976c-9fde-73a5-80c6-72a8e0c7aea5",
@@ -2910,9 +3338,19 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"leafeon-bw87-91600-holo": {
+"id": "019c9785-bf3a-7218-b52b-3af35e0a0328",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "ledyba-07-18-46481-revers": {
 "id": "019c978d-6a45-722e-986e-5bb6a18e40a0",
 "synced": "2026-10-09",
+"variant": "Reverse Holofoil"
+},
+"lickilicky-12-132-86712-revers": {
+"id": "019c976c-a022-7d32-94ee-e69687182195",
+"synced": "2026-10-13",
 "variant": "Reverse Holofoil"
 },
 "light-arcanine-012-105-86734-unlimi": {
@@ -3010,6 +3448,11 @@
 "synced": "2026-10-09",
 "variant": "Unlimited"
 },
+"lucario-002-017-86877-normal": {
+"id": "019c9792-4e0b-70b2-8318-b5728bea0844",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "lucario-14-95-86881-holofo": {
 "id": "019c976e-bc55-706b-ac66-8162d72f343b",
 "synced": "2026-10-12",
@@ -3029,6 +3472,21 @@
 "id": "019c976e-bc4e-7d71-beac-35a437c35673",
 "synced": "2026-10-12",
 "variant": "Normal"
+},
+"lucario-64-99-86882-revers": {
+"id": "019c976e-bc5a-74e9-9ba8-d5ea70b6860d",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"lucario-78-135-86884-revers": {
+"id": "019c976e-bc62-77be-93de-21fe1bbe6001",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"lucario-80-113-86886-holofo": {
+"id": "019c976e-bc65-7dae-aff9-61eb798e7beb",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "lucario-c-31-86887-non-ho": {
 "id": "019c976e-bc6a-7294-9fae-d7d814084bb5",
@@ -3065,6 +3523,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"lugia-14-132-86908": {
+"id": "019c976e-bc8e-7a78-a888-5c75c5f9ddb2",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "lugia-15-95-86910": {
 "id": "019c976e-bc90-70a3-8c99-867298ac3613",
 "synced": "2026-10-12",
@@ -3074,6 +3537,26 @@
 "id": "019c976e-bc8b-79bf-963c-141f7974a025",
 "synced": "2026-10-11",
 "variant": "Normal"
+},
+"lugia-ex-102": {
+"id": "019c976e-bc98-7cb5-9fcd-c327c327a05e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"lugia-ex-108-135-86913": {
+"id": "019c976e-bc95-7771-8e1f-9bdcba6ec0e5",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"lugia-ex-bw83-86914": {
+"id": "019c976e-bc96-73ce-8ad9-9e5df68a9172",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"lugia-ex-full-art-134": {
+"id": "019c976e-bc99-721f-b655-844ba0a6d82e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "lugia-hgss02-86909": {
 "id": "019c9792-4e54-7a49-b79f-0625d580af49",
@@ -3104,6 +3587,11 @@
 "id": "019c9792-4e70-7194-b7a6-5998957a71f6",
 "synced": "2026-10-11",
 "variant": "Holofoil"
+},
+"luxray-003-017-86948-normal": {
+"id": "019c9792-4ebb-72e7-8feb-006800d52bf0",
+"synced": "2026-10-13",
+"variant": "Normal"
 },
 "luxray-7-130-86946-revers": {
 "id": "019c976e-bce4-7954-891c-ff850fd42617",
@@ -3164,6 +3652,11 @@
 "id": "019c976e-bd72-7a06-86a4-6e3856fc4361",
 "synced": "2026-10-09",
 "variant": "Normal"
+},
+"magikarp-30-113-87037-revers": {
+"id": "019c976e-bd8e-75d2-88db-7d2bb840c9d5",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "magikarp-64-107-87028-non-ho": {
 "id": "019c976e-bd79-7f99-af01-9e35a993fcbb",
@@ -3315,9 +3808,19 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"meloetta-ex-rc25": {
+"id": "019c9792-c039-7b09-bda1-4311a83c8776",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "meowth-10-53-87309-holofo": {
 "id": "019c9792-c045-73f0-80dc-622db40e1364",
 "synced": "2026-10-10",
+"variant": "Holofoil"
+},
+"meowth-102-101-87325": {
+"id": "019c9770-c95e-7cc6-9d51-013ba2a96888",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "meowth-106-146-191913-revers": {
@@ -3353,9 +3856,24 @@
 "metagross-11-113-87342": {
 "failed": "2026-10-11"
 },
+"metagross-4-95-87340-holofo": {
+"id": "019c9792-c08a-75ba-9cea-a9b8084d1798",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"metagross-52-116-87343-holofo": {
+"id": "019c9770-c982-7da1-b2df-28debd3f90f7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "metagross-7-87339-holofo": {
 "id": "019c9770-c97e-71ef-82f6-38adc0595598",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"metagross-bw75-87344": {
+"id": "019c9770-c985-7fc1-9cb4-17dbaa5abd50",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "mew-003-017-87407-holofo": {
@@ -3381,9 +3899,29 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"mew-15-132-87403-holofo": {
+"id": "019c9770-c9fe-7fcf-a749-4588280ac13d",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"mew-bw98-87406": {
+"id": "019c9770-ca03-74f7-a9b8-780d3342220e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "mew-ex-100-110-87410-holofo": {
 "id": "019c9770-ca06-7bbd-85a7-2754de14e18b",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"mew-ex-46-124-87411": {
+"id": "019c9770-ca08-75c6-9d3f-c3e274b40ae0",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"mew-ex-rc24": {
+"id": "019c9792-c118-79b3-b8ec-799b90bbd9b4",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "mewtwo-010-102-107005-unlimi": {
@@ -3421,6 +3959,11 @@
 "synced": "2026-10-11",
 "variant": "Normal"
 },
+"mewtwo-53-113-87424": {
+"id": "019c9770-ca2c-707e-8153-5ba7039045fd",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "mewtwo-9-100-87421": {
 "id": "019c9770-ca1b-7782-b6e9-4e1377b8cdf3",
 "synced": "2026-10-12",
@@ -3429,6 +3972,21 @@
 "mewtwo-ex-101-109-87428": {
 "id": "019c9770-ca33-77f9-96c0-986812742141",
 "synced": "2026-10-10",
+"variant": "Holofoil"
+},
+"mewtwo-ex-54-99-87429": {
+"id": "019c9770-ca34-7539-a1c6-0c6887eab871",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"mewtwo-ex-98-fa": {
+"id": "019c9770-ca38-7f65-a6f9-1523d3377977",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"mewtwo-ex-bw45-87430-holofo": {
+"id": "019c9770-ca36-72c0-abe8-e7ddfb616aa4",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "mewtwo-lv-x-dp28-87434": {
@@ -3574,6 +4132,11 @@
 "moltres-149-87563-holofo": {
 "id": "019c9772-d64f-70e3-bab3-09c4472f620f",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"moltres-ex-14": {
+"id": "019c9772-d65c-7183-9c2a-8118ae064199",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "monferno-056-130-174129-revers": {
@@ -3726,6 +4289,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"ninetales-20-95-87776-normal": {
+"id": "019c9793-6c55-78ef-9e70-89f8426e7e97",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "ninetales-32-123-87772": {
 "id": "019c9772-d826-7054-809e-67dd9596efee",
 "synced": "2026-10-12",
@@ -3751,6 +4319,11 @@
 "synced": "2026-10-10",
 "variant": "Holofoil"
 },
+"ninetales-bw66-87779-holo": {
+"id": "019c9772-d833-7bf5-aeac-aa8759bc6513",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "ninetales-ex-96-101-87782-holofo": {
 "id": "019c9772-d839-7fa0-b932-02248bb7442c",
 "synced": "2026-10-11",
@@ -3770,6 +4343,11 @@
 "id": "019c978d-6a40-7383-aecb-43042aacb497",
 "synced": "2026-10-09",
 "variant": "Normal"
+},
+"oshawott-004-012-87893-holofo": {
+"id": "019c9793-6d6c-750a-a508-637ce68ffc76",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "pachirisu-dp04-87901-holofo": {
 "id": "019c9793-6d7b-709d-ab35-c06b01af2485",
@@ -3804,6 +4382,16 @@
 "palkia-dp27-87909": {
 "id": "019c9793-6d8c-7b4b-9369-5937fcc5d258",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"palkia-ex-100-101-87916": {
+"id": "019c9774-e11e-7b32-881e-74876a1a7f82",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"palkia-ex-66-101-87915-holo-t": {
+"id": "019c9774-e11d-7474-8c5c-b5decab79a4c",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "palkia-g-12-127-87917": {
@@ -3906,6 +4494,11 @@
 "synced": "2026-10-11",
 "variant": "Normal"
 },
+"pignite-26-113-88063-revers": {
+"id": "019c9774-e28c-72b9-a8e9-8b93c14bb49c",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "pikachu-013-017-88083-holofo": {
 "id": "019c9793-edb9-7a11-8ab0-e41cbf39880b",
 "synced": "2026-10-11",
@@ -3939,9 +4532,19 @@
 "pikachu-094-123-174062-revers": {
 "failed": "2026-10-10"
 },
+"pikachu-115-114-88101": {
+"id": "019c9774-e2b1-7e17-a28e-71d7ab07bbe2",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "pikachu-124-165-88076-normal": {
 "id": "019c9774-e297-7f99-9208-7aa610708759",
 "synced": "2026-10-09",
+"variant": "Normal"
+},
+"pikachu-16-30-88100-non-ho": {
+"id": "019c9793-edd9-7169-8b67-b04d2b78fa22",
+"synced": "2026-10-13",
 "variant": "Normal"
 },
 "pikachu-27-53-88069-normal": {
@@ -3994,6 +4597,12 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"pikachu-rc29": {
+"failed": "2026-10-13"
+},
+"pikachu-rc7": {
+"failed": "2026-10-13"
+},
 "pikachu-w-stamped-60-64-126209-normal": {
 "id": "019c97ae-8ba8-7d66-bd4c-2a758804ae8a",
 "synced": "2026-10-10",
@@ -4014,6 +4623,16 @@
 "synced": "2026-10-10",
 "variant": "Holofoil"
 },
+"piplup-015-017-88143-normal": {
+"id": "019c9793-ee34-79de-aaf6-d2763d7af9a3",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
+"piplup-015-017-88148-normal": {
+"id": "019c9793-ee3b-7713-b735-8d37b635f3a5",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "piplup-093-100-235080-revers": {
 "id": "019c97f1-f659-78b7-9977-27ef0bc7ac01",
 "synced": "2026-10-10",
@@ -4029,6 +4648,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"piplup-rc6-rc25-88154-holo": {
+"id": "019c9793-ee46-7d40-b4b3-8f6b36ac49bd",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "plusle-005-017-88167-normal": {
 "id": "019c9793-ee60-769b-933f-5199faeb523c",
 "synced": "2026-10-11",
@@ -4038,6 +4662,11 @@
 "id": "019c9793-ee63-754f-bf8a-dca55a874e67",
 "synced": "2026-10-12",
 "variant": "Normal"
+},
+"plusle-39-108-88173-revers": {
+"id": "019c9774-e325-77af-8757-2699a9f04a9c",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "plusle-hgss16-88172-holo": {
 "id": "019c9793-ee6a-7ab7-b517-7ad1976595ca",
@@ -4058,6 +4687,11 @@
 "id": "019c9793-ef13-721f-b74b-e362ca616780",
 "synced": "2026-10-09",
 "variant": "Unlimited"
+},
+"politoed-7-95-88251-holo": {
+"id": "019c9793-ef19-7b4c-9587-85c59f923658",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "poliwag-059-102-107056-stedit": {
 "id": "019c97a1-f2c0-74f4-9c91-9cd22353e36e",
@@ -4164,10 +4798,20 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"psyduck-100-132-88438-normal": {
+"id": "019c9776-f791-7b64-9706-d30752b31589",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "psyduck-104-147-88435-non-ho": {
 "id": "019c9776-f78c-7659-ad6f-ab0d9fe13465",
 "synced": "2026-10-10",
 "variant": "Normal"
+},
+"psyduck-32-149-88441": {
+"id": "019c9776-f799-7905-8149-82367305c2ae",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "psyduck-53-62-44455-stedit": {
 "id": "019c978d-69b5-7ab0-8ad7-5d52aa48d5f4",
@@ -4183,6 +4827,11 @@
 "id": "019c9776-f79d-7cdd-ad12-cb1b23431cc5",
 "synced": "2026-10-11",
 "variant": "Normal"
+},
+"purrloin-009-012-88463-holofo": {
+"id": "019c9794-508e-7fde-9c77-828332cd4ae4",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "quagsire-030-147-88467-non-ho": {
 "id": "019c9776-f7cf-7c64-a9fb-4a9a11e48726",
@@ -4289,6 +4938,11 @@
 "synced": "2026-10-09",
 "variant": "Unlimited Holofoil"
 },
+"raikou-16-132-88534-revers": {
+"id": "019c9776-f836-7ef2-97a8-57f8d1575c19",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "raikou-22-64-88530-1st-ed": {
 "id": "019c9794-512d-7c4e-843e-f8556b95d396",
 "synced": "2026-10-09",
@@ -4307,6 +4961,11 @@
 "raikou-sl9-88536": {
 "id": "019c9776-f837-7a06-9691-b8e2789578b4",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"raikou-suicune-legend-92-95-88539-holo-t": {
+"id": "019c9794-5143-799d-a1e1-4fb8d7ca5d81",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "rampardos-13-127-88571": {
@@ -4344,6 +5003,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"rayquaza-11-20-88631": {
+"id": "019c9794-aab8-7f2a-bfed-b20cc0b4e3d7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "rayquaza-14-146-88627": {
 "id": "019c9779-0ff2-7044-9286-082d756fa908",
 "synced": "2026-10-12",
@@ -4379,6 +5043,11 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"rayquaza-93": {
+"id": "019c9779-0fff-75e3-87a0-736a612fb60d",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "rayquaza-c-8-147-88639": {
 "id": "019c9779-1018-7381-8158-99fecc9dcf6e",
 "synced": "2026-10-11",
@@ -4404,10 +5073,25 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"rayquaza-ex-85-124-88645": {
+"id": "019c9779-1024-7806-ae8f-1730530eb008",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"rayquaza-ex-bw47-88646": {
+"id": "019c9779-1026-7494-a191-1cc49cee29bc",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "regice-36-146-88657-revers": {
 "id": "019c9779-1047-7bb8-b167-1b2019c01fbe",
 "synced": "2026-10-12",
 "variant": "Reverse Holofoil"
+},
+"regigigas-ex-82-99-88666-holo": {
+"id": "019c9779-105f-71ea-933a-c2f37f32eb2a",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "regigigas-lv-x-100-100-88669-holo": {
 "id": "019c9779-1069-74a9-baa8-e664699a314b",
@@ -4424,6 +5108,41 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"reshiram-113-114-88710-holo-1": {
+"id": "019c9779-1101-76fa-beba-d33c4a14650d",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"reshiram-17-116-88708-revers": {
+"id": "019c9779-10f9-7fda-8020-575304f31b7f",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"reshiram-28-113-88709": {
+"id": "019c9779-10fc-75a0-b59d-6e7e6c98206c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"reshiram-ex-29-113-88715-holofo": {
+"id": "019c9779-110b-7a99-a6f7-d436452aa575",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"reshiram-ex-bw36-88714-holofo": {
+"id": "019c9779-1108-7875-862d-d88c72be6506",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"reshiram-ex-full-art-95": {
+"id": "019c9779-110d-7d7c-9ea2-06afef8423d9",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"reshiram-rc22": {
+"id": "019c9794-ab8c-7229-a6bc-d914021fe9f4",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "rhyhorn-091-144-88739-normal": {
 "id": "019c9779-115a-7d31-b80b-970d0e85ce56",
 "synced": "2026-10-10",
@@ -4432,6 +5151,11 @@
 "rhyperior-lv-x-dp29-88750": {
 "id": "019c9794-abe2-73a9-82b2-9e872a7abfce",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"riolu-008-017-88752-holofo": {
+"id": "019c9794-abe9-7ff6-9928-bb34159702a2",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "rocket-s-hitmonchan-011-132-88773-unlimi": {
@@ -4569,6 +5293,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"salamence-18-132-88897-holofo": {
+"id": "019c9779-12cf-74bc-b7c2-e7dc551f211e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "salamence-8-99-88899": {
 "id": "019c977b-1e4c-76f3-801d-9142ec6dfbb7",
 "synced": "2026-10-11",
@@ -4629,6 +5358,11 @@
 "synced": "2026-10-10",
 "variant": "Holofoil"
 },
+"scraggy-010-012-88986-holofo": {
+"id": "019c9795-04f9-71de-bacd-eb20ab19d90c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "scyther-017-130-42461-holo": {
 "id": "019c9745-24f6-728d-9a43-6843dca332c5",
 "synced": "2026-10-09",
@@ -4667,6 +5401,21 @@
 "shaymin-14-127-89108-holofo": {
 "id": "019c977b-202d-7b83-b99f-feaeb5742711",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"shaymin-8-95-89109-holo": {
+"id": "019c9795-0600-7185-b3f5-ed9fc5ff41f7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"shaymin-ex-94-99-89112-holo-9": {
+"id": "019c977b-2039-7d7a-a007-93f9514b0531",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"shaymin-ex-rc21": {
+"id": "019c9795-0606-7ab0-8b94-9958ad06a5b1",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "shaymin-lv-x-126-127-89114-holo-l": {
@@ -4819,6 +5568,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"slowpoke-23-108-89335-revers": {
+"id": "019c977d-5f29-74e8-8222-cf87779479e9",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "slowpoke-45-95-89326-non-ho": {
 "id": "019c9795-5463-79ac-a32b-80c6e81bbdda",
 "synced": "2026-10-11",
@@ -4879,6 +5633,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"snorlax-101-135-89396-non-ho": {
+"id": "019c977d-5f87-7da9-af12-c17eefbb56da",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "snorlax-11-64-45122-unlimi": {
 "id": "019c978d-69d1-7070-89b9-845af6fa5139",
 "synced": "2026-10-10",
@@ -4924,6 +5683,11 @@
 "synced": "2026-10-10",
 "variant": "Unlimited"
 },
+"squirtle-112-132-89494-revers": {
+"id": "019c977d-6073-7878-a6c6-66073af87156",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "squirtle-131-165-89486-non-ho": {
 "id": "019c977d-6062-72d7-9139-e0fab556fff1",
 "synced": "2026-10-09",
@@ -4942,6 +5706,11 @@
 "squirtle-83-112-89490-normal": {
 "id": "019c977d-606a-7256-bc87-167d833ddb4c",
 "synced": "2026-10-11",
+"variant": "Normal"
+},
+"stantler-009-017-89505-normal": {
+"id": "019c9795-b6b1-7775-8a96-182c49742511",
+"synced": "2026-10-13",
 "variant": "Normal"
 },
 "staraptor-16-130-89508-holofo": {
@@ -4984,6 +5753,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"steelix-87-95-89564": {
+"id": "019c9795-b72f-7b56-b78b-cc1190b9bb34",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "sudowoodo-26-64-89590-unlimi": {
 "id": "019c9795-b765-7113-b3e1-ac98207d3da2",
 "synced": "2026-10-09",
@@ -4999,10 +5773,25 @@
 "synced": "2026-10-09",
 "variant": "Unlimited Holofoil"
 },
+"suicune-19-132-89604": {
+"id": "019c977f-817f-7eb3-9986-a26376b97c9c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "suicune-53-53-89601-normal": {
 "id": "019c9795-b77d-70f5-9428-f160a3c52e2b",
 "synced": "2026-10-10",
 "variant": "Normal"
+},
+"suicune-entei-legend-94-95-89610-holofo": {
+"id": "019c9795-b78c-70a1-8e8b-2f62191f264b",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"suicune-entei-legend-95-95-89609": {
+"id": "019c9795-b78b-72a5-818e-6465a0619947",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "suicune-hgss21-89605-holofo": {
 "id": "019c9795-b784-75c3-bc49-76be9951de67",
@@ -5139,10 +5928,25 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"tornadus-98-98-89977-holo-9": {
+"id": "019c9781-a025-7234-9b98-b0ab5fec51a0",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"tornadus-ex-98-116-89981": {
+"id": "019c9781-a02b-78ac-84d5-31d2bfc7e314",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "torterra-17-130-89983": {
 "id": "019c9781-a02e-740f-9512-d2d52bb8c367",
 "synced": "2026-10-12",
 "variant": "Holofoil"
+},
+"torterra-3-135-89988-revers": {
+"id": "019c9781-a03d-7eb5-a7d9-73d545e29d24",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "torterra-lv-x-122-130-89989": {
 "id": "019c9781-a03f-7453-b897-2c6faba6b318",
@@ -5168,6 +5972,11 @@
 "id": "019c9781-a04b-7df6-979a-bd03ac3dfa2e",
 "synced": "2026-10-09",
 "variant": "Normal"
+},
+"turtwig-017-017-90072-holofo": {
+"id": "019c9796-fe75-7f8a-b547-46d5e8989081",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "turtwig-dp01-90075-holofo": {
 "id": "019c9796-fe7a-7add-89f9-228950323a84",
@@ -5232,14 +6041,29 @@
 "synced": "2026-10-12",
 "variant": "Reverse Holofoil"
 },
+"tyranitar-26-95-90121-normal": {
+"id": "019c9796-fed8-72d3-a4d2-2d94e0bf9471",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "tyranitar-30-100-90120-normal": {
 "id": "019c9781-a1a8-7feb-9edf-4a2d86fec3af",
 "synced": "2026-10-11",
 "variant": "Normal"
 },
+"tyranitar-88-95-90122": {
+"id": "019c9796-feda-7e66-9269-32e1496920af",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "tyranitar-ex-017-017-90124-holofo": {
 "id": "019c9796-fedd-7dc8-b64c-ff9fc186b72a",
 "synced": "2026-10-11",
+"variant": "Holofoil"
+},
+"tyranitar-ex-91": {
+"id": "019c97a0-0200-7f97-8dc9-ff9856c2b069",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "umbreon-041-147-90143-non-ho": {
@@ -5276,6 +6100,21 @@
 "id": "019c9796-ff02-783d-8046-c0ff89fe5aea",
 "synced": "2026-10-09",
 "variant": "Unlimited"
+},
+"umbreon-61-108-90149-non-ho": {
+"id": "019c9781-a1e2-7f33-b502-2829c7c6d7bc",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
+"umbreon-64-116-90152": {
+"id": "019c9781-a1eb-7e3d-9290-eb61873f92b7",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"umbreon-bw93-90150": {
+"id": "019c9781-a1e5-76ea-ad2f-d96639b11f58",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "umbreon-neo-discovery-13-unl": {
 "id": "019c9796-fef7-76d6-82f8-8588d77323f6",
@@ -5327,6 +6166,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"ursaring-89-95-90255-holo-p": {
+"id": "019c9797-4ed3-7a8c-917f-c9cdec70538e",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "uxie-18-123-90259": {
 "id": "019c9781-a2e1-77e3-99d6-53c2a8a32090",
 "synced": "2026-10-12",
@@ -5361,6 +6205,11 @@
 "id": "019c9797-4f1b-7006-ac92-5d17e25c08e2",
 "synced": "2026-10-12",
 "variant": "Normal"
+},
+"vaporeon-bw89-90289": {
+"id": "019c9781-a332-7fc4-8c0e-074376f72611",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "venomoth-111-144-90300-non-ho": {
 "id": "019c9781-a358-72a3-bf0c-119c12a39879",
@@ -5407,10 +6256,35 @@
 "synced": "2026-10-09",
 "variant": "Holofoil"
 },
+"venusaur-20-132-90319-revers": {
+"id": "019c9783-adc3-7565-8168-3af6ee42e3c8",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "venusaur-28-100-90318": {
 "id": "019c9797-4f61-7427-831f-a7a336aec8ce",
 "synced": "2026-10-10",
 "variant": "Reverse Holofoil"
+},
+"victini-43-101-90345-revers": {
+"id": "019c9783-adef-7e1d-85a6-d7a1e2282ce2",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
+"victini-98-101-90349": {
+"id": "019c9783-adf8-7457-a4bd-759a8e46b205",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"victini-bw32-90346-holofo": {
+"id": "019c9783-adf0-7537-8056-d48ec5b3c28a",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"victini-ex-131-135-90352": {
+"id": "019c9783-adfd-771c-a638-1d337e7ff035",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "victreebel-14-64-45125-stedit": {
 "id": "019c978d-69d6-7e4b-a608-c5032d31c508",
@@ -5426,6 +6300,16 @@
 "id": "019c978d-6a3d-7ee3-b405-b7a45c165c75",
 "synced": "2026-10-09",
 "variant": "Reverse Holofoil"
+},
+"virizion-97-101-90392-holo-f": {
+"id": "019c9783-ae4e-76d8-9dfe-5766c132ea64",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"volcarona-bw40-90403-holofo": {
+"id": "019c9783-ae61-7072-9e0f-83c3914f5f1b",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 },
 "vulpix-091-105-90433-1st-ed": {
 "id": "019c9783-ae99-78d8-ab43-ca3f94d4e33c",
@@ -5482,6 +6366,11 @@
 "synced": "2026-10-10",
 "variant": "Normal"
 },
+"white-kyurem-bw59-90587-holo": {
+"id": "019c9783-afb0-7eee-ad4a-5da55f7dd855",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "wigglytuff-019-130-42463-holofo": {
 "id": "019c9745-24f9-711b-bdea-0a149d1b93a3",
 "synced": "2026-10-09",
@@ -5505,6 +6394,11 @@
 "wobbuffet-hgss04-90622-holofo": {
 "id": "019c9797-9e85-7bf5-8bc5-b0bb3a959861",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"woobat-007-012-90629-holofo": {
+"id": "019c9797-9ea7-7105-a00f-f6484a1f636d",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "wooper-71-101-90639-normal": {
@@ -5577,23 +6471,60 @@
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
 },
+"zapdos-8-90720": {
+"id": "019c9797-9fcd-7b7b-addd-4bec9e7e2e5a",
+"synced": "2026-10-13",
+"variant": "Normal"
+},
 "zapdos-g-12-99-90726-revers": {
 "id": "019c9785-bd77-7f00-a37b-01c97fae443e",
 "synced": "2026-10-11",
 "variant": "Reverse Holofoil"
+},
+"zekrom-bw24-90734-holofo": {
+"id": "019c9785-bd97-7e36-a261-15c1f9582d26",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"zekrom-ex-51-99-90740-holofo": {
+"id": "019c9785-bda6-7aff-b9e2-ecd425c5d2e5",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"zekrom-ex-full-art-97": {
+"id": "019c9785-bdaa-7fd6-97a9-6db7f7f4b99c",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"zoroark-bw19-90752": {
+"id": "019c9785-bdbd-74bb-b3fa-020914f9b556",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
+"zorua-bw12-90760-holo": {
+"id": "019c9785-bdce-7185-808f-0cfd480e68c6",
+"synced": "2026-10-13",
+"variant": "Holofoil"
 }
 },
 "sets": {
+"Ancient Origins": "pokemon--xy-ancient-origins",
 "Aquapolis": "pokemon--aquapolis",
 "Arceus": "pokemon--arceus",
 "Base Set": "pokemon--base-set",
 "Base Set (Shadowless)": "pokemon--base-set-shadowless",
 "Base Set 2": "pokemon--base-set-2",
 "Best of Promos": "pokemon--best-of-promos",
+"Black and White": "pokemon--black-and-white",
+"Black and White Promos": "pokemon--black-and-white-promos",
+"Boundaries Crossed": "pokemon--boundaries-crossed",
 "Burger King Promos": "pokemon--burger-king-promos",
 "Call of Legends": "pokemon--call-of-legends",
+"Dark Explorers": "pokemon--dark-explorers",
 "Diamond and Pearl": "pokemon--diamond-and-pearl",
 "Diamond and Pearl Promos": "pokemon--diamond-and-pearl-promos",
+"Dragon Vault": "pokemon--dragon-vault",
+"Dragons Exalted": "pokemon--dragons-exalted",
 "EX Battle Stadium": "pokemon--ex-battle-stadium",
 "EX Crystal Guardians": "pokemon--ex-crystal-guardians",
 "EX Delta Species": "pokemon--ex-delta-species",
@@ -5612,32 +6543,48 @@
 "EX Team Rocket Returns": "pokemon--ex-team-rocket-returns",
 "EX Trainer Kit 1: Latias & Latios": "pokemon--ex-trainer-kit-1-latias-and-latios",
 "EX Unseen Forces": "pokemon--ex-unseen-forces",
+"Emerging Powers": "pokemon--emerging-powers",
 "Expedition": "pokemon--expedition",
 "Fossil": "pokemon--fossil",
 "Great Encounters": "pokemon--great-encounters",
 "Gym Challenge": "pokemon--gym-challenge",
 "Gym Heroes": "pokemon--gym-heroes",
 "HGSS Promos": "pokemon--hgss-promos",
+"HGSS Trainer Kit: Gyarados & Raichu": "pokemon--hgss-trainer-kit-gyarados-and-raichu",
 "HS Undaunted": "pokemon--undaunted",
 "HeartGold & SoulSilver": "pokemon--heartgold-soulsilver",
 "HeartGold SoulSilver": "pokemon--heartgold-soulsilver",
 "Jungle": "pokemon--jungle",
 "Legendary Collection": "pokemon--legendary-collection",
+"Legendary Treasures": "pokemon--legendary-treasures",
 "Legendary Treasures: Radiant Collection": "pokemon--legendary-treasures-radiant-collection",
 "Legends Awakened": "pokemon--legends-awakened",
 "Majestic Dawn": "pokemon--majestic-dawn",
+"McDonald's Promos 2011": "pokemon--mcdonalds-promos-2011",
+"McDonald's Promos 2012": "pokemon--mcdonalds-promos-2012",
 "Mysterious Treasures": "pokemon--mysterious-treasures",
 "Neo Destiny": "pokemon--neo-destiny",
 "Neo Discovery": "pokemon--neo-discovery",
 "Neo Genesis": "pokemon--neo-genesis",
 "Neo Revelation": "pokemon--neo-revelation",
+"Next Destinies": "pokemon--next-destinies",
+"Noble Victories": "pokemon--noble-victories",
 "POP Series 1": "pokemon--pop-series-1",
 "POP Series 2": "pokemon--pop-series-2",
 "POP Series 3": "pokemon--pop-series-3",
 "POP Series 4": "pokemon--pop-series-4",
 "POP Series 5": "pokemon--pop-series-5",
+"POP Series 6": "pokemon--pop-series-6",
+"POP Series 7": "pokemon--pop-series-7",
+"POP Series 8": "pokemon--pop-series-8",
+"POP Series 9": "pokemon--pop-series-9",
+"Plasma Blast": "pokemon--plasma-blast",
+"Plasma Freeze": "pokemon--plasma-freeze",
+"Plasma Storm": "pokemon--plasma-storm",
 "Platinum": "pokemon--platinum",
 "Rising Rivals": "pokemon--rising-rivals",
+"Rumble": "pokemon--rumble",
+"Secret Wonders": "pokemon--secret-wonders",
 "Skyridge": "pokemon--skyridge",
 "Southern Islands": "pokemon--southern-islands",
 "Stormfront": "pokemon--stormfront",
@@ -5645,6 +6592,7 @@
 "Team Rocket": "pokemon--team-rocket",
 "Triumphant": "pokemon--triumphant",
 "Undaunted": "pokemon--undaunted",
+"Unleashed": "pokemon--unleashed",
 "WoTC Promo": "pokemon--wotc-promo"
 }
 }
