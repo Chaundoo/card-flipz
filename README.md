@@ -39,3 +39,13 @@ Add an entry to `eras/eras.json` above `"other"` (id, name, years, set-name patt
 ## Weekly price refresh
 `.github/workflows/price-refresh.yml` runs `scripts/refresh_prices.py` every Friday. It reads every
 era file, refreshes raw prices, and only rewrites the era files that changed.
+
+## Flip Finder (new flip cards, approved by you)
+
+The **Flip Finder** tab lists new cards the bot found with a good condition flip. Nothing is added to the site until you pick it.
+
+* **Finding:** `.github/workflows/find-candidates.yml` runs early **Monday to Thursday** (your no-show days), after the daily price update, and scans 2010-2020 sets with whatever TCG Price Lookup requests are left. Friday to Sunday it does nothing, so show-day card adds keep their requests. Each set is re-checked about once a week. It writes `candidates.json`.
+* **Picking:** on the tab, tap cards or use **Select all**, then **Add to site** (or **Hide** to never see a card again). That opens a GitHub issue; press **Create**.
+* **Adding:** `approve-candidates.yml` copies the picked cards into the era files using the prices saved when they were found. It uses **no** API requests.
+* **Settings:** `scripts/discovery_config.json` (vendor %, min/max buy price, minimum return, request budget, which years/sets, popular Pokémon, words to skip).
+* **Test it without saving anything:** Actions → *Flip Finder* → Run workflow (dry run is on by default). The report lists the fields the API returned, so the trainer and price checks can be tuned.

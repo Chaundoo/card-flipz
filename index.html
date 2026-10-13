@@ -510,6 +510,22 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 @media (prefers-reduced-motion:reduce){.tile{transition:none}.tile:hover{transform:none}}
 
 .localnote{max-width:1180px;margin:10px auto 0;padding:10px 14px;border-radius:10px;background:var(--gold-soft);color:var(--gold-ink);font-size:13.5px}.localnote button{margin-left:8px;border:1px solid currentColor;background:transparent;border-radius:7px;padding:3px 8px;font-size:12.5px;color:inherit}
+
+/* Flip Finder */
+.pill.warnp{background:var(--gold-soft);color:var(--gold-ink)}
+.pill.newp{background:var(--navy);color:var(--navy-ink)}
+.tile[data-pick]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fstats{display:flex;flex-direction:column;gap:7px}
+.fmain{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fmain b{font-size:21px}
+.froute{font-size:13px;color:var(--muted)}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.fgrid div{background:var(--surface-2);border-radius:8px;padding:6px 8px;display:flex;flex-direction:column;min-width:0}
+.fgrid span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.fgrid b{font-size:14px}
+.fflags{display:flex;gap:4px;flex-wrap:wrap}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.fbar select{max-width:100%}
 </style>
 </head><body>
 <div id="root"><p style="padding:40px;text-align:center;font-family:sans-serif">Loading cards…</p></div>
@@ -520,6 +536,7 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 var SKEL = "<!doctype html><html><head><meta charset=utf8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>\n";
 var DATA = JSON.parse(document.getElementById("app-data").textContent);
 var cards = DATA.cards || [];
+var CANDS = DATA.candidates || [], CMETA = DATA.candMeta || {};
 /* Eras: each era's cards are saved in their own file (eras/<id>/<id>.json). */
 var ERAS = DATA.eras || [];
 var ERA_RULES = ERAS.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ try{ return new RegExp(p,"i"); }catch(err){ return /(?!)/; } })}; });
@@ -715,7 +732,7 @@ var searchTimer = null;
 function thumb(c){ var u = c && c.image || ""; return /^https:\/\/tcgplayer-cdn\.tcgplayer\.com\/product\/\d+_400w\.jpg$/.test(u) ? u.replace("_400w.jpg","_200w.jpg") : u; }
 function watchImages(){
   var imgs = root.querySelectorAll("img[data-img]");
-  var byId = {}; cards.forEach(function(c){ byId[c.id] = c; });
+  var byId = {}; cards.concat(CANDS).forEach(function(c){ byId[c.id] = c; });
   function show(img){ var c = byId[img.getAttribute("data-img")]; if(c && c.image){ img.setAttribute("data-full", c.image); img.src = thumb(c); } img.removeAttribute("data-img"); }
   if(imgObserver) imgObserver.disconnect();
   if(!("IntersectionObserver" in window)){ imgs.forEach(show); return; }
@@ -936,6 +953,7 @@ function chip(k,label,unit,gold){ return '<label class="set-chip'+(gold?' gold':
 function bindHeader(){
   var vb = document.getElementById("viewbtn"); if(vb) vb.addEventListener("click", showChooser);
   var tc = document.getElementById("tab-cards"); if(tc) tc.addEventListener("click", function(){ state.notice = ""; go(null); });
+  var tf = document.getElementById("tab-finder"); if(tf) tf.addEventListener("click", function(){ state.notice = ""; goFinder(); });
   var tp = document.getElementById("tab-pairs"); if(tp) tp.addEventListener("click", function(){ state.notice = ""; goPairs(null); });
   var tl = document.getElementById("tab-log"); if(tl) tl.addEventListener("click", function(){ state.notice = ""; goLog(null); });
   var fe = document.getElementById("fees"); if(fe) fe.addEventListener("toggle", function(){ state.feesOpen = fe.open; });
@@ -1288,9 +1306,10 @@ function addCards(target, ids){
   changed(p); return p;
 }
 function tabs(){
-  var v = state.view, cur = (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  var v = state.view, cur = v==="finder" ? "finder" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  var fn = finderAvail().length;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
-  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+'</nav>';
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+'</nav>';
 }
 function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
 
@@ -1301,6 +1320,7 @@ function selectBar(){
     '<button class="btn primary" id="sel-add"'+(selected.length?'':' disabled')+'>Add to pairing</button><button class="btn" id="sel-cancel">Cancel</button></div>';
 }
 function pairBar(){
+  if(state.view==="finder") return finderBar();
   if(state.selecting && state.view==="list") return selectBar();
   var n = pendingCount(); if(!n) return '';
   var sent = SYNC.sentAt ? (Date.now()-SYNC.sentAt)/60000 : null, status;
@@ -1321,6 +1341,10 @@ function mountBar(){
   document.body.style.setProperty("--barh", bar.offsetHeight+"px");
   var sa = document.getElementById("sel-add"); if(sa) sa.addEventListener("click", function(){
     if(!selected.length) return; var p = addCards(document.getElementById("sel-target").value, selected.slice()); goPairs(p.id); });
+  var fa = document.getElementById("fd-add"); if(fa) fa.addEventListener("click", function(){ sendFinder(finderSel.slice(), []); });
+  var fh = document.getElementById("fd-hide"); if(fh) fh.addEventListener("click", function(){
+    if(confirm("Hide "+finderSel.length+" card"+(finderSel.length!==1?"s":"")+" for good? They won't be suggested again.")) sendFinder([], finderSel.slice()); });
+  var fc = document.getElementById("fd-clear"); if(fc) fc.addEventListener("click", function(){ finderSel = []; state.fmsg = ""; var y = window.scrollY; render(); window.scrollTo(0,y); });
   var sc = document.getElementById("sel-cancel"); if(sc) sc.addEventListener("click", function(){ state.selecting = false; selected = []; render(); });
   var ps = document.getElementById("pb-save"); if(ps) ps.addEventListener("click", pushToGitHub);
   var pk = document.getElementById("pb-check"); if(pk) pk.addEventListener("click", function(){ remember(); location.reload(); });
@@ -1333,7 +1357,7 @@ function mountBar(){
 }
 /* reopen the same screen after a reload */
 function remember(){
-  var v = state.view, o = v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
+  var v = state.view, o = v==="finder" ? "finder" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
   try{ sessionStorage.setItem("flipdesk.open", o); }catch(e){}
 }
 /* View-only visitors: keep their new pairings on this device instead. */
@@ -1782,10 +1806,139 @@ function showAddLink(){
   url.focus();
 }
 
+/* ---------- Flip Finder: new cards the bot found with a good flip. You pick which ones move into the site. ---------- */
+var finderSel = [], FSENT_KEY = "cfz.finderSent";
+state.fsort = "match"; state.fera = ""; state.fclean = false; state.fmsg = "";
+var FFLAG = {
+  est:["Estimated price","The buy or resell price is TCGplayer's mid price (no recent market price), so it is a softer number."],
+  bigjump:["Big price jump","The resell price is about double (or more) what you would pay. Vendors get picky on big jumps like this."],
+  wide:["Resell price high vs listings","The resell price is well above the lowest listing. A few high sales may be lifting it, so check the listings."]
+};
+function finderSentIds(){ var o = load(FSENT_KEY, null); return (o && o.ids && Date.now()-o.at < 6*3600*1000) ? o.ids : []; }
+function finderAvail(){
+  var have = {}; cards.forEach(function(x){ have[String(x.tcgId||"")+"|"+String(x.tcgVariant||"").toLowerCase()] = 1; });
+  var sent = finderSentIds();
+  return CANDS.filter(function(c){ return !have[String(c.tcgId||"")+"|"+String(c.tcgVariant||"").toLowerCase()] && sent.indexOf(c.id)<0; });
+}
+/* Best flip for a candidate at YOUR vendor %, ranked by percentage return (then dollars). */
+function fRoute(c){
+  var g = condGap(c, "vendor"); if(!g) return null;
+  var ok = g.routes.filter(function(r){ return r.net>0; }); if(!ok.length) return null;
+  return ok.reduce(function(a,b){ return (b.roi>a.roi || (b.roi===a.roi && b.net>a.net)) ? b : a; });
+}
+function finderRows(){
+  var list = finderAvail().map(function(c){ return {c:c, r:fRoute(c)}; }).filter(function(x){ return x.r; });
+  if(state.fera) list = list.filter(function(x){ return x.c.era===state.fera; });
+  if(state.fclean) list = list.filter(function(x){ return !(x.c.flags||[]).length; });
+  var s = state.fsort;
+  list.sort(function(a,b){
+    if(s==="roi") return b.r.roi-a.r.roi;
+    if(s==="net") return b.r.net-a.r.net;
+    if(s==="buy") return a.r.buy-b.r.buy;
+    if(s==="new") return String(b.c.found||"").localeCompare(String(a.c.found||"")) || b.r.roi-a.r.roi;
+    return (b.c.score||0)-(a.c.score||0);
+  });
+  return list;
+}
+function newSince(){ var g = CMETA.generated; if(!g) return "9999"; var d = new Date(g+"T12:00:00"); d.setDate(d.getDate()-3); return d.toISOString().slice(0,10); }
+function finderTile(x, picked){
+  var c = x.c, r = x.r, nw = c.found && c.found >= newSince();
+  var eg = condGap(c, "ebay"), e = eg && eg.routes.filter(function(q){ return q.fk===r.fk; })[0];
+  var flags = (c.flags||[]).map(function(f){ var m = FFLAG[f]; return m ? '<span class="pill warnp" title="'+esc(m[1])+'">'+esc(m[0])+'</span>' : ''; }).join("");
+  return '<div class="tile'+(picked?' picked':'')+'" data-pick="'+esc(c.id)+'" role="checkbox" aria-checked="'+picked+'" tabindex="0"><span class="check" aria-hidden="true">✓</span>'+
+    '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
+    '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
+    ((nw||c.pop||flags) ? '<div class="fflags">'+(nw?'<span class="pill newp">New</span>':'')+(c.pop?'<span class="pill pos" title="A popular Pokémon">★ Popular</span>':'')+flags+'</div>' : '')+
+    condLine(c)+
+    '<div class="fstats"><div class="fmain"><b class="num pos-t">'+signed(r.net)+'</b><span class="pill pos">'+pct(r.roi)+' return</span></div>'+
+    '<div class="froute">Buy '+r.from+' '+money(r.buy)+' → sell '+r.to+' '+money(r.sell)+'</div>'+
+    '<div class="fgrid"><div><span>Vendor pays</span><b class="num">'+money(r.sell*S.vendor/100,2)+'</b></div>'+
+    '<div><span>Price jump</span><b class="num">'+(r.sell/r.buy).toFixed(1)+'×</b></div>'+
+    '<div><span>eBay profit</span><b class="num '+(e&&e.net>=0?'pos-t':'neg-t')+'">'+(e?signed(e.net):'—')+'</b></div></div></div>'+
+    '<div class="sub">'+tcgLink(c, r.fk, "Find a "+r.from+" copy")+' · found '+fmtDate(c.found)+'</div></div>';
+}
+function finderBar(){
+  var ids = finderRows().map(function(x){ return x.c.id; });
+  finderSel = finderSel.filter(function(id){ return ids.indexOf(id)>=0; });
+  if(!finderSel.length) return state.fmsg ? '<div class="actionbar" role="region" aria-label="Flip Finder"><span class="msg" role="status">'+esc(state.fmsg)+'</span></div>' : '';
+  var n = finderSel.length;
+  return '<div class="actionbar" role="region" aria-label="Selected flip candidates"><b id="fd-count">'+n+' selected</b>'+
+    '<button class="btn" id="fd-clear">Clear</button><button class="btn" id="fd-hide">Hide</button>'+
+    '<button class="btn primary" id="fd-add">Add '+n+' to site</button>'+(state.fmsg?'<span class="msg" role="status">'+esc(state.fmsg)+'</span>':'')+'</div>';
+}
+function sendFinder(add, hide){
+  if(!add.length && !hide.length) return;
+  var title = "Add candidates: "+(add.length ? add.length+" card"+(add.length!==1?"s":"") : "")+(add.length&&hide.length?", ":"")+(hide.length ? "hide "+hide.length : "");
+  var body = "Sent from the Flip Finder. Press **Create**: the bot adds the cards and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, add:add, hide:hide})+"\n```";
+  var base = "https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body=";
+  var url = base+encodeURIComponent(body);
+  if(url.length > 7600){ /* too long for a link: copy it so it can be pasted into the issue */
+    copyText(body);
+    url = base+encodeURIComponent("Delete this line, then paste (the site copied your picks), then press Create.");
+    state.fmsg = "That's a lot of cards, so they were copied instead of filled in. In GitHub, clear the description box, paste, then press Create.";
+  } else state.fmsg = (add.length ? "Sent to GitHub. Press Create there; the cards show up in about a minute (refresh this page after)." : "Sent to GitHub. Press Create there to hide them for good.");
+  window.open(url, "_blank", "noopener");
+  save(FSENT_KEY, {at:Date.now(), ids:add.concat(hide)});   /* hides them here until the list refreshes */
+  finderSel = []; render();
+}
+function goFinder(){ state.view = "finder"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#finder"); }catch(e){} window.scrollTo(0,0); render(); }
+function renderFinder(){
+  var rows = finderRows(), sent = finderSentIds();
+  var eras = Array.from(new Set(finderAvail().map(function(c){ return c.era; }))).filter(Boolean);
+  var h = header();
+  if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
+  h += '<div class="pair-intro"><div><h2>Flip Finder</h2><p class="sub">New cards the bot found with a good condition flip, best match first. '+
+    'Pick the ones you want and add them to the site; nothing is added until you do. Return and vendor pay use your vendor rate at the top ('+S.vendor+'%); the bot looks for cards that still work at '+(CMETA.vendor||70)+'%.'+
+    (CMETA.generated ? ' Last scan '+fmtDate(CMETA.generated)+' · '+(CMETA.scanned||0)+' sets checked that night of '+(CMETA.watched||0)+' watched. It scans Monday to Thursday.' : '')+'</p></div></div>';
+  if(!rows.length){
+    h += '<div class="empty">'+(CANDS.length ? 'No candidates match those filters.' : 'No candidates yet. The Flip Finder searches early Monday to Thursday (Pacific); check back after the next scan.')+'</div>';
+    if(sent.length) h += '<p class="note">'+sent.length+' card'+(sent.length!==1?'s':'')+' you just sent are hidden here until the list refreshes. <button class="btn" id="fd-unhide">Show them again</button></p>';
+  } else {
+    var allOn = rows.every(function(x){ return finderSel.indexOf(x.c.id)>=0; });
+    h += '<div class="fbar">'+
+      '<select id="fd-sort" aria-label="Sort candidates"><option value="match">Best match</option><option value="roi">Return (%)</option><option value="net">Profit ($)</option><option value="buy">Cheapest buy</option><option value="new">Newest</option></select>'+
+      (eras.length>1 ? '<select id="fd-era" aria-label="Filter by era"><option value="">All eras</option>'+eras.map(function(id){ var e = ERAS.filter(function(x){ return x.id===id; })[0]; return '<option value="'+esc(id)+'"'+(id===state.fera?' selected':'')+'>'+esc(e?e.name:id)+'</option>'; }).join("")+'</select>' : '')+
+      '<button class="btn'+(state.fclean?' dark':'')+'" id="fd-clean" aria-pressed="'+state.fclean+'">No warnings only</button>'+
+      '<button class="btn primary" id="fd-all">'+(allOn?'Unselect all':'Select all '+rows.length)+'</button>'+
+      (sent.length ? '<button class="btn" id="fd-unhide">Show '+sent.length+' sent</button>' : '')+'</div>';
+    h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Hide” removes a card for good.</p>';
+    h += '<div class="grid selecting">'+rows.map(function(x){ return finderTile(x, finderSel.indexOf(x.c.id)>=0); }).join("")+'</div>';
+  }
+  root.innerHTML = h;
+  var so = document.getElementById("fd-sort"); if(so) so.value = state.fsort;
+  bindHeader(); watchImages();
+  function redraw(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
+  if(so) so.addEventListener("change", function(e){ state.fsort = e.target.value; redraw(); });
+  var er = document.getElementById("fd-era"); if(er) er.addEventListener("change", function(e){ state.fera = e.target.value; redraw(); });
+  var cl = document.getElementById("fd-clean"); if(cl) cl.addEventListener("click", function(){ state.fclean = !state.fclean; redraw(); });
+  var un = document.getElementById("fd-unhide"); if(un) un.addEventListener("click", function(){ try{ localStorage.removeItem(FSENT_KEY); }catch(e){} redraw(); });
+  var al = document.getElementById("fd-all"); if(al) al.addEventListener("click", function(){
+    var ids = rows.map(function(x){ return x.c.id; });
+    var on = ids.every(function(id){ return finderSel.indexOf(id)>=0; });
+    if(on) finderSel = finderSel.filter(function(id){ return ids.indexOf(id)<0; });
+    else ids.forEach(function(id){ if(finderSel.indexOf(id)<0) finderSel.push(id); });
+    state.fmsg = ""; redraw(); });
+  root.querySelectorAll("[data-pick]").forEach(function(t){
+    function toggle(e){
+      if(e.target.closest && e.target.closest("a")) return;
+      if(e.type==="keydown" && e.key!==" " && e.key!=="Enter") return;
+      if(e.type==="keydown") e.preventDefault();
+      var id = t.getAttribute("data-pick"), k = finderSel.indexOf(id);
+      if(k>=0) finderSel.splice(k,1); else finderSel.push(id);
+      state.fmsg = "";
+      t.classList.toggle("picked", k<0); t.setAttribute("aria-checked", String(k<0));
+      var allb = document.getElementById("fd-all"); if(allb) allb.textContent = rows.every(function(x){ return finderSel.indexOf(x.c.id)>=0; }) ? "Unselect all" : "Select all "+rows.length;
+      mountBar();
+    }
+    t.addEventListener("click", toggle); t.addEventListener("keydown", toggle);
+  });
+}
+
 /* ---------- routing ---------- */
 function go(id){ if(!id) state.fromPair = null; state.view = id ? "detail" : "list"; state.id = id; state.selecting = false; selected = []; try{ history.replaceState(null,"", id ? "#"+id : location.pathname); }catch(e){} window.scrollTo(0,0); render(); }
 function render(){
   if(state.view==="detail") renderDetail();
+  else if(state.view==="finder") renderFinder();
   else if(state.view==="pairings") renderPairings();
   else if(state.view==="pairing") renderPairing();
   else if(state.view==="log") renderLog();
@@ -1805,7 +1958,8 @@ document.addEventListener("focusout", function(){ setTimeout(function(){ var a =
   initPairs();
   var wasSent = !!SYNC.sentAt; syncSave();
   if(wasSent && !pendingCount()) state.notice = "Saved to GitHub. Everyone now sees your pairings and profit log changes.";
-  if(id==="pairings"){ state.view="pairings"; }
+  if(id==="finder"){ state.view="finder"; }
+  else if(id==="pairings"){ state.view="pairings"; }
   else if(id==="log"){ state.view="log"; }
   else if(id && id.indexOf("show:")===0){ state.view="show"; state.showId=id.slice(5); }
   else if(id && id.indexOf("pairing:")===0){ state.view="pairing"; state.pid=id.slice(8); }
@@ -1905,11 +2059,11 @@ function notice(dropped){
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
 getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).then(function(man){
   MAN=man; rules=man.eras.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ return new RegExp(p,"i"); })}; });
-  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]})]));
+  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]}), getJSON("candidates.json", {version:"", cards:[]}).catch(function(){ return {version:"", cards:[]}; })]));
 }).then(function(files){
   var data={}, local=readLocal(), dropped=[], changedLocal=false;
   MAN.eras.forEach(function(e,i){ data[e.id]=files[i]; });
-  var log=files[files.length-1]; data.pairings=files[files.length-2];
+  var cf=files[files.length-1], log=files[files.length-2]; data.pairings=files[files.length-3];
   Object.keys(data).forEach(function(k){ REMOTE[k]=String(data[k].version||""); });
   /* One-time: edits saved on this device under the old single cards.json */
   var old=null; try{ old=JSON.parse(localStorage.getItem(OLD_LKEY)||"null"); }catch(e){}
@@ -1934,7 +2088,7 @@ getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).the
   MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
   var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
   var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
-  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:(log&&log.shows)||[], pairingsDraft:pairingsDraft, eras:eras});
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:(log&&log.shows)||[], pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched}});
   notice(dropped);
   if(FROM_PHONE){ var off=document.createElement("div"); off.className="localnote"; off.textContent="No connection right now, so this is the card data saved on your phone. It updates on its own next time you have signal."; document.body.insertBefore(off,document.body.firstChild); }
   var s=document.createElement("script"); s.textContent=document.getElementById("app-js").textContent; document.body.appendChild(s);
