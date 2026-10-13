@@ -22,7 +22,7 @@ def main():
     with open(os.path.join(ROOT, "eras/eras.json")) as f:
         for e in json.load(f).get("eras", []):
             files.append(f"eras/{e['id']}/{e['id']}.json")
-    files += ["pairings.json", "profitlog.json"]
+    files += ["pairings.json", "profitlog.json", "candidates.json"]
     out = {"files": {}}
     for rel in files:
         v = file_id(rel)

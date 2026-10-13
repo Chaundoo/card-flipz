@@ -1,0 +1,41 @@
+{
+  "about": "Settings for the Flip Finder (scripts/discover_candidates.py). Edit and commit to change what it looks for. Nothing here touches the cards already on the site.",
+  "vendor_pct": 70,
+  "min_buy": 5,
+  "max_buy": 300,
+  "min_roi_pct": 20,
+  "min_net": 3,
+  "big_jump_ratio": 2.0,
+  "max_candidates": 80,
+  "max_age_days": 21,
+  "min_rescan_days": 5,
+  "daily_requests": 60,
+  "reserve_requests": 8,
+  "reserve_requests_show_days": 25,
+  "years": [2010, 2020],
+  "sets_fallback": [
+    "Black and White", "Emerging Powers", "Noble Victories", "Next Destinies", "Dark Explorers", "Dragons Exalted",
+    "Dragon Vault", "Boundaries Crossed", "Plasma Storm", "Plasma Freeze", "Plasma Blast", "Legendary Treasures",
+    "Black and White Promos",
+    "XY", "Flashfire", "Furious Fists", "Phantom Forces", "Primal Clash", "Double Crisis", "Roaring Skies",
+    "Ancient Origins", "BREAKthrough", "BREAKpoint", "Generations", "Fates Collide", "Steam Siege", "Evolutions",
+    "XY Promos",
+    "Sun & Moon", "Guardians Rising", "Burning Shadows", "Shining Legends", "Crimson Invasion", "Ultra Prism",
+    "Forbidden Light", "Celestial Storm", "Dragon Majesty", "Lost Thunder", "Team Up", "Detective Pikachu",
+    "Unbroken Bonds", "Unified Minds", "Hidden Fates", "Cosmic Eclipse", "SM Promos",
+    "HeartGold SoulSilver", "Unleashed", "Undaunted", "Triumphant", "Call of Legends", "HGSS Promos",
+    "Sword & Shield", "Rebel Clash", "Darkness Ablaze", "Champion's Path", "Vivid Voltage"
+  ],
+  "skip_sets": ["McDonald", "Battle Academy", "Deck", "Trainer Kit", "Classic", "Collection", "Box"],
+  "skip_name_patterns": [
+    "\\bEnergy\\b", "\\b(Supporter|Stadium)\\b", "\\bProfessor\\b",
+    "\\b(Poke ?Ball|Great Ball|Ultra Ball|Master Ball|Potion|Rare Candy|Trainer)\\b"
+  ],
+  "popular": [
+    "Charizard", "Pikachu", "Mewtwo", "Mew", "Eevee", "Umbreon", "Espeon", "Vaporeon", "Jolteon", "Flareon",
+    "Leafeon", "Glaceon", "Sylveon", "Lucario", "Gengar", "Rayquaza", "Dragonite", "Gyarados", "Blastoise",
+    "Venusaur", "Lugia", "Ho-Oh", "Greninja", "Garchomp", "Gardevoir", "Arceus", "Giratina", "Darkrai",
+    "Zoroark", "Snorlax", "Charmander", "Squirtle", "Bulbasaur", "Mimikyu", "Lapras", "Alakazam", "Machamp",
+    "Tyranitar", "Salamence", "Blaziken", "Sceptile", "Swampert", "Reshiram", "Zekrom", "Kyurem"
+  ]
+}
