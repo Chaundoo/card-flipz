@@ -1,0 +1,8 @@
+{
+  "about": "How the 100 free TCG Price Lookup requests a day are shared. The count resets at 00:00 UTC (5 pm Pacific in summer, 4 pm in winter), so show days are UTC days. Edit and commit to change.",
+  "price_update_max_requests": 60,
+  "flip_finder_max_requests": 85,
+  "keep_free_weekdays": 10,
+  "keep_free_show_days": 70,
+  "show_days_utc": ["Fri", "Sat", "Sun"]
+}

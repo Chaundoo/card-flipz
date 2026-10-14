@@ -9,9 +9,6 @@
   "max_candidates": 80,
   "max_age_days": 21,
   "min_rescan_days": 5,
-  "daily_requests": 60,
-  "reserve_requests": 8,
-  "reserve_requests_show_days": 25,
   "years": [2010, 2020],
   "sets_fallback": [
     "Black and White", "Emerging Powers", "Noble Victories", "Next Destinies", "Dark Explorers", "Dragons Exalted",

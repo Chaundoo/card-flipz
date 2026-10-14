@@ -41,51 +41,15 @@ TODAY = rp.TODAY
 
 
 class DApi(rp.Api):
-    """Same client as the price update, but keeps a bigger or smaller reserve of today's requests."""
-    def __init__(self, budget, reserve):
-        super().__init__(budget)
-        self.reserve = reserve
-
-    def can(self, n=1):
-        left = self.budget - self.used
-        if self.remaining is not None:
-            left = min(left, self.remaining - self.reserve)
-        return left >= n
-
-    def get_path(self, path, params):
-        """A request to another endpoint (used for the set list). One retry on a rate-limit reply."""
-        import urllib.request, urllib.error, urllib.parse, random
-        if not self.can():
-            raise rp.Stop("daily request budget used")
-        url = rp.BASE + path + "?" + urllib.parse.urlencode(params)
-        for attempt in range(2):
-            wait = random.uniform(*rp.PAUSE) - (time.time() - self.last)
-            if wait > 0:
-                time.sleep(wait)
-            self.last = time.time()
-            req = urllib.request.Request(url, headers={"X-API-Key": rp.API_KEY, "Accept": "application/json", "User-Agent": rp.UA})
-            self.used += 1
-            try:
-                with urllib.request.urlopen(req, timeout=30) as r:
-                    self._quota(r.headers)
-                    return json.loads(r.read().decode("utf-8", "replace"))
-            except urllib.error.HTTPError as e:
-                self._quota(e.headers)
-                body = e.read().decode("utf-8", "replace")[:200]
-                if e.code in (401, 403):
-                    raise rp.Stop(f"the API rejected the key (HTTP {e.code}). {body}")
-                if e.code == 429 and attempt == 0:
-                    if "daily" in body.lower():
-                        raise rp.Stop("TCG Price Lookup's daily request limit is used up")
-                    time.sleep(float(e.headers.get("Retry-After") or 10) + 1)
-                    continue
-                raise RuntimeError(f"HTTP {e.code}: {body}")
-        raise RuntimeError("gave up after retries")
+    """Same client as the price update; keeps today's reserve from scripts/api_budget.json free."""
 
 
 def load_cfg():
     cfg = json.load(open(CFG_PATH, encoding="utf-8"))
-    cfg["daily_requests"] = int(os.environ.get("DISC_REQUESTS") or cfg.get("daily_requests") or 60)
+    budget = rp.load_budget()
+    cfg["daily_requests"] = int(os.environ.get("DISC_REQUESTS") or budget["flip_finder_max_requests"])
+    cfg["reserve_requests"] = int(budget["keep_free_weekdays"])
+    cfg["reserve_requests_show_days"] = int(budget["keep_free_show_days"])
     return cfg
 
 
@@ -145,13 +109,21 @@ def pick_sets(raw_sets, cfg):
 
 def get_sets(api, dstate, cfg, problems):
     cache = dstate.get("setlist") or {}
-    if cache.get("sets") and days_ago(cache.get("fetched", "")) < 30:
+    # (a list of exactly 200 was cut off by the old one-page download, so get the full one)
+    if cache.get("sets") and days_ago(cache.get("fetched", "")) < 30 and len(cache["sets"]) != 200:
         return pick_sets(cache["sets"], cfg), "remembered"
     if cache.get("failed") and days_ago(cache["failed"]) < 30 and not cache.get("sets"):
         return fallback_sets(dstate, cfg), "fallback (set list endpoint didn't work before)"
     try:
-        j = api.get_path("/sets", {"game": "pokemon", "limit": 500})
-        raw = rp.records(j)
+        raw, offset = [], 0
+        for _ in range(10):   # the list comes in pages of up to 200 sets
+            j = api.get_path("/sets", {"game": "pokemon", "limit": 200, "offset": offset})
+            page = rp.records(j)
+            raw += page
+            total = int((j or {}).get("total") or 0)
+            offset += len(page)
+            if not page or (total and offset >= total) or (not total and len(page) < 200):
+                break
         if not raw:
             raise RuntimeError("the set list came back empty")
         dstate["setlist"] = {"fetched": TODAY, "sets": [
