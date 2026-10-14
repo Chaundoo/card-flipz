@@ -1,0 +1,1155 @@
+{
+"about": "Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.",
+"dismissed": [],
+"setlist": {
+"fetched": "2026-10-13",
+"sets": [
+{
+"game": "pokemon",
+"name": "Alternate Art Promos",
+"slug": "pokemon--alternate-art-promos"
+},
+{
+"game": "pokemon",
+"name": "Aquapolis",
+"slug": "pokemon--aquapolis"
+},
+{
+"game": "pokemon",
+"name": "Arceus",
+"slug": "pokemon--arceus"
+},
+{
+"game": "pokemon",
+"name": "Ash vs Team Rocket Deck Kit (JP Exclusive)",
+"slug": "pokemon--ash-vs-team-rocket-deck-kit-jp-exclusive"
+},
+{
+"game": "pokemon",
+"name": "BW Trainer Kit: Excadrill & Zoroark",
+"slug": "pokemon--bw-trainer-kit-excadrill-and-zoroark"
+},
+{
+"game": "pokemon",
+"name": "Base Set",
+"slug": "pokemon--base-set"
+},
+{
+"game": "pokemon",
+"name": "Base Set (Shadowless)",
+"slug": "pokemon--base-set-shadowless"
+},
+{
+"game": "pokemon",
+"name": "Base Set 2",
+"slug": "pokemon--base-set-2"
+},
+{
+"game": "pokemon",
+"name": "Battle Academy",
+"slug": "pokemon--battle-academy"
+},
+{
+"game": "pokemon",
+"name": "Battle Academy 2022",
+"slug": "pokemon--battle-academy-2022"
+},
+{
+"game": "pokemon",
+"name": "Battle Academy 2024",
+"slug": "pokemon--battle-academy-2024"
+},
+{
+"game": "pokemon",
+"name": "Best of Promos",
+"slug": "pokemon--best-of-promos"
+},
+{
+"game": "pokemon",
+"name": "Black and White",
+"slug": "pokemon--black-and-white"
+},
+{
+"game": "pokemon",
+"name": "Black and White Promos",
+"slug": "pokemon--black-and-white-promos"
+},
+{
+"game": "pokemon",
+"name": "Blister Exclusives",
+"slug": "pokemon--blister-exclusives"
+},
+{
+"game": "pokemon",
+"name": "Boundaries Crossed",
+"slug": "pokemon--boundaries-crossed"
+},
+{
+"game": "pokemon",
+"name": "Burger King Promos",
+"slug": "pokemon--burger-king-promos"
+},
+{
+"game": "pokemon",
+"name": "Call of Legends",
+"slug": "pokemon--call-of-legends"
+},
+{
+"game": "pokemon",
+"name": "Celebrations",
+"slug": "pokemon--celebrations"
+},
+{
+"game": "pokemon",
+"name": "Celebrations: Classic Collection",
+"slug": "pokemon--celebrations-classic-collection"
+},
+{
+"game": "pokemon",
+"name": "Champion's Path",
+"slug": "pokemon--champions-path"
+},
+{
+"game": "pokemon",
+"name": "Countdown Calendar Promos",
+"slug": "pokemon--countdown-calendar-promos"
+},
+{
+"game": "pokemon",
+"name": "Cross Force",
+"slug": "pokemon--cross-force"
+},
+{
+"game": "pokemon",
+"name": "DP Trainer Kit: Manaphy & Lucario",
+"slug": "pokemon--dp-trainer-kit-manaphy-and-lucario"
+},
+{
+"game": "pokemon",
+"name": "Dark Explorers",
+"slug": "pokemon--dark-explorers"
+},
+{
+"game": "pokemon",
+"name": "Deck Exclusives",
+"slug": "pokemon--deck-exclusives"
+},
+{
+"game": "pokemon",
+"name": "Detective Pikachu",
+"slug": "pokemon--detective-pikachu"
+},
+{
+"game": "pokemon",
+"name": "Diamond and Pearl",
+"slug": "pokemon--diamond-and-pearl"
+},
+{
+"game": "pokemon",
+"name": "Diamond and Pearl Promos",
+"slug": "pokemon--diamond-and-pearl-promos"
+},
+{
+"game": "pokemon",
+"name": "Double Crisis",
+"slug": "pokemon--double-crisis"
+},
+{
+"game": "pokemon",
+"name": "Dragon Majesty",
+"slug": "pokemon--dragon-majesty"
+},
+{
+"game": "pokemon",
+"name": "Dragon Vault",
+"slug": "pokemon--dragon-vault"
+},
+{
+"game": "pokemon",
+"name": "Dragons Exalted",
+"slug": "pokemon--dragons-exalted"
+},
+{
+"game": "pokemon",
+"name": "Dual Evolution",
+"slug": "pokemon--dual-evolution"
+},
+{
+"game": "pokemon",
+"name": "EX Battle Stadium",
+"slug": "pokemon--ex-battle-stadium"
+},
+{
+"game": "pokemon",
+"name": "EX Crystal Guardians",
+"slug": "pokemon--ex-crystal-guardians"
+},
+{
+"game": "pokemon",
+"name": "EX Delta Species",
+"slug": "pokemon--ex-delta-species"
+},
+{
+"game": "pokemon",
+"name": "EX Deoxys",
+"slug": "pokemon--ex-deoxys"
+},
+{
+"game": "pokemon",
+"name": "EX Dragon",
+"slug": "pokemon--ex-dragon"
+},
+{
+"game": "pokemon",
+"name": "EX Dragon Frontiers",
+"slug": "pokemon--ex-dragon-frontiers"
+},
+{
+"game": "pokemon",
+"name": "EX Emerald",
+"slug": "pokemon--ex-emerald"
+},
+{
+"game": "pokemon",
+"name": "EX FireRed & LeafGreen",
+"slug": "pokemon--ex-firered-and-leafgreen"
+},
+{
+"game": "pokemon",
+"name": "EX Hidden Legends",
+"slug": "pokemon--ex-hidden-legends"
+},
+{
+"game": "pokemon",
+"name": "EX Holon Phantoms",
+"slug": "pokemon--ex-holon-phantoms"
+},
+{
+"game": "pokemon",
+"name": "EX Legend Maker",
+"slug": "pokemon--ex-legend-maker"
+},
+{
+"game": "pokemon",
+"name": "EX Power Keepers",
+"slug": "pokemon--ex-power-keepers"
+},
+{
+"game": "pokemon",
+"name": "EX Ruby and Sapphire",
+"slug": "pokemon--ex-ruby-and-sapphire"
+},
+{
+"game": "pokemon",
+"name": "EX Sandstorm",
+"slug": "pokemon--ex-sandstorm"
+},
+{
+"game": "pokemon",
+"name": "EX Team Magma vs Team Aqua",
+"slug": "pokemon--ex-team-magma-vs-team-aqua"
+},
+{
+"game": "pokemon",
+"name": "EX Team Rocket Returns",
+"slug": "pokemon--ex-team-rocket-returns"
+},
+{
+"game": "pokemon",
+"name": "EX Trainer Kit 1: Latias & Latios",
+"slug": "pokemon--ex-trainer-kit-1-latias-and-latios"
+},
+{
+"game": "pokemon",
+"name": "EX Trainer Kit 2: Plusle & Minun",
+"slug": "pokemon--ex-trainer-kit-2-plusle-and-minun"
+},
+{
+"game": "pokemon",
+"name": "EX Unseen Forces",
+"slug": "pokemon--ex-unseen-forces"
+},
+{
+"game": "pokemon",
+"name": "Emerging Powers",
+"slug": "pokemon--emerging-powers"
+},
+{
+"game": "pokemon",
+"name": "Expedition",
+"slug": "pokemon--expedition"
+},
+{
+"game": "pokemon",
+"name": "First Partner Collection 2026",
+"slug": "pokemon--first-partner-collection-2026"
+},
+{
+"game": "pokemon",
+"name": "First Partner Pack",
+"slug": "pokemon--first-partner-pack"
+},
+{
+"game": "pokemon",
+"name": "Fossil",
+"slug": "pokemon--fossil"
+},
+{
+"game": "pokemon",
+"name": "Freedom Ascension",
+"slug": "pokemon--freedom-ascension"
+},
+{
+"game": "pokemon",
+"name": "Generations",
+"slug": "pokemon--generations"
+},
+{
+"game": "pokemon",
+"name": "Generations: Radiant Collection",
+"slug": "pokemon--generations-radiant-collection"
+},
+{
+"game": "pokemon",
+"name": "Great Encounters",
+"slug": "pokemon--great-encounters"
+},
+{
+"game": "pokemon",
+"name": "Gym Challenge",
+"slug": "pokemon--gym-challenge"
+},
+{
+"game": "pokemon",
+"name": "Gym Heroes",
+"slug": "pokemon--gym-heroes"
+},
+{
+"game": "pokemon",
+"name": "HGSS Promos",
+"slug": "pokemon--hgss-promos"
+},
+{
+"game": "pokemon",
+"name": "HGSS Trainer Kit: Gyarados & Raichu",
+"slug": "pokemon--hgss-trainer-kit-gyarados-and-raichu"
+},
+{
+"game": "pokemon",
+"name": "HeartGold SoulSilver",
+"slug": "pokemon--heartgold-soulsilver"
+},
+{
+"game": "pokemon",
+"name": "Hidden Fates",
+"slug": "pokemon--hidden-fates"
+},
+{
+"game": "pokemon",
+"name": "Hidden Fates: Shiny Vault",
+"slug": "pokemon--hidden-fates-shiny-vault"
+},
+{
+"game": "pokemon",
+"name": "Jumbo Cards",
+"slug": "pokemon--jumbo-cards"
+},
+{
+"game": "pokemon",
+"name": "Jungle",
+"slug": "pokemon--jungle"
+},
+{
+"game": "pokemon",
+"name": "Kalos Starter Set",
+"slug": "pokemon--kalos-starter-set"
+},
+{
+"game": "pokemon",
+"name": "Kids WB Promos",
+"slug": "pokemon--kids-wb-promos"
+},
+{
+"game": "pokemon",
+"name": "League & Championship Cards",
+"slug": "pokemon--league-and-championship-cards"
+},
+{
+"game": "pokemon",
+"name": "Legendary Collection",
+"slug": "pokemon--legendary-collection"
+},
+{
+"game": "pokemon",
+"name": "Legendary Treasures",
+"slug": "pokemon--legendary-treasures"
+},
+{
+"game": "pokemon",
+"name": "Legendary Treasures: Radiant Collection",
+"slug": "pokemon--legendary-treasures-radiant-collection"
+},
+{
+"game": "pokemon",
+"name": "Legends Awakened",
+"slug": "pokemon--legends-awakened"
+},
+{
+"game": "pokemon",
+"name": "ME01: Mega Evolution",
+"slug": "pokemon--me01-mega-evolution"
+},
+{
+"game": "pokemon",
+"name": "ME02: Phantasmal Flames",
+"slug": "pokemon--me02-phantasmal-flames"
+},
+{
+"game": "pokemon",
+"name": "ME03: Perfect Order",
+"slug": "pokemon--me03-perfect-order"
+},
+{
+"game": "pokemon",
+"name": "ME04: Chaos Rising",
+"slug": "pokemon--me04-chaos-rising"
+},
+{
+"game": "pokemon",
+"name": "ME05: Pitch Black",
+"slug": "pokemon--me05-pitch-black"
+},
+{
+"game": "pokemon",
+"name": "ME06: Delta Reign",
+"slug": "pokemon--me06-delta-reign"
+},
+{
+"game": "pokemon",
+"name": "ME: 30th Celebration",
+"slug": "pokemon--me-30th-celebration"
+},
+{
+"game": "pokemon",
+"name": "ME: 30th Celebration Classic Collection",
+"slug": "pokemon--me-30th-celebration-classic-collection"
+},
+{
+"game": "pokemon",
+"name": "ME: Ascended Heroes",
+"slug": "pokemon--me-ascended-heroes"
+},
+{
+"game": "pokemon",
+"name": "ME: Mega Evolution Promo",
+"slug": "pokemon--me-mega-evolution-promo"
+},
+{
+"game": "pokemon",
+"name": "MEE: Mega Evolution Energies",
+"slug": "pokemon--mee-mega-evolution-energies"
+},
+{
+"game": "pokemon",
+"name": "Majestic Dawn",
+"slug": "pokemon--majestic-dawn"
+},
+{
+"game": "pokemon",
+"name": "McDonald's 25th Anniversary Promos",
+"slug": "pokemon--mcdonalds-25th-anniversary-promos"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2011",
+"slug": "pokemon--mcdonalds-promos-2011"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2012",
+"slug": "pokemon--mcdonalds-promos-2012"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2014",
+"slug": "pokemon--mcdonalds-promos-2014"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2015",
+"slug": "pokemon--mcdonalds-promos-2015"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2016",
+"slug": "pokemon--mcdonalds-promos-2016"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2017",
+"slug": "pokemon--mcdonalds-promos-2017"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2018",
+"slug": "pokemon--mcdonalds-promos-2018"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2019",
+"slug": "pokemon--mcdonalds-promos-2019"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2022",
+"slug": "pokemon--mcdonalds-promos-2022"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2023",
+"slug": "pokemon--mcdonalds-promos-2023"
+},
+{
+"game": "pokemon",
+"name": "McDonald's Promos 2024",
+"slug": "pokemon--mcdonalds-promos-2024"
+},
+{
+"game": "pokemon",
+"name": "Miscellaneous Cards & Products",
+"slug": "pokemon--miscellaneous-cards-and-products"
+},
+{
+"game": "pokemon",
+"name": "My First Battle",
+"slug": "pokemon--my-first-battle"
+},
+{
+"game": "pokemon",
+"name": "Mysterious Treasures",
+"slug": "pokemon--mysterious-treasures"
+},
+{
+"game": "pokemon",
+"name": "Neo Destiny",
+"slug": "pokemon--neo-destiny"
+},
+{
+"game": "pokemon",
+"name": "Neo Discovery",
+"slug": "pokemon--neo-discovery"
+},
+{
+"game": "pokemon",
+"name": "Neo Genesis",
+"slug": "pokemon--neo-genesis"
+},
+{
+"game": "pokemon",
+"name": "Neo Revelation",
+"slug": "pokemon--neo-revelation"
+},
+{
+"game": "pokemon",
+"name": "Next Destinies",
+"slug": "pokemon--next-destinies"
+},
+{
+"game": "pokemon",
+"name": "Nintendo Promos",
+"slug": "pokemon--nintendo-promos"
+},
+{
+"game": "pokemon",
+"name": "Noble Victories",
+"slug": "pokemon--noble-victories"
+},
+{
+"game": "pokemon",
+"name": "Origins",
+"slug": "pokemon--origins"
+},
+{
+"game": "pokemon",
+"name": "POP Series 1",
+"slug": "pokemon--pop-series-1"
+},
+{
+"game": "pokemon",
+"name": "POP Series 2",
+"slug": "pokemon--pop-series-2"
+},
+{
+"game": "pokemon",
+"name": "POP Series 3",
+"slug": "pokemon--pop-series-3"
+},
+{
+"game": "pokemon",
+"name": "POP Series 4",
+"slug": "pokemon--pop-series-4"
+},
+{
+"game": "pokemon",
+"name": "POP Series 5",
+"slug": "pokemon--pop-series-5"
+},
+{
+"game": "pokemon",
+"name": "POP Series 6",
+"slug": "pokemon--pop-series-6"
+},
+{
+"game": "pokemon",
+"name": "POP Series 7",
+"slug": "pokemon--pop-series-7"
+},
+{
+"game": "pokemon",
+"name": "POP Series 8",
+"slug": "pokemon--pop-series-8"
+},
+{
+"game": "pokemon",
+"name": "POP Series 9",
+"slug": "pokemon--pop-series-9"
+},
+{
+"game": "pokemon",
+"name": "Pikachu World Collection Promos",
+"slug": "pokemon--pikachu-world-collection-promos"
+},
+{
+"game": "pokemon",
+"name": "Plasma Blast",
+"slug": "pokemon--plasma-blast"
+},
+{
+"game": "pokemon",
+"name": "Plasma Freeze",
+"slug": "pokemon--plasma-freeze"
+},
+{
+"game": "pokemon",
+"name": "Plasma Storm",
+"slug": "pokemon--plasma-storm"
+},
+{
+"game": "pokemon",
+"name": "Platinum",
+"slug": "pokemon--platinum"
+},
+{
+"game": "pokemon",
+"name": "Player Placement Trainer Promos",
+"slug": "pokemon--player-placement-trainer-promos"
+},
+{
+"game": "pokemon",
+"name": "Pokemon Bulk Card Lots",
+"slug": "pokemon--pokemon-bulk-card-lots"
+},
+{
+"game": "pokemon",
+"name": "Pokemon GO",
+"slug": "pokemon--pokemon-go"
+},
+{
+"game": "pokemon",
+"name": "Prize Pack Series Cards",
+"slug": "pokemon--prize-pack-series-cards"
+},
+{
+"game": "pokemon",
+"name": "Professor Program Promos",
+"slug": "pokemon--professor-program-promos"
+},
+{
+"game": "pokemon",
+"name": "Rising Rivals",
+"slug": "pokemon--rising-rivals"
+},
+{
+"game": "pokemon",
+"name": "Rumble",
+"slug": "pokemon--rumble"
+},
+{
+"game": "pokemon",
+"name": "SM - Burning Shadows",
+"slug": "pokemon--sm-burning-shadows"
+},
+{
+"game": "pokemon",
+"name": "SM - Celestial Storm",
+"slug": "pokemon--sm-celestial-storm"
+},
+{
+"game": "pokemon",
+"name": "SM - Cosmic Eclipse",
+"slug": "pokemon--sm-cosmic-eclipse"
+},
+{
+"game": "pokemon",
+"name": "SM - Crimson Invasion",
+"slug": "pokemon--sm-crimson-invasion"
+},
+{
+"game": "pokemon",
+"name": "SM - Forbidden Light",
+"slug": "pokemon--sm-forbidden-light"
+},
+{
+"game": "pokemon",
+"name": "SM - Guardians Rising",
+"slug": "pokemon--sm-guardians-rising"
+},
+{
+"game": "pokemon",
+"name": "SM - Lost Thunder",
+"slug": "pokemon--sm-lost-thunder"
+},
+{
+"game": "pokemon",
+"name": "SM - Team Up",
+"slug": "pokemon--sm-team-up"
+},
+{
+"game": "pokemon",
+"name": "SM - Ultra Prism",
+"slug": "pokemon--sm-ultra-prism"
+},
+{
+"game": "pokemon",
+"name": "SM - Unbroken Bonds",
+"slug": "pokemon--sm-unbroken-bonds"
+},
+{
+"game": "pokemon",
+"name": "SM - Unified Minds",
+"slug": "pokemon--sm-unified-minds"
+},
+{
+"game": "pokemon",
+"name": "SM Base Set",
+"slug": "pokemon--sm-base-set"
+},
+{
+"game": "pokemon",
+"name": "SM Promos",
+"slug": "pokemon--sm-promos"
+},
+{
+"game": "pokemon",
+"name": "SM Trainer Kit: Alolan Sandslash & Alolan Ninetales",
+"slug": "pokemon--sm-trainer-kit-alolan-sandslash-and-alolan-ninetales"
+},
+{
+"game": "pokemon",
+"name": "SM Trainer Kit: Lycanroc & Alolan Raichu",
+"slug": "pokemon--sm-trainer-kit-lycanroc-and-alolan-raichu"
+},
+{
+"game": "pokemon",
+"name": "SV01: Scarlet & Violet Base Set",
+"slug": "pokemon--sv01-scarlet-and-violet-base-set"
+},
+{
+"game": "pokemon",
+"name": "SV02: Paldea Evolved",
+"slug": "pokemon--sv02-paldea-evolved"
+},
+{
+"game": "pokemon",
+"name": "SV03: Obsidian Flames",
+"slug": "pokemon--sv03-obsidian-flames"
+},
+{
+"game": "pokemon",
+"name": "SV04: Paradox Rift",
+"slug": "pokemon--sv04-paradox-rift"
+},
+{
+"game": "pokemon",
+"name": "SV05: Temporal Forces",
+"slug": "pokemon--sv05-temporal-forces"
+},
+{
+"game": "pokemon",
+"name": "SV06: Twilight Masquerade",
+"slug": "pokemon--sv06-twilight-masquerade"
+},
+{
+"game": "pokemon",
+"name": "SV07: Stellar Crown",
+"slug": "pokemon--sv07-stellar-crown"
+},
+{
+"game": "pokemon",
+"name": "SV08: Surging Sparks",
+"slug": "pokemon--sv08-surging-sparks"
+},
+{
+"game": "pokemon",
+"name": "SV09: Journey Together",
+"slug": "pokemon--sv09-journey-together"
+},
+{
+"game": "pokemon",
+"name": "SV10: Destined Rivals",
+"slug": "pokemon--sv10-destined-rivals"
+},
+{
+"game": "pokemon",
+"name": "SV: Black Bolt",
+"slug": "pokemon--sv-black-bolt"
+},
+{
+"game": "pokemon",
+"name": "SV: Paldean Fates",
+"slug": "pokemon--sv-paldean-fates"
+},
+{
+"game": "pokemon",
+"name": "SV: Prismatic Evolutions",
+"slug": "pokemon--sv-prismatic-evolutions"
+},
+{
+"game": "pokemon",
+"name": "SV: Scarlet & Violet 151",
+"slug": "pokemon--sv-scarlet-and-violet-151"
+},
+{
+"game": "pokemon",
+"name": "SV: Scarlet & Violet Promo Cards",
+"slug": "pokemon--sv-scarlet-and-violet-promo-cards"
+},
+{
+"game": "pokemon",
+"name": "SV: Shrouded Fable",
+"slug": "pokemon--sv-shrouded-fable"
+},
+{
+"game": "pokemon",
+"name": "SV: White Flare",
+"slug": "pokemon--sv-white-flare"
+},
+{
+"game": "pokemon",
+"name": "SVE: Scarlet & Violet Energies",
+"slug": "pokemon--sve-scarlet-and-violet-energies"
+},
+{
+"game": "pokemon",
+"name": "SWSH01: Sword & Shield Base Set",
+"slug": "pokemon--swsh01-sword-and-shield-base-set"
+},
+{
+"game": "pokemon",
+"name": "SWSH02: Rebel Clash",
+"slug": "pokemon--swsh02-rebel-clash"
+},
+{
+"game": "pokemon",
+"name": "SWSH03: Darkness Ablaze",
+"slug": "pokemon--swsh03-darkness-ablaze"
+},
+{
+"game": "pokemon",
+"name": "SWSH04: Vivid Voltage",
+"slug": "pokemon--swsh04-vivid-voltage"
+},
+{
+"game": "pokemon",
+"name": "SWSH05: Battle Styles",
+"slug": "pokemon--swsh05-battle-styles"
+},
+{
+"game": "pokemon",
+"name": "SWSH06: Chilling Reign",
+"slug": "pokemon--swsh06-chilling-reign"
+},
+{
+"game": "pokemon",
+"name": "SWSH07: Evolving Skies",
+"slug": "pokemon--swsh07-evolving-skies"
+},
+{
+"game": "pokemon",
+"name": "SWSH08: Fusion Strike",
+"slug": "pokemon--swsh08-fusion-strike"
+},
+{
+"game": "pokemon",
+"name": "SWSH09: Brilliant Stars",
+"slug": "pokemon--swsh09-brilliant-stars"
+},
+{
+"game": "pokemon",
+"name": "SWSH09: Brilliant Stars Trainer Gallery",
+"slug": "pokemon--swsh09-brilliant-stars-trainer-gallery"
+},
+{
+"game": "pokemon",
+"name": "SWSH10: Astral Radiance",
+"slug": "pokemon--swsh10-astral-radiance"
+},
+{
+"game": "pokemon",
+"name": "SWSH10: Astral Radiance Trainer Gallery",
+"slug": "pokemon--swsh10-astral-radiance-trainer-gallery"
+},
+{
+"game": "pokemon",
+"name": "SWSH11: Lost Origin",
+"slug": "pokemon--swsh11-lost-origin"
+},
+{
+"game": "pokemon",
+"name": "SWSH11: Lost Origin Trainer Gallery",
+"slug": "pokemon--swsh11-lost-origin-trainer-gallery"
+},
+{
+"game": "pokemon",
+"name": "SWSH12: Silver Tempest",
+"slug": "pokemon--swsh12-silver-tempest"
+},
+{
+"game": "pokemon",
+"name": "SWSH12: Silver Tempest Trainer Gallery",
+"slug": "pokemon--swsh12-silver-tempest-trainer-gallery"
+},
+{
+"game": "pokemon",
+"name": "SWSH: Crown Zenith",
+"slug": "pokemon--swsh-crown-zenith"
+},
+{
+"game": "pokemon",
+"name": "SWSH: Crown Zenith: Galarian Gallery",
+"slug": "pokemon--swsh-crown-zenith-galarian-gallery"
+},
+{
+"game": "pokemon",
+"name": "SWSH: Sword & Shield Promo Cards",
+"slug": "pokemon--swsh-sword-and-shield-promo-cards"
+},
+{
+"game": "pokemon",
+"name": "Secret Wonders",
+"slug": "pokemon--secret-wonders"
+},
+{
+"game": "pokemon",
+"name": "Shining Fates",
+"slug": "pokemon--shining-fates"
+},
+{
+"game": "pokemon",
+"name": "Shining Fates: Shiny Vault",
+"slug": "pokemon--shining-fates-shiny-vault"
+},
+{
+"game": "pokemon",
+"name": "Shining Legends",
+"slug": "pokemon--shining-legends"
+},
+{
+"game": "pokemon",
+"name": "Skyridge",
+"slug": "pokemon--skyridge"
+},
+{
+"game": "pokemon",
+"name": "Southeast Asia Exclusives",
+"slug": "pokemon--southeast-asia-exclusives"
+},
+{
+"game": "pokemon",
+"name": "Southern Islands",
+"slug": "pokemon--southern-islands"
+},
+{
+"game": "pokemon",
+"name": "Spiritforged",
+"slug": "pokemon--spiritforged"
+},
+{
+"game": "pokemon",
+"name": "Stormfront",
+"slug": "pokemon--stormfront"
+},
+{
+"game": "pokemon",
+"name": "Supreme Victors",
+"slug": "pokemon--supreme-victors"
+},
+{
+"game": "pokemon",
+"name": "Team Rocket",
+"slug": "pokemon--team-rocket"
+},
+{
+"game": "pokemon",
+"name": "Trading Card Game Classic",
+"slug": "pokemon--trading-card-game-classic"
+},
+{
+"game": "pokemon",
+"name": "Trick or Trade BOOster Bundle",
+"slug": "pokemon--trick-or-trade-booster-bundle"
+},
+{
+"game": "pokemon",
+"name": "Trick or Trade BOOster Bundle 2023",
+"slug": "pokemon--trick-or-trade-booster-bundle-2023"
+}
+]
+},
+"sets": {
+"pokemon--black-and-white": {
+"found": 2,
+"name": "Black and White",
+"records": 242,
+"scanned": "2026-10-13"
+},
+"pokemon--black-and-white-promos": {
+"found": 19,
+"name": "Black and White Promos",
+"records": 149,
+"scanned": "2026-10-13"
+},
+"pokemon--boundaries-crossed": {
+"found": 20,
+"name": "Boundaries Crossed",
+"records": 292,
+"scanned": "2026-10-13"
+},
+"pokemon--call-of-legends": {
+"found": 32,
+"name": "Call of Legends",
+"records": 205,
+"scanned": "2026-10-13"
+},
+"pokemon--champions-path": {
+"found": 1,
+"name": "Champion's Path",
+"records": 165,
+"scanned": "2026-10-13"
+},
+"pokemon--dark-explorers": {
+"found": 22,
+"name": "Dark Explorers",
+"records": 213,
+"scanned": "2026-10-13"
+},
+"pokemon--detective-pikachu": {
+"found": 0,
+"name": "Detective Pikachu",
+"records": 40,
+"scanned": "2026-10-13"
+},
+"pokemon--double-crisis": {
+"found": 0,
+"name": "Double Crisis",
+"records": 71,
+"scanned": "2026-10-13"
+},
+"pokemon--dragon-majesty": {
+"found": 1,
+"name": "Dragon Majesty",
+"records": 151,
+"scanned": "2026-10-13"
+},
+"pokemon--dragon-vault": {
+"found": 0,
+"name": "Dragon Vault",
+"records": 24,
+"scanned": "2026-10-13"
+},
+"pokemon--dragons-exalted": {
+"found": 8,
+"name": "Dragons Exalted",
+"records": 243,
+"scanned": "2026-10-13"
+},
+"pokemon--emerging-powers": {
+"found": 0,
+"name": "Emerging Powers",
+"records": 217,
+"scanned": "2026-10-13"
+},
+"pokemon--generations": {
+"found": 1,
+"name": "Generations",
+"records": 188,
+"scanned": "2026-10-13"
+},
+"pokemon--heartgold-soulsilver": {
+"found": 29,
+"name": "HeartGold SoulSilver",
+"records": 237,
+"scanned": "2026-10-13"
+},
+"pokemon--hgss-promos": {
+"found": 3,
+"name": "HGSS Promos",
+"records": 38,
+"scanned": "2026-10-13"
+},
+"pokemon--hidden-fates": {
+"found": 0,
+"name": "Hidden Fates",
+"records": 152,
+"scanned": "2026-10-13"
+},
+"pokemon--legendary-treasures": {
+"found": 16,
+"name": "Legendary Treasures",
+"records": 220,
+"scanned": "2026-10-13"
+},
+"pokemon--next-destinies": {
+"found": 7,
+"name": "Next Destinies",
+"records": 207,
+"scanned": "2026-10-13"
+},
+"pokemon--noble-victories": {
+"found": 2,
+"name": "Noble Victories",
+"records": 215,
+"scanned": "2026-10-13"
+},
+"pokemon--plasma-blast": {
+"found": 3,
+"name": "Plasma Blast",
+"records": 201,
+"scanned": "2026-10-13"
+},
+"pokemon--plasma-freeze": {
+"found": 21,
+"name": "Plasma Freeze",
+"records": 228,
+"scanned": "2026-10-13"
+},
+"pokemon--plasma-storm": {
+"found": 6,
+"name": "Plasma Storm",
+"records": 265,
+"scanned": "2026-10-13"
+},
+"pokemon--shining-legends": {
+"found": 1,
+"name": "Shining Legends",
+"records": 161,
+"scanned": "2026-10-13"
+},
+"pokemon--sm-promos": {
+"found": 37,
+"name": "SM Promos",
+"records": 337,
+"scanned": "2026-10-13"
+}
+}
+}
