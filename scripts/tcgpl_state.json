@@ -1707,6 +1707,11 @@
 "synced": "2026-10-13",
 "variant": "Holofoil"
 },
+"dragonite-83-116-84916": {
+"id": "019c9761-98c7-7b09-8b23-153f958b5700",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "dragonite-83-116-84916-holo": {
 "id": "019c9761-98c6-7eea-ab5b-783cded47756",
 "synced": "2026-10-13",
@@ -2227,6 +2232,11 @@
 "synced": "2026-10-12",
 "variant": "Holofoil"
 },
+"gardevoir-109-108-85638": {
+"id": "019c9765-da4f-799b-a04f-b79ed5d32767",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "gardevoir-57-99-85637-holofo": {
 "id": "019c9765-da4a-71d1-853d-963eb20bae0a",
 "synced": "2026-10-13",
@@ -2527,6 +2537,11 @@
 "synced": "2026-10-13",
 "variant": "Holofoil"
 },
+"groudon-shiny-sl4-85926": {
+"id": "019c9768-6dc2-7675-bc0c-d0c008af2202",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "grovyle-19-100-85946-revers": {
 "id": "019c9790-c4c0-7fe3-a24c-73b1fc8567b7",
 "synced": "2026-10-10",
@@ -2616,6 +2631,11 @@
 "id": "019c9768-6e80-7e16-b686-5217400310f4",
 "synced": "2026-10-11",
 "variant": "Holofoil"
+},
+"gyarados-red-123-123-85995": {
+"id": "019c9768-6e75-72bb-a7bb-da430a1e0fe6",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "happiny-052-123-155609-revers": {
 "id": "019c97b9-4876-7597-a0a2-dbc18b7c3c5d",
@@ -3183,6 +3203,11 @@
 "kyogre-sl6-86551": {
 "id": "019c976c-9f0d-7f4d-89e8-c85d96836edb",
 "synced": "2026-10-12",
+"variant": "Holofoil"
+},
+"kyogre-sm129-prerelease-staff-sm129-172931": {
+"id": "019c96ab-cf4a-7c66-a7de-4595291a5cbf",
+"synced": "2026-10-13",
 "variant": "Holofoil"
 },
 "kyurem-21-20-86563-holofo": {
@@ -5063,6 +5088,11 @@
 "synced": "2026-10-13",
 "variant": "Holofoil"
 },
+"rayquaza-93-113-88632": {
+"id": "019c9779-1002-772f-b3ec-9bf85e3e37a0",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "rayquaza-c-8-147-88639": {
 "id": "019c9779-1018-7381-8158-99fecc9dcf6e",
 "synced": "2026-10-11",
@@ -6096,6 +6126,11 @@
 "synced": "2026-10-11",
 "variant": "Holofoil"
 },
+"umbreon-22-95-90147": {
+"id": "019c9781-a1dd-7050-a809-f45bcc77b040",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "umbreon-22-95-90147-holo": {
 "id": "019c9781-a1db-7649-8839-2dbd1888dae5",
 "synced": "2026-10-12",
@@ -6116,10 +6151,20 @@
 "synced": "2026-10-09",
 "variant": "Unlimited"
 },
+"umbreon-60-60-108-90148": {
+"id": "019c9781-a1e0-7d40-885b-b0cee3cf1f9b",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
+},
 "umbreon-61-108-90149-non-ho": {
 "id": "019c9781-a1e2-7f33-b502-2829c7c6d7bc",
 "synced": "2026-10-13",
 "variant": "Normal"
+},
+"umbreon-61-61-108-90149": {
+"id": "019c9781-a1e3-76d7-91be-254f8eaefc6d",
+"synced": "2026-10-13",
+"variant": "Reverse Holofoil"
 },
 "umbreon-64-116-90152": {
 "id": "019c9781-a1eb-7e3d-9290-eb61873f92b7",
@@ -6491,6 +6536,11 @@
 "synced": "2026-10-13",
 "variant": "Normal"
 },
+"zapdos-ex-team-plasma-48-135-90725": {
+"id": "019c9785-bd73-74c9-be12-fa3e0534fe04",
+"synced": "2026-10-13",
+"variant": "Holofoil"
+},
 "zapdos-g-12-99-90726-revers": {
 "id": "019c9785-bd77-7f00-a37b-01c97fae443e",
 "synced": "2026-10-11",
@@ -6599,6 +6649,7 @@
 "Platinum": "pokemon--platinum",
 "Rising Rivals": "pokemon--rising-rivals",
 "Rumble": "pokemon--rumble",
+"SM Promos": "pokemon--sm-promos",
 "Secret Wonders": "pokemon--secret-wonders",
 "Skyridge": "pokemon--skyridge",
 "Southern Islands": "pokemon--southern-islands",
