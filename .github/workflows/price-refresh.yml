@@ -1,14 +1,16 @@
-name: Daily price update (TCG Price Lookup)
+name: Price update (TCG Price Lookup)
 
 on:
   schedule:
-    # Every day 13:23 UTC = 6:23 am Pacific (5:23 am in winter). Each run updates about 1/7
-    # of the cards, oldest first, so every card is refreshed about once a week.
-    - cron: "23 13 * * *"
+    # Monday-Friday 13:23 UTC = 6:23 am Pacific (5:23 am in winter). Each run refreshes EVERY card
+    # (100 per request, ~19 requests), so Friday morning has fresh prices for the weekend shows.
+    # No runs Saturday/Sunday: prices stay put at shows (nothing new for phones to download) and
+    # those days' requests stay free for adding cards. See scripts/api_budget.json.
+    - cron: "23 13 * * 1-5"
   workflow_dispatch:
     inputs:
       cards:
-        description: "How many cards to update this run (0 = the normal daily share)"
+        description: "Most cards to update this run (0 = all of them)"
         default: "0"
       dry_run:
         description: "Test run: get prices but don't save anything"
