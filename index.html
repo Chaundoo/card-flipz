@@ -526,6 +526,12 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .fflags{display:flex;gap:4px;flex-wrap:wrap}
 .fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
 .fbar select{max-width:100%}
+.flock{max-width:340px;margin:28px auto;padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);text-align:center}
+.flock h2{margin:0 0 6px}
+.flock p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.flock input{width:100%;box-sizing:border-box;padding:12px;font-size:24px;letter-spacing:.5em;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-family:inherit}
+.flock .btn{width:100%;margin-top:10px}
+.flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
 </style>
 </head><body>
 <div id="root"><p style="padding:40px;text-align:center;font-family:sans-serif">Loading cards…</p></div>
@@ -1307,7 +1313,7 @@ function addCards(target, ids){
 }
 function tabs(){
   var v = state.view, cur = v==="finder" ? "finder" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
-  var fn = finderAvail().length;
+  var fn = finderOpen() ? finderAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
   return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+'</nav>';
 }
@@ -1808,6 +1814,32 @@ function showAddLink(){
 
 /* ---------- Flip Finder: new cards the bot found with a good flip. You pick which ones move into the site. ---------- */
 var finderSel = [], FSENT_KEY = "cfz.finderSent";
+/* Passcode gate. Only a scrambled (SHA-256) copy of the code is kept here, never the code itself.
+   Once entered on a device it is remembered there, so you only type it once per phone. */
+var FLOCK_HASH = "fdd5b3899e0bafccb451bf750e8fa488f8deeda13f860c73b97a2d91e5d88e57", FLOCK_KEY = "cfz.finderOk";
+function finderOpen(){ return load(FLOCK_KEY, "") === FLOCK_HASH; }
+function sha256hex(t){
+  return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(function(b){
+    return Array.from(new Uint8Array(b)).map(function(x){ return x.toString(16).padStart(2,"0"); }).join(""); });
+}
+function renderFinderLock(){
+  var h = header();
+  h += '<form class="flock" id="flock" autocomplete="off"><h2>Flip Finder</h2><p>Enter the 4-digit passcode to see new flip cards.</p>'+
+    '<input id="flock-code" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="Passcode" autofocus>'+
+    '<button class="btn primary" type="submit">Unlock</button><div class="msg" id="flock-msg" role="status"></div></form>';
+  root.innerHTML = h;
+  bindHeader();
+  var f = document.getElementById("flock"), inp = document.getElementById("flock-code"), msg = document.getElementById("flock-msg");
+  function tryCode(){
+    var v = inp.value.trim(); if(v.length < 4){ msg.textContent = "Enter all 4 digits."; return; }
+    sha256hex("cfz-finder:"+v).then(function(x){
+      if(x === FLOCK_HASH){ save(FLOCK_KEY, x); render(); }
+      else { msg.textContent = "Wrong passcode."; inp.value = ""; inp.focus(); }
+    }).catch(function(){ msg.textContent = "This browser can't check the passcode."; });
+  }
+  f.addEventListener("submit", function(e){ e.preventDefault(); tryCode(); });
+  inp.addEventListener("input", function(){ inp.value = inp.value.replace(/\D/g,"").slice(0,4); msg.textContent = ""; if(inp.value.length===4) tryCode(); });
+}
 state.fsort = "match"; state.fera = ""; state.fclean = false; state.fmsg = "";
 var FFLAG = {
   est:["Estimated price","The buy or resell price is TCGplayer's mid price (no recent market price), so it is a softer number."],
@@ -1858,6 +1890,7 @@ function finderTile(x, picked){
     '<div class="sub">'+tcgLink(c, r.fk, "Find a "+r.from+" copy")+' · found '+fmtDate(c.found)+'</div></div>';
 }
 function finderBar(){
+  if(!finderOpen()) return '';
   var ids = finderRows().map(function(x){ return x.c.id; });
   finderSel = finderSel.filter(function(id){ return ids.indexOf(id)>=0; });
   if(!finderSel.length) return state.fmsg ? '<div class="actionbar" role="region" aria-label="Flip Finder"><span class="msg" role="status">'+esc(state.fmsg)+'</span></div>' : '';
@@ -1883,6 +1916,7 @@ function sendFinder(add, hide){
 }
 function goFinder(){ state.view = "finder"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#finder"); }catch(e){} window.scrollTo(0,0); render(); }
 function renderFinder(){
+  if(!finderOpen()) return renderFinderLock();
   var rows = finderRows(), sent = finderSentIds();
   var eras = Array.from(new Set(finderAvail().map(function(c){ return c.era; }))).filter(Boolean);
   var h = header();
