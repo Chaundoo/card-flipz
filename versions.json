@@ -1,16 +1,17 @@
 {
  "files": {
-  "eras/bw/bw.json": "1130e573a9c9",
-  "eras/dp-hgss/dp-hgss.json": "c0dc881b6644",
+  "candidates.json": "2191d72a18d4",
+  "eras/bw/bw.json": "60efd55212f5",
+  "eras/dp-hgss/dp-hgss.json": "d22be11b5525",
   "eras/eras.json": "69305f4aa2b7",
-  "eras/ex/ex.json": "ee38c7782a4c",
+  "eras/ex/ex.json": "788727f85fcd",
   "eras/me/me.json": "6b5f06232ea6",
-  "eras/other/other.json": "ea9ba37bc29f",
-  "eras/sm/sm.json": "3c4cd370ef58",
-  "eras/sv/sv.json": "bc0368488ccf",
-  "eras/swsh/swsh.json": "9dfdb6805ae7",
-  "eras/wotc/wotc.json": "a0995562a7b0",
-  "eras/xy/xy.json": "2f6d92861f7f",
+  "eras/other/other.json": "c02843f02709",
+  "eras/sm/sm.json": "ac9b77e1b876",
+  "eras/sv/sv.json": "5a0d98cb15da",
+  "eras/swsh/swsh.json": "3cc454094e54",
+  "eras/wotc/wotc.json": "e6169b63986b",
+  "eras/xy/xy.json": "0c8f2daecd3c",
   "pairings.json": "08dad2161821",
   "profitlog.json": "e5c2e258789e"
  }
