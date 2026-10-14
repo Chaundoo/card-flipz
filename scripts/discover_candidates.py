@@ -246,7 +246,7 @@ def build(rec, set_name, slug, hp_ok, ctx):
     if why:
         ctx.count[why] += 1
         return None
-    prices = rp.cond_prices(rec)
+    prices, fixes = rp.checked_prices(rec)   # odd one-off sales are evened out first
     if len(prices) < 2:
         ctx.count["noprice"] += 1
         return None
@@ -272,8 +272,7 @@ def build(rec, set_name, slug, hp_ok, ctx):
     raw = {}
     for k in ("nm", "lp", "mp", "dmg"):
         if k in prices:
-            p, est = prices[k]
-            raw[k] = {"price": round(p, 2), "date": when, "src": rp.SRC_MID if est else rp.SRC, "est": est}
+            raw[k] = rp.raw_entry(k, prices[k], when, fixes)
     base = "-".join(x for x in (ac.slugify(rec.get("name")), ac.slugify(rec.get("number")), str(tid)) if x)
     cid = base if base not in ctx.taken else f"{base}-{ac.slugify(printing)[:8]}"
     n = 2

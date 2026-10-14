@@ -161,13 +161,13 @@ def main():
             return out("duplicate", f"↩️ Already on the site: **{c['name']} ({c.get('variant', '')})**. Nothing was added.\n\n"
                                     f"[Open it on the site]({SITE}#{c['id']})")
 
-    prices = rp.cond_prices(rec)
+    rp.learn_ratios(all_cards)
+    prices, fixes = rp.checked_prices(rec)
     when = (rec.get("last_price_update") or rec.get("updated_at") or rp.TODAY)[:10]
     raw = {}
     for k in ("nm", "lp", "mp", "dmg"):
         if k in prices:
-            p, est = prices[k]
-            raw[k] = {"price": round(p, 2), "date": when, "src": rp.SRC_MID if est else rp.SRC, "est": est}
+            raw[k] = rp.raw_entry(k, prices[k], when, fixes)
     set_name = (rec.get("set") or {}).get("name") or rec.get("set_name") or ""
     era = era_for(set_name, manifest, cards_by_era)
     if era not in files:
