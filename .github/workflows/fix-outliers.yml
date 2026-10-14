@@ -1,0 +1,27 @@
+name: Fix outlier prices (one time)
+
+# Runs the daily job's outlier check over every card already on the site, so cards
+# like a $999 LP sitting above a $797 NM get evened out now instead of on their next
+# weekly refresh. Uses no API requests. Safe to run again.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: price-refresh
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 scripts/fix_outliers.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python3 scripts/build_versions.py
+          git add eras versions.json
+          git diff --cached --quiet && echo "Nothing to change." || (git commit -m "Fix outlier condition prices" && git push)
