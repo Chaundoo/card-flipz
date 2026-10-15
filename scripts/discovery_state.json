@@ -1,5 +1,6 @@
 {
 "about": "Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.",
+"declined": {},
 "dismissed": [],
 "setlist": {
 "fetched": "2026-10-15",
@@ -1300,5 +1301,167 @@
 "records": 272,
 "scanned": "2026-10-15"
 }
+},
+"taste": [
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:espeon",
+"set:Plasma Freeze",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:umbreon",
+"set:Undaunted",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:espeon",
+"set:Undaunted",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:rayquaza",
+"set:Dragons Exalted",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:raikou & suicune",
+"set:Unleashed",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:kyogre & groudon",
+"set:Undaunted",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:darkrai & cresselia",
+"set:Triumphant",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:mew",
+"set:Triumphant",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:dragonite",
+"set:Triumphant",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:kyogre & groudon",
+"set:Undaunted",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:pikachu",
+"set:Undaunted",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:raichu",
+"set:Undaunted",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:psyduck",
+"set:Triumphant",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:pikachu",
+"set:Black and White Promos",
+"kind:promo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:dragonair",
+"set:Triumphant",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:gyarados",
+"set:Legendary Treasures",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
 }
+]
 }
