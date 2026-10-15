@@ -1,0 +1,19 @@
+{
+  "about": "Settings for the weekly TCGplayer sales check (scripts/tcgplayer_check.py). It only looks at skewed (estimated) prices and the top flips, once a week at a random time Monday-Thursday. Edit and commit to change.",
+  "slot_hours_pacific": [9, 11, 13, 15, 17, 19],
+  "slot_days": ["Mon", "Tue", "Wed", "Thu"],
+  "max_start_delay_minutes": 100,
+  "pause_seconds": [4, 9],
+  "max_cards": 150,
+  "top_by_profit": 40,
+  "top_by_return": 40,
+  "top_flip_finder": 20,
+  "min_buy": 5,
+  "ebay_fee_pct": 13.25,
+  "sales_days": 90,
+  "odd_sale_low": 0.4,
+  "odd_sale_high": 2.5,
+  "recheck_days": 4,
+  "trust_days": 11,
+  "forget_days": 60
+}

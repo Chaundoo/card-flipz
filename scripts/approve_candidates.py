@@ -2,10 +2,13 @@
 """Move Flip Finder candidates you picked on the site into the card list (runs in GitHub Actions).
 
 The site's Flip Finder tab opens an issue titled "Add candidates: ..." whose body holds a JSON block:
-    {"v":1, "add":["card-id", ...], "hide":["card-id", ...]}
-  add  -> each card is copied from candidates.json (with the condition prices it was found with) into
-          its era file, so the vendor and condition-flip numbers work right away.
-  hide -> each card is removed from the list and never suggested again.
+    {"v":1, "add":["card-id", ...], "decline":["card-id", ...], "hide":["card-id", ...]}
+  add     -> each card is copied from candidates.json (with the condition prices it was found with) into
+             its era file, so the vendor and condition-flip numbers work right away.
+  decline -> "Not for me": removed from the list and not suggested again for decline_days (90).
+  hide    -> removed from the list and never suggested again.
+Every pick is also remembered (Pokémon, set, card type, price range) so the Flip Finder ranks
+similar cards lower (declined/hidden) or higher (added) on its next search.
 
 This uses NO TCG Price Lookup requests: everything needed is already in candidates.json. The daily
 price update refreshes the new cards later like any other card.
@@ -17,6 +20,7 @@ import json, os, re, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp
 import add_card as ac
+import discover_candidates as dc
 
 ROOT = rp.ROOT
 CANDS = os.path.join(ROOT, "candidates.json")
@@ -56,13 +60,13 @@ def parse(text):
     if not isinstance(p, dict) or p.get("v") != 1:
         return None, "This issue isn't in a format I know (expected version 1)."
     ids = {}
-    for key in ("add", "hide"):
+    for key in ("add", "decline", "hide"):
         v = p.get(key, [])
         if not isinstance(v, list) or len(v) > MAX_IDS or not all(isinstance(x, str) and ID_RE.match(x) for x in v):
             return None, f"The '{key}' list has a bad card id or is too long, so nothing was changed."
         ids[key] = list(dict.fromkeys(v))
-    overlap = set(ids["add"]) & set(ids["hide"])
-    ids["hide"] = [x for x in ids["hide"] if x not in overlap]
+    ids["hide"] = [x for x in ids["hide"] if x not in set(ids["add"])]
+    ids["decline"] = [x for x in ids["decline"] if x not in set(ids["add"]) | set(ids["hide"])]
     return ids, None
 
 
@@ -70,7 +74,7 @@ def main():
     ids, err = parse(issue_text())
     if err:
         return out("failed", "❌ " + err)
-    if not ids["add"] and not ids["hide"]:
+    if not ids["add"] and not ids["hide"] and not ids["decline"]:
         return out("nothing", "ℹ️ No cards were picked, so nothing changed.")
 
     cands = json.load(open(CANDS, encoding="utf-8")) if os.path.exists(CANDS) else {"cards": []}
@@ -91,6 +95,14 @@ def main():
     state.setdefault("sets", {})
     dstate = json.load(open(DSTATE, encoding="utf-8")) if os.path.exists(DSTATE) else {}
     dstate.setdefault("dismissed", [])
+    dstate.setdefault("declined", {})
+    dstate.setdefault("taste", [])
+    cfg = json.load(open(dc.CFG_PATH, encoding="utf-8"))
+    import datetime
+    until = (datetime.date.fromisoformat(rp.TODAY) + datetime.timedelta(days=int(cfg.get("decline_days", 90)))).isoformat()
+
+    def learn(c, v):
+        dstate["taste"].append({"d": rp.TODAY, "v": v, "f": dc.features(c)})
 
     added, dupes, missing, touched = [], [], [], set()
     for cid in ids["add"]:
@@ -119,6 +131,7 @@ def main():
         if c.get("setSlug") and c.get("set"):
             state["sets"].setdefault(c["set"], c["setSlug"])
         added.append((c, era, new_id))
+        learn(c, +1)
 
     hidden = []
     for cid in ids["hide"]:
@@ -127,8 +140,20 @@ def main():
             if c.get("pkey") and c["pkey"] not in dstate["dismissed"]:
                 dstate["dismissed"].append(c["pkey"])
             hidden.append(c)
+            learn(c, -2)
+    declined = []
+    for cid in ids["decline"]:
+        c = by_id.get(cid)
+        if c:
+            if c.get("pkey"):
+                dstate["declined"][c["pkey"]] = {"until": until, "card": f"{c['name']} ({c['variant']}) {c['set']} {c['number']}"}
+            declined.append(c)
+            learn(c, -1)
+    # forget expired declines and old picks so the files stay small
+    dstate["declined"] = {k: v for k, v in dstate["declined"].items() if (v.get("until") or "") > rp.TODAY}
+    dstate["taste"] = dstate["taste"][-600:]
 
-    if not added and not hidden and not dupes:
+    if not added and not hidden and not dupes and not declined:
         return out("failed", "❌ None of those cards are on the Flip Finder list any more (it may have refreshed). "
                              "Open the Flip Finder tab again and pick from the current list.")
 
@@ -138,7 +163,7 @@ def main():
         d["version"] = stamp
         with open(p, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
-    gone = {c["id"] for c, _, _ in added} | {c["id"] for c in dupes} | {c["id"] for c in hidden}
+    gone = {c["id"] for c, _, _ in added} | {c["id"] for c in dupes} | {c["id"] for c in hidden} | {c["id"] for c in declined}
     cands["cards"] = [c for c in cands.get("cards", []) if c.get("id") not in gone]
     cands["version"] = stamp
     with open(CANDS, "w", encoding="utf-8") as f:
@@ -158,9 +183,12 @@ def main():
         L += ["", f"↩️ Already on the site, skipped: " + ", ".join(f"{c['name']} ({c['variant']})" for c in dupes)]
     if hidden:
         L += ["", f"🙈 Hidden from the Flip Finder for good: " + ", ".join(f"{c['name']} ({c['variant']})" for c in hidden)]
+    if declined:
+        L += ["", f"👎 Not for you ({len(declined)}), kept off the list until {until}: " + ", ".join(f"{c['name']} ({c['variant']})" for c in declined),
+              "", "The Flip Finder will also rank cards like these lower on its next search."]
     if missing:
         L += ["", f"❔ Not on the list any more ({len(missing)}): the list refreshed before this ran."]
-    return out("added" if (added or hidden or dupes) else "failed", "\n".join(L))
+    return out("added" if (added or hidden or dupes or declined) else "failed", "\n".join(L))
 
 
 if __name__ == "__main__":

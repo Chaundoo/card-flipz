@@ -11,6 +11,10 @@ What it does
      used up. Every card is checked at the vendor rate in the settings (default 70%).
   3. Keeps cards with a good condition flip: buy one condition, sell one step up to a vendor, buy price
      over $5, good percentage return, no trainers/energy, not already on the site, not hidden by you.
+     Only popular Pokémon (the "popular" list in the settings) and no stamped cards (prerelease, staff,
+     league, championship...), since vendors rarely want those.
+     Cards you declined ("Not for me" on the site) stay away for decline_days, and the finder learns
+     from your picks: Pokémon, sets and card types you keep declining rank lower, ones you add rank higher.
   4. Writes candidates.json (ranked, with the condition prices). The site's "Flip Finder" tab shows it and
      you choose which cards move into the site. Nothing is added to the site by this script.
 
@@ -148,6 +152,67 @@ def fallback_sets(dstate, cfg):
     return out
 
 
+# ---------------------------------------------------------------- your taste (learned from picks)
+KIND_RE = [("full art", r"full art"), ("secret rare", r"secret|rainbow"), ("promo", r"promo"),
+           ("reverse holo", r"reverse"), ("holo", r"holo"), ("non-holo", r"non-holo|normal")]
+
+
+def base_name(name):
+    """'Flygon - BW53 (Prerelease) [Staff]' -> 'flygon', 'Alolan Sandslash' -> 'alolan sandslash'."""
+    n = re.split(r"\s+-\s+|\s*[\(\[]", name or "")[0]
+    n = re.sub(r"\b(EX|GX|V|VMAX|VSTAR|LV\.?X|BREAK|Prime|LEGEND|Star|δ)\b", "", n, flags=re.I)
+    return re.sub(r"\s+", " ", n).strip().lower()
+
+
+def features(c):
+    """What the finder learns from: the Pokémon, the set, the card type and the price range."""
+    text = f"{c.get('variant', '')} {c.get('set', '')}".lower()
+    kind = next((k for k, pat in KIND_RE if re.search(pat, text)), "other")
+    buy = 0
+    for k in ("mp", "lp", "dmg", "nm"):
+        p = ((c.get("raw") or {}).get(k) or {}).get("price")
+        if isinstance(p, (int, float)):
+            buy = p
+            break
+    band = "under $20" if buy < 20 else "$20-50" if buy < 50 else "$50-100" if buy < 100 else "$100+"
+    return [f"pokemon:{base_name(c.get('name'))}", f"set:{c.get('set', '')}", f"kind:{kind}", f"price:{band}"]
+
+
+def taste_counts(dstate, cfg):
+    """{feature: (declines, adds)} from your picks in the last taste_days."""
+    out = {}
+    for e in dstate.get("taste", []):
+        if days_ago(e.get("d", "")) > cfg.get("taste_days", 180):
+            continue
+        for f in e.get("f", []):
+            no, yes = out.get(f, (0, 0))
+            out[f] = (no + max(0, -e.get("v", 0)), yes + max(0, e.get("v", 0)))
+    return out
+
+
+def taste_factor(c, counts):
+    """Score multiplier: each decline of a matching Pokémon/set/type/price range lowers it, each add raises it."""
+    m = 1.0
+    for f in features(c):
+        no, yes = counts.get(f, (0, 0))
+        w = 1.0 if f.startswith("pokemon:") else 0.5     # the Pokémon itself counts most
+        m *= (0.8 ** (no * w)) * (1.1 ** (yes * w))
+    return max(0.2, min(1.6, m))
+
+
+def declined_now(dstate):
+    return {k for k, v in (dstate.get("declined") or {}).items() if (v.get("until") or "") > TODAY}
+
+
+def stamped(c, cfg):
+    text = f"{c.get('name', '')} {c.get('variant', '')}"
+    return any(re.search(p, text, re.I) for p in cfg.get("stamp_patterns", []))
+
+
+def is_popular(c, ctx):
+    return any(p.search(c.get("name") or "") for p in ctx.popular)
+
+
 # ---------------------------------------------------------------- one card
 def skip_reason(rec, cfg, hp_ok):
     for k in ("supertype", "card_type", "cardType", "category", "type", "kind"):
@@ -191,7 +256,9 @@ class Ctx:
     def __init__(self, cfg, have, taken, dismissed, manifest, cards_by_era):
         self.cfg, self.have, self.taken, self.dismissed = cfg, have, taken, dismissed
         self.manifest, self.cards_by_era = manifest, cards_by_era
-        self.count = {k: 0 for k in ("seen", "onsite", "dismissed", "trainer", "energy", "noprice", "noflip", "notcg", "kept")}
+        self.count = {k: 0 for k in ("seen", "onsite", "dismissed", "trainer", "energy", "noprice", "noflip", "notcg", "kept",
+                                     "stamped", "unpopular", "declined")}
+        self.declined, self.taste, self.verified = set(), {}, {}
         self.keys, self.tp_keys = set(), set()
         self.popular = [re.compile(r"\b" + re.escape(p) + r"\b", re.I) for p in cfg["popular"]]
 
@@ -214,11 +281,25 @@ def build(rec, set_name, slug, hp_ok, ctx):
     if rec.get("id") in ctx.dismissed:
         ctx.count["dismissed"] += 1
         return None
+    if rec.get("id") in ctx.declined:
+        ctx.count["declined"] += 1
+        return None
     why = skip_reason(rec, cfg, hp_ok)
     if why:
         ctx.count[why] += 1
         return None
+    look = {"name": rec.get("name") or "", "variant": printing}
+    if stamped(look, cfg):
+        ctx.count["stamped"] += 1
+        return None
+    if cfg.get("require_popular", True) and not is_popular(look, ctx):
+        ctx.count["unpopular"] += 1
+        return None
     prices, fixes = rp.checked_prices(rec)   # odd one-off sales are evened out first
+    v = ctx.verified.get(f"{tid}|{printing.lower()}")   # real TCGplayer sales win when checked recently
+    if v:
+        for k, e in v["prices"].items():
+            prices[k] = (e["price"], bool(e.get("est")))
     if len(prices) < 2:
         ctx.count["noprice"] += 1
         return None
@@ -245,6 +326,8 @@ def build(rec, set_name, slug, hp_ok, ctx):
     for k in ("nm", "lp", "mp", "dmg"):
         if k in prices:
             raw[k] = rp.raw_entry(k, prices[k], when, fixes)
+    if v:
+        rp.overlay_verified({"tcgId": tid, "tcgVariant": printing}, raw, ctx.verified)
     base = "-".join(x for x in (ac.slugify(rec.get("name")), ac.slugify(rec.get("number")), str(tid)) if x)
     cid = base if base not in ctx.taken else f"{base}-{ac.slugify(printing)[:8]}"
     n = 2
@@ -258,7 +341,7 @@ def build(rec, set_name, slug, hp_ok, ctx):
         "set": set_name, "number": rec.get("number") or "", "raw": raw, "graded": {}, "gem": "", "verdict": "",
         "notes": "", "image": rec.get("image_url") or "", "updated": TODAY, "tcgId": tid, "tcgVariant": printing,
         "era": era, "found": TODAY, "pkey": rec.get("id"), "setSlug": slug, "score": round(score, 1),
-        "flags": flags, "pop": popular,
+        "base": round(score, 1), "flags": flags, "pop": popular,
     }
 
 
@@ -287,6 +370,7 @@ def main():
     dstate.setdefault("sets", {})
     dstate.setdefault("dismissed", [])
     dismissed = set(dstate["dismissed"])
+    declined = declined_now(dstate)
     prev = jload(CANDS, {"cards": []})
     prev_cards = [c for c in prev.get("cards", []) if isinstance(c, dict) and c.get("id")]
     taken |= {c["id"] for c in prev_cards}
@@ -294,6 +378,7 @@ def main():
     reserve = cfg["reserve_requests_show_days"] if show_day else cfg["reserve_requests"]
     api = DApi(cfg["daily_requests"], reserve)
     ctx = Ctx(cfg, have, taken, dismissed, manifest, cards_by_era)
+    ctx.declined, ctx.taste, ctx.verified = declined, taste_counts(dstate, cfg), rp.load_verified()
     problems, stop_reason = [], None
     scanned, partial = [], None
     fresh = []          # candidates found this run
@@ -364,13 +449,19 @@ def main():
             fresh_by_key[k]["found"] = c.get("found") or fresh_by_key[k]["found"]   # keep first-seen date
             fresh_by_key[k]["id"] = c["id"]
             continue
-        if (str(c.get("tcgId")), str(c.get("tcgVariant", "")).lower()) in have or c.get("pkey") in dismissed:
-            continue                                  # already added or hidden
+        if (str(c.get("tcgId")), str(c.get("tcgVariant", "")).lower()) in have or c.get("pkey") in dismissed \
+                or c.get("pkey") in declined:
+            continue                                  # already added, hidden or declined
+        if stamped(c, cfg) or (cfg.get("require_popular", True) and not is_popular(c, ctx)):
+            continue                                  # stamped / not a popular Pokémon (settings changed)
         if c.get("set") in rescanned:
             continue                                  # its set was re-checked and it no longer qualifies
         if days_ago(c.get("updated") or "") > cfg["max_age_days"]:
             continue                                  # price info too old
         keep.append(c)
+    for c in keep + list(fresh_by_key.values()):     # re-rank everything with what your picks taught it
+        c.setdefault("base", c.get("score", 0))
+        c["score"] = round(c["base"] * taste_factor(c, ctx.taste), 1)
     merged = sorted(keep + list(fresh_by_key.values()), key=lambda c: -c.get("score", 0))[:cfg["max_candidates"]]
     new_count = sum(1 for c in merged if c.get("found") == TODAY)
 
@@ -390,7 +481,8 @@ def main():
         f"- Sets scanned this run: **{len(scanned)}**" + (f" (+ partly: {partial})" if partial else "") + f" of {len(set_pool)} watched (set list: {set_src}); never scanned yet: {never}",
         f"- API requests used: **{api.used}** of {cfg['daily_requests']}" + (f" (API says {api.remaining} left today; {reserve} kept free)" if api.remaining is not None else ""),
         f"- Cards looked at: {ctx.count['seen']} → **{ctx.count['kept']}** flip candidates"
-        f" (already on site {ctx.count['onsite']}, hidden by you {ctx.count['dismissed']}, trainers/energy {ctx.count['trainer'] + ctx.count['energy']},"
+        f" (already on site {ctx.count['onsite']}, hidden by you {ctx.count['dismissed']}, declined by you {ctx.count['declined']},"
+        f" stamped {ctx.count['stamped']}, not a popular Pokémon {ctx.count['unpopular']}, trainers/energy {ctx.count['trainer'] + ctx.count['energy']},"
         f" missing prices {ctx.count['noprice']}, no good flip {ctx.count['noflip']}, no TCGplayer id {ctx.count['notcg']})",
         f"- On the Flip Finder list now: **{len(merged)}** ({new_count} new today) · took {secs // 60}m {secs % 60}s",
     ]

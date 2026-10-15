@@ -22,7 +22,14 @@ or keep_free_show_days on show days (Friday-Sunday) for adding cards at shows.
 Odd one-off sales: before saving, the four condition prices are checked against each
 other (see "outlier check" below). If a lower condition is priced above a higher one,
 e.g. LP $999 over NM $797 because of one strange sale, that price is replaced with an
-estimate from the other conditions and marked "est." on the site.
+estimate from the other conditions and marked "est." on the site. An NM price far
+above LP (e.g. NM $540 vs LP $76 from one strange NM sale) is also replaced with an
+estimate, and the card is queued for the weekly TCGplayer sales check.
+
+TCGplayer sales check: scripts/tcgplayer_check.py (random time Monday-Thursday) looks at
+the real TCGplayer sales for skewed and top-flip cards and saves them in
+scripts/tcgplayer_verified.json. While a checked price is fresh (see "trust_days" in
+scripts/tcgplayer_config.json) it wins over the TCG Price Lookup price for that condition.
 
 Only raw.nm / raw.lp / raw.mp / raw.dmg and "updated" are changed on a card.
 Graded values, pop counts, notes, images, pairings and tcgId stay as they are.
@@ -275,6 +282,9 @@ DEFAULT_RATIOS = {"nm": 1.0, "lp": 0.57, "mp": 0.38, "dmg": 0.20}   # usual pric
 NOISE_PCT, NOISE_USD = 0.08, 0.50   # worse condition may sit this far above the better one
 FLOOR = 0.10                        # ...and down to 10% of the usual spacing below it (big NM premiums are real)
 LISTING_GAP = 1.5                   # a sale 1.5x the cheapest same-or-better listing looks odd
+NM_SPIKE = 3.5                      # NM above 3.5x LP (or 6x MP with no LP) is treated as one odd NM sale
+NM_SPIKE_MP = 6.0
+NM_SPIKE_WHY = "far above the lower conditions, likely one odd NM sale; waiting for the weekly TCGplayer sales check"
 RATIOS = dict(DEFAULT_RATIOS)
 
 
@@ -370,6 +380,18 @@ def clean_prices(prices, lows=None):
             fixes.append((k, p[k], out[k][0], why))
     elif len(have) > 2:
         fixes.append(("?", None, None, "conditions disagree too much to tell which sale is off"))
+    # NM spike: one odd NM sale far above LP passes the checks above (big NM premiums are real),
+    # but it shows a fake LP -> NM flip. Use the usual NM/LP spacing until TCGplayer sales confirm it.
+    if "nm" in out and not any(f[0] == "nm" for f in fixes):
+        ref = next(((k, out[k][0]) for k in ("lp", "mp") if k in out and out[k][0] >= 3), None)
+        if ref and out["nm"][0] > (NM_SPIKE if ref[0] == "lp" else NM_SPIKE_MP) * ref[1]:
+            old_nm = out["nm"][0]
+            guess = ref[1] / RATIOS[ref[0]]
+            if cheapest.get("nm"):
+                guess = min(guess, cheapest["nm"])
+            guess = max(guess, ref[1])
+            out["nm"] = (round(guess, 2), True)
+            fixes.append(("nm", old_nm, out["nm"][0], NM_SPIKE_WHY))
     # last pass: no condition may be priced above a better one
     top = None
     for k in CONDS:
@@ -400,6 +422,64 @@ def listing_lows(rec):
 def checked_prices(rec):
     """cond_prices() with the outlier check applied. Returns (prices, fixes)."""
     return clean_prices(cond_prices(rec), listing_lows(rec))
+
+
+# ---------------------------------------------------------------- TCGplayer-checked prices
+VERIFIED = os.path.join(ROOT, "scripts", "tcgplayer_verified.json")
+TP_CONFIG = os.path.join(ROOT, "scripts", "tcgplayer_config.json")
+
+
+def printing_key(card):
+    """'<tcgId>|<printing>' — the same for a site card and a Flip Finder candidate."""
+    if not card.get("tcgId"):
+        return None
+    return f"{card['tcgId']}|{(card.get('tcgVariant') or wanted_printing(card.get('variant'))).lower()}"
+
+
+def load_verified():
+    """{key: {'checked': date, 'prices': {cond: raw entry}}} for checks still fresh enough to trust."""
+    try:
+        days = int(json.load(open(TP_CONFIG, encoding="utf-8")).get("trust_days", 11))
+    except (OSError, ValueError):
+        days = 11
+    try:
+        data = json.load(open(VERIFIED, encoding="utf-8")).get("cards", {})
+    except (OSError, ValueError):
+        return {}
+    out = {}
+    for k, v in data.items():
+        try:
+            age = (datetime.date.fromisoformat(TODAY) - datetime.date.fromisoformat(v.get("checked", "")[:10])).days
+        except ValueError:
+            continue
+        if age <= days and v.get("prices"):
+            out[k] = v
+    return out
+
+
+def overlay_verified(card, raw, verified):
+    """Put fresh TCGplayer-checked prices on raw (in place). Returns the conditions that changed."""
+    v = verified.get(printing_key(card) or "")
+    if not v:
+        return []
+    changed = []
+    for c, e in v["prices"].items():
+        if c in CONDS and isinstance(e, dict) and isinstance(e.get("price"), (int, float)) and raw.get(c) != e:
+            raw[c] = dict(e)
+            changed.append(c)
+    # a TCG Price Lookup price may not sit above a better TCGplayer-checked one
+    locked = set(v["prices"])
+    top = None
+    for c in CONDS:
+        e = raw.get(c)
+        if not isinstance(e, dict) or not isinstance(e.get("price"), (int, float)):
+            continue
+        if top is not None and e["price"] > top and c not in locked:
+            raw[c] = dict(e, price=round(top, 2), est=True,
+                          src=f"Estimated: capped at the TCGplayer-checked price of a better condition (was ${e['price']:,.2f})")
+            changed.append(c)
+        top = raw[c]["price"] if top is None else min(top, raw[c]["price"])
+    return changed
 
 
 def raw_entry(cond, price, when, fixes=()):
@@ -435,6 +515,7 @@ def main():
     show_day = is_show_day(budget)
     reserve = keep_free(budget)
     learn_ratios(cards)
+    verified = load_verified()
 
     def recently_failed(c):
         s = st.get(c["id"]) or {}
@@ -469,18 +550,21 @@ def main():
             return
         when = (rec.get("last_price_update") or rec.get("updated_at") or TODAY)[:10]
         raw = card.setdefault("raw", {})
+        new_raw = dict(raw)
+        for c in ("nm", "lp", "mp", "dmg"):
+            if c in prices:   # no price for a condition: keep the old one
+                new_raw[c] = raw_entry(c, prices[c], when, fixes)
+        overlay_verified(card, new_raw, verified)   # fresh TCGplayer-checked prices win
         changed = False
         for c in ("nm", "lp", "mp", "dmg"):
-            if c not in prices:
-                continue   # no price for this condition: keep the old one
-            new = raw_entry(c, prices[c], when, fixes)
-            old = raw.get(c) or {}
+            old, new = raw.get(c) or {}, new_raw.get(c)
+            if new is None or old == new:
+                continue
             if c == "nm" and isinstance(old.get("price"), (int, float)) and old["price"] > 0 \
                     and abs(new["price"] - old["price"]) / old["price"] >= 0.15:
                 moves.append((label(card), old["price"], new["price"]))
-            if old != new:
-                raw[c] = new
-                changed = True
+            raw[c] = new
+            changed = True
         if changed:
             card["updated"] = TODAY
             dirty.add(file_of[card["id"]])
@@ -677,8 +761,9 @@ def main():
         moves.sort(key=lambda m: -abs(m[2] - m[1]) / m[1])
         lines += ["", "**Biggest NM moves (15%+):**"] + [f"- {n}: ${o:,.2f} → ${nw:,.2f}" for n, o, nw in moves[:10]]
     if outliers:
-        lines += ["", f"**Outlier prices fixed ({len(outliers)}):** a lower condition was priced above a higher one "
-                      "(usually one odd sale), so that price was replaced with an estimate marked \"est.\" on the site."]
+        lines += ["", f"**Outlier prices fixed ({len(outliers)}):** a lower condition was priced above a higher one, or NM sat far "
+                      "above LP (usually one odd sale), so that price was replaced with an estimate marked \"est.\" on the site. "
+                      "The weekly TCGplayer sales check replaces these estimates with real sales."]
         for n, fx in outliers[:15]:
             bits = [f"{k.upper()} ${a:,.2f} → ${b:,.2f}" for k, a, b, _ in fx if a is not None]
             lines.append(f"- {n}: " + (", ".join(bits) or "conditions disagree; check by hand"))
