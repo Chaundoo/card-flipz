@@ -1,0 +1,90 @@
+name: TCGplayer sales check (weekly, random time)
+
+# Checks REAL TCGplayer sales, but only for cards with skewed/estimated prices and the top flips
+# (settings: scripts/tcgplayer_config.json). Once a week at a random time Monday-Thursday Pacific:
+# this wakes up every two hours on those days, and scripts/tcgplayer_check.py only goes ahead at
+# this week's slot (it changes every week), then waits a random number of minutes before starting.
+# The other wake-ups stop after a few seconds and save nothing.
+on:
+  schedule:
+    # Mon-Thu mornings/afternoons Pacific (UTC times; Tue-Fri 00/02/04 UTC = Mon-Thu evening Pacific)
+    - cron: "41 16,18,20,22 * * 1-4"
+    - cron: "41 0,2,4 * * 2-5"
+  workflow_dispatch:
+    inputs:
+      cards:
+        description: "Most cards to check (blank = the setting in tcgplayer_config.json)"
+        default: ""
+      dry_run:
+        description: "Test run: check and report, but save nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: tcgplayer-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Check TCGplayer sales (only at this week's random slot)
+        id: run
+        continue-on-error: true
+        env:
+          NOW: ${{ github.event_name == 'workflow_dispatch' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          LIMIT: ${{ github.event.inputs.cards || '' }}
+        run: |
+          git pull -q --ff-only origin main || true
+          python3 scripts/tcgplayer_check.py
+
+      - name: Save the checked prices
+        if: always() && steps.run.outputs.ran == 'true' && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp scripts/tcgplayer_verified.json tcgplayer_section.md /tmp/keep/
+          # Retry if the price update or another job saved at the same moment.
+          for try in 1 2 3; do
+            python3 scripts/build_versions.py
+            git add eras candidates.json PRICE_LOG.md versions.json scripts/tcgplayer_verified.json
+            git diff --cached --quiet && { echo "Nothing to save."; break; }
+            git commit -q -m "TCGplayer sales check $(date -u +%Y-%m-%d) (${{ steps.run.outputs.status }})"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            git fetch -q origin main && git reset -q --hard origin/main
+            cp /tmp/keep/tcgplayer_verified.json scripts/tcgplayer_verified.json
+            python3 scripts/tcgplayer_check.py --apply --log /tmp/keep/tcgplayer_section.md
+            sleep $((try * 10))
+          done
+
+      - name: Post the result to the "Price update log" issue
+        if: always() && (steps.run.outputs.ran == 'true' || failure())
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ The TCGplayer sales check crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Price update log") | .number' | head -n 1)
+          if [ -z "$num" ]; then
+            url=$(gh issue create --title "Price update log" --body "The price jobs post here when something needs a look.")
+            num="${url##*/}"
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if TCGplayer blocked it
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
+          exit 1
