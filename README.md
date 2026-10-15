@@ -36,16 +36,29 @@ can save this way. The repo is public, so the saved pairings and profit log are 
 Add an entry to `eras/eras.json` above `"other"` (id, name, years, set-name patterns), then create
 `eras/<id>/<id>.json` containing `{"era":"<id>","version":"0","cards":[]}`.
 
-## Weekly price refresh
-`.github/workflows/price-refresh.yml` runs `scripts/refresh_prices.py` every Friday. It reads every
-era file, refreshes raw prices, and only rewrites the era files that changed.
+## Daily price update
+`.github/workflows/price-refresh.yml` runs `scripts/refresh_prices.py` Monday to Friday with TCG Price
+Lookup prices. Odd prices (a lower condition above a higher one, or NM far above LP from one strange
+sale) are replaced with an estimate marked "est." until the TCGplayer sales check looks at them.
+
+## Weekly TCGplayer sales check
+`.github/workflows/tcgplayer-check.yml` runs `scripts/tcgplayer_check.py` once a week at a **random
+time Monday to Thursday** (the slot changes every week; it wakes up every two hours on those days and
+only goes ahead at that week's slot, after a random wait). It looks at TCGplayer's real sales from the
+last 90 days, but only for cards with an estimated price, the top flips, and the top Flip Finder
+cards (about 150 cards, one request at a time with random pauses). Odd sales are thrown out and the
+median sale is saved in `scripts/tcgplayer_verified.json` and on the cards; the daily update keeps
+those prices for 11 days. Settings: `scripts/tcgplayer_config.json`. Run it now: Actions →
+*TCGplayer sales check* → Run workflow. Results are posted to the "Price update log" issue.
 
 ## Flip Finder (new flip cards, approved by you)
 
 The **Flip Finder** tab lists new cards the bot found with a good condition flip. Nothing is added to the site until you pick it.
 
 * **Finding:** `.github/workflows/find-candidates.yml` runs early **Monday to Thursday** (your no-show days), after the daily price update, and scans 2010-2020 sets with whatever TCG Price Lookup requests are left. Friday to Sunday it does nothing, so show-day card adds keep their requests. Each set is re-checked about once a week. It writes `candidates.json`.
-* **Picking:** on the tab, tap cards or use **Select all**, then **Add to site** (or **Hide** to never see a card again). That opens a GitHub issue; press **Create**.
+* **What it suggests:** only popular Pokémon (the `popular` list in the settings) and no stamped cards (prerelease, staff, league, championship… see `stamp_patterns`), since vendors rarely buy those.
+* **Picking:** on the tab, tap cards or use **Select all**, then **Add to site**, **Not for me** (off the list for 90 days) or **Never show** (gone for good). That opens a GitHub issue; press **Create**.
+* **Learning:** every add / decline is remembered in `scripts/discovery_state.json` (the Pokémon, set, card type and price range). Pokémon, sets and card types you keep declining rank lower on the next search; ones you add rank higher. Cards you just leave alone stay on the list until their set is re-checked and they no longer qualify, their prices are 3 weeks old, or better cards push them out.
 * **Adding:** `approve-candidates.yml` copies the picked cards into the era files using the prices saved when they were found. It uses **no** API requests.
 * **Settings:** `scripts/discovery_config.json` (vendor %, min/max buy price, minimum return, request budget, which years/sets, popular Pokémon, words to skip).
 * **Test it without saving anything:** Actions → *Flip Finder* → Run workflow (dry run is on by default). The report lists the fields the API returned, so the trainer and price checks can be tuned.

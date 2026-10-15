@@ -1347,9 +1347,12 @@ function mountBar(){
   document.body.style.setProperty("--barh", bar.offsetHeight+"px");
   var sa = document.getElementById("sel-add"); if(sa) sa.addEventListener("click", function(){
     if(!selected.length) return; var p = addCards(document.getElementById("sel-target").value, selected.slice()); goPairs(p.id); });
-  var fa = document.getElementById("fd-add"); if(fa) fa.addEventListener("click", function(){ sendFinder(finderSel.slice(), []); });
+  var fa = document.getElementById("fd-add"); if(fa) fa.addEventListener("click", function(){ sendFinder(finderSel.slice(), [], []); });
+  var fn = document.getElementById("fd-decline"); if(fn) fn.addEventListener("click", function(){
+    var n = finderSel.length;
+    if(confirm("Pass on "+n+" card"+(n!==1?"s":"")+"? "+(n!==1?"They":"It")+" won't be suggested for 90 days, and the Flip Finder will suggest fewer cards like "+(n!==1?"these":"this")+".")) sendFinder([], [], finderSel.slice()); });
   var fh = document.getElementById("fd-hide"); if(fh) fh.addEventListener("click", function(){
-    if(confirm("Hide "+finderSel.length+" card"+(finderSel.length!==1?"s":"")+" for good? They won't be suggested again.")) sendFinder([], finderSel.slice()); });
+    if(confirm("Hide "+finderSel.length+" card"+(finderSel.length!==1?"s":"")+" for good? They won't be suggested again.")) sendFinder([], finderSel.slice(), []); });
   var fc = document.getElementById("fd-clear"); if(fc) fc.addEventListener("click", function(){ finderSel = []; state.fmsg = ""; var y = window.scrollY; render(); window.scrollTo(0,y); });
   var sc = document.getElementById("sel-cancel"); if(sc) sc.addEventListener("click", function(){ state.selecting = false; selected = []; render(); });
   var ps = document.getElementById("pb-save"); if(ps) ps.addEventListener("click", pushToGitHub);
@@ -1880,7 +1883,7 @@ function finderTile(x, picked){
   return '<div class="tile'+(picked?' picked':'')+'" data-pick="'+esc(c.id)+'" role="checkbox" aria-checked="'+picked+'" tabindex="0"><span class="check" aria-hidden="true">✓</span>'+
     '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
     '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
-    ((nw||c.pop||flags) ? '<div class="fflags">'+(nw?'<span class="pill newp">New</span>':'')+(c.pop?'<span class="pill pos" title="A popular Pokémon">★ Popular</span>':'')+flags+'</div>' : '')+
+    ((nw||flags) ? '<div class="fflags">'+(nw?'<span class="pill newp">New</span>':'')+flags+'</div>' : '')+
     condLine(c)+
     '<div class="fstats"><div class="fmain"><b class="num pos-t">'+signed(r.net)+'</b><span class="pill pos">'+pct(r.roi)+' return</span></div>'+
     '<div class="froute">Buy '+r.from+' '+money(r.buy)+' → sell '+r.to+' '+money(r.sell)+'</div>'+
@@ -1896,22 +1899,28 @@ function finderBar(){
   if(!finderSel.length) return state.fmsg ? '<div class="actionbar" role="region" aria-label="Flip Finder"><span class="msg" role="status">'+esc(state.fmsg)+'</span></div>' : '';
   var n = finderSel.length;
   return '<div class="actionbar" role="region" aria-label="Selected flip candidates"><b id="fd-count">'+n+' selected</b>'+
-    '<button class="btn" id="fd-clear">Clear</button><button class="btn" id="fd-hide">Hide</button>'+
+    '<button class="btn" id="fd-clear">Clear</button><button class="btn" id="fd-decline" title="Not suggested for 90 days; similar cards rank lower">Not for me</button><button class="btn" id="fd-hide" title="Never suggested again">Never show</button>'+
     '<button class="btn primary" id="fd-add">Add '+n+' to site</button>'+(state.fmsg?'<span class="msg" role="status">'+esc(state.fmsg)+'</span>':'')+'</div>';
 }
-function sendFinder(add, hide){
-  if(!add.length && !hide.length) return;
-  var title = "Add candidates: "+(add.length ? add.length+" card"+(add.length!==1?"s":"") : "")+(add.length&&hide.length?", ":"")+(hide.length ? "hide "+hide.length : "");
-  var body = "Sent from the Flip Finder. Press **Create**: the bot adds the cards and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, add:add, hide:hide})+"\n```";
+function sendFinder(add, hide, decline){
+  decline = decline || [];
+  if(!add.length && !hide.length && !decline.length) return;
+  var parts = [];
+  if(add.length) parts.push(add.length+" card"+(add.length!==1?"s":""));
+  if(decline.length) parts.push("not for me "+decline.length);
+  if(hide.length) parts.push("hide "+hide.length);
+  var title = "Add candidates: "+parts.join(", ");
+  var body = "Sent from the Flip Finder. Press **Create**: the bot updates the list and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, add:add, decline:decline, hide:hide})+"\n```";
   var base = "https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body=";
   var url = base+encodeURIComponent(body);
   if(url.length > 7600){ /* too long for a link: copy it so it can be pasted into the issue */
     copyText(body);
     url = base+encodeURIComponent("Delete this line, then paste (the site copied your picks), then press Create.");
     state.fmsg = "That's a lot of cards, so they were copied instead of filled in. In GitHub, clear the description box, paste, then press Create.";
-  } else state.fmsg = (add.length ? "Sent to GitHub. Press Create there; the cards show up in about a minute (refresh this page after)." : "Sent to GitHub. Press Create there to hide them for good.");
+  } else state.fmsg = (add.length ? "Sent to GitHub. Press Create there; the cards show up in about a minute (refresh this page after)." :
+      decline.length ? "Sent to GitHub. Press Create there; those cards stay off the list for 90 days." : "Sent to GitHub. Press Create there to hide them for good.");
   window.open(url, "_blank", "noopener");
-  save(FSENT_KEY, {at:Date.now(), ids:add.concat(hide)});   /* hides them here until the list refreshes */
+  save(FSENT_KEY, {at:Date.now(), ids:add.concat(hide, decline)});   /* hides them here until the list refreshes */
   finderSel = []; render();
 }
 function goFinder(){ state.view = "finder"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#finder"); }catch(e){} window.scrollTo(0,0); render(); }
@@ -1935,7 +1944,7 @@ function renderFinder(){
       '<button class="btn'+(state.fclean?' dark':'')+'" id="fd-clean" aria-pressed="'+state.fclean+'">No warnings only</button>'+
       '<button class="btn primary" id="fd-all">'+(allOn?'Unselect all':'Select all '+rows.length)+'</button>'+
       (sent.length ? '<button class="btn" id="fd-unhide">Show '+sent.length+' sent</button>' : '')+'</div>';
-    h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Hide” removes a card for good.</p>';
+    h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Not for me” takes a card off the list for 90 days and teaches the finder to suggest fewer like it. “Never show” removes it for good.</p>';
     h += '<div class="grid selecting">'+rows.map(function(x){ return finderTile(x, finderSel.indexOf(x.c.id)>=0); }).join("")+'</div>';
   }
   root.innerHTML = h;
