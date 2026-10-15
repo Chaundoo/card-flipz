@@ -2152,6 +2152,11 @@
 "synced": "2026-10-15",
 "variant": "1st Edition"
 },
+"eevee-48-48-90-85088": {
+"id": "019c978f-b8f8-73c0-933f-b1eafc322077",
+"synced": "2026-10-15",
+"variant": "Reverse Holofoil"
+},
 "eevee-51-64-45154-stedit": {
 "id": "019c978d-6a17-73f9-b953-ea1e88d72566",
 "synced": "2026-10-15",
@@ -2557,6 +2562,11 @@
 "synced": "2026-10-15",
 "variant": "1st Edition"
 },
+"flareon-44-95-85499": {
+"id": "019cb392-3755-7359-bcad-7be6974a8713",
+"synced": "2026-10-15",
+"variant": "Reverse Holofoil"
+},
 "flareon-5-113-85501": {
 "id": "019c9765-d926-74fe-b6fb-21d39b305438",
 "synced": "2026-10-15",
@@ -2756,6 +2766,11 @@
 "id": "019c9765-da5c-70ba-8754-1fc77db4abf1",
 "synced": "2026-10-15",
 "variant": "1st Edition"
+},
+"gastly-63-102-85656": {
+"id": "019c9765-da82-7257-b70f-b02d0464317e",
+"synced": "2026-10-15",
+"variant": "Reverse Holofoil"
 },
 "gastly-xy132-118873-holofo": {
 "id": "019c96a7-fcb2-7a8b-84b0-2b3387fc778f",
@@ -3651,6 +3666,11 @@
 "id": "019c9791-8369-7498-ba30-a1d904a98a1a",
 "synced": "2026-10-15",
 "variant": "Reverse Holofoil"
+},
+"jirachi-1-95-86330-holofoil": {
+"id": "019c9791-8367-793b-9e8f-8d090ad85d83",
+"synced": "2026-10-15",
+"variant": "Holofoil"
 },
 "jirachi-31-146-86328-revers": {
 "id": "019c976a-8a8d-7f3b-956d-9c9d51edd53e",

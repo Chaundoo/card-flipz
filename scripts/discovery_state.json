@@ -1462,6 +1462,46 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:gastly",
+"set:Triumphant",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:eevee",
+"set:Undaunted",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:flareon",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:jirachi",
+"set:Unleashed",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
 }
 ]
 }
