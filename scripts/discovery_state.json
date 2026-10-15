@@ -2,7 +2,7 @@
 "about": "Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.",
 "dismissed": [],
 "setlist": {
-"fetched": "2026-10-13",
+"fetched": "2026-10-15",
 "sets": [
 {
 "game": "pokemon",
@@ -1003,6 +1003,131 @@
 "game": "pokemon",
 "name": "Trick or Trade BOOster Bundle 2023",
 "slug": "pokemon--trick-or-trade-booster-bundle-2023"
+},
+{
+"game": "pokemon",
+"name": "Trick or Trade BOOster Bundle 2024",
+"slug": "pokemon--trick-or-trade-booster-bundle-2024"
+},
+{
+"game": "pokemon",
+"name": "Triumphant",
+"slug": "pokemon--triumphant"
+},
+{
+"game": "pokemon",
+"name": "Undaunted",
+"slug": "pokemon--undaunted"
+},
+{
+"game": "pokemon",
+"name": "Unleashed",
+"slug": "pokemon--unleashed"
+},
+{
+"game": "pokemon",
+"name": "Vendetta",
+"slug": "pokemon--vendetta"
+},
+{
+"game": "pokemon",
+"name": "WoTC Promo",
+"slug": "pokemon--wotc-promo"
+},
+{
+"game": "pokemon",
+"name": "World Championship Decks",
+"slug": "pokemon--world-championship-decks"
+},
+{
+"game": "pokemon",
+"name": "XY - Ancient Origins",
+"slug": "pokemon--xy-ancient-origins"
+},
+{
+"game": "pokemon",
+"name": "XY - BREAKpoint",
+"slug": "pokemon--xy-breakpoint"
+},
+{
+"game": "pokemon",
+"name": "XY - BREAKthrough",
+"slug": "pokemon--xy-breakthrough"
+},
+{
+"game": "pokemon",
+"name": "XY - Evolutions",
+"slug": "pokemon--xy-evolutions"
+},
+{
+"game": "pokemon",
+"name": "XY - Fates Collide",
+"slug": "pokemon--xy-fates-collide"
+},
+{
+"game": "pokemon",
+"name": "XY - Flashfire",
+"slug": "pokemon--xy-flashfire"
+},
+{
+"game": "pokemon",
+"name": "XY - Furious Fists",
+"slug": "pokemon--xy-furious-fists"
+},
+{
+"game": "pokemon",
+"name": "XY - Phantom Forces",
+"slug": "pokemon--xy-phantom-forces"
+},
+{
+"game": "pokemon",
+"name": "XY - Primal Clash",
+"slug": "pokemon--xy-primal-clash"
+},
+{
+"game": "pokemon",
+"name": "XY - Roaring Skies",
+"slug": "pokemon--xy-roaring-skies"
+},
+{
+"game": "pokemon",
+"name": "XY - Steam Siege",
+"slug": "pokemon--xy-steam-siege"
+},
+{
+"game": "pokemon",
+"name": "XY Base Set",
+"slug": "pokemon--xy-base-set"
+},
+{
+"game": "pokemon",
+"name": "XY Promos",
+"slug": "pokemon--xy-promos"
+},
+{
+"game": "pokemon",
+"name": "XY Trainer Kit: Bisharp & Wigglytuff",
+"slug": "pokemon--xy-trainer-kit-bisharp-and-wigglytuff"
+},
+{
+"game": "pokemon",
+"name": "XY Trainer Kit: Latias & Latios",
+"slug": "pokemon--xy-trainer-kit-latias-and-latios"
+},
+{
+"game": "pokemon",
+"name": "XY Trainer Kit: Pikachu Libre & Suicune",
+"slug": "pokemon--xy-trainer-kit-pikachu-libre-and-suicune"
+},
+{
+"game": "pokemon",
+"name": "XY Trainer Kit: Sylveon & Noivern",
+"slug": "pokemon--xy-trainer-kit-sylveon-and-noivern"
+},
+{
+"game": "pokemon",
+"name": "e-Reader Sample Cards",
+"slug": "pokemon--e-reader-sample-cards"
 }
 ]
 },
@@ -1150,6 +1275,30 @@
 "name": "SM Promos",
 "records": 337,
 "scanned": "2026-10-13"
+},
+"pokemon--triumphant": {
+"found": 13,
+"name": "Triumphant",
+"records": 196,
+"scanned": "2026-10-15"
+},
+"pokemon--undaunted": {
+"found": 16,
+"name": "Undaunted",
+"records": 173,
+"scanned": "2026-10-15"
+},
+"pokemon--unleashed": {
+"found": 7,
+"name": "Unleashed",
+"records": 181,
+"scanned": "2026-10-15"
+},
+"pokemon--xy-promos": {
+"found": 3,
+"name": "XY Promos",
+"records": 272,
+"scanned": "2026-10-15"
 }
 }
 }
