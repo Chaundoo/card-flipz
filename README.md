@@ -21,6 +21,27 @@ pairings.json             saved pairings
 profitlog.json            saved profit log (card shows)
 ```
 
+## Quick check and Hunting (card shows)
+* **Quick check** tab: type a card number (like `4/102`) or a name. Each condition shows the most you can pay and
+  still break even when a vendor buys at your vendor % (big number = it sells one condition up, e.g. LP → NM;
+  "stays" = the vendor takes it as the same condition).
+* **Hunting** tab: tap **☆ Hunt** on a card (or in Quick check) to add it. The list is sorted by best flip and
+  shows the same buy-max prices. It is saved on that device.
+* Cards rank by **vendor profit** by default; switch to eBay in the "Sell to" box (remembered on that device).
+
+## Admin log (passcode)
+The **Admin** tab (4-digit passcode) shows what every bot did today and this week in plain English, e.g.
+"Successful price update: checked 1,899 cards and 412 prices changed". Problems, and scheduled bots that didn't
+run, are listed at the top, and a red notice shows on the other tabs (on devices where Admin is unlocked).
+**Copy for Claude** copies a problem with its full report so it can be pasted into a chat.
+Every workflow ends with `scripts/log_run.sh`, which adds the run to `botlog.json` (`scripts/botlog.py`, kept 35
+days). The tab also reads GitHub's public list of Actions runs to catch crashes and missed runs.
+
+## Card file size
+Empty fields (graded prices and pop counts that were never filled in, blank gem/verdict/notes) are left out of
+the era files, so the phone downloads less. The site treats a missing field as empty. The bots
+(`refresh_prices.py`, `approve_candidates.py`) strip empty fields whenever they save.
+
 ## Saving edits from the site
 When you save a card, the site downloads only the era file(s) that changed (e.g. `sv.json`).
 Upload each one into its own folder: **eras → sv → Add file → Upload files**.

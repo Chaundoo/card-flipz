@@ -532,6 +532,73 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .flock input{width:100%;box-sizing:border-box;padding:12px;font-size:24px;letter-spacing:.5em;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-family:inherit}
 .flock .btn{width:100%;margin-top:10px}
 .flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
+
+/* Quick check + Hunting */
+.tabs{flex-wrap:wrap}
+body.phone .tabs{display:grid;grid-template-columns:repeat(3,1fr)}
+body.phone .tab{padding:8px 4px;font-size:13.5px;white-space:normal;line-height:1.2}
+.qc-search{margin:4px 0 14px;max-width:560px}
+.qc-search input{font-size:22px;padding:12px 4px;font-variant-numeric:tabular-nums}
+.qc-list{display:flex;flex-direction:column;gap:12px}
+.qc-row{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.qc-art{flex:none;width:72px;aspect-ratio:63/88;align-self:flex-start;border-radius:7px;overflow:hidden;background:var(--surface-2);border:none;padding:0;cursor:pointer}
+.qc-art img{width:100%;height:100%;object-fit:cover;display:block}
+.qc-art img:not([src]){visibility:hidden}
+.qc-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.qc-head{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.qc-name{background:none;border:none;padding:0;text-align:left;color:inherit;display:flex;flex-direction:column;min-width:0;cursor:pointer}
+.qc-name b{font-size:16px}
+.qc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.qc-cell{background:var(--surface-2);border-radius:9px;padding:7px 9px;display:flex;flex-direction:column;min-width:0}
+.qc-cell>span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.qc-cell b{font-size:19px;font-variant-numeric:tabular-nums;line-height:1.25}
+.qc-cell small{font-size:11.5px;color:var(--muted);line-height:1.35;font-variant-numeric:tabular-nums}
+.qc-cell.best{background:var(--pos-soft)} .qc-cell.best b{color:var(--pos)}
+.qc-cell.none b{color:var(--muted);font-size:15px}
+.qc-flip{font-size:13px;color:var(--muted)} .qc-flip b{color:var(--ink)} .qc-flip b.pos-t{color:var(--pos)} .qc-flip b.neg-t{color:var(--neg)}
+body.phone .qc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.phone .qc-row{padding:10px;gap:10px}
+body.phone .qc-art{width:58px}
+.star{flex:none;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer}
+.star i{font-style:normal;font-size:15px;line-height:1}
+.star.on{background:var(--gold-soft);color:var(--gold-ink);border-color:transparent}
+.tile .hunt-badge{position:absolute;top:18px;right:18px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#1b1400;display:flex;align-items:center;justify-content:center;font-size:15px;z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+
+/* Admin log */
+body.phone .tabs{grid-template-columns:repeat(4,1fr)}
+.tab .count.bad{background:var(--neg);color:#fff}
+.adm-alert{display:block;width:100%;text-align:left;margin-top:10px;border:none;border-radius:10px;padding:10px 14px;background:var(--neg-soft);color:var(--neg);font-weight:700;cursor:pointer}
+.adm-banner{border-radius:14px;padding:14px 16px;margin:6px 0 4px;display:flex;flex-direction:column;gap:4px}
+.adm-banner b{font-size:17px}
+.adm-banner.ok{background:var(--pos-soft);color:var(--pos)} .adm-banner.ok span{color:var(--ink)}
+.adm-banner.warn{background:var(--gold-soft);color:var(--gold-ink)}
+.adm-banner.fail{background:var(--neg-soft);color:var(--neg)}
+.adm-banner ul{margin:4px 0 0;padding-left:18px;color:var(--ink);display:flex;flex-direction:column;gap:6px;font-size:14px}
+.adm-banner a,.adm-links a{color:inherit;font-weight:600;white-space:nowrap}
+.linkbtn{border:none;background:none;padding:0;font:inherit;font-weight:700;color:var(--ink);text-decoration:underline;cursor:pointer;white-space:nowrap}
+.adm-bots{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.adm-bot{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.adm-bot.ok{border-left-color:var(--pos)} .adm-bot.warn{border-left-color:var(--gold)} .adm-bot.fail{border-left-color:var(--neg)}
+.adm-bot-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.adm-bot small{color:var(--muted);font-size:12px}
+.adm-bot p{margin:4px 0 0;font-size:13.5px;line-height:1.45}
+.adm-dot{font-weight:800}
+.adm-bot.ok .adm-dot{color:var(--pos)} .adm-bot.warn .adm-dot{color:var(--gold-ink)} .adm-bot.fail .adm-dot{color:var(--neg)}
+.adm-feed{display:flex;flex-direction:column;gap:8px}
+.adm-day{font-size:12px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--muted);margin:10px 0 0}
+.adm-item{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.adm-ico{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;background:var(--surface-2);color:var(--muted)}
+.adm-item.ok .adm-ico{background:var(--pos-soft);color:var(--pos)}
+.adm-item.warn .adm-ico{background:var(--gold-soft);color:var(--gold-ink)}
+.adm-item.fail{border-color:var(--neg)} .adm-item.fail .adm-ico{background:var(--neg-soft);color:var(--neg)}
+.adm-body{flex:1;min-width:0}
+.adm-meta{font-size:12.5px;color:var(--muted)} .adm-meta b{color:var(--ink)}
+.adm-body p{margin:3px 0 0;font-size:14.5px;line-height:1.45}
+.adm-body ul{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--muted)}
+.adm-links{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-top:6px;font-size:13px}
+.adm-links details{flex-basis:100%}
+.adm-links summary{cursor:pointer;color:var(--muted);font-weight:600}
+.adm-links pre{white-space:pre-wrap;word-break:break-word;font:12px/1.5 ui-monospace,Menlo,monospace;background:var(--surface-2);border-radius:8px;padding:10px;margin:6px 0 0;max-height:360px;overflow:auto}
 </style>
 </head><body>
 <div id="root"><p style="padding:40px;text-align:center;font-family:sans-serif">Loading cards…</p></div>
@@ -559,13 +626,14 @@ var GRADED = [["psa10","PSA 10","psa"],["cgc10","CGC 10","cgc"],["pristine","CGC
 var VERDICTS = ["Grade it","Grade selectively","Grade clean copies only","Sell raw","Hold","Pass"];
 var root = document.getElementById("root");
 var artifactApi = null, canWrite = null, apiChecked = false; // null = unknown yet
-var state = {view:"list", id:null, q:"", set:"", era:"", sort:"gap", basis:"psa10", exit:"ebay", editing:null, saving:false, msg:"", msgType:"", confirmDel:false, shown:40};
+var state = {view:"list", id:null, q:"", set:"", era:"", sort:"gap", basis:"psa10", exit:"vendor", editing:null, saving:false, msg:"", msgType:"", confirmDel:false, shown:40};
 var PAGE = 40, imgObserver = null;
 
 function load(k, d){ try{ var v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } }
 function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 var S = load("flipdesk.settings", {vendor:75, psa:75, cgc:35, ebay:13.25});
 var VIEW = load("flipdesk.view", null);
+if(load("flipdesk.exit", "vendor")==="ebay") state.exit = "ebay"; /* ranks by vendor profit unless you picked eBay */
 var ADV = load("flipdesk.adv", false) === true; /* Advanced analytics (grading, pop, break-even): off by default */
 var ADV_SORTS = ["profit","roi","psa10","breakeven"];
 function setAdv(on){ ADV = !!on; save("flipdesk.adv", ADV); if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap"; render(); }
@@ -831,7 +899,7 @@ function filteredList(){
   if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap";
   var gaps = {}; list.forEach(function(c){ gaps[c.id] = condGap(c); });
   list.sort(function(a,b){
-    if(state.sort==="psa10") return (Number(b.graded.psa10&&b.graded.psa10.price)||0)-(Number(a.graded.psa10&&a.graded.psa10.price)||0);
+    if(state.sort==="psa10"){ var ga10 = a.graded&&a.graded.psa10, gb10 = b.graded&&b.graded.psa10; return (Number(gb10&&gb10.price)||0)-(Number(ga10&&ga10.price)||0); }
     if(state.sort==="raw") return buyOf(b)-buyOf(a);
     if(state.sort==="profit"||state.sort==="roi"){
       var pa = profitFor(a), pb = profitFor(b);
@@ -867,12 +935,11 @@ function renderList(){
     '<select id="setf" aria-label="Filter by set"><option value="">All sets</option>'+sets.map(function(s){return '<option'+(s===state.set?' selected':'')+'>'+esc(s)+'</option>';}).join("")+'</select>'+
     '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
       (ADV ? '<optgroup label="Advanced: grading"><option value="profit">Grading profit ($)</option><option value="roi">Grading return (%)</option><option value="psa10">PSA 10 price</option><option value="breakeven">Lowest break-even grade</option></optgroup>' : '')+'</select>'+
-    '<select id="exitf" aria-label="Sell to"><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option></select>'+
+    '<select id="exitf" aria-label="Sell to"><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option></select>'+
     (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
     '<button class="btn'+(state.selecting?' dark':'')+'" id="selbtn" aria-pressed="'+!!state.selecting+'">'+(state.selecting?'Done selecting':'Select cards')+'</button>'+
     '<button class="advbtn" id="advbtn" role="switch" aria-checked="'+ADV+'" title="Show grading values, population counts and break-even grades"><i aria-hidden="true"></i>Advanced analytics</button>'+
     '<button class="btn primary" id="addlink">+ Add from TCGplayer link</button>'+
-    (canWrite!==false && artifactApi ? '<button class="btn" id="add">+ Add card by hand</button>' : '')+
   '</div>';
   h += '<div id="results">'+resultsHTML()+'</div>';
   h += storageMeter();
@@ -890,9 +957,8 @@ function renderList(){
   var eraSel = document.getElementById("eraf"); if(eraSel) eraSel.addEventListener("change", function(e){ state.era = e.target.value; state.set = ""; state.shown = PAGE; renderList(); });
   sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
   var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
-  var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; state.shown = PAGE; renderList(); });
+  var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; save("flipdesk.exit", state.exit); state.shown = PAGE; renderList(); });
   document.getElementById("advbtn").addEventListener("click", function(){ setAdv(!ADV); var n = document.getElementById("advbtn"); if(n) n.focus(); });
-  var add = document.getElementById("add"); if(add) add.addEventListener("click", function(){ openEditor(null); });
   var addl = document.getElementById("addlink"); if(addl) addl.addEventListener("click", showAddLink);
   document.getElementById("selbtn").addEventListener("click", function(){ state.selecting = !state.selecting; if(!state.selecting) selected = []; var y = window.scrollY; render(); window.scrollTo(0,y); });
   bindResults();
@@ -913,7 +979,7 @@ function resultsHTML(){
     if(state.selecting) h += '<p class="note" style="margin:-6px 0 12px"><b>Select the cards you’re selling together</b>, then add them to a pairing with the bar at the bottom.</p>';
     h += '<div class="grid'+(state.selecting?' selecting':'')+'">'+list.map(function(c){
       var picked = selected.indexOf(c.id)>=0;
-      var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+
+      var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+(hunting(c.id)?'<span class="hunt-badge" title="On your Hunting list">★</span>':'')+
         '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
         '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
         condLine(c)+bestFlipTile(c);
@@ -959,6 +1025,9 @@ function chip(k,label,unit,gold){ return '<label class="set-chip'+(gold?' gold':
 function bindHeader(){
   var vb = document.getElementById("viewbtn"); if(vb) vb.addEventListener("click", showChooser);
   var tc = document.getElementById("tab-cards"); if(tc) tc.addEventListener("click", function(){ state.notice = ""; go(null); });
+  var tq = document.getElementById("tab-check"); if(tq) tq.addEventListener("click", function(){ state.notice = ""; goCheck(); });
+  var th = document.getElementById("tab-hunt"); if(th) th.addEventListener("click", function(){ state.notice = ""; goHunt(); });
+  var ta = document.getElementById("tab-admin"); if(ta) ta.addEventListener("click", function(){ state.notice = ""; goAdmin(); });
   var tf = document.getElementById("tab-finder"); if(tf) tf.addEventListener("click", function(){ state.notice = ""; goFinder(); });
   var tp = document.getElementById("tab-pairs"); if(tp) tp.addEventListener("click", function(){ state.notice = ""; goPairs(null); });
   var tl = document.getElementById("tab-log"); if(tl) tl.addEventListener("click", function(){ state.notice = ""; goLog(null); });
@@ -980,7 +1049,7 @@ function renderDetail(){
   h += '<div class="detail-head"><div class="art">'+(c.image?'<img src="'+c.image+'" alt="'+esc(title(c))+'">':'')+'</div><div>'+
     '<div class="title-row"><div><h2>'+esc(title(c))+'</h2><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · Updated '+fmtDate(c.updated)+'</div></div>'+
     '<div class="confirm"><select id="addpair" class="btn" aria-label="Add this card to a pairing"><option value="">+ Add to pairing</option><option value="__new">New pairing</option>'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>'; }).join("")+'</select>'+
-    (canWrite!==false && artifactApi ? '<button class="btn dark" id="edit">Edit card</button>' : '')+'</div></div>'+
+    starBtn(c.id)+(canWrite!==false && artifactApi ? '<button class="btn dark" id="edit">Edit card</button>' : '')+'</div></div>'+
     (function(){ var g = condGap(c), f = g && g.best;
       return '<div class="kpis">'+
         kpi("Raw NM", money(buy), "Near Mint market")+
@@ -1003,7 +1072,7 @@ function renderDetail(){
         (tcgUrl(c,r[0])?'<div class="meta">'+tcgLink(c,r[0],"See "+r[0].toUpperCase()+" listings on TCGplayer")+'</div>':'')+
         (p>0?'<div class="meta">Vendors buy at <b class="num" style="color:var(--gold-ink)">'+money(p*S.vendor/100,2)+'</b>'+(i>0?' · '+money(buy-p)+' below NM':'')+'</div>':'')+'</div>'; }).join("")+'</div></section>';
     h += flipSection(c);
-    if(ADV) h += '<section class="block"><h3>Graded values &amp; profit</h3><div class="plist">'+GRADED.map(function(g){ var x=c.graded[g[0]]||{}; var r=calc(c,g[0],g[2]);
+    if(ADV) h += '<section class="block"><h3>Graded values &amp; profit</h3><div class="plist">'+GRADED.map(function(g){ var x=(c.graded||{})[g[0]]||{}; var r=calc(c,g[0],g[2]);
       if(!r) return '<div class="prow2"><div class="top2"><b>'+g[1]+'</b><span class="price">—</span></div><div class="meta">'+esc(x.src||"No data")+'</div></div>';
       return '<div class="prow2"><div class="top2"><b>'+g[1]+'</b><span class="price num">'+money(r.sale,r.sale<100&&r.sale%1?2:0)+'</span></div>'+
         '<div class="meta">'+(x.est?'<span class="pill est">est.</span> ':'')+esc(x.src||"")+'</div>'+
@@ -1019,7 +1088,7 @@ function renderDetail(){
 
   h += flipSection(c);
   if(ADV) h += '<section class="block"><h3>Graded values &amp; profit: eBay vs. selling to a vendor</h3><div class="tbl-wrap"><table><tr><th>Grade</th><th class="r">Market sale</th><th>Source</th><th class="r">Grading fee</th><th class="r">Total cost</th><th class="r">eBay net</th><th class="r">eBay margin</th><th class="r v">Vendor net</th><th class="r v">Vendor margin</th></tr>'+
-    GRADED.map(function(g){ var x = c.graded[g[0]]||{}; var r = calc(c,g[0],g[2]);
+    GRADED.map(function(g){ var x = (c.graded||{})[g[0]]||{}; var r = calc(c,g[0],g[2]);
       if(!r) return '<tr><td class="g">'+g[1]+'</td><td class="r">—</td><td>'+esc(x.src||"No data")+'</td><td colspan="6"></td></tr>';
       return '<tr><td class="g">'+g[1]+'</td><td class="r num"><b>'+money(r.sale,r.sale<100&&r.sale%1?2:0)+'</b>'+(x.est?' <span class="pill est">est.</span>':'')+'</td><td>'+esc(x.src||"")+'</td><td class="r num">'+money(r.fee)+'</td><td class="r num">'+money(r.cost)+'</td>'+
         '<td class="r num '+(r.ebayNet>=0?'pos-t':'neg-t')+'">'+signed(r.ebayNet)+'</td><td class="r"><span class="pill '+(r.ebayNet>=0?'pos':'neg')+'">'+pct(r.ebayM)+'</span></td>'+
@@ -1032,20 +1101,18 @@ function renderDetail(){
   bindHeader();
   document.getElementById("back").addEventListener("click", function(){ if(fromP){ var id = fromP.id; state.fromPair = null; goPairs(id); } else go(null); });
   var ed = document.getElementById("edit"); if(ed) ed.addEventListener("click", function(){ openEditor(c); });
+  bindStars(root);
   var ap = document.getElementById("addpair"); ap.addEventListener("change", function(){ if(!ap.value) return; var p = addCards(ap.value, [c.id]); goPairs(p.id); });
 }
 function kpi(l,v,s){ return '<div class="kpi"><span>'+l+'</span><b class="num">'+v+'</b><small>'+esc(s||"")+'</small></div>'; }
 
 /* ---------- editor ---------- */
-function blankCard(){
-  var raw={}, graded={};
-  RAW.forEach(function(r){ raw[r[0]]={price:"",date:"",src:"",est:false}; });
-  GRADED.forEach(function(g){ graded[g[0]]={price:"",src:"",est:false}; });
-  return {id:"",name:"",variant:"",set:"",number:"",image:"",updated:new Date().toISOString().slice(0,10),raw:raw,graded:graded,gem:"",liquidity:"",verdict:"",notes:""};
-}
+/* Cards are added from a TCGplayer link (or the Flip Finder); the editor only edits existing cards. */
 function openEditor(c){
-  state.editing = JSON.parse(JSON.stringify(c || blankCard()));
-  state.isNew = !c; state.msg=""; state.confirmDel=false;
+  if(!c) return;
+  state.editing = JSON.parse(JSON.stringify(c));
+  if(!state.editing.raw) state.editing.raw = {};
+  state.isNew = false; state.msg=""; state.confirmDel=false;
   renderEditor();
 }
 function closeEditor(){ state.editing=null; var s=document.getElementById("sheet"); if(s) s.remove(); document.body.style.overflow=""; }
@@ -1065,7 +1132,7 @@ function renderEditor(){
     RAW.map(function(r){ var x=e.raw[r[0]]||{}; return '<div class="prow"><b>'+r[1]+'</b><input id="r-'+r[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="r-'+r[0]+'-src" placeholder="Source" value="'+esc(x.src)+'"><input id="r-'+r[0]+'-date" placeholder="YYYY-MM-DD" value="'+esc(x.date)+'"><label class="chk"><input type="checkbox" id="r-'+r[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
     '<p class="note">Flip profits compare each condition with the next one up. Fill in all four conditions if you can.</p></fieldset>';
   h += '<div'+(ADV?'':' hidden')+'><p class="note" style="margin-top:14px">Advanced: grading data. Not needed for condition flips.</p><fieldset><legend>Graded prices</legend><div class="prow g phead"><span></span><span>Price $</span><span>Source &amp; date</span><span>Est.</span></div>'+
-    GRADED.map(function(g){ var x=e.graded[g[0]]||{}; return '<div class="prow g"><b>'+g[1]+'</b><input id="g-'+g[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="g-'+g[0]+'-src" placeholder="e.g. eBay Sold 09/14/26" value="'+esc(x.src)+'"><label class="chk"><input type="checkbox" id="g-'+g[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
+    GRADED.map(function(g){ var x=(e.graded||{})[g[0]]||{}; return '<div class="prow g"><b>'+g[1]+'</b><input id="g-'+g[0]+'-price" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Price" value="'+esc(x.price)+'"><input id="g-'+g[0]+'-src" placeholder="e.g. eBay Sold 09/14/26" value="'+esc(x.src)+'"><label class="chk"><input type="checkbox" id="g-'+g[0]+'-est"'+(x.est?' checked':'')+'> est.</label></div>'; }).join("")+
   '</fieldset>';
   var pp = e.pop || {};
   function pf(k,label){ return '<label class="f">'+label+'<input id="p-'+k+'" type="number" min="0" step="1" inputmode="numeric" value="'+esc(pp[k]==null?"":pp[k])+'"></label>'; }
@@ -1121,7 +1188,9 @@ function collect(){
   if(document.getElementById("f-era")) e.era = val("f-era") || guessEra(e.set); else if(!e.era) e.era = guessEra(e.set);
   var tm = /product\/(\d+)/.exec(val("f-tcg")) || /^(\d+)$/.exec(val("f-tcg")); if(tm) e.tcgId = Number(tm[1]); else if(!val("f-tcg")) delete e.tcgId;
   RAW.forEach(function(r){ e.raw[r[0]]={price:num("r-"+r[0]+"-price"),src:val("r-"+r[0]+"-src"),date:val("r-"+r[0]+"-date"),est:chk("r-"+r[0]+"-est")}; });
-  GRADED.forEach(function(g){ e.graded[g[0]]={price:num("g-"+g[0]+"-price"),src:val("g-"+g[0]+"-src"),est:chk("g-"+g[0]+"-est")}; });
+  /* only filled-in grades are saved, so the card files stay small */
+  var gr = {}; GRADED.forEach(function(g){ var x = {price:num("g-"+g[0]+"-price"),src:val("g-"+g[0]+"-src"),est:chk("g-"+g[0]+"-est")}; if(x.price!=="" || x.src) gr[g[0]] = x; });
+  if(Object.keys(gr).length) e.graded = gr; else delete e.graded;
   var np = {}, anyPop = false;
   ["psa10","psa9","psaTotal","cgc10","cgc9","cgcTotal"].forEach(function(k){ var v = num("p-"+k); np[k] = v==="" ? null : Math.round(v); if(np[k]!=null) anyPop = true; });
   np.src = val("p-src");
@@ -1129,6 +1198,7 @@ function collect(){
   np.date = changed ? new Date().toISOString().slice(0,10) : (old.date || "");
   if(anyPop) e.pop = np; else delete e.pop;
   e.gem=val("f-gem"); e.liquidity=val("f-liq"); e.verdict=val("f-verdict"); e.notes=val("f-notes");
+  ["gem","liquidity","verdict","notes"].forEach(function(k){ if(e[k]==="") delete e[k]; });
   return e;
 }
 function setMsg(t,type){ state.msg=t; state.msgType=type||""; var m=document.getElementById("msg"); if(m){ m.textContent=t; m.className="msg "+(type||""); } }
@@ -1312,10 +1382,10 @@ function addCards(target, ids){
   changed(p); return p;
 }
 function tabs(){
-  var v = state.view, cur = v==="finder" ? "finder" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  var v = state.view, cur = v==="finder" ? "finder" : v==="check" ? "check" : v==="hunt" ? "hunt" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
   var fn = finderOpen() ? finderAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
-  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+'</nav>';
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("hunt",huntTabLabel())+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+t("admin",adminTabLabel())+'</nav>';
 }
 function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
 
@@ -1366,7 +1436,7 @@ function mountBar(){
 }
 /* reopen the same screen after a reload */
 function remember(){
-  var v = state.view, o = v==="finder" ? "finder" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
+  var v = state.view, o = v==="finder" ? "finder" : v==="check" ? "check" : v==="hunt" ? "hunt" : v==="admin" ? "admin" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
   try{ sessionStorage.setItem("flipdesk.open", o); }catch(e){}
 }
 /* View-only visitors: keep their new pairings on this device instead. */
@@ -1977,17 +2047,295 @@ function renderFinder(){
   });
 }
 
+/* ---------- Quick check + Hunting ----------
+   Buy-max: the most you can pay for a copy and still break even when a vendor buys it at your vendor %.
+   "flip" = it sells one condition up (DMG→MP, MP→LP, LP→NM); "same" = the vendor takes it as the same condition. */
+function buyMax(c){
+  var v = S.vendor/100;
+  return RAW.map(function(r,i){
+    var k = r[0], x = (c.raw && c.raw[k]) || {}, own = priceAt(c,k);
+    var upK = i>0 ? RAW[i-1][0] : null, up = upK ? priceAt(c,upK) : 0, ux = (upK && c.raw && c.raw[upK]) || {};
+    return {k:k, label:k.toUpperCase(), upLabel:upK ? upK.toUpperCase() : "", own:own, flip:up ? up*v : 0, same:own ? own*v : 0, est:!!((own && x.est) || (up && ux.est))};
+  });
+}
+function upTo(n){ return n<10 ? money(Math.floor(n*100)/100, 2) : money(Math.floor(n), 0); }
+var HUNT_KEY = "cfz.hunt";
+var HUNT = (function(){ var l = load(HUNT_KEY, []); return Array.isArray(l) ? l.filter(function(x){ return typeof x==="string"; }) : []; })();
+function hunting(id){ return HUNT.indexOf(id)>=0; }
+function huntCards(){ return HUNT.map(cardById).filter(Boolean); }
+function toggleHunt(id){ var k = HUNT.indexOf(id); if(k>=0) HUNT.splice(k,1); else HUNT.unshift(id); save(HUNT_KEY, HUNT); return k<0; }
+function starInner(on){ return '<i aria-hidden="true">'+(on?'★':'☆')+'</i>'+(on?'Hunting':'Hunt'); }
+function starBtn(id){ var on = hunting(id); return '<button type="button" class="star'+(on?' on':'')+'" data-star="'+esc(id)+'" aria-pressed="'+on+'" title="'+(on?'Take off your Hunting list':'Add to your Hunting list')+'">'+starInner(on)+'</button>'; }
+function huntTabLabel(){ var n = huntCards().length; return 'Hunting'+(n?'<span class="count">'+n+'</span>':''); }
+function bindStars(scope, after){
+  scope.querySelectorAll("[data-star]").forEach(function(b){ b.addEventListener("click", function(ev){
+    ev.stopPropagation();
+    var on = toggleHunt(b.getAttribute("data-star"));
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); b.innerHTML = starInner(on);
+    b.title = on ? "Take off your Hunting list" : "Add to your Hunting list";
+    var t = document.getElementById("tab-hunt"); if(t) t.innerHTML = huntTabLabel();
+    if(after) after();
+  }); });
+}
+function flipScore(c){ var g = condGap(c); return g ? g.score : -Infinity; }
+function byFlip(a, b){ var d = flipScore(b)-flipScore(a); return d || title(a).localeCompare(title(b)); }
+function checkRow(c){
+  var m = buyMax(c), g = condGap(c,"vendor"), best = g && g.best.fk, f = condGap(c);
+  var cells = m.map(function(x){
+    if(!x.own && !x.flip) return '<div class="qc-cell none"><span>'+x.label+'</span><b>No price</b></div>';
+    var big = x.flip || x.same, sub;
+    if(x.flip) sub = 'if it sells as '+x.upLabel+(x.same ? '<br>stays '+x.label+': '+upTo(x.same) : '');
+    else sub = 'vendor pays at '+x.label;
+    return '<div class="qc-cell'+(x.k===best && g.best.net>0 ? ' best' : '')+'"><span>'+x.label+(x.own ? ' · mkt '+money(x.own,0) : '')+'</span><b>'+upTo(big)+(x.est?' <span class="pill est">est.</span>':'')+'</b><small>'+sub+'</small></div>';
+  }).join("");
+  var flip = f ? '<div class="qc-flip">Best flip ('+(state.exit==="vendor"?'vendor':'eBay')+'): <b class="num '+(f.best.net>=0?'pos-t':'neg-t')+'">'+signed(f.best.net)+'</b> · buy '+f.best.from+' '+money(f.best.buy)+' → sell '+f.best.to+' '+money(f.best.sell)+'</div>' : '';
+  return '<div class="qc-row"><button type="button" class="qc-art" data-go="'+esc(c.id)+'" aria-label="Open '+esc(title(c))+'">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="sub">#'+esc(c.number)+'</span>')+'</button>'+
+    '<div class="qc-main"><div class="qc-head"><button type="button" class="qc-name" data-go="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></button>'+starBtn(c.id)+'</div>'+
+    '<div class="qc-grid">'+cells+'</div>'+flip+'</div></div>';
+}
+function bindRows(scope, after){
+  scope.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click", function(){ go(b.getAttribute("data-go")); }); });
+  bindStars(scope, after);
+  watchImages();
+}
+var QC_MAX = 25, qcTimer = null;
+function goCheck(){ state.view = "check"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#check"); }catch(e){} window.scrollTo(0,0); render();
+  var q = document.getElementById("qc"); if(q){ try{ q.focus({preventScroll:true}); }catch(e){ q.focus(); } } }
+function checkResults(){
+  var q = (state.qc||"").trim();
+  if(!q) return '<div class="empty">Type a card number (or a name) to see what to pay.</div>';
+  var sr = smartSearch(cards, q), list = sr.list.slice().sort(byFlip), total = list.length;
+  if(!total) return '<div class="empty">No card matches “'+esc(q)+'”.</div>';
+  var h = sr.fuzzy ? '<p class="note" style="margin:-6px 0 12px">No exact match. Showing close matches.</p>' : '';
+  h += '<div class="qc-list">'+list.slice(0, QC_MAX).map(checkRow).join("")+'</div>';
+  if(total>QC_MAX) h += '<p class="note">Showing the best '+QC_MAX+' of '+total+' matches. Add the set number (like 4/102) or a word from the name to narrow it.</p>';
+  return h;
+}
+function renderCheck(){
+  var h = header();
+  h += '<div class="pair-intro"><div><h2>Quick check</h2><p class="sub">Type a card number (like 4/102 or TG12) or a name. Each condition shows the most you can pay and still break even when a vendor buys at '+S.vendor+'%. The big number assumes it sells one condition up (LP → NM); “stays” is if the vendor takes it as the same condition. Change the vendor % at the top.</p></div></div>';
+  h += '<label class="search qc-search"><input id="qc" type="search" aria-label="Card number or name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="Card # (e.g. 4/102) or name" value="'+esc(state.qc||"")+'"></label>';
+  h += '<div id="qc-results">'+checkResults()+'</div>';
+  root.innerHTML = h; bindHeader();
+  var box = document.getElementById("qc-results"); bindRows(box);
+  var qi = document.getElementById("qc");
+  qi.addEventListener("input", function(e){
+    if(e.isComposing) return;
+    clearTimeout(qcTimer);
+    qcTimer = setTimeout(function(){ if(state.qc===qi.value) return; state.qc = qi.value; box.innerHTML = checkResults(); bindRows(box); }, 150);
+  });
+  qi.addEventListener("compositionend", function(){ qi.dispatchEvent(new Event("input")); });
+  qi.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); qi.blur(); } });
+}
+function goHunt(){ state.view = "hunt"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#hunt"); }catch(e){} window.scrollTo(0,0); render(); }
+function renderHunt(){
+  var list = huntCards().sort(byFlip);
+  var h = header();
+  h += '<div class="pair-intro"><div><h2>Hunting</h2><p class="sub">Cards you’re looking for, best flip first ('+exitText()+'). Each one shows the most to pay per condition at your vendor rate ('+S.vendor+'%). Tap <b>☆ Hunt</b> on any card or in Quick check to add it. This list is saved on this device.</p></div>'+
+    (list.length ? '<button class="btn" id="hunt-clear">Clear list</button>' : '')+'</div>';
+  if(!list.length) h += '<div class="empty">No cards on your Hunting list yet. Open a card (or look one up in <b>Quick check</b>) and tap <b>☆ Hunt</b>.</div>';
+  else h += '<div class="qc-list" id="hunt-list">'+list.map(checkRow).join("")+'</div>';
+  root.innerHTML = h; bindHeader();
+  function redraw(){ var y = window.scrollY; render(); window.scrollTo(0, y); }
+  bindRows(root, redraw);
+  var cl = document.getElementById("hunt-clear"); if(cl) cl.addEventListener("click", function(){
+    if(!confirm("Take all "+list.length+" card"+(list.length!==1?"s":"")+" off your Hunting list?")) return;
+    HUNT = []; save(HUNT_KEY, HUNT); render(); });
+}
+
+/* ---------- Admin log (passcode) ----------
+   Reads botlog.json (one plain-English line per bot run, written by scripts/botlog.py) and GitHub's public
+   list of Actions runs for the last 7 days, then says what ran, what it did, and what needs a look. */
+var ALOCK_HASH = "16f848a0f4c06220817e710e7fbaface", ALOCK_KEY = "cfz.adminOk", ASEEN_KEY = "cfz.adminSeen";
+var ADM = {log:null, runs:null, runsErr:"", loading:false, at:0, filter:"week"};
+var BOTINFO = {
+  price:   {name:"Daily price update", wf:"price-refresh.yml", when:"Mon–Fri about 6:23 am"},
+  finder:  {name:"Flip Finder", wf:"find-candidates.yml", when:"Mon–Thu about 7:47 am"},
+  tcgcheck:{name:"TCGplayer sales check", wf:"tcgplayer-check.yml", when:"Once a week, random time Mon–Thu"},
+  addcard: {name:"Add card from link", wf:"add-card.yml", when:"When you add a card"},
+  approve: {name:"Add Flip Finder cards", wf:"approve-candidates.yml", when:"When you pick Flip Finder cards"},
+  save:    {name:"Save pairings & profit log", wf:"save-data.yml", when:"When you tap Save to GitHub"},
+  outliers:{name:"Fix outlier prices", wf:"fix-outliers.yml", when:"By hand"},
+  patch:   {name:"One-time patch", wf:"one-time-cleanup.yml", when:"By hand"},
+  versions:{name:"Update versions.json", wf:"versions.yml", when:"After uploads"},
+  pages:   {name:"Website publish", wf:"pages-build-deployment", when:"After every change"}
+};
+function adminOpen(){ return load(ALOCK_KEY, "") === ALOCK_HASH; }
+function botOfRun(r){ var p = String(r.path||""); for(var k in BOTINFO){ if(p.indexOf(BOTINFO[k].wf)>=0) return k; } return /pages/i.test(r.name||"") ? "pages" : null; }
+function runIdOf(url){ var m = /actions\/runs\/(\d+)/.exec(url||""); return m ? m[1] : ""; }
+function dayKey(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function clock(d){ var h = d.getHours(), m = String(d.getMinutes()).padStart(2,"0"); return (h%12||12)+":"+m+(h<12?" am":" pm"); }
+function dayLabel(d){ var t = new Date(), y = new Date(); y.setDate(t.getDate()-1);
+  if(dayKey(d)===dayKey(t)) return "Today"; if(dayKey(d)===dayKey(y)) return "Yesterday";
+  return d.toLocaleDateString("en-US",{weekday:"long", month:"short", day:"numeric"}); }
+function whenText(d){ var l = dayLabel(d); return (l==="Today"||l==="Yesterday" ? l.toLowerCase() : l) + " at " + clock(d); }
+function loadAdmin(force){
+  if(ADM.loading || (!force && ADM.log && Date.now()-ADM.at < 5*60*1000)) return Promise.resolve();
+  ADM.loading = true;
+  var since = new Date(Date.now()-8*86400000).toISOString().slice(0,10);
+  var a = fetch("botlog.json?t="+Date.now(), {cache:"no-store"}).then(function(r){ return r.ok ? r.json() : {entries:[]}; }).catch(function(){ return {entries:[]}; });
+  var b = fetch("https://api.github.com/repos/"+DATA_REPO+"/actions/runs?per_page=100&created=%3E%3D"+since, {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error(r.status===403 ? "GitHub says too many checks from this network in the last hour" : "GitHub answered "+r.status); return r.json(); })
+    .then(function(j){ ADM.runsErr = ""; return j.workflow_runs || []; })
+    .catch(function(e){ ADM.runsErr = (e && e.message) || "no connection"; return null; });
+  return Promise.all([a,b]).then(function(x){ ADM.log = (x[0] && x[0].entries) || []; if(x[1]) ADM.runs = x[1]; ADM.at = Date.now(); ADM.loading = false; })
+    .catch(function(){ ADM.loading = false; });
+}
+/* one feed: bot-log entries, plus Actions runs that left no entry (older runs, crashes, publishes) */
+function adminFeed(){
+  var log = ADM.log || [], runs = ADM.runs || [], byRun = {}, feed = [], cut = Date.now()-7*86400000;
+  log.forEach(function(e){ var id = runIdOf(e.run); if(id) byRun[id] = e;
+    var d = new Date(e.t); if(d.getTime() >= cut) feed.push({d:d, bot:e.bot, name:e.name||(BOTINFO[e.bot]||{}).name||e.bot, level:e.level, headline:e.headline, facts:e.facts||[], details:e.details||"", url:e.run, dry:e.dry, event:e.event}); });
+  var quiet = {pages:{ok:0}, versions:{ok:0}};
+  runs.forEach(function(r){
+    if(byRun[String(r.id)] || r.conclusion==="skipped") return;
+    var bot = botOfRun(r); if(!bot) return;
+    var d = new Date(r.run_started_at || r.created_at); if(d.getTime() < cut) return;
+    var running = r.status!=="completed", c = r.conclusion;
+    var mins = (new Date(r.updated_at) - new Date(r.run_started_at || r.created_at))/60000;
+    if(bot==="tcgcheck" && c==="success" && mins < 4) return;            /* wake-ups that weren't this week's slot */
+    if((bot==="pages" || bot==="versions") && c==="success"){ quiet[bot].ok++; return; }
+    var nm = BOTINFO[bot].name, level, head;
+    if(running){ level = "run"; head = nm+" is running right now."; }
+    else if(c==="success"){ level = "ok"; head = nm+" ran fine."; }
+    else if(c==="cancelled"){ level = "warn"; head = nm+" was cancelled or timed out."; }
+    else { level = "fail"; head = nm+" failed. Open the run to see the error."; }
+    feed.push({d:d, bot:bot, name:nm, level:level, headline:head, facts:[], details:"", url:r.html_url, event:r.event, generic:true});
+  });
+  feed.sort(function(a,b){ return b.d-a.d; });
+  return {feed:feed, quiet:quiet};
+}
+/* things that need a look: failures/warnings, and scheduled bots that didn't run when expected */
+function lastSlot(hourUTC, minUTC, days){ /* most recent scheduled time that should be finished by now (2 h grace) */
+  var t = new Date(Date.now()-2*3600000);
+  for(var i=0;i<10;i++){ var d = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()-i, hourUTC, minUTC));
+    if(days.indexOf(d.getUTCDay())>=0 && d <= t) return d; }
+  return null;
+}
+function adminIssues(){
+  var out = [], F = adminFeed().feed, since3 = Date.now()-3*86400000;
+  F.forEach(function(x){ if((x.level==="fail" || x.level==="warn") && x.d.getTime() >= since3 && !x.dry) out.push({level:x.level, text:x.name+" ("+whenText(x.d)+"): "+x.headline, url:x.url, item:x}); });
+  if(ADM.runs){
+    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"]].forEach(function(s){
+      var slot = lastSlot(s[1], s[2], s[4]); if(!slot) return;
+      var ran = ADM.runs.some(function(r){ return botOfRun(r)===s[0] && r.event==="schedule" && new Date(r.created_at) >= new Date(slot.getTime()-30*60000); });
+      if(!ran) out.push({level:"warn", text:BOTINFO[s[0]].name+" didn't run on "+slot.toLocaleDateString("en-US",{weekday:"long"})+" ("+BOTINFO[s[0]].when+"). GitHub sometimes skips a scheduled run; if it keeps happening, tell Claude."});
+    });
+  }
+  var newest = "";
+  cards.forEach(function(c){ RAW.forEach(function(r){ var x = c.raw && c.raw[r[0]]; if(x && x.date && x.date > newest) newest = x.date; }); });
+  if(newest){ var age = (Date.now() - new Date(newest+"T12:00:00").getTime())/86400000; if(age > 4) out.push({level:"warn", text:"The newest card price is from "+fmtDate(newest)+" ("+Math.floor(age)+" days old). The daily price update may not be saving."}); }
+  var tc = (ADM.log||[]).filter(function(e){ return e.bot==="tcgcheck"; })[0], oldest = (ADM.log||[]).length ? new Date(ADM.log[ADM.log.length-1].t) : null;
+  if(!tc && oldest && Date.now()-oldest.getTime() > 9*86400000) out.push({level:"warn", text:"The TCGplayer sales check hasn't run in over a week."});
+  return out;
+}
+function adminBadge(){ /* problems newer than your last look at the Admin tab */
+  if(!adminOpen() || !ADM.log) return 0;
+  var seen = load(ASEEN_KEY, 0);
+  return adminIssues().filter(function(i){ return i.item && i.item.d.getTime() > seen; }).length;
+}
+function forClaude(x){
+  return "Card Flipz bot problem — "+x.name+", "+whenText(x.d)+"\n"+x.headline+(x.facts.length ? "\n- "+x.facts.join("\n- ") : "")+(x.details ? "\n\n"+x.details : "")+(x.url ? "\n\nRun: "+x.url : "");
+}
+function goAdmin(){ state.view = "admin"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#admin"); }catch(e){} window.scrollTo(0,0); render(); }
+function renderAdminLock(){
+  var h = header();
+  h += '<form class="flock" id="alock" autocomplete="off"><h2>Admin log</h2><p>Enter the 4-digit passcode to see what the bots did.</p>'+
+    '<input id="alock-code" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="Passcode" autofocus>'+
+    '<button class="btn primary" type="submit">Unlock</button><div class="msg" id="alock-msg" role="status"></div></form>';
+  root.innerHTML = h; bindHeader();
+  var f = document.getElementById("alock"), inp = document.getElementById("alock-code"), msg = document.getElementById("alock-msg");
+  function tryCode(){
+    var v = inp.value.trim(); if(v.length < 4){ msg.textContent = "Enter all 4 digits."; return; }
+    sha256hex("cfz-admin:"+v).then(function(x){
+      if(x.slice(0,32) === ALOCK_HASH){ save(ALOCK_KEY, ALOCK_HASH); render(); }
+      else { msg.textContent = "Wrong passcode."; inp.value = ""; inp.focus(); }
+    }).catch(function(){ msg.textContent = "This browser can't check the passcode."; });
+  }
+  f.addEventListener("submit", function(e){ e.preventDefault(); tryCode(); });
+  inp.addEventListener("input", function(){ inp.value = inp.value.replace(/\D/g,"").slice(0,4); msg.textContent = ""; if(inp.value.length===4) tryCode(); });
+}
+var LVL = {ok:["✓","Worked"], warn:["!","Needs a look"], fail:["✕","Problem"], run:["…","Running"]};
+function renderAdmin(){
+  if(!adminOpen()) return renderAdminLock();
+  var h = header();
+  h += '<div class="pair-intro"><div><h2>Admin log</h2><p class="sub">What every bot did this week, in plain English. Problems show at the top. Tap <b>Copy for Claude</b> on a problem and paste it into a chat to get it fixed.</p></div>'+
+    '<div class="bk-acts"><button class="btn" id="adm-refresh"'+(ADM.loading?' disabled':'')+'>'+(ADM.loading?'Checking…':'Refresh')+'</button><button class="btn ghost" id="adm-lock">Lock</button></div></div>';
+  if(!ADM.log){ h += '<div class="empty">Checking the bots…</div>'; root.innerHTML = h; bindHeader(); loadAdmin().then(function(){ if(state.view==="admin") render(); }); return; }
+  save(ASEEN_KEY, Date.now());
+  var issues = adminIssues(), fq = adminFeed(), feed = fq.feed, today = dayKey(new Date());
+  /* status banner */
+  if(!issues.length) h += '<div class="adm-banner ok"><b>✓ Everything looks good.</b><span>No failed runs in the last 3 days and every scheduled bot ran on time.</span></div>';
+  else h += '<div class="adm-banner '+(issues.some(function(i){return i.level==="fail";})?'fail':'warn')+'"><b>'+issues.length+' thing'+(issues.length!==1?'s':'')+' need'+(issues.length===1?'s':'')+' a look</b><ul>'+
+    issues.map(function(i,n){ return '<li>'+esc(i.text)+(i.item?' <button class="linkbtn" data-copy="'+n+'">Copy for Claude</button>':'')+(i.url?' <a href="'+esc(i.url)+'" target="_blank" rel="noopener">Open run ↗</a>':'')+'</li>'; }).join("")+'</ul></div>';
+  if(ADM.runsErr) h += '<p class="note">Couldn’t read GitHub’s run list ('+esc(ADM.runsErr)+'), so only the bots’ own log is shown and missed runs can’t be spotted. Try Refresh later.</p>';
+  /* per-bot status */
+  var main = ["price","finder","tcgcheck","addcard","approve","save"];
+  h += '<section class="block"><h3>Bots at a glance</h3><div class="adm-bots">'+main.map(function(k){
+    var last = feed.filter(function(x){ return x.bot===k && x.level!=="run" && !x.dry; })[0], n = feed.filter(function(x){ return x.bot===k && !x.dry; }).length;
+    return '<div class="adm-bot '+(last?last.level:'none')+'"><div class="adm-bot-top"><b>'+esc(BOTINFO[k].name)+'</b><span class="adm-dot" aria-hidden="true">'+(last?LVL[last.level][0]:'·')+'</span></div>'+
+      '<small>'+esc(BOTINFO[k].when)+' · '+n+' run'+(n!==1?'s':'')+' this week</small>'+
+      '<p>'+(last ? '<b>Last: '+esc(whenText(last.d))+'.</b> '+esc(last.headline) : 'No runs this week.')+'</p></div>';
+  }).join("")+'</div>'+
+  '<p class="note">Website published '+fq.quiet.pages.ok+' time'+(fq.quiet.pages.ok!==1?'s':'')+' and the file list updated '+fq.quiet.versions.ok+' time'+(fq.quiet.versions.ok!==1?'s':'')+' this week without problems'+(CMETA.generated?' · Flip Finder list from '+fmtDate(CMETA.generated)+' ('+CANDS.length+' cards)':'')+'.</p></section>';
+  /* feed */
+  var list = feed.filter(function(x){ return ADM.filter==="problems" ? (x.level==="fail"||x.level==="warn") : ADM.filter==="today" ? dayKey(x.d)===today : true; });
+  h += '<section class="block"><div class="c-head"><h3>Activity</h3><div class="seg" role="group" aria-label="Show">'+
+    [["today","Today"],["week","This week"],["problems","Problems"]].map(function(f){ return '<button data-af="'+f[0]+'" aria-pressed="'+(ADM.filter===f[0])+'">'+f[1]+'</button>'; }).join("")+'</div></div>';
+  if(!list.length) h += '<div class="empty">'+(ADM.filter==="problems"?'No problems this week.':ADM.filter==="today"?'No bot runs yet today.':'No bot runs this week.')+'</div>';
+  else {
+    var lastDay = "";
+    h += '<div class="adm-feed">'+list.map(function(x){
+      var i = feed.indexOf(x), dk = dayKey(x.d), head = '';
+      if(dk!==lastDay){ lastDay = dk; head = '<div class="adm-day">'+esc(dayLabel(x.d))+'</div>'; }
+      var who = x.event==="issues" ? "you, from the site" : x.event==="workflow_dispatch" ? "you, by hand" : x.event==="schedule" ? "on schedule" : x.event==="push" ? "after a change" : "";
+      return head+'<div class="adm-item '+x.level+'"><span class="adm-ico" aria-label="'+LVL[x.level][1]+'">'+LVL[x.level][0]+'</span><div class="adm-body">'+
+        '<div class="adm-meta"><b>'+esc(x.name)+'</b> · '+clock(x.d)+(who?' · '+who:'')+(x.dry?' · <span class="pill est">test run</span>':'')+'</div>'+
+        '<p>'+esc(x.headline)+'</p>'+
+        (x.facts.length ? '<ul>'+x.facts.map(function(f){ return '<li>'+esc(f)+'</li>'; }).join("")+'</ul>' : '')+
+        '<div class="adm-links">'+(x.details?'<details><summary>Full report</summary><pre>'+esc(x.details)+'</pre></details>':'')+
+        (x.level==="fail"||x.level==="warn" ? '<button class="linkbtn" data-copyf="'+i+'">Copy for Claude</button>' : '')+
+        (x.url?'<a href="'+esc(x.url)+'" target="_blank" rel="noopener">Open run ↗</a>':'')+'</div></div></div>';
+    }).join("")+'</div>';
+  }
+  h += '<p class="note">Times are on this device’s clock. Runs from before the admin log was added only show “ran fine” or “failed”. The passcode keeps this tab tidy, but the bot results themselves are public on GitHub.</p></section>';
+  root.innerHTML = h; bindHeader();
+  document.getElementById("adm-refresh").addEventListener("click", function(){ loadAdmin(true).then(function(){ if(state.view==="admin") render(); }); render(); });
+  document.getElementById("adm-lock").addEventListener("click", function(){ try{ localStorage.removeItem(ALOCK_KEY); }catch(e){} go(null); });
+  root.querySelectorAll("[data-af]").forEach(function(b){ b.addEventListener("click", function(){ ADM.filter = b.getAttribute("data-af"); var y = window.scrollY; render(); window.scrollTo(0,y); }); });
+  function copied(b, t){ copyText(t); var o = b.textContent; b.textContent = "Copied ✓"; setTimeout(function(){ b.textContent = o; }, 1800); }
+  root.querySelectorAll("[data-copy]").forEach(function(b){ b.addEventListener("click", function(){ copied(b, forClaude(issues[Number(b.getAttribute("data-copy"))].item)); }); });
+  root.querySelectorAll("[data-copyf]").forEach(function(b){ b.addEventListener("click", function(){ copied(b, forClaude(feed[Number(b.getAttribute("data-copyf"))])); }); });
+}
+function adminNotice(){ /* on other tabs: a heads-up when a bot had a problem since you last looked */
+  var n = adminBadge(); if(!n || state.view==="admin") return "";
+  return '<button class="adm-alert" id="adm-alert">⚠️ '+n+' bot problem'+(n!==1?'s':'')+' since you last checked. Open Admin log →</button>';
+}
+
+function mountAdminAlert(){
+  var old = document.getElementById("adm-alert"); if(old) old.remove();
+  var html = adminNotice(), nav = root.querySelector("nav.tabs"); if(!html || !nav) return;
+  var w = document.createElement("div"); w.innerHTML = html; var b = w.firstChild; nav.parentNode.insertBefore(b, nav.nextSibling);
+  b.addEventListener("click", goAdmin);
+  var t = document.getElementById("tab-admin"); if(t) t.innerHTML = adminTabLabel();
+}
+function adminTabLabel(){ var n = adminBadge(); return adminOpen() ? 'Admin'+(n?'<span class="count bad">'+n+'</span>':'') : 'Admin 🔒'; }
+
 /* ---------- routing ---------- */
 function go(id){ if(!id) state.fromPair = null; state.view = id ? "detail" : "list"; state.id = id; state.selecting = false; selected = []; try{ history.replaceState(null,"", id ? "#"+id : location.pathname); }catch(e){} window.scrollTo(0,0); render(); }
 function render(){
   if(state.view==="detail") renderDetail();
   else if(state.view==="finder") renderFinder();
+  else if(state.view==="check") renderCheck();
+  else if(state.view==="hunt") renderHunt();
+  else if(state.view==="admin") renderAdmin();
   else if(state.view==="pairings") renderPairings();
   else if(state.view==="pairing") renderPairing();
   else if(state.view==="log") renderLog();
   else if(state.view==="show") renderShow();
   else renderList();
   mountBar();
+  mountAdminAlert();
 }
 
 /* hide the bottom bar while typing or picking in a field, so it never covers what you're filling in */
@@ -2002,6 +2350,9 @@ document.addEventListener("focusout", function(){ setTimeout(function(){ var a =
   var wasSent = !!SYNC.sentAt; syncSave();
   if(wasSent && !pendingCount()) state.notice = "Saved to GitHub. Everyone now sees your pairings and profit log changes.";
   if(id==="finder"){ state.view="finder"; }
+  else if(id==="check"){ state.view="check"; }
+  else if(id==="hunt"){ state.view="hunt"; }
+  else if(id==="admin"){ state.view="admin"; }
   else if(id==="pairings"){ state.view="pairings"; }
   else if(id==="log"){ state.view="log"; }
   else if(id && id.indexOf("show:")===0){ state.view="show"; state.showId=id.slice(5); }
@@ -2010,6 +2361,7 @@ document.addEventListener("focusout", function(){ setTimeout(function(){ var a =
   measureStorage();
   applyView();
   render();
+  if(adminOpen() && state.view!=="admin") loadAdmin().then(function(){ if(state.view==="admin") render(); else mountAdminAlert(); });
   if(VIEW!=="phone" && VIEW!=="desktop") showChooser();
   if(window.claude && typeof window.claude.use==="function"){
     window.claude.use("downloads").then(function(api){ downloadsApi = api || null; }).catch(function(){});
