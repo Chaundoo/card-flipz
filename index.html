@@ -533,39 +533,43 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .flock .btn{width:100%;margin-top:10px}
 .flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
 
-/* Quick check + Hunting */
+/* Quick check */
 .tabs{flex-wrap:wrap}
 body.phone .tabs{display:grid;grid-template-columns:repeat(3,1fr)}
 body.phone .tab{padding:8px 4px;font-size:13.5px;white-space:normal;line-height:1.2}
 .qc-search{margin:4px 0 14px;max-width:560px}
 .qc-search input{font-size:22px;padding:12px 4px;font-variant-numeric:tabular-nums}
 .qc-list{display:flex;flex-direction:column;gap:12px}
-.qc-row{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
-.qc-art{flex:none;width:72px;aspect-ratio:63/88;align-self:flex-start;border-radius:7px;overflow:hidden;background:var(--surface-2);border:none;padding:0;cursor:pointer}
+.qc-row{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.qc-art{flex:none;width:76px;aspect-ratio:63/88;align-self:flex-start;border-radius:7px;overflow:hidden;background:var(--surface-2);border:none;padding:0;cursor:pointer}
 .qc-art img{width:100%;height:100%;object-fit:cover;display:block}
 .qc-art img:not([src]){visibility:hidden}
 .qc-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
-.qc-head{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.qc-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
 .qc-name{background:none;border:none;padding:0;text-align:left;color:inherit;display:flex;flex-direction:column;min-width:0;cursor:pointer}
 .qc-name b{font-size:16px}
-.qc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.qc-cell{background:var(--surface-2);border-radius:9px;padding:7px 9px;display:flex;flex-direction:column;min-width:0}
-.qc-cell>span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
-.qc-cell b{font-size:19px;font-variant-numeric:tabular-nums;line-height:1.25}
-.qc-cell small{font-size:11.5px;color:var(--muted);line-height:1.35;font-variant-numeric:tabular-nums}
-.qc-cell.best{background:var(--pos-soft)} .qc-cell.best b{color:var(--pos)}
-.qc-cell.none b{color:var(--muted);font-size:15px}
-.qc-flip{font-size:13px;color:var(--muted)} .qc-flip b{color:var(--ink)} .qc-flip b.pos-t{color:var(--pos)} .qc-flip b.neg-t{color:var(--neg)}
-body.phone .qc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.qc-best{flex:none;font-size:13px;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.qc-best.pos{background:var(--pos-soft);color:var(--pos)}
+.qc-list{max-width:820px}
+.qc-tbl{width:100%;min-width:0;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14.5px}
+.qc-tbl th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;text-align:right;padding:0 8px 4px;background:none;border-bottom:none;white-space:nowrap}
+.qc-tbl th:first-child,.qc-tbl td:first-child{text-align:left}
+.qc-tbl td{padding:6px 8px;text-align:right;border-top:1px solid var(--line);border-bottom:none;vertical-align:middle;white-space:nowrap}
+.qc-tbl td:first-child{font-weight:700;color:var(--muted)}
+.qc-tbl td.qv b{color:var(--ink)}
+.qc-tbl td.f small{color:var(--muted);font-weight:600;margin-right:4px}
+.qc-tbl tr.best td{background:var(--pos-soft)}
+.qc-tbl tr.best td:first-child{border-radius:8px 0 0 8px} .qc-tbl tr.best td:last-child{border-radius:0 8px 8px 0}
+.qc-tbl .pill.est{font-size:10px;padding:1px 5px;margin-left:3px}
+.qc-tbl .dim{color:var(--muted)}
 body.phone .qc-row{padding:10px;gap:10px}
-body.phone .qc-art{width:58px}
-.star{flex:none;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-weight:700;font-size:13px;color:var(--muted);cursor:pointer}
-.star i{font-style:normal;font-size:15px;line-height:1}
-.star.on{background:var(--gold-soft);color:var(--gold-ink);border-color:transparent}
-.tile .hunt-badge{position:absolute;top:18px;right:18px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#1b1400;display:flex;align-items:center;justify-content:center;font-size:15px;z-index:1;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+body.phone .qc-art{width:52px}
+body.phone .qc-tbl{font-size:13.5px}
+body.phone .qc-tbl th,body.phone .qc-tbl td{padding-left:4px;padding-right:4px}
+body.phone .qc-head{flex-direction:column;gap:6px}
 
 /* Admin log */
-body.phone .tabs{grid-template-columns:repeat(4,1fr)}
+body.phone .tabs{grid-template-columns:repeat(3,1fr)}
 .tab .count.bad{background:var(--neg);color:#fff}
 .adm-alert{display:block;width:100%;text-align:left;margin-top:10px;border:none;border-radius:10px;padding:10px 14px;background:var(--neg-soft);color:var(--neg);font-weight:700;cursor:pointer}
 .adm-banner{border-radius:14px;padding:14px 16px;margin:6px 0 4px;display:flex;flex-direction:column;gap:4px}
@@ -979,7 +983,7 @@ function resultsHTML(){
     if(state.selecting) h += '<p class="note" style="margin:-6px 0 12px"><b>Select the cards you’re selling together</b>, then add them to a pairing with the bar at the bottom.</p>';
     h += '<div class="grid'+(state.selecting?' selecting':'')+'">'+list.map(function(c){
       var picked = selected.indexOf(c.id)>=0;
-      var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+(hunting(c.id)?'<span class="hunt-badge" title="On your Hunting list">★</span>':'')+
+      var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+
         '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
         '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
         condLine(c)+bestFlipTile(c);
@@ -1026,7 +1030,6 @@ function bindHeader(){
   var vb = document.getElementById("viewbtn"); if(vb) vb.addEventListener("click", showChooser);
   var tc = document.getElementById("tab-cards"); if(tc) tc.addEventListener("click", function(){ state.notice = ""; go(null); });
   var tq = document.getElementById("tab-check"); if(tq) tq.addEventListener("click", function(){ state.notice = ""; goCheck(); });
-  var th = document.getElementById("tab-hunt"); if(th) th.addEventListener("click", function(){ state.notice = ""; goHunt(); });
   var ta = document.getElementById("tab-admin"); if(ta) ta.addEventListener("click", function(){ state.notice = ""; goAdmin(); });
   var tf = document.getElementById("tab-finder"); if(tf) tf.addEventListener("click", function(){ state.notice = ""; goFinder(); });
   var tp = document.getElementById("tab-pairs"); if(tp) tp.addEventListener("click", function(){ state.notice = ""; goPairs(null); });
@@ -1049,7 +1052,7 @@ function renderDetail(){
   h += '<div class="detail-head"><div class="art">'+(c.image?'<img src="'+c.image+'" alt="'+esc(title(c))+'">':'')+'</div><div>'+
     '<div class="title-row"><div><h2>'+esc(title(c))+'</h2><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · Updated '+fmtDate(c.updated)+'</div></div>'+
     '<div class="confirm"><select id="addpair" class="btn" aria-label="Add this card to a pairing"><option value="">+ Add to pairing</option><option value="__new">New pairing</option>'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+'</option>'; }).join("")+'</select>'+
-    starBtn(c.id)+(canWrite!==false && artifactApi ? '<button class="btn dark" id="edit">Edit card</button>' : '')+'</div></div>'+
+    (canWrite!==false && artifactApi ? '<button class="btn dark" id="edit">Edit card</button>' : '')+'</div></div>'+
     (function(){ var g = condGap(c), f = g && g.best;
       return '<div class="kpis">'+
         kpi("Raw NM", money(buy), "Near Mint market")+
@@ -1101,7 +1104,6 @@ function renderDetail(){
   bindHeader();
   document.getElementById("back").addEventListener("click", function(){ if(fromP){ var id = fromP.id; state.fromPair = null; goPairs(id); } else go(null); });
   var ed = document.getElementById("edit"); if(ed) ed.addEventListener("click", function(){ openEditor(c); });
-  bindStars(root);
   var ap = document.getElementById("addpair"); ap.addEventListener("change", function(){ if(!ap.value) return; var p = addCards(ap.value, [c.id]); goPairs(p.id); });
 }
 function kpi(l,v,s){ return '<div class="kpi"><span>'+l+'</span><b class="num">'+v+'</b><small>'+esc(s||"")+'</small></div>'; }
@@ -1382,10 +1384,10 @@ function addCards(target, ids){
   changed(p); return p;
 }
 function tabs(){
-  var v = state.view, cur = v==="finder" ? "finder" : v==="check" ? "check" : v==="hunt" ? "hunt" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  var v = state.view, cur = v==="finder" ? "finder" : v==="check" ? "check" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
   var fn = finderOpen() ? finderAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
-  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("hunt",huntTabLabel())+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+t("admin",adminTabLabel())+'</nav>';
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+t("admin",adminTabLabel())+'</nav>';
 }
 function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
 
@@ -1436,7 +1438,7 @@ function mountBar(){
 }
 /* reopen the same screen after a reload */
 function remember(){
-  var v = state.view, o = v==="finder" ? "finder" : v==="check" ? "check" : v==="hunt" ? "hunt" : v==="admin" ? "admin" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
+  var v = state.view, o = v==="finder" ? "finder" : v==="check" ? "check" : v==="admin" ? "admin" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
   try{ sessionStorage.setItem("flipdesk.open", o); }catch(e){}
 }
 /* View-only visitors: keep their new pairings on this device instead. */
@@ -2047,55 +2049,40 @@ function renderFinder(){
   });
 }
 
-/* ---------- Quick check + Hunting ----------
-   Buy-max: the most you can pay for a copy and still break even when a vendor buys it at your vendor %.
-   "flip" = it sells one condition up (DMG→MP, MP→LP, LP→NM); "same" = the vendor takes it as the same condition. */
-function buyMax(c){
+/* ---------- Quick check ----------
+   Per condition: market price, what a vendor pays at your vendor %, and the profit if you buy at that
+   condition's market price and a vendor buys it as the next condition up (DMG→MP, MP→LP, LP→NM). */
+try{ localStorage.removeItem("cfz.hunt"); }catch(e){} /* old saved list from the removed tab */
+function qcFlips(c){
   var v = S.vendor/100;
   return RAW.map(function(r,i){
     var k = r[0], x = (c.raw && c.raw[k]) || {}, own = priceAt(c,k);
-    var upK = i>0 ? RAW[i-1][0] : null, up = upK ? priceAt(c,upK) : 0, ux = (upK && c.raw && c.raw[upK]) || {};
-    return {k:k, label:k.toUpperCase(), upLabel:upK ? upK.toUpperCase() : "", own:own, flip:up ? up*v : 0, same:own ? own*v : 0, est:!!((own && x.est) || (up && ux.est))};
+    var upK = i>0 ? RAW[i-1][0] : null, up = upK ? priceAt(c,upK) : 0;
+    return {k:k, label:k.toUpperCase(), upLabel:upK ? upK.toUpperCase() : "", own:own, est:!!(own && x.est),
+      vend:own ? own*v : 0, net:(own && up) ? up*v - own : null};
   });
 }
-function upTo(n){ return n<10 ? money(Math.floor(n*100)/100, 2) : money(Math.floor(n), 0); }
-var HUNT_KEY = "cfz.hunt";
-var HUNT = (function(){ var l = load(HUNT_KEY, []); return Array.isArray(l) ? l.filter(function(x){ return typeof x==="string"; }) : []; })();
-function hunting(id){ return HUNT.indexOf(id)>=0; }
-function huntCards(){ return HUNT.map(cardById).filter(Boolean); }
-function toggleHunt(id){ var k = HUNT.indexOf(id); if(k>=0) HUNT.splice(k,1); else HUNT.unshift(id); save(HUNT_KEY, HUNT); return k<0; }
-function starInner(on){ return '<i aria-hidden="true">'+(on?'★':'☆')+'</i>'+(on?'Hunting':'Hunt'); }
-function starBtn(id){ var on = hunting(id); return '<button type="button" class="star'+(on?' on':'')+'" data-star="'+esc(id)+'" aria-pressed="'+on+'" title="'+(on?'Take off your Hunting list':'Add to your Hunting list')+'">'+starInner(on)+'</button>'; }
-function huntTabLabel(){ var n = huntCards().length; return 'Hunting'+(n?'<span class="count">'+n+'</span>':''); }
-function bindStars(scope, after){
-  scope.querySelectorAll("[data-star]").forEach(function(b){ b.addEventListener("click", function(ev){
-    ev.stopPropagation();
-    var on = toggleHunt(b.getAttribute("data-star"));
-    b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); b.innerHTML = starInner(on);
-    b.title = on ? "Take off your Hunting list" : "Add to your Hunting list";
-    var t = document.getElementById("tab-hunt"); if(t) t.innerHTML = huntTabLabel();
-    if(after) after();
-  }); });
-}
-function flipScore(c){ var g = condGap(c); return g ? g.score : -Infinity; }
-function byFlip(a, b){ var d = flipScore(b)-flipScore(a); return d || title(a).localeCompare(title(b)); }
+function qcBest(rows){ var b = null; rows.forEach(function(r){ if(r.net!=null && (!b || r.net>b.net)) b = r; }); return b; }
+function qcScore(c){ var b = qcBest(qcFlips(c)); return b ? b.net : -Infinity; }
+function byFlip(a, b){ var d = qcScore(b)-qcScore(a); return d || title(a).localeCompare(title(b)); }
 function checkRow(c){
-  var m = buyMax(c), g = condGap(c,"vendor"), best = g && g.best.fk, f = condGap(c);
-  var cells = m.map(function(x){
-    if(!x.own && !x.flip) return '<div class="qc-cell none"><span>'+x.label+'</span><b>No price</b></div>';
-    var big = x.flip || x.same, sub;
-    if(x.flip) sub = 'if it sells as '+x.upLabel+(x.same ? '<br>stays '+x.label+': '+upTo(x.same) : '');
-    else sub = 'vendor pays at '+x.label;
-    return '<div class="qc-cell'+(x.k===best && g.best.net>0 ? ' best' : '')+'"><span>'+x.label+(x.own ? ' · mkt '+money(x.own,0) : '')+'</span><b>'+upTo(big)+(x.est?' <span class="pill est">est.</span>':'')+'</b><small>'+sub+'</small></div>';
+  var rows = qcFlips(c), best = qcBest(rows);
+  var body = rows.map(function(r){
+    var isBest = best && r===best && r.net>0;
+    var flip = r.net==null ? '<span class="dim">—</span>' :
+      '<small>→ '+r.upLabel+'</small><b class="'+(r.net>=0?'pos-t':'neg-t')+'">'+signed(r.net)+'</b>';
+    return '<tr'+(isBest?' class="best"':'')+'><td>'+r.label+'</td>'+
+      '<td>'+(r.own ? money(r.own,0)+(r.est?'<span class="pill est">est.</span>':'') : '<span class="dim">—</span>')+'</td>'+
+      '<td class="qv">'+(r.own ? '<b>'+money(r.vend,0)+'</b>' : '<span class="dim">—</span>')+'</td>'+
+      '<td class="f">'+flip+'</td></tr>';
   }).join("");
-  var flip = f ? '<div class="qc-flip">Best flip ('+(state.exit==="vendor"?'vendor':'eBay')+'): <b class="num '+(f.best.net>=0?'pos-t':'neg-t')+'">'+signed(f.best.net)+'</b> · buy '+f.best.from+' '+money(f.best.buy)+' → sell '+f.best.to+' '+money(f.best.sell)+'</div>' : '';
+  var tag = best ? '<span class="qc-best'+(best.net>0?' pos':'')+'">Best: '+best.label+' → '+best.upLabel+' '+signed(best.net)+'</span>' : '<span class="qc-best">Not enough prices to flip</span>';
   return '<div class="qc-row"><button type="button" class="qc-art" data-go="'+esc(c.id)+'" aria-label="Open '+esc(title(c))+'">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="sub">#'+esc(c.number)+'</span>')+'</button>'+
-    '<div class="qc-main"><div class="qc-head"><button type="button" class="qc-name" data-go="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></button>'+starBtn(c.id)+'</div>'+
-    '<div class="qc-grid">'+cells+'</div>'+flip+'</div></div>';
+    '<div class="qc-main"><div class="qc-head"><button type="button" class="qc-name" data-go="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></button>'+tag+'</div>'+
+    '<table class="qc-tbl"><thead><tr><th>Cond.</th><th>Market</th><th>Vendor '+S.vendor+'%</th><th>Flip up</th></tr></thead><tbody>'+body+'</tbody></table></div></div>';
 }
-function bindRows(scope, after){
+function bindRows(scope){
   scope.querySelectorAll("[data-go]").forEach(function(b){ b.addEventListener("click", function(){ go(b.getAttribute("data-go")); }); });
-  bindStars(scope, after);
   watchImages();
 }
 var QC_MAX = 25, qcTimer = null;
@@ -2113,7 +2100,7 @@ function checkResults(){
 }
 function renderCheck(){
   var h = header();
-  h += '<div class="pair-intro"><div><h2>Quick check</h2><p class="sub">Type a card number (like 4/102 or TG12) or a name. Each condition shows the most you can pay and still break even when a vendor buys at '+S.vendor+'%. The big number assumes it sells one condition up (LP → NM); “stays” is if the vendor takes it as the same condition. Change the vendor % at the top.</p></div></div>';
+  h += '<div class="pair-intro"><div><h2>Quick check</h2><p class="sub">Type a card number (like 4/102 or TG12) or a name. <b>Market</b> is the price for that condition, <b>Vendor</b> is what a vendor pays at '+S.vendor+'%, and <b>Flip up</b> is your profit if you buy at market and a vendor buys it one condition higher. Best flips first. Change the vendor % at the top.</p></div></div>';
   h += '<label class="search qc-search"><input id="qc" type="search" aria-label="Card number or name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="Card # (e.g. 4/102) or name" value="'+esc(state.qc||"")+'"></label>';
   h += '<div id="qc-results">'+checkResults()+'</div>';
   root.innerHTML = h; bindHeader();
@@ -2127,22 +2114,6 @@ function renderCheck(){
   qi.addEventListener("compositionend", function(){ qi.dispatchEvent(new Event("input")); });
   qi.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); qi.blur(); } });
 }
-function goHunt(){ state.view = "hunt"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#hunt"); }catch(e){} window.scrollTo(0,0); render(); }
-function renderHunt(){
-  var list = huntCards().sort(byFlip);
-  var h = header();
-  h += '<div class="pair-intro"><div><h2>Hunting</h2><p class="sub">Cards you’re looking for, best flip first ('+exitText()+'). Each one shows the most to pay per condition at your vendor rate ('+S.vendor+'%). Tap <b>☆ Hunt</b> on any card or in Quick check to add it. This list is saved on this device.</p></div>'+
-    (list.length ? '<button class="btn" id="hunt-clear">Clear list</button>' : '')+'</div>';
-  if(!list.length) h += '<div class="empty">No cards on your Hunting list yet. Open a card (or look one up in <b>Quick check</b>) and tap <b>☆ Hunt</b>.</div>';
-  else h += '<div class="qc-list" id="hunt-list">'+list.map(checkRow).join("")+'</div>';
-  root.innerHTML = h; bindHeader();
-  function redraw(){ var y = window.scrollY; render(); window.scrollTo(0, y); }
-  bindRows(root, redraw);
-  var cl = document.getElementById("hunt-clear"); if(cl) cl.addEventListener("click", function(){
-    if(!confirm("Take all "+list.length+" card"+(list.length!==1?"s":"")+" off your Hunting list?")) return;
-    HUNT = []; save(HUNT_KEY, HUNT); render(); });
-}
-
 /* ---------- Admin log (passcode) ----------
    Reads botlog.json (one plain-English line per bot run, written by scripts/botlog.py) and GitHub's public
    list of Actions runs for the last 7 days, then says what ran, what it did, and what needs a look. */
@@ -2327,7 +2298,6 @@ function render(){
   if(state.view==="detail") renderDetail();
   else if(state.view==="finder") renderFinder();
   else if(state.view==="check") renderCheck();
-  else if(state.view==="hunt") renderHunt();
   else if(state.view==="admin") renderAdmin();
   else if(state.view==="pairings") renderPairings();
   else if(state.view==="pairing") renderPairing();
@@ -2351,7 +2321,6 @@ document.addEventListener("focusout", function(){ setTimeout(function(){ var a =
   if(wasSent && !pendingCount()) state.notice = "Saved to GitHub. Everyone now sees your pairings and profit log changes.";
   if(id==="finder"){ state.view="finder"; }
   else if(id==="check"){ state.view="check"; }
-  else if(id==="hunt"){ state.view="hunt"; }
   else if(id==="admin"){ state.view="admin"; }
   else if(id==="pairings"){ state.view="pairings"; }
   else if(id==="log"){ state.view="log"; }

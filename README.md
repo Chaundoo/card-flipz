@@ -21,12 +21,11 @@ pairings.json             saved pairings
 profitlog.json            saved profit log (card shows)
 ```
 
-## Quick check and Hunting (card shows)
-* **Quick check** tab: type a card number (like `4/102`) or a name. Each condition shows the most you can pay and
-  still break even when a vendor buys at your vendor % (big number = it sells one condition up, e.g. LP → NM;
-  "stays" = the vendor takes it as the same condition).
-* **Hunting** tab: tap **☆ Hunt** on a card (or in Quick check) to add it. The list is sorted by best flip and
-  shows the same buy-max prices. It is saved on that device.
+## Quick check (card shows)
+* **Quick check** tab: type a card number (like `4/102`) or a name. Each card shows a small table per condition:
+  **Market** price, what a **Vendor** pays at your vendor %, and **Flip up** = your profit if you buy at that
+  condition's market price and a vendor buys it one condition higher (e.g. LP → NM). The best flip is highlighted
+  and results are sorted best flip first.
 * Cards rank by **vendor profit** by default; switch to eBay in the "Sell to" box (remembered on that device).
 
 ## Admin log (passcode)
