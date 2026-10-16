@@ -751,7 +751,7 @@ def main():
 
     if saved:
         # files that still carry empty fields get slimmed once (after that they only save when prices change)
-        for k, (path, data) in files.items():
+        for k, (path, data) in enumerate(files):
             if k not in dirty and any(json.dumps(c, sort_keys=True) != json.dumps(slim_card(dict(c)), sort_keys=True)
                                       for c in data.get("cards", [])):
                 dirty.add(k)
