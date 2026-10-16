@@ -95,3 +95,14 @@ jobs:
         run: |
           echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
           exit 1
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: finder
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.run.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh

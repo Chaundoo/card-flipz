@@ -17,3 +17,14 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add eras index.html scripts/refresh_prices.py
           git diff --cached --quiet && echo "Nothing to change." || (git commit -m "Add the Add-from-TCGplayer-link button; leave API room for adds" && git push)
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: patch
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ''
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh

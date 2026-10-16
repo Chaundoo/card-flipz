@@ -57,3 +57,14 @@ jobs:
           else
             gh issue close "$NUM" --reason "not planned"
           fi
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: addcard
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.add.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh

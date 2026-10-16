@@ -25,3 +25,14 @@ jobs:
           python3 scripts/build_versions.py
           git add eras versions.json
           git diff --cached --quiet && echo "Nothing to change." || (git commit -m "Fix outlier condition prices" && git push)
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: outliers
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ''
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh

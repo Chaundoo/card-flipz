@@ -52,7 +52,7 @@ jobs:
             echo "Nothing to save."
           else
             git commit -m "Price update $(date -u +%Y-%m-%d) (${{ steps.run.outputs.status }})"
-            if ! git push; then
+            if ! git push && ! { git pull -q --rebase origin main && git push; }; then
               printf '\n**⚠️ Could not save:** a card file changed on GitHub while this ran (someone uploaded a new copy). Nothing was overwritten. Those cards get picked up again on the next run.\n' >> run_report.md
               exit 1
             fi
@@ -96,3 +96,14 @@ jobs:
         run: |
           echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
           exit 1
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: price
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.run.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh
