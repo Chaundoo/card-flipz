@@ -494,6 +494,28 @@ def raw_entry(cond, price, when, fixes=()):
 
 
 # ---------------------------------------------------------------- main
+# Empty fields are left out of the card files to keep the phone download small (the site treats a
+# missing field the same as an empty one). Graded values and pop counts that were never filled in go too.
+POP_KEYS = ("psa10", "psa9", "psaTotal", "cgc10", "cgc9", "cgcTotal")
+
+
+def slim_card(c):
+    g = c.get("graded")
+    if isinstance(g, dict):
+        g = {k: v for k, v in g.items() if isinstance(v, dict) and (v.get("price") not in ("", None) or v.get("src"))}
+        if g:
+            c["graded"] = g
+        else:
+            c.pop("graded", None)
+    p = c.get("pop")
+    if isinstance(p, dict) and all(p.get(k) in ("", None) for k in POP_KEYS):
+        c.pop("pop", None)
+    for k in ("gem", "verdict", "notes", "liquidity"):
+        if c.get(k) == "":
+            c.pop(k, None)
+    return c
+
+
 def main():
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
     files, file_of, cards = [], {}, []
@@ -728,10 +750,17 @@ def main():
     saved = not DRY_RUN and status != "FAILED"
 
     if saved:
+        # files that still carry empty fields get slimmed once (after that they only save when prices change)
+        for k, (path, data) in files.items():
+            if k not in dirty and any(json.dumps(c, sort_keys=True) != json.dumps(slim_card(dict(c)), sort_keys=True)
+                                      for c in data.get("cards", [])):
+                dirty.add(k)
         stamp = str(int(time.time()))
         for k in sorted(dirty):
             path, data = files[k]
             data["version"] = stamp
+            for c in data.get("cards", []):
+                slim_card(c)
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
         state["about"] = ("Written by scripts/refresh_prices.py. Remembers which TCG Price Lookup card each site card is, "
@@ -776,6 +805,32 @@ def main():
             for k, n, w in problems[40:]:
                 print(f"{k}: {n} — {w}")
     report = "\n".join(lines) + "\n"
+    try:
+        import botlog
+        test = "Test run (nothing saved): " if DRY_RUN else ""
+        if status == "OK":
+            head = (f"{test}Successful price update: checked {len(done):,} of {len(cards):,} cards and "
+                    f"{stats['updated']:,} prices changed. Used {api.used} API requests.")
+        elif status == "PARTIAL":
+            head = (f"{test}Price update only partly finished: checked {len(done):,} of {len(cards):,} cards"
+                    + (f". Stopped early: {stop_reason}" if stop_reason else "") + f". Errors: {stats['error']}.")
+        else:
+            head = (f"{test}Price update failed: " + (stop_reason or ("the TCGPL_API_KEY secret is missing" if not API_KEY else "see details"))
+                    + ". No prices were saved.")
+        facts = []
+        if stats["matched"]:
+            facts.append(f"Matched {stats['matched']} newly added cards to TCG Price Lookup")
+        if outliers:
+            facts.append(f"{len(outliers)} odd prices replaced with estimates (marked est.)")
+        if moves:
+            facts.append(f"{len(moves)} cards moved 15%+ at NM")
+        if stats["noprice"] or stats["nomatch"]:
+            facts.append(f"{stats['noprice']} had no price and {stats['nomatch']} couldn't be matched (old prices kept)")
+        if unmatched:
+            facts.append(f"{unmatched} cards still not matched to TCG Price Lookup")
+        botlog.summary(head, {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"), facts)
+    except Exception as e:
+        print(f"(admin log summary skipped: {e})")
     open(REPORT, "w", encoding="utf-8").write(report)
     print(report)
 

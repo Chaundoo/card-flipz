@@ -473,6 +473,24 @@ def main():
     if problems:
         L += ["", f"**Problem cards ({len(problems)}):**"] + [f"- {k}: {n} — {w}" for k, n, w in problems[:20]]
     section = "\n".join(L) + "\n"
+    try:
+        import botlog
+        test = "Test run (nothing saved): " if DRY else ""
+        if status == "BLOCKED":
+            head = f"{test}TCGplayer blocked the weekly sales check, so no prices were checked. It tries again next week."
+        else:
+            head = (f"{test}TCGplayer sales check {'ran fine' if status == 'OK' else 'only partly finished'}: looked up "
+                    f"{len(todo)} cards and confirmed {stats['checked']} prices against real sales.")
+        facts = []
+        if changes:
+            facts.append(f"{len(changes)} prices moved 15%+ after checking real sales")
+        if stats["blocked"] or stats["error"]:
+            facts.append(f"Blocked {stats['blocked']} times, {stats['error']} errors")
+        if stop:
+            facts.append(f"Stopped early: {stop}")
+        botlog.summary(head, {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"), facts)
+    except Exception as e:
+        print(f"(admin log summary skipped: {e})")
     open(rp.REPORT, "w", encoding="utf-8").write(section)
     print(section)
 

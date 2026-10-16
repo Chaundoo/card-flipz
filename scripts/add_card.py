@@ -8,7 +8,7 @@ product link (the site's "+ Add from TCGplayer link" button makes this issue).
   TCGplayer; the card is looked up on TCG Price Lookup with your API key.
 * Skips duplicates (same TCGplayer product + same printing already on the site).
 * Adds the card with its raw condition prices to the right era file, so the vendor and
-  condition-flip numbers work right away. Graded values are left empty.
+  condition-flip numbers work right away. Graded values are left out (none yet).
 * Writes the reply for the issue to run_report.md and status=added|duplicate|failed
   to $GITHUB_OUTPUT.
 
@@ -180,8 +180,8 @@ def main():
         cid, n = f"{base}-{n}", n + 1
     card = {
         "id": cid, "name": rec.get("name") or "", "variant": LABELS.get(printing.lower(), printing),
-        "set": set_name, "number": rec.get("number") or "", "raw": raw, "graded": {},
-        "gem": "", "verdict": "", "notes": "", "image": rec.get("image_url") or "",
+        "set": set_name, "number": rec.get("number") or "", "raw": raw,
+        "image": rec.get("image_url") or "",
         "updated": rp.TODAY, "tcgId": int(link["id"]), "tcgVariant": printing,
     }
     path, data = files[era]

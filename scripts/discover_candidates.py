@@ -338,8 +338,8 @@ def build(rec, set_name, slug, hp_ok, ctx):
     ctx.count["kept"] += 1
     return {
         "id": cid, "name": rec.get("name") or "", "variant": ac.LABELS.get(printing.lower(), printing),
-        "set": set_name, "number": rec.get("number") or "", "raw": raw, "graded": {}, "gem": "", "verdict": "",
-        "notes": "", "image": rec.get("image_url") or "", "updated": TODAY, "tcgId": tid, "tcgVariant": printing,
+        "set": set_name, "number": rec.get("number") or "", "raw": raw,
+        "image": rec.get("image_url") or "", "updated": TODAY, "tcgId": tid, "tcgVariant": printing,
         "era": era, "found": TODAY, "pkey": rec.get("id"), "setSlug": slug, "score": round(score, 1),
         "base": round(score, 1), "flags": flags, "pop": popular,
     }
@@ -502,6 +502,23 @@ def main():
     if problems:
         L += ["", f"**Problems ({len(problems)}):**"] + [f"- {k}: {n} — {w}" for k, n, w in problems[:25]]
     report = "\n".join(L) + "\n"
+    try:
+        import botlog
+        test = "Test run (nothing saved): " if DRY else ""
+        if status == "FAILED":
+            head = f"{test}Flip Finder failed: {stop_reason or 'see details'}. The list was not changed."
+        else:
+            head = (f"{test}Flip Finder {'ran fine' if status == 'OK' else 'only partly finished'}: scanned {len(scanned)} sets, "
+                    f"looked at {ctx.count['seen']:,} cards and found {ctx.count['kept']} flips. "
+                    f"{len(merged)} cards on the list now ({new_count} new).")
+        facts = [f"Used {api.used} of {cfg['daily_requests']} API requests"]
+        if stop_reason and status != "FAILED":
+            facts.append(f"Stopped early: {stop_reason}")
+        if problems:
+            facts.append(f"{len(problems)} problems (see details)")
+        botlog.summary(head, {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"), facts)
+    except Exception as e:
+        print(f"(admin log summary skipped: {e})")
 
     saved = not DRY and status != "FAILED"
     if saved:

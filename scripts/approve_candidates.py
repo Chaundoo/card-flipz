@@ -161,6 +161,8 @@ def main():
     for era in touched:
         p, d = files[era]
         d["version"] = stamp
+        for c in d.get("cards", []):
+            rp.slim_card(c)
         with open(p, "w", encoding="utf-8") as f:
             json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
     gone = {c["id"] for c, _, _ in added} | {c["id"] for c in dupes} | {c["id"] for c in hidden} | {c["id"] for c in declined}

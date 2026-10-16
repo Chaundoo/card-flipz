@@ -158,6 +158,11 @@ def main():
         report("ℹ️ Nothing to save: this issue didn't contain any changes.\n")
         out("nothing")
         return
+    try:
+        import botlog
+        botlog.summary("Saved your changes to the site: " + "; ".join(l.replace("- ", "", 1).replace("**", "") for l in lines) + ".", "ok")
+    except Exception:
+        pass
     report("✅ Saved to the site:\n\n" + "\n".join(lines) + "\n\nRefresh the site (or tap **Check**) and the changes show for everyone.\n")
     out("saved")
 
