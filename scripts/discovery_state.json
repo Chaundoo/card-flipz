@@ -1502,6 +1502,16 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-15",
+"f": [
+"pokemon:ditto",
+"set:Triumphant",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
