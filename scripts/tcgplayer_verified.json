@@ -1,0 +1,4488 @@
+{
+"about": "Written by scripts/tcgplayer_check.py: real TCGplayer sales per condition for skewed and top-flip cards. Keys are '<tcgplayer id>|<printing>'. The daily update keeps these prices while they're fresh.",
+"cards": {
+"101520|holofoil": {
+"card": "M Rayquaza EX (Secret Rare (Shiny)) — Ancient Origins 98/98",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 245.0,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-06",
+"est": false,
+"price": 729.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 392.17,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-05",
+"est": false,
+"price": 1749.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"107014|1st edition": {
+"card": "Dugtrio (1st Edition) — Base Set (Shadowless) 019/102",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-01",
+"est": false,
+"price": 36.73,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 115.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-26",
+"est": false,
+"price": 45.62,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 131.89,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"107026|unlimited": {
+"card": "Haunter (Unlimited) — Base Set (Shadowless) 029/102",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 2.0,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 7.35,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days (ignored odd sale: $3.59)"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 3.77,
+"src": "TCGplayer sales: median of 33 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 20.23,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days (ignored odd sales: $7.00, $49.99, $47.89)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"108602|holofoil": {
+"card": "Latios EX (Promo · Holo) — XY Promos XY72",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 1.91,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-12",
+"est": false,
+"price": 5.88,
+"src": "TCGplayer sales: median of 62 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 3.5,
+"src": "TCGplayer sales: median of 36 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 17.41,
+"src": "TCGplayer sales: median of 56 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"110427|holofoil": {
+"card": "Mudkip (Promo · Holo) — McDonald's Promos 2015 005/012",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 1.62,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days (ignored odd sales: $3.75, $3.75, $3.50)"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 12.12,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days (ignored odd sale: $34.11)"
+},
+"mp": {
+"date": "2026-10-10",
+"est": false,
+"price": 8.0,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days (ignored odd sales: $29.99, $18.80, $18.80)"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 43.98,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"110433|holofoil": {
+"card": "Torchic (Promo · Holo) — McDonald's Promos 2015 003/012",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 1.25,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days (ignored odd sale: $3.19)"
+},
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 9.14,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sale: $37.04)"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 4.93,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-10",
+"est": false,
+"price": 32.23,
+"src": "TCGplayer market price before an odd $59.99, $37.06 sale (only sales in 90 days)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"126560|holofoil": {
+"card": "Crobat BREAK (Promo · Holo) — XY Promos XY181",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 2.0,
+"src": "TCGplayer sales: median of 13 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 5.65,
+"src": "TCGplayer sales: median of 24 sales in the last 90 days (ignored odd sale: $2.37)"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 3.88,
+"src": "TCGplayer sales: median of 22 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-01",
+"est": false,
+"price": 14.82,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sales: $83.66, $49.99)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"126564|normal": {
+"card": "Garchomp Spirit Link (Non-Holo) — XY Promos XY169",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": false,
+"price": 5.46,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-01",
+"est": false,
+"price": 20.41,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sales: $42.96, $43.01, $3.00)"
+},
+"mp": {
+"date": "2026-09-21",
+"est": false,
+"price": 6.34,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"127193|holofoil": {
+"card": "Umbreon GX (Secret Rare · Holo) — SM Base Set 154/149",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": false,
+"price": 38.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 74.28,
+"src": "TCGplayer sales: median of 19 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-07",
+"est": false,
+"price": 61.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 123.0,
+"src": "TCGplayer sales: median of 25 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"133417|reverse holofoil": {
+"card": "Greninja (League Promo · 4th Place · Reverse Holo) — League & Championship Cards 040/122",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-20",
+"est": false,
+"price": 35.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days (ignored odd sale: $99.95)"
+},
+"mp": {
+"date": "2026-09-28",
+"est": false,
+"price": 29.81,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-06",
+"est": false,
+"price": 99.12,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"138497|holofoil": {
+"card": "Charizard GX (Secret Rare (Rainbow)) — Burning Shadows 150/147",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-09",
+"est": false,
+"price": 174.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-12",
+"est": false,
+"price": 360.0,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 274.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 900.98,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"139102|holofoil": {
+"card": "Alolan Meowth (Promo · Holo) — SM Promos SM51",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-06",
+"est": false,
+"price": 1.5,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days (ignored odd sale: $3.15)"
+},
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 8.69,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 3.37,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days (ignored odd sale: $12.00)"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 27.84,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"146699|holofoil": {
+"card": "Shining Mew (Holo Rare) — Shining Legends 40/73",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-22",
+"est": false,
+"price": 59.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days (ignored odd sale: $18.74)"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 125.33,
+"src": "TCGplayer sales: median of 26 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-01",
+"est": false,
+"price": 99.95,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 192.75,
+"src": "TCGplayer sales: median of 43 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"153265|holofoil": {
+"card": "Torterra (Promo · Cracked Ice · Holo) — League & Championship Cards 010/095",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 1.87,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 5.64,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-03",
+"est": false,
+"price": 3.57,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-03",
+"est": false,
+"price": 13.53,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"155084|normal": {
+"card": "Eevee (Non-Holo · Build-A-Bear Workshop Exclusive) — Miscellaneous Cards & Products 063/098",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-11",
+"est": false,
+"price": 8.38,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 27.32,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-14",
+"est": false,
+"price": 20.83,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-29",
+"est": false,
+"price": 34.85,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"155606|reverse holofoil": {
+"card": "Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-11",
+"est": false,
+"price": 6.45,
+"src": "TCGplayer sales: median of 24 sales in the last 90 days (ignored odd sale: $1.41)"
+},
+"lp": {
+"date": "2026-10-10",
+"est": false,
+"price": 24.62,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-10",
+"est": false,
+"price": 12.04,
+"src": "TCGplayer sales: median of 18 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 73.23,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"172931|holofoil": {
+"card": "Kyogre - SM129 (Prerelease) [Staff] (Holo) — SM Promos SM129",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-21",
+"est": false,
+"price": 124.64,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-06",
+"est": false,
+"price": 499.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"174489|holofoil": {
+"card": "Blastoise (Holo · EX Crystal Guardians) — Deck Exclusives 014/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 8.21,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-09",
+"est": false,
+"price": 35.25,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 32.17,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-20",
+"est": false,
+"price": 68.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"178869|holofoil": {
+"card": "Suicune GX (Secret Rare · Holo) — Lost Thunder 220/214",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-07-20",
+"est": false,
+"price": 36.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"lp": {
+"date": "2026-10-01",
+"est": false,
+"price": 102.56,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-24",
+"est": false,
+"price": 39.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-27",
+"est": false,
+"price": 105.64,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"180459|holofoil": {
+"card": "Eevee (Promo · Holo) — McDonald's Promos 2018 011/012",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-27",
+"est": false,
+"price": 2.75,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days (ignored odd sale: $1.27)"
+},
+"lp": {
+"date": "2026-10-12",
+"est": false,
+"price": 11.33,
+"src": "TCGplayer sales: median of 23 sales in the last 90 days (ignored odd sale: $28.67)"
+},
+"mp": {
+"date": "2026-09-21",
+"est": false,
+"price": 6.96,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-30",
+"est": false,
+"price": 35.2,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days (ignored odd sales: $139.55, $85.74, $85.74)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"181559|holofoil": {
+"card": "Ho-Oh (Holo · Cosmos Holo) — Deck Exclusives 027/115",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-26",
+"est": false,
+"price": 7.99,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-26",
+"est": false,
+"price": 39.02,
+"src": "TCGplayer sales: median of 14 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 30.34,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 68.3,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"183805|holofoil": {
+"card": "Pikachu & Zekrom GX (Full Art) — Team Up 162/181",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-19",
+"est": false,
+"price": 78.37,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 111.69,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 196.24,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"183829|holofoil": {
+"card": "Gengar & Mimikyu GX (Full Art) — Team Up 164/181",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-19",
+"est": false,
+"price": 105.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-12",
+"est": false,
+"price": 299.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-23",
+"est": false,
+"price": 232.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 400.75,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"197780|holofoil": {
+"card": "Charizard GX (Shiny Vault) — Hidden Fates SV49/SV94",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-09-25",
+"est": false,
+"price": 424.35,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 799.74,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"230421|holofoil": {
+"card": "Arcanine (Promo · Prerelease · Holo) — Black and White Promos 12/99",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 53.06,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-03",
+"est": false,
+"price": 79.48,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"42382|holofoil": {
+"card": "Charizard (Holo) — Base Set 004/102",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 189.17,
+"src": "TCGplayer sales: median of 93 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 512.49,
+"src": "TCGplayer sales: median of 26 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 379.91,
+"src": "TCGplayer sales: median of 66 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 924.99,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"45120|1st edition holofoil": {
+"card": "Clefable (1st Edition Holofoil · 1) — Jungle 01/64",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-10",
+"est": false,
+"price": 24.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 94.78,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 39.47,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-19",
+"est": false,
+"price": 113.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"83536|normal": {
+"card": "Ampharos (Non-Holo) — Aquapolis 001/147",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-30",
+"est": false,
+"price": 8.25,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-28",
+"est": true,
+"price": 28.61,
+"src": "Estimated: TCGplayer sales showed $42.80, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-09-20",
+"est": false,
+"price": 30.78,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-02",
+"est": false,
+"price": 28.61,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"83605|holofoil": {
+"card": "Arceus LV.X (Promo · Holo) — Diamond and Pearl Promos DP53",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 12.27,
+"src": "TCGplayer sales: median of 18 sales in the last 90 days (ignored odd sales: $40.99, $27.54)"
+},
+"lp": {
+"date": "2026-09-23",
+"est": false,
+"price": 36.99,
+"src": "TCGplayer sales: median of 15 sales in the last 90 days (ignored odd sales: $164.99, $324.72, $244.86)"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 26.56,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sales: $92.00, $58.49, $58.49)"
+},
+"nm": {
+"date": "2026-08-18",
+"est": false,
+"price": 115.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days (ignored odd sale: $1,000.00)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"83655|holofoil": {
+"card": "Articuno ex (Holo · 032 (EX Collector's Window Tins) — Nintendo Promos 032",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 32.14,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 137.53,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-14",
+"est": false,
+"price": 109.75,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-04",
+"est": false,
+"price": 154.8,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"83768|reverse holofoil": {
+"card": "Beedrill (Reverse Holo) — Legendary Collection 020/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": true,
+"price": 55.05,
+"src": "Estimated: TCGplayer sales showed $83.37, above a better condition, so capped"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 141.32,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-05",
+"est": false,
+"price": 55.05,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 299.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"83876|1st edition": {
+"card": "Blaine's Ninetales (1st Edition) — Gym Challenge 021/132",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-12",
+"est": false,
+"price": 39.89,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-03",
+"est": false,
+"price": 23.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 51.99,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"83898|holofoil": {
+"card": "Blastoise (Holo) — Plasma Blast 16/101",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-07",
+"est": false,
+"price": 2.99,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 8.45,
+"src": "TCGplayer sales: median of 24 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 5.05,
+"src": "TCGplayer sales: median of 17 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 22.49,
+"src": "TCGplayer sales: median of 26 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84036|reverse holofoil": {
+"card": "Bulbasaur (Reverse Holo) — Dark Explorers 1/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 19.39,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sale: $50.00)"
+},
+"mp": {
+"date": "2026-09-16",
+"est": false,
+"price": 19.24,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-19",
+"est": false,
+"price": 36.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84188|holofoil": {
+"card": "Charizard (Holo) — EX Power Keepers 6/108",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 54.94,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 183.32,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 149.99,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84201|holofoil": {
+"card": "Charizard G Lv.X (Holo) — Supreme Victors 143",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-07",
+"est": false,
+"price": 64.99,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 241.25,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-11",
+"est": false,
+"price": 187.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-21",
+"est": false,
+"price": 447.02,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84219|reverse holofoil": {
+"card": "Charmander (Reverse Holo) — Legendary Treasures 17/113",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-15",
+"est": true,
+"price": 9.23,
+"src": "Estimated from the other conditions' TCGplayer sales (the only DMG sale was odd: $0.75)"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 27.0,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-24",
+"est": false,
+"price": 16.58,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-09",
+"est": false,
+"price": 57.23,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sale: $149.99)"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84225|holofoil": {
+"card": "Charmeleon (Holo) — EX Dragon 99/97",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-11",
+"est": false,
+"price": 41.89,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-01",
+"est": false,
+"price": 152.94,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-19",
+"est": false,
+"price": 80.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-30",
+"est": false,
+"price": 142.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84235|reverse holofoil": {
+"card": "Charmeleon (Reverse Holo) — Legendary Treasures 18/113",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 19.88,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-18",
+"est": false,
+"price": 15.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-01",
+"est": false,
+"price": 29.09,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84359|reverse holofoil": {
+"card": "Clefairy (Reverse Holo) — Call of Legends 54/95",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 5.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-15",
+"est": true,
+"price": 5.0,
+"src": "Estimated: TCGplayer sales showed $6.29, above a better condition, so capped"
+},
+"nm": {
+"date": "2026-10-08",
+"est": false,
+"price": 19.95,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84592|unlimited holofoil": {
+"card": "Dark Espeon (Unlimited Holofoil) — Neo Destiny 004/105",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 123.28,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 354.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-05",
+"est": false,
+"price": 249.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-15",
+"est": false,
+"price": 649.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84608|reverse holofoil": {
+"card": "Dark Gyarados (Reverse Holo) — EX Team Rocket Returns 36/109",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 165.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-07",
+"est": false,
+"price": 315.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-30",
+"est": false,
+"price": 243.02,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84659|unlimited holofoil": {
+"card": "Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 18.07,
+"src": "TCGplayer sales: median of 32 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 53.36,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 42.68,
+"src": "TCGplayer sales: median of 36 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 184.69,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sales: $598.12, $89.99)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84709|holofoil": {
+"card": "Darkrai EX (Full Art) — Dark Explorers 107/108",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 299.98,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"lp": {
+"date": "2026-09-22",
+"est": false,
+"price": 410.34,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-12",
+"est": false,
+"price": 312.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-08",
+"est": false,
+"price": 789.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84710|holofoil": {
+"card": "Darkrai G (Holo) — Rising Rivals 3/111",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-01",
+"est": false,
+"price": 13.56,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 60.06,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-01",
+"est": false,
+"price": 39.99,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 93.19,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84760|reverse holofoil": {
+"card": "Deoxys (Reverse Holo · Delta Species - Attack Forme) — EX Holon Phantoms 3/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-20",
+"est": false,
+"price": 31.8,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-29",
+"est": false,
+"price": 163.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-08",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-15",
+"est": true,
+"price": 261.78,
+"src": "Estimated from the other conditions' TCGplayer sales (the only NM sales were odd: $1,498.99, $5.00)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84764|holofoil": {
+"card": "Deoxys (Delta Species · Holo) — EX Holon Phantoms 5/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": false,
+"price": 22.45,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-01",
+"est": false,
+"price": 90.98,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-12",
+"est": false,
+"price": 47.69,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-21",
+"est": false,
+"price": 136.3,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84765|holofoil": {
+"card": "Deoxys (Holo · Delta Species) — POP Series 4 002/017",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-11",
+"est": false,
+"price": 17.95,
+"src": "TCGplayer sales: median of 19 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 101.49,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sale: $10.24)"
+},
+"mp": {
+"date": "2026-09-11",
+"est": false,
+"price": 68.5,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-14",
+"est": false,
+"price": 350.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84777|holofoil": {
+"card": "Deoxys EX (Team Plasma · Full Art · Holo) — Plasma Freeze 111/116",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-14",
+"est": false,
+"price": 143.16,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 365.23,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-08",
+"est": false,
+"price": 279.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 770.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84811|holofoil": {
+"card": "Dialga G LV.X (Holo) — Platinum 122/127",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 18.74,
+"src": "TCGplayer sales: median of 22 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 56.8,
+"src": "TCGplayer sales: median of 24 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 44.99,
+"src": "TCGplayer sales: median of 20 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 238.41,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days (ignored odd sale: $749.72)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"84844|reverse holofoil": {
+"card": "Ditto (Reverse Holo) — Triumphant 17/102",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-08-21",
+"est": false,
+"price": 103.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-29",
+"est": false,
+"price": 32.33,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"84910|holofoil": {
+"card": "Dragonite (Holo · 9) — Expedition 009/165",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-06",
+"est": false,
+"price": 247.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 449.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-05",
+"est": false,
+"price": 1250.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84916|reverse holofoil": {
+"card": "Dragonite (Reverse Holo) — Plasma Freeze 83/116",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-17",
+"est": false,
+"price": 8.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"lp": {
+"date": "2026-09-01",
+"est": false,
+"price": 26.87,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-24",
+"est": false,
+"price": 18.72,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-22",
+"est": false,
+"price": 49.95,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"84920|normal": {
+"card": "Dragonite FB (Non-Holo) — Supreme Victors 56/147",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-25",
+"est": false,
+"price": 3.26,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days (ignored odd sale: $8.00)"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 9.5,
+"src": "TCGplayer sales: median of 22 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-08",
+"est": false,
+"price": 8.34,
+"src": "TCGplayer sales: median of 21 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 21.45,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days (ignored odd sales: $74.99, $149.99, $151.34)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85054|reverse holofoil": {
+"card": "Duskull (Reverse Holo · Shiny) — Stormfront SH2",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 40.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 111.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-07",
+"est": false,
+"price": 89.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85081|reverse holofoil": {
+"card": "Eevee (Reverse Holo) — EX Unseen Forces 55/115",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-23",
+"est": false,
+"price": 39.9,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-18",
+"est": false,
+"price": 138.85,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sale: $17.99)"
+},
+"mp": {
+"date": "2026-09-12",
+"est": false,
+"price": 105.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-24",
+"est": false,
+"price": 194.32,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85090|reverse holofoil": {
+"card": "Eevee (83) (Reverse Holo) — Dark Explorers 83/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 43.61,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-23",
+"est": false,
+"price": 34.42,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-21",
+"est": false,
+"price": 65.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"85290|1st edition holofoil": {
+"card": "Erika's Dragonair (1st Edition Holofoil) — Gym Heroes 004/132",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-09",
+"est": false,
+"price": 79.85,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-26",
+"est": false,
+"price": 185.25,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-08-20",
+"est": false,
+"price": 117.43,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 368.94,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85323|holofoil": {
+"card": "Espeon (Holo · Prime) — Undaunted 81/90",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 99.99,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 246.75,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-05",
+"est": false,
+"price": 170.0,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-06",
+"est": false,
+"price": 599.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85325|reverse holofoil": {
+"card": "Espeon (Reverse Holo) — Dark Explorers 48/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-14",
+"est": true,
+"price": 50.0,
+"src": "Estimated: TCGplayer sales showed $61.98, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-08-17",
+"est": false,
+"price": 40.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-24",
+"est": false,
+"price": 50.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"85422|reverse holofoil": {
+"card": "Feraligatr (Reverse Holo) — Call of Legends 25/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-02",
+"est": false,
+"price": 5.2,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 19.66,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-15",
+"est": false,
+"price": 15.48,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 48.46,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"85525|reverse holofoil": {
+"card": "Flygon (Reverse Holo) — Secret Wonders 5/132",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-06",
+"est": false,
+"price": 20.44,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sales: $7.40, $7.77)"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 7.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-15",
+"est": true,
+"price": 26.81,
+"src": "Estimated from the other conditions' TCGplayer sales (the only NM sales were odd: $79.99, $80.97)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85533|holofoil": {
+"card": "Flygon Lv.X (Holo) — Rising Rivals 105/111",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-29",
+"est": false,
+"price": 47.09,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": true,
+"price": 100.0,
+"src": "Estimated: TCGplayer sales showed $133.40, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-10-03",
+"est": false,
+"price": 84.99,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85631|holofoil": {
+"card": "Garchomp LV.X (Holo) — Majestic Dawn 97/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-02",
+"est": false,
+"price": 114.5,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-27",
+"est": false,
+"price": 270.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85638|holofoil": {
+"card": "Gardevoir (Holo) — Dark Explorers 109/108",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-08-13",
+"est": false,
+"price": 590.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-13",
+"est": false,
+"price": 1198.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85647|1st edition": {
+"card": "Gastly (1st Edition) — Neo Destiny 065/105",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 6.19,
+"src": "TCGplayer sales: median of 30 sales in the last 90 days (ignored odd sale: $1.79)"
+},
+"mp": {
+"date": "2026-10-09",
+"est": false,
+"price": 2.5,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days (ignored odd sales: $6.72, $1.20)"
+},
+"nm": {
+"date": "2026-10-05",
+"est": false,
+"price": 18.32,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85674|reverse holofoil": {
+"card": "Gengar (Reverse Holo) — EX Legend Maker 5/92",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-04",
+"est": false,
+"price": 170.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-15",
+"est": false,
+"price": 258.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85682|holofoil": {
+"card": "Gengar LV.X (Holo Rare) — Arceus 97/99",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-06",
+"est": false,
+"price": 185.0,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 387.59,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-09",
+"est": false,
+"price": 295.9,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-06",
+"est": false,
+"price": 999.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days (ignored odd sales: $429.16, $350.00)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85741|holofoil": {
+"card": "Giratina EX (Full Art · Holo) — Dragons Exalted 124/124",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-03",
+"est": false,
+"price": 84.77,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-24",
+"est": false,
+"price": 287.37,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-07",
+"est": false,
+"price": 199.98,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 610.98,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85926|holofoil": {
+"card": "Groudon (Shiny) (Holo) — Call of Legends SL4",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-22",
+"est": false,
+"price": 179.67,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-27",
+"est": true,
+"price": 630.0,
+"src": "Estimated: TCGplayer sales showed $799.99, above a better condition, so capped"
+},
+"nm": {
+"date": "2026-08-27",
+"est": false,
+"price": 630.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85933|holofoil": {
+"card": "Groudon EX (106 Full Art) (Holo) — Dark Explorers 106/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-03",
+"est": false,
+"price": 427.46,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"85989|reverse holofoil": {
+"card": "Gyarados (Reverse Holo) — Legendary Collection 012/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 212.5,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-12",
+"est": false,
+"price": 519.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"85995|reverse holofoil": {
+"card": "Gyarados (Red) (Reverse Holo) — HeartGold SoulSilver 123/123",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-28",
+"est": false,
+"price": 52.66,
+"src": "TCGplayer market price before an odd $16.99 sale (only sale in 90 days)"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 125.59,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 83.69,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-16",
+"est": false,
+"price": 499.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86026|reverse holofoil": {
+"card": "Haunter (Reverse Holo) — EX Legend Maker 35/92",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-17",
+"est": false,
+"price": 72.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-06",
+"est": false,
+"price": 248.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-31",
+"est": false,
+"price": 116.87,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86127|holofoil": {
+"card": "Ho-Oh (Holo · Shiny) — Call of Legends SL5",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-02",
+"est": false,
+"price": 153.45,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-29",
+"est": false,
+"price": 300.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 299.99,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-01",
+"est": false,
+"price": 749.98,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"86325|reverse holofoil": {
+"card": "Jirachi (Reverse Holo) — EX Hidden Legends 8/101",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-03",
+"est": false,
+"price": 21.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 120.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-02",
+"est": false,
+"price": 64.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sale: $20.94)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86342|normal": {
+"card": "Jolteon (Non-Holo) — POP Series 3 003/017",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 3.89,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-15",
+"est": true,
+"price": 14.76,
+"src": "Estimated from the other conditions' TCGplayer sales (the only LP sales were odd: $52.67, $135.00)"
+},
+"mp": {
+"date": "2026-08-18",
+"est": false,
+"price": 14.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days (ignored odd sale: $9.95)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86397|holofoil": {
+"card": "Kabutops (Holo) — EX Legend Maker 7/92",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-01",
+"est": false,
+"price": 6.7,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days (ignored odd sale: $15.00)"
+},
+"lp": {
+"date": "2026-09-26",
+"est": false,
+"price": 47.8,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-12",
+"est": false,
+"price": 27.66,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-14",
+"est": false,
+"price": 55.66,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86423|reverse holofoil": {
+"card": "Kangaskhan (Reverse Holo) — Triumphant 36/102",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-08-14",
+"est": false,
+"price": 6.29,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-09",
+"est": false,
+"price": 3.91,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 19.11,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"86551|holofoil": {
+"card": "Kyogre (Shiny · Holo) — Call of Legends SL6",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-22",
+"est": false,
+"price": 199.12,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-27",
+"est": false,
+"price": 377.49,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-28",
+"est": false,
+"price": 242.01,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86645|reverse holofoil": {
+"card": "Larvitar (51) (Reverse Holo) — Unleashed 51/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-23",
+"est": false,
+"price": 3.38,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 7.06,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"86659|holofoil": {
+"card": "Latias ex (Holo) — EX Dragon 93/97",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-06",
+"est": false,
+"price": 79.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-11",
+"est": false,
+"price": 249.99,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-04",
+"est": false,
+"price": 157.53,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86669|holofoil": {
+"card": "Latios (Delta Species · Holo) — EX Delta Species 9/113",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 29.99,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 116.26,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 85.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86671|reverse holofoil": {
+"card": "Latios (Delta Species · Reverse Holo) — EX Holon Phantoms 22/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-14",
+"est": false,
+"price": 54.92,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-07",
+"est": false,
+"price": 175.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-08",
+"est": false,
+"price": 79.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-07",
+"est": false,
+"price": 499.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86680|reverse holofoil": {
+"card": "Leafeon (Reverse Holo) — Undaunted 17/90",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-07-28",
+"est": false,
+"price": 23.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 78.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"86682|reverse holofoil": {
+"card": "Leafeon (Reverse Holo) — Dark Explorers 6/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-10",
+"est": false,
+"price": 33.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-17",
+"est": false,
+"price": 24.88,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-27",
+"est": false,
+"price": 48.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"86880|reverse holofoil": {
+"card": "Lucario (Reverse Holo) — Unleashed 19/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-15",
+"est": true,
+"price": 12.74,
+"src": "Estimated from the other conditions' TCGplayer sales (the only DMG sale was odd: $4.80)"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 42.7,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-09",
+"est": false,
+"price": 20.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"86908|holofoil": {
+"card": "Lugia (Holo) — Secret Wonders 14/132",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 33.35,
+"src": "TCGplayer sales: median of 13 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 89.5,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days (ignored odd sales: $299.99, $300.00)"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 50.14,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-13",
+"est": false,
+"price": 297.62,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sales: $1,000.98, $134.80)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86909|holofoil": {
+"card": "Lugia (Promo · Holo) — HGSS Promos HGSS02",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-09",
+"est": false,
+"price": 37.5,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 126.4,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days (ignored odd sale: $300.00)"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 69.16,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-04",
+"est": false,
+"price": 499.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days (ignored odd sales: $1,002.82, $100.30)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86910|holofoil": {
+"card": "Lugia (Holo) — Call of Legends 15/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-28",
+"est": false,
+"price": 52.5,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": true,
+"price": 192.17,
+"src": "Estimated: TCGplayer sales showed $499.99, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 95.39,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-18",
+"est": false,
+"price": 192.17,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86911|holofoil": {
+"card": "Lugia (Holo · Shiny) — Call of Legends SL7",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-11",
+"est": false,
+"price": 232.44,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 600.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"86916|holofoil": {
+"card": "Lugia EX (Full Art) — Plasma Storm 134/135",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 199.85,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sale: $600.00)"
+},
+"lp": {
+"date": "2026-10-02",
+"est": true,
+"price": 1151.99,
+"src": "Estimated: TCGplayer sales showed $1,849.99, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-09-22",
+"est": false,
+"price": 348.43,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sale: $1,499.99)"
+},
+"nm": {
+"date": "2026-09-22",
+"est": false,
+"price": 1151.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days (ignored odd sales: $500.00, $2,999.99)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86918|holofoil": {
+"card": "Lugia Legend (Top Half · Holo) — HeartGold SoulSilver 113/123",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 63.83,
+"src": "TCGplayer sales: median of 14 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 214.99,
+"src": "TCGplayer sales: median of 13 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-01",
+"est": false,
+"price": 125.5,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 350.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"86952|holofoil": {
+"card": "Luxray GL Lv.X (Holo) — Rising Rivals 109/111",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-23",
+"est": false,
+"price": 45.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-19",
+"est": false,
+"price": 119.1,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-30",
+"est": false,
+"price": 87.01,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87228|reverse holofoil": {
+"card": "Marowak (Reverse Holo) — Triumphant 44/102",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-08-25",
+"est": false,
+"price": 4.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-24",
+"est": false,
+"price": 25.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days (ignored odd sale: $34.05)"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"87325|holofoil": {
+"card": "Meowth (Secret Rare · Holo) — Noble Victories 102/101",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 63.3,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-25",
+"est": false,
+"price": 62.34,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-24",
+"est": false,
+"price": 97.15,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87342|holofoil": {
+"card": "Metagross (Delta Species · Holo) — EX Delta Species 11/113",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-26",
+"est": false,
+"price": 25.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-14",
+"est": false,
+"price": 96.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 57.49,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-30",
+"est": false,
+"price": 199.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87401|holofoil": {
+"card": "Mew (Holo) — POP Series 4 004/017",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-11",
+"est": false,
+"price": 28.55,
+"src": "TCGplayer sales: median of 21 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 117.85,
+"src": "TCGplayer sales: median of 13 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 69.99,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87406|holofoil": {
+"card": "Mew (Promo · Holo) — Black and White Promos BW98",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 469.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 299.01,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87410|holofoil": {
+"card": "Mew ex (Holo) — EX Holon Phantoms 100/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-10",
+"est": false,
+"price": 114.49,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-07-28",
+"est": false,
+"price": 649.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 282.01,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"87425|holofoil": {
+"card": "Mewtwo (Holo · Delta Species) — EX Delta Species 12/113",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-02",
+"est": false,
+"price": 113.45,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-23",
+"est": false,
+"price": 319.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-13",
+"est": false,
+"price": 199.5,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-17",
+"est": false,
+"price": 746.84,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"87428|holofoil": {
+"card": "Mewtwo ex (Holo) — EX Ruby and Sapphire 101/109",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 89.74,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-30",
+"est": false,
+"price": 350.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-02",
+"est": false,
+"price": 238.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 899.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"87434|holofoil": {
+"card": "Mewtwo LV.X (Promo · Holo) — Diamond and Pearl Promos DP28",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 23.99,
+"src": "TCGplayer sales: median of 25 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-26",
+"est": false,
+"price": 80.0,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sale: $199.95)"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 54.14,
+"src": "TCGplayer sales: median of 18 sales in the last 90 days (ignored odd sale: $11.42)"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 445.45,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"87568|holofoil": {
+"card": "Moltres EX (Team Plasma) — Plasma Storm 14/135",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 2.19,
+"src": "TCGplayer sales: median of 31 sales in the last 90 days (ignored odd sale: $0.99)"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 6.31,
+"src": "TCGplayer sales: median of 60 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 5.0,
+"src": "TCGplayer sales: median of 30 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 11.15,
+"src": "TCGplayer sales: median of 94 sales in the last 90 days (ignored odd sales: $99.00, $84.47, $49.73)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"87604|reverse holofoil": {
+"card": "Mudkip (Reverse Holo · 010 (e-League) — Nintendo Promos 010",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-07-28",
+"est": false,
+"price": 42.18,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"lp": {
+"date": "2026-07-27",
+"est": false,
+"price": 75.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": true,
+"price": 75.0,
+"src": "Estimated: TCGplayer sales showed $107.82, above a better condition, so capped"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 200.69,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days (ignored odd sale: $99.00)"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"87768|reverse holofoil": {
+"card": "Ninetales (Reverse Holo) — Aquapolis 025/147",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-10",
+"est": false,
+"price": 110.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-14",
+"est": false,
+"price": 39.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"87779|holofoil": {
+"card": "Ninetales (Holo) — Black and White Promos BW66",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 33.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 19.99,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 40.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88083|holofoil": {
+"card": "Pikachu (Holo) — POP Series 4 013/017",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 20.76,
+"src": "TCGplayer sales: median of 15 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-26",
+"est": true,
+"price": 62.16,
+"src": "Estimated: TCGplayer sales showed $125.53, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-10-09",
+"est": false,
+"price": 49.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-24",
+"est": false,
+"price": 62.16,
+"src": "TCGplayer market price before an odd $369.63 sale (only sale in 90 days)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88097|reverse holofoil": {
+"card": "Pikachu (Reverse Holo) — Undaunted 61/90",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-30",
+"est": false,
+"price": 20.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-06",
+"est": false,
+"price": 87.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-27",
+"est": false,
+"price": 141.23,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88153|reverse holofoil": {
+"card": "Piplup (Reverse Holo) — Legendary Treasures 33/113",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-08-28",
+"est": false,
+"price": 12.52,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 12.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 34.76,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"88173|reverse holofoil": {
+"card": "Plusle (Reverse Holo) — Dark Explorers 39/108",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 19.62,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days (ignored odd sale: $5.55)"
+},
+"mp": {
+"date": "2026-09-20",
+"est": false,
+"price": 6.03,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-01",
+"est": false,
+"price": 23.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88321|holofoil": {
+"card": "Porygon-Z LV.X (Holo) — Majestic Dawn 100/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-12",
+"est": false,
+"price": 59.64,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": true,
+"price": 200.0,
+"src": "Estimated: TCGplayer sales showed $225.00, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 149.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-23",
+"est": false,
+"price": 200.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88359|normal": {
+"card": "Primeape (Non-Holo) — Aquapolis 029/147",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 69.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-20",
+"est": false,
+"price": 29.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-22",
+"est": false,
+"price": 89.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88528|holofoil": {
+"card": "Raichu LV.X (Holo) — Stormfront 99/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-06",
+"est": false,
+"price": 34.99,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-06",
+"est": true,
+"price": 104.5,
+"src": "Estimated: TCGplayer sales showed $116.25, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-08-22",
+"est": false,
+"price": 68.98,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-07-22",
+"est": false,
+"price": 104.5,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88536|holofoil": {
+"card": "Raikou (Shiny · Holo) — Call of Legends SL9",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-01",
+"est": false,
+"price": 75.5,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 225.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-03",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 698.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sale: $119.99)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88626|holofoil": {
+"card": "Rayquaza (Holo) — EX Emerald 9/106",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 74.98,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-22",
+"est": false,
+"price": 206.66,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 407.83,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88626|reverse holofoil": {
+"card": "Rayquaza (Reverse Holo) — EX Emerald 9/106",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-10-04",
+"est": false,
+"price": 1078.45,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88628|holofoil": {
+"card": "Rayquaza (Holo) — Call of Legends 20/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 22.14,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days (ignored odd sale: $51.94)"
+},
+"lp": {
+"date": "2026-09-13",
+"est": false,
+"price": 153.62,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-07",
+"est": true,
+"price": 153.62,
+"src": "Estimated: TCGplayer sales showed $225.00, above a better condition, so capped"
+},
+"nm": {
+"date": "2026-09-09",
+"est": false,
+"price": 1251.39,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"88628|reverse holofoil": {
+"card": "Rayquaza (Reverse Holo) — Call of Legends 20/95",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-22",
+"est": false,
+"price": 34.9,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-02",
+"est": false,
+"price": 99.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-30",
+"est": false,
+"price": 46.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sale: $99.99)"
+},
+"nm": {
+"date": "2026-08-31",
+"est": false,
+"price": 143.32,
+"src": "TCGplayer market price before an odd $1,554.90, $900.00 sale (only sales in 90 days)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88630|holofoil": {
+"card": "Rayquaza (Holo) — Dragons Exalted 128/124",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-14",
+"est": false,
+"price": 999.95,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-08-08",
+"est": false,
+"price": 749.95,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-10",
+"est": false,
+"price": 1250.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88634|reverse holofoil": {
+"card": "Rayquaza (Reverse Holo · Delta Species) — EX Holon Phantoms 16/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 180.58,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-14",
+"est": false,
+"price": 388.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-05",
+"est": false,
+"price": 350.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-01",
+"est": false,
+"price": 961.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88635|reverse holofoil": {
+"card": "Rayquaza (Reverse Holo · Delta Species) — EX Holon Phantoms 26/110",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-30",
+"est": false,
+"price": 199.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-25",
+"est": false,
+"price": 439.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-28",
+"est": false,
+"price": 269.95,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"88637|holofoil": {
+"card": "Rayquaza & Deoxys Legend (Holo · Bottom) — Undaunted 90/90",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-01",
+"est": false,
+"price": 77.39,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 272.65,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-19",
+"est": false,
+"price": 215.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days (ignored odd sale: $32.83)"
+},
+"nm": {
+"date": "2026-09-25",
+"est": false,
+"price": 599.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88638|holofoil": {
+"card": "Rayquaza & Deoxys Legend (Top Half · Holo) — Undaunted 89/90",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-06",
+"est": false,
+"price": 340.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-28",
+"est": false,
+"price": 183.32,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-23",
+"est": false,
+"price": 598.88,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88641|holofoil": {
+"card": "Rayquaza C LV.X (Promo · Holo) — Diamond and Pearl Promos DP47",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 39.98,
+"src": "TCGplayer sales: median of 26 sales in the last 90 days (ignored odd sales: $140.40, $90.70, $90.70)"
+},
+"lp": {
+"date": "2026-10-04",
+"est": false,
+"price": 238.0,
+"src": "TCGplayer sales: median of 14 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-10",
+"est": false,
+"price": 79.24,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 502.5,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days (ignored odd sale: $1,073.93)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88644|holofoil": {
+"card": "Rayquaza ex (Holo · 039 (EX Collector's Tin) — Nintendo Promos 039",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-12",
+"est": false,
+"price": 175.22,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-09",
+"est": false,
+"price": 500.0,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days (ignored odd sale: $2,998.98)"
+},
+"mp": {
+"date": "2026-10-13",
+"est": false,
+"price": 300.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88716|holofoil": {
+"card": "Reshiram EX (Full Art) — Next Destinies 95/99",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-01",
+"est": false,
+"price": 50.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-31",
+"est": false,
+"price": 167.5,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-10",
+"est": false,
+"price": 112.27,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-06",
+"est": false,
+"price": 444.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"88963|reverse holofoil": {
+"card": "Scizor (Reverse Holo) — Undaunted 7/90",
+"checked": "2026-10-15",
+"prices": {
+"mp": {
+"date": "2026-10-10",
+"est": false,
+"price": 26.99,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-31",
+"est": false,
+"price": 49.99,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"89152|holofoil": {
+"card": "Shiftry (Holo) — EX Sandstorm 12/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-03",
+"est": false,
+"price": 5.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-08",
+"est": false,
+"price": 22.4,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 15.94,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-11",
+"est": false,
+"price": 35.85,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"89397|holofoil": {
+"card": "Snorlax Lv.X (Holo) — Rising Rivals 111/111",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-10-06",
+"est": false,
+"price": 999.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-09-22",
+"est": false,
+"price": 450.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"89761|reverse holofoil": {
+"card": "Tauros (Reverse Holo) — EX FireRed & LeafGreen 16/112",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-29",
+"est": false,
+"price": 5.54,
+"src": "TCGplayer market price before an odd $3.00 sale (only sale in 90 days)"
+},
+"lp": {
+"date": "2026-08-08",
+"est": false,
+"price": 24.18,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days (ignored odd sales: $50.00, $11.99)"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 16.98,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"90000|reverse holofoil": {
+"card": "Totodile (Reverse Holo) — HeartGold SoulSilver 86/123",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-09",
+"est": false,
+"price": 29.5,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 22.34,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-02",
+"est": false,
+"price": 30.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"90072|holofoil": {
+"card": "Turtwig (Holo) — POP Series 6 017/017",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-26",
+"est": false,
+"price": 2.19,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-07",
+"est": false,
+"price": 7.19,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days (ignored odd sales: $20.56, $22.33)"
+},
+"mp": {
+"date": "2026-09-12",
+"est": false,
+"price": 4.25,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-06",
+"est": false,
+"price": 28.35,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"90080|reverse holofoil": {
+"card": "Turtwig (Reverse Holo) — Unleashed 67/95",
+"checked": "2026-10-15",
+"prices": {
+"lp": {
+"date": "2026-09-27",
+"est": false,
+"price": 17.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-27",
+"est": false,
+"price": 13.99,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-09-10",
+"est": false,
+"price": 27.49,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"Flip Finder"
+]
+},
+"90103|holofoil": {
+"card": "Typhlosion (Holo) — EX Unseen Forces 17/115",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-30",
+"est": false,
+"price": 22.46,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-21",
+"est": false,
+"price": 80.7,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-03",
+"est": false,
+"price": 57.47,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 99.0,
+"src": "TCGplayer market price before an odd $979.82 sale (only sale in 90 days)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"90123|reverse holofoil": {
+"card": "Tyranitar (Delta Species · Reverse Holo) — EX Delta Species 16/113",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": false,
+"price": 63.4,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-19",
+"est": false,
+"price": 255.0,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-21",
+"est": false,
+"price": 129.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 308.05,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"90137|unlimited holofoil": {
+"card": "Umbreon (Unlimited Holo) — Neo Discovery 13/75",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-02",
+"est": false,
+"price": 200.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-03",
+"est": false,
+"price": 675.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 356.69,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-05",
+"est": false,
+"price": 945.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"90146|holofoil": {
+"card": "Umbreon (Prime) — HS Undaunted 86/90",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-28",
+"est": false,
+"price": 151.45,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 399.5,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 276.87,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-25",
+"est": false,
+"price": 674.99,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"90318|reverse holofoil": {
+"card": "Venusaur (Reverse Holo) — EX Crystal Guardians 28/100",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-04",
+"est": false,
+"price": 35.6,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days (ignored odd sale: $4.99)"
+},
+"lp": {
+"date": "2026-10-02",
+"est": false,
+"price": 159.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-17",
+"est": false,
+"price": 69.98,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"90457|reverse holofoil": {
+"card": "Wailord (Reverse Holo) — EX Ruby and Sapphire 14/109",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-02",
+"est": false,
+"price": 10.94,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-08-27",
+"est": false,
+"price": 13.43,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-29",
+"est": false,
+"price": 14.99,
+"src": "TCGplayer sales: median of 9 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-01",
+"est": false,
+"price": 40.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"90725|holofoil": {
+"card": "Zapdos EX (Team Plasma) (Holo) — Plasma Storm 48/135",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-08",
+"est": false,
+"price": 2.12,
+"src": "TCGplayer sales: median of 20 sales in the last 90 days (ignored odd sales: $8.24, $5.12)"
+},
+"lp": {
+"date": "2026-10-13",
+"est": false,
+"price": 7.25,
+"src": "TCGplayer sales: median of 49 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 4.41,
+"src": "TCGplayer sales: median of 28 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 11.78,
+"src": "TCGplayer sales: median of 56 sales in the last 90 days (ignored odd sales: $100.00, $52.31, $32.64)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"91246|holofoil": {
+"card": "M Charizard EX (X (Secret Rare)) — Flashfire 108/106",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-05",
+"est": false,
+"price": 118.87,
+"src": "TCGplayer sales: median of 10 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 479.11,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-08-10",
+"est": false,
+"price": 293.26,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-13",
+"est": false,
+"price": 1501.23,
+"src": "TCGplayer market price before an odd $103.01 sale (only sale in 90 days)"
+}
+},
+"why": [
+"top flip"
+]
+},
+"92292|holofoil": {
+"card": "M Lucario EX (Holo · Secret) — XY - Furious Fists 113/111",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-03",
+"est": false,
+"price": 24.35,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-03",
+"est": false,
+"price": 88.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-07",
+"est": false,
+"price": 55.34,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-10",
+"est": false,
+"price": 125.97,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"94683|holofoil": {
+"card": "Gengar EX (Full Art · Holo) — Phantom Forces 114/119",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-07",
+"est": false,
+"price": 205.53,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 489.99,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-06",
+"est": false,
+"price": 344.98,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-12",
+"est": false,
+"price": 776.97,
+"src": "TCGplayer sales: median of 5 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"94688|holofoil": {
+"card": "M Gengar EX (Secret Rare (Gold)) — Phantom Forces 121/119",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-08-09",
+"est": false,
+"price": 114.06,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-06",
+"est": false,
+"price": 275.99,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 207.99,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-10-07",
+"est": false,
+"price": 531.47,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"94689|holofoil": {
+"card": "Dialga EX (Secret Rare Holo) — Phantom Forces 122/119",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-13",
+"est": false,
+"price": 186.12,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-05",
+"est": false,
+"price": 525.0,
+"src": "TCGplayer sales: median of 7 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-09-10",
+"est": false,
+"price": 390.0,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"nm": {
+"date": "2026-09-30",
+"est": false,
+"price": 1045.62,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+},
+"96047|holofoil": {
+"card": "Primal Kyogre EX (Full Art) — Primal Clash 149/160",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-03",
+"est": false,
+"price": 61.66,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-15",
+"est": false,
+"price": 159.39,
+"src": "TCGplayer sales: median of 8 sales in the last 90 days"
+},
+"mp": {
+"date": "2026-10-05",
+"est": false,
+"price": 93.0,
+"src": "TCGplayer sales: median of 16 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-04",
+"est": false,
+"price": 334.99,
+"src": "TCGplayer sales: median of 6 sales in the last 90 days"
+}
+},
+"why": [
+"top flip"
+]
+},
+"97706|holofoil": {
+"card": "Latios - HGSS11 (Cracked Ice Holo) (Holo) — HGSS Promos HGSS11",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-09-04",
+"est": false,
+"price": 13.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-24",
+"est": false,
+"price": 35.73,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days (ignored odd sale: $88.99)"
+},
+"mp": {
+"date": "2026-10-12",
+"est": false,
+"price": 32.84,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-08-14",
+"est": false,
+"price": 82.58,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days (ignored odd sale: $839.52)"
+}
+},
+"why": [
+"estimate"
+]
+},
+"97731|reverse holofoil": {
+"card": "Swampert (Reverse Holo) — EX Emerald 11/106",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-06",
+"est": false,
+"price": 36.16,
+"src": "TCGplayer sales: median of 4 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-09-10",
+"est": false,
+"price": 158.95,
+"src": "TCGplayer sales: median of 1 sale in the last 90 days"
+},
+"mp": {
+"date": "2026-10-01",
+"est": false,
+"price": 120.0,
+"src": "TCGplayer sales: median of 3 sales in the last 90 days"
+},
+"nm": {
+"date": "2026-10-05",
+"est": false,
+"price": 161.0,
+"src": "TCGplayer sales: median of 2 sales in the last 90 days"
+}
+},
+"why": [
+"estimate"
+]
+},
+"97957|holofoil": {
+"card": "Dark Tyranitar (Holo · EX Team Rocket Returns) — Deck Exclusives 020/109",
+"checked": "2026-10-15",
+"prices": {
+"dmg": {
+"date": "2026-10-11",
+"est": false,
+"price": 10.0,
+"src": "TCGplayer sales: median of 12 sales in the last 90 days"
+},
+"lp": {
+"date": "2026-10-04",
+"est": true,
+"price": 57.23,
+"src": "Estimated: TCGplayer sales showed $69.99, above a better condition, so capped"
+},
+"mp": {
+"date": "2026-10-11",
+"est": false,
+"price": 39.23,
+"src": "TCGplayer sales: median of 11 sales in the last 90 days (ignored odd sale: $9.97)"
+},
+"nm": {
+"date": "2026-07-30",
+"est": false,
+"price": 57.23,
+"src": "TCGplayer market price before an odd $23.28 sale (only sale in 90 days)"
+}
+},
+"why": [
+"estimate",
+"top flip"
+]
+}
+},
+"last_run": "2026-10-15"
+}
