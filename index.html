@@ -531,6 +531,11 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .flock p{margin:0 0 14px;color:var(--muted);font-size:14px}
 .flock input{width:100%;box-sizing:border-box;padding:12px;font-size:24px;letter-spacing:.5em;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font-family:inherit}
 .flock .btn{width:100%;margin-top:10px}
+.snotes{width:100%;box-sizing:border-box;min-height:140px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:15px/1.5 inherit;font-family:inherit;resize:vertical}
+.notes-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12.5px}
+.notes-meta span:last-child{white-space:nowrap}
+.show-note{display:block;font-size:12.5px;color:var(--muted);font-style:italic;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.log-lockrow{display:flex;justify-content:flex-end;margin-top:8px}
 .flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
 
 /* Quick check */
@@ -1290,6 +1295,9 @@ function initPairs(){
 var SYNC_KEY = "cfz.sync", DATA_REPO = "Chaundoo/card-flipz";
 var REMOTE_PAIRS = (DATA.pairings||[]).map(normPair), REMOTE_SHOWS = (DATA.shows||[]).map(normShow);
 function emptyDiff(){ return {up:{}, del:{}}; }
+var LOGLOCK = DATA.logLock || null;
+function logLocked(){ return !!(LOGLOCK && !LOGLOCK.open); }
+var NOTES_MAX = 5000;
 var SYNC = (function(){ var s = load(SYNC_KEY, null);
   if(!s || typeof s!=="object") s = {};
   ["pairings","shows"].forEach(function(k){ if(!s[k] || typeof s[k].up!=="object" || typeof s[k].del!=="object") s[k] = emptyDiff(); });
@@ -1297,7 +1305,7 @@ var SYNC = (function(){ var s = load(SYNC_KEY, null);
 function numOr(v){ return v!=="" && v!=null && !isNaN(Number(v)) && Number(v)>=0 ? Number(v) : ""; }
 function normPair(p){ p = p||{}; return {id:String(p.id||uid("p")), name:String(p.name||"Untitled pairing").slice(0,60), created:String(p.created||"").slice(0,10),
   items:(Array.isArray(p.items)?p.items:[]).map(function(it){ it = it||{}; return {cardId:String(it.cardId||""), bought:String(it.bought||"nm"), sellAs:String(it.sellAs||"nm"), paid:numOr(it.paid)}; })}; }
-function normShow(s){ s = s||{}; return {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours),
+function normShow(s){ s = s||{}; return {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours), notes:String(s.notes||"").slice(0,NOTES_MAX),
   sales:(Array.isArray(s.sales)?s.sales:[]).map(function(r){ r = r||{}; return {id:String(r.id||uid("r")), cardId:r.cardId?String(r.cardId):null, label:String(r.label||"").slice(0,80), bought:numOr(r.bought), sold:numOr(r.sold)}; })}; }
 function canon(o){
   if(Array.isArray(o)) return "["+o.map(canon).join(",")+"]";
@@ -1317,16 +1325,30 @@ function diffList(remote, cur, norm){
   remote.forEach(function(x){ if(!ids[x.id]) d.del[x.id] = 1; });
   return d;
 }
-function pendingCount(){ var n = 0; ["pairings","shows"].forEach(function(k){ n += Object.keys(SYNC[k].up).length + Object.keys(SYNC[k].del).length; }); return n; }
+function pendingCount(){ var n = 0; (logLocked() ? ["pairings"] : ["pairings","shows"]).forEach(function(k){ n += Object.keys(SYNC[k].up).length + Object.keys(SYNC[k].del).length; }); return n; }
 function syncSave(){
   SYNC.pairings = diffList(REMOTE_PAIRS, sharedPairs(), normPair);
-  if(typeof LOG!=="undefined") SYNC.shows = diffList(REMOTE_SHOWS, LOG.shows, normShow);
+  if(typeof LOG!=="undefined" && !logLocked()){ SYNC.shows = diffList(REMOTE_SHOWS, LOG.shows, normShow); warmEnc(); }
   if(!pendingCount()) delete SYNC.sentAt;
   save(SYNC_KEY, SYNC);
 }
+/* Each changed card show is locked (encrypted) on this phone before it goes to GitHub, so the public repo
+   and the save issue only ever hold scrambled data. Locking runs in the background as you edit. */
+var ENC = {};
+function b64e(u){ var t = ""; for(var i=0;i<u.length;i++) t += String.fromCharCode(u[i]); return btoa(t); }
+function encShow(sh){
+  var src = canon(sh), c = ENC[sh.id]; if(c && c.src===src) return Promise.resolve(c.rec);
+  var iv = crypto.getRandomValues(new Uint8Array(12)), te = new TextEncoder();
+  return crypto.subtle.encrypt({name:"AES-GCM", iv:iv, additionalData:te.encode(sh.id)}, window.CFZ_LOGKEY, te.encode(JSON.stringify(sh))).then(function(ct){
+    var rec = {id:sh.id, iv:b64e(iv), ct:b64e(new Uint8Array(ct))}; ENC[sh.id] = {src:src, rec:rec}; return rec; });
+}
+function warmEnc(){ if(!window.CFZ_LOGKEY) return; Object.keys(SYNC.shows.up).forEach(function(id){ encShow(SYNC.shows.up[id]).catch(function(){}); }); }
+function encReady(){ var out = [];
+  for(var id in SYNC.shows.up){ var c = ENC[id]; if(!c || c.src!==canon(SYNC.shows.up[id])) return null; out.push(c.rec); }
+  return out; }
 function syncSummary(){
   var p = Object.keys(SYNC.pairings.up).length + Object.keys(SYNC.pairings.del).length;
-  var s = Object.keys(SYNC.shows.up).length + Object.keys(SYNC.shows.del).length, a = [];
+  var s = logLocked() ? 0 : Object.keys(SYNC.shows.up).length + Object.keys(SYNC.shows.del).length, a = [];
   if(p) a.push(p+" pairing"+(p===1?"":"s")); if(s) a.push(s+" card show"+(s===1?"":"s"));
   return a.join(" + ");
 }
@@ -1338,7 +1360,13 @@ function copyText(t){
 function pushToGitHub(){
   syncSave(); if(!pendingCount()) return;
   function vals(o){ return Object.keys(o).map(function(k){ return o[k]; }); }
-  var payload = {v:1, pairings:{up:vals(SYNC.pairings.up), del:Object.keys(SYNC.pairings.del)}, shows:{up:vals(SYNC.shows.up), del:Object.keys(SYNC.shows.del)}};
+  var showUps = [];
+  if(!logLocked() && Object.keys(SYNC.shows.up).length){
+    if(!window.CFZ_LOGKEY){ state.pairMsg = "Unlock the Profit Log first so your card shows can be locked before saving."; mountBar(); return; }
+    showUps = encReady();
+    if(!showUps){ warmEnc(); state.pairMsg = "Locking your profit log changes. Tap Save to GitHub again in a second."; mountBar(); return; }
+  }
+  var payload = {v:1, pairings:{up:vals(SYNC.pairings.up), del:Object.keys(SYNC.pairings.del)}, shows:logLocked() ? {up:[], del:[]} : {up:showUps, del:Object.keys(SYNC.shows.del)}};
   var title = "Save data: "+syncSummary();
   var body = "Sent from the Card Flipz site. Press **Create**: the bot saves this and closes the issue in about a minute.\n\n```json\n"+JSON.stringify(payload)+"\n```";
   var base = "https://github.com/"+DATA_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body=";
@@ -1387,7 +1415,7 @@ function tabs(){
   var v = state.view, cur = v==="finder" ? "finder" : v==="check" ? "check" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
   var fn = finderOpen() ? finderAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
-  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log","Profit Log")+t("admin",adminTabLabel())+'</nav>';
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log", logLocked() ? "Profit Log 🔒" : "Profit Log")+t("admin",adminTabLabel())+'</nav>';
 }
 function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
 
@@ -1432,7 +1460,7 @@ function mountBar(){
   var pd = document.getElementById("pb-discard"); if(pd) pd.addEventListener("click", function(){
     if(!confirm("Throw away the "+syncSummary()+" changes that aren't on GitHub yet?")) return;
     pairs = REMOTE_PAIRS.map(clone).concat(localPairsFromStore()); LOG.shows = REMOTE_SHOWS.map(clone);
-    SYNC = {pairings:emptyDiff(), shows:emptyDiff()}; save(SYNC_KEY, SYNC); state.pairMsg = "";
+    SYNC = {pairings:emptyDiff(), shows:logLocked() ? SYNC.shows : emptyDiff()}; save(SYNC_KEY, SYNC); state.pairMsg = "";
     if(state.view==="pairing" && !pairById(state.pid)) state.view = "pairings";
     if(state.view==="show" && !showById(state.showId)) state.view = "log"; render(); });
 }
@@ -1546,7 +1574,8 @@ function renderPairing(){
       '<button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'; }).join("")+'</div>';
   if(p.items.length) h += '<p class="note">Bought → sells as. Leave Paid blank to use the market price for the bought condition. Tick cards to see what just those pay, or to split, move or remove them. Tap a name for its stats.</p>';
   h += '</section>';
-  if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
+  if(p.items.length && logLocked()) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Unlock the <b>Profit Log</b> tab to log it.</span></div>';
+  else if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
   root.innerHTML = h; bindHeader();
   function rerender(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
   document.getElementById("pback").addEventListener("click", function(){ state.notice = ""; goPairs(null); });
@@ -1692,6 +1721,7 @@ function backupText(){
   L.push("Total profit: "+signed(t.profit)+"   Card shows: "+t.shows+"   Hours: "+t.hours+"   Per hour: "+perHr(t.perHour)+"   Average per show: "+(t.avg==null?"—":signed(t.avg)), "");
   sortedShows(false).forEach(function(sh){ var s = showStats(sh);
     L.push(sh.date+" · "+(sh.name||"Card show")+" · "+(s.hours||"?")+" h · profit "+signed(s.profit)+(s.perHour!=null?" · "+perHr(s.perHour):""));
+    if(sh.notes) L.push("   Notes: "+sh.notes.replace(/\n/g,"\n   "));
     sh.sales.forEach(function(r){ L.push("   "+saleName(r)+" | bought $"+(Number(r.bought)||0)+" | "+(isNum(r.sold) ? "sold $"+Number(r.sold)+" | "+signed(Number(r.sold)-(Number(r.bought)||0)) : "not sold yet")); });
     L.push("");
   });
@@ -1710,7 +1740,7 @@ function downloadBackup(){
 }
 function parseBackup(text){
   var i = String(text||"").indexOf(BK_MARK), json = i>=0 ? text.slice(i+BK_MARK.length) : text;
-  try{ var d = JSON.parse(json.trim()); if(d && Array.isArray(d.shows)) return d.shows.filter(function(s){ return s && typeof s==="object"; }).map(function(s){ return {id:String(s.id||uid("s")), name:String(s.name||"Card show"), date:String(s.date||""), hours:isNum(s.hours)?Number(s.hours):"", sales:Array.isArray(s.sales)?s.sales.map(function(r){ return {id:String(r.id||uid("r")), cardId:r.cardId||null, label:String(r.label||""), bought:isNum(r.bought)?Number(r.bought):"", sold:isNum(r.sold)?Number(r.sold):""}; }):[]}; }); }catch(e){}
+  try{ var d = JSON.parse(json.trim()); if(d && Array.isArray(d.shows)) return d.shows.filter(function(s){ return s && typeof s==="object"; }).map(function(s){ return {id:String(s.id||uid("s")), name:String(s.name||"Card show"), date:String(s.date||""), hours:isNum(s.hours)?Number(s.hours):"", notes:String(s.notes||"").slice(0,NOTES_MAX), sales:Array.isArray(s.sales)?s.sales.map(function(r){ return {id:String(r.id||uid("r")), cardId:r.cardId||null, label:String(r.label||""), bought:isNum(r.bought)?Number(r.bought):"", sold:isNum(r.sold)?Number(r.sold):""}; }):[]}; }); }catch(e){}
   return null;
 }
 function restoreFrom(text){
@@ -1720,10 +1750,39 @@ function restoreFrom(text){
   LOG.shows = shows; markBackedUp(); saveLog(); state.backupPanel = {mode:"msg", msg:"Restored "+shows.length+" card show"+(shows.length===1?"":"s")+"."}; render();
 }
 
+/* --- passcode lock --- */
+function unlockLog(code){
+  var e = LOGLOCK.enc, te = new TextEncoder();
+  return crypto.subtle.importKey("raw", te.encode(code), "PBKDF2", false, ["deriveKey"]).then(function(base){
+    return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64d(e.salt), iterations:e.iter, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, true, ["encrypt","decrypt"]);
+  }).then(function(k){
+    return crypto.subtle.decrypt({name:"AES-GCM", iv:b64d(e.check.iv), additionalData:te.encode("check")}, k, b64d(e.check.ct)).then(function(){ return crypto.subtle.exportKey("raw", k); });
+  }).then(function(raw){ save("cfz.logKey", {salt:e.salt, key:b64e(new Uint8Array(raw))}); });
+}
+function b64d(t){ var b = atob(t), u = new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i] = b.charCodeAt(i); return u; }
+function lockLog(){ try{ localStorage.removeItem("cfz.logKey"); }catch(e){} remember(); location.reload(); }
+function renderLogLock(){
+  var h = header();
+  h += '<form class="flock" id="llock" autocomplete="off"><h2>Profit Log</h2><p>Enter the 4-digit passcode to open your profit log.</p>'+
+    '<input id="llock-code" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="Passcode" autofocus>'+
+    '<button class="btn primary" type="submit">Unlock</button><div class="msg" id="llock-msg" role="status"></div></form>';
+  root.innerHTML = h; bindHeader();
+  var f = document.getElementById("llock"), inp = document.getElementById("llock-code"), msg = document.getElementById("llock-msg"), busy = false;
+  function tryCode(){
+    var v = inp.value.trim(); if(v.length < 4){ msg.textContent = "Enter all 4 digits."; return; }
+    if(busy) return; busy = true; msg.textContent = "Unlocking…";
+    if(!(window.crypto && crypto.subtle)){ msg.textContent = "This browser can't open the locked log."; busy = false; return; }
+    unlockLog(v).then(function(){ msg.textContent = "Opening…"; remember(); location.reload(); })
+      .catch(function(){ busy = false; msg.textContent = "Wrong passcode."; inp.value = ""; inp.focus(); });
+  }
+  f.addEventListener("submit", function(e){ e.preventDefault(); tryCode(); });
+  inp.addEventListener("input", function(){ inp.value = inp.value.replace(/\D/g,"").slice(0,4); if(!busy) msg.textContent = ""; if(inp.value.length===4) tryCode(); });
+}
+
 /* --- views --- */
 function renderLog(){
   var t = logStats(), h = header();
-  h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Changes save on your phone right away; tap <b>Save to GitHub</b> to share them. Note: the GitHub repo is public, so anyone with the link can see this log.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
+  h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Changes save on your phone right away; tap <b>Save to GitHub</b> to keep them on the site. The log is locked with your passcode: on GitHub it’s saved scrambled, so only someone with the passcode can read it.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
   if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so unsaved changes are lost if you close it. Tap Save to GitHub before leaving.</p>';
   if(backupDue() && !state.backupPanel) h += '<div class="notice bk-due"><span><b>'+(new Date().getDay()===5?'It’s Friday: save':'Time to save')+' a backup of your profit log.</b> If you lose your phone or clear your browser, this file brings it back.</span><span class="bk-acts"><button class="btn primary" id="bk-now">Save backup</button><button class="btn ghost" id="bk-snooze">Not now</button></span></div>';
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
@@ -1736,13 +1795,16 @@ function renderLog(){
       '<div><span>Average per show</span><b>'+(t.avg==null?'—':signed(t.avg))+'</b><small>'+t.shows+' card show'+(t.shows===1?'':'s')+'</small></div></div>';
     h += '<section class="block"><div class="c-head"><h3>'+(chartMode==="run"?'Running total':'Profit by show')+'</h3><div class="seg" role="group" aria-label="Chart view"><button id="cm-show" aria-pressed="'+(chartMode==="show")+'">Each show</button><button id="cm-run" aria-pressed="'+(chartMode==="run")+'">Running total</button></div></div><div class="chart-box" id="pchart"></div></section>';
     h += '<section class="block"><h3>Card shows</h3><div class="plist">'+sortedShows(false).map(function(sh){ var s = showStats(sh);
-      return '<button class="show-row" data-show="'+esc(sh.id)+'"><span class="show-date">'+fmtDate(sh.date)+'</span><span class="show-main"><b>'+esc(sh.name||"Card show")+'</b><span class="sub">'+(s.hours? s.hours+' h · ' : '')+s.sold+' sold'+(s.unsold? ' · '+s.unsold+' not sold yet':'')+'</span></span>'+
+      return '<button class="show-row" data-show="'+esc(sh.id)+'"><span class="show-date">'+fmtDate(sh.date)+'</span><span class="show-main"><b>'+esc(sh.name||"Card show")+'</b><span class="sub">'+(s.hours? s.hours+' h · ' : '')+s.sold+' sold'+(s.unsold? ' · '+s.unsold+' not sold yet':'')+'</span>'+(sh.notes ? '<span class="show-note">📝 '+esc(sh.notes.replace(/\s+/g," ").slice(0,90))+'</span>' : '')+'</span>'+
         '<span class="show-num"><b class="num '+(s.profit>=0?'':'neg-t')+'">'+signed(s.profit)+'</b><span class="sub">'+(s.perHour!=null?perHr(s.perHour):'')+'</span></span></button>'; }).join("")+'</div></section>';
   }
+  if(LOGLOCK) h += '<div class="log-lockrow"><button class="btn ghost" id="loglock">🔒 Lock on this device</button></div>';
   h += '<div class="bk-foot"><span class="sub">Backup: '+(LOG.lastBackup ? 'last saved '+fmtDate(LOG.lastBackup) : 'never saved')+'</span><button class="btn ghost" id="bk-save">Save backup</button><button class="btn ghost" id="bk-restore">Restore</button></div>';
   root.innerHTML = h; bindHeader();
   document.getElementById("newshow").addEventListener("click", function(){ var sh = newShow(); goLog(sh.id); });
   bindBackup();
+  var ll = document.getElementById("loglock"); if(ll) ll.addEventListener("click", function(){
+    if(pendingCount() && !confirm("You have changes not on GitHub yet. They stay on this phone and come back when you unlock. Lock now?")) return; lockLog(); });
   root.querySelectorAll("[data-show]").forEach(function(b){ b.addEventListener("click", function(){ goLog(b.getAttribute("data-show")); }); });
   var a = document.getElementById("cm-show"), b = document.getElementById("cm-run");
   if(a){ a.addEventListener("click", function(){ chartMode = "show"; render(); }); b.addEventListener("click", function(){ chartMode = "run"; render(); }); }
@@ -1786,6 +1848,9 @@ function renderShow(){
   h += '<div class="psum"><div class="psum-main"><span class="lbl">Profit from this show</span><b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b>'+(s.perHour!=null?'<span class="pill pos">'+perHr(s.perHour)+'</span>':'')+'</div>'+
     '<div class="psum-stats"><div><span>You paid</span><b class="num">'+money(s.spent,0)+'</b><small>'+sh.sales.length+' card'+(sh.sales.length===1?'':'s')+'</small></div><div class="v"><span>You sold for</span><b class="num">'+money(s.got,0)+'</b><small>'+s.sold+' sold</small></div><div><span>Not sold yet</span><b class="num">'+s.unsold+'</b><small>'+(s.unsold? money(s.unsoldCost,0)+' paid, not counted yet' : 'Everything sold')+'</small></div></div>'+
     (s.hours ? '' : '<p class="sub">Add your hours above to see money per hour.</p>')+'</div>';
+  var nlen = (sh.notes||"").length;
+  h += '<section class="block"><h3>Notes</h3><textarea id="snotes" class="snotes" maxlength="'+NOTES_MAX+'" rows="6" placeholder="Your thoughts on this show: how it went, vendors who paid well, cards people were asking for, what to bring next time…">'+esc(sh.notes||"")+'</textarea>'+
+    '<div class="notes-meta sub"><span id="snotes-st">'+(nlen?'Saved on this phone. Tap Save to GitHub to keep it on the site.':'Notes save as you type.')+'</span><span id="snotes-n">'+nlen+' / '+NOTES_MAX+'</span></div></section>';
   h += '<section class="block"><h3>Cards ('+sh.sales.length+')</h3>';
   if(!sh.sales.length) h += '<div class="empty">No cards yet. Add the cards you bought or sold at this show below.</div>';
   else if(phone){
@@ -1806,7 +1871,11 @@ function renderShow(){
   if(pairs.length) h += '<div class="padd pair-import"><span class="sub">Or add a whole pairing:</span><select id="spair" aria-label="Pairing to add">'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+' ('+p.items.length+')</option>'; }).join("")+'</select><button class="btn" id="spair-go">Add pairing</button></div>';
   root.innerHTML = h; bindHeader();
   function redraw(){ saveLog(); var y = window.scrollY; render(); window.scrollTo(0,y); }
-  document.getElementById("sback").addEventListener("click", function(){ goLog(null); });
+  var nt = document.getElementById("snotes"), nst = document.getElementById("snotes-st"), nn = document.getElementById("snotes-n"), ntimer = null;
+  function flushNotes(){ clearTimeout(ntimer); ntimer = null; if(sh.notes !== nt.value){ sh.notes = nt.value.slice(0,NOTES_MAX); saveLog(); } nst.textContent = "Saved on this phone. Tap Save to GitHub to keep it on the site."; }
+  nt.addEventListener("input", function(){ nn.textContent = nt.value.length+" / "+NOTES_MAX; nst.textContent = "Saving…"; clearTimeout(ntimer); ntimer = setTimeout(flushNotes, 600); });
+  nt.addEventListener("blur", flushNotes);
+  document.getElementById("sback").addEventListener("click", function(){ flushNotes(); goLog(null); });
   var nm = document.getElementById("sname"); nm.addEventListener("change", function(){ sh.name = nm.value.trim() || "Card show"; saveLog(); });
   var dt = document.getElementById("sdate"); dt.addEventListener("change", function(){ sh.date = dt.value; saveLog(); });
   var hr = document.getElementById("shours"); hr.addEventListener("change", function(){ var v = parseFloat(hr.value); sh.hours = isNaN(v)||v<0 ? "" : v; redraw(); });
@@ -2301,6 +2370,7 @@ function render(){
   else if(state.view==="admin") renderAdmin();
   else if(state.view==="pairings") renderPairings();
   else if(state.view==="pairing") renderPairing();
+  else if((state.view==="log"||state.view==="show") && logLocked()) renderLogLock();
   else if(state.view==="log") renderLog();
   else if(state.view==="show") renderShow();
   else renderList();
@@ -2384,6 +2454,23 @@ function split(cards, pairings){
   var res={}; for(var k in out) res[k]=JSON.stringify(out[k]); res.pairings=JSON.stringify(pairings||[]); return res;
 }
 var REMOTE_VERSION="";
+/* Profit log lock: profitlog.json holds each card show encrypted (AES-GCM, key from the passcode via PBKDF2).
+   After the passcode is entered once on a device, the key is kept there so the log opens on its own. */
+var LOGKEY_STORE="cfz.logKey";
+function b64d(t){ var b=atob(t), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
+function openLog(log){
+  var enc=log&&log.enc;
+  if(!enc) return Promise.resolve({shows:(log&&log.shows)||[], lock:null});
+  var locked={shows:[], lock:{enc:enc, open:false}}, saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(LOGKEY_STORE)||"null"); }catch(e){}
+  if(!saved || saved.salt!==enc.salt || !window.crypto || !crypto.subtle) return Promise.resolve(locked);
+  return crypto.subtle.importKey("raw", b64d(saved.key), "AES-GCM", false, ["encrypt","decrypt"]).then(function(k){
+    function dec(o, aad){ return crypto.subtle.decrypt({name:"AES-GCM", iv:b64d(o.iv), additionalData:new TextEncoder().encode(aad)}, k, b64d(o.ct)).then(function(b){ return JSON.parse(new TextDecoder().decode(b)); }); }
+    return dec(enc.check, "check").then(function(){
+      return Promise.all((log.shows||[]).map(function(x){ return dec(x, x.id).catch(function(){ return null; }); }));
+    }).then(function(shows){ window.CFZ_LOGKEY=k; return {shows:shows.filter(function(x){ return x && typeof x==="object"; }), lock:{enc:enc, open:true}}; });
+  }).catch(function(){ try{ localStorage.removeItem(LOGKEY_STORE); }catch(e){} return locked; });
+}
 window.claude={use:function(name){
   if(name==="downloads") return Promise.resolve({save:function(o){ var b=new Blob([o.data],{type:"text/plain"}); var a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=o.filename; document.body.appendChild(a); a.click(); setTimeout(function(){a.remove();},1500); return Promise.resolve(); }});
   if(name==="artifact") return Promise.resolve({publish:function(doc){
@@ -2425,6 +2512,9 @@ getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).the
   MAN=man; rules=man.eras.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ return new RegExp(p,"i"); })}; });
   return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]}), getJSON("candidates.json", {version:"", cards:[]}).catch(function(){ return {version:"", cards:[]}; })]));
 }).then(function(files){
+  return openLog(files[files.length-2]).then(function(L){ return [files, L]; });
+}).then(function(arr){
+  var files=arr[0], LOGX=arr[1];
   var data={}, local=readLocal(), dropped=[], changedLocal=false;
   MAN.eras.forEach(function(e,i){ data[e.id]=files[i]; });
   var cf=files[files.length-1], log=files[files.length-2]; data.pairings=files[files.length-3];
@@ -2452,7 +2542,7 @@ getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).the
   MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
   var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
   var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
-  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:(log&&log.shows)||[], pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched}});
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:LOGX.shows, logLock:LOGX.lock, pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched}});
   notice(dropped);
   if(FROM_PHONE){ var off=document.createElement("div"); off.className="localnote"; off.textContent="No connection right now, so this is the card data saved on your phone. It updates on its own next time you have signal."; document.body.insertBefore(off,document.body.firstChild); }
   var s=document.createElement("script"); s.textContent=document.getElementById("app-js").textContent; document.body.appendChild(s);

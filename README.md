@@ -50,7 +50,16 @@ Pairings and the profit log save from the site, no downloading needed. Every cha
 phone right away; tap **Save to GitHub** in the bar at the bottom and press **Create** on the GitHub
 page that opens. `.github/workflows/save-data.yml` (`scripts/save_data.py`) writes the changes into
 `pairings.json` / `profitlog.json` and closes the issue (about a minute). Only you and collaborators
-can save this way. The repo is public, so the saved pairings and profit log are public too.
+can save this way. The repo is public, so saved pairings are public too.
+
+## Profit Log lock (passcode)
+The **Profit Log** tab asks for a 4-digit passcode. Each card show (cards, prices, hours and notes) is
+encrypted on the phone before it's saved (AES-GCM, key made from the passcode with PBKDF2), so
+`profitlog.json` and the "Save data" issues only hold scrambled text. The passcode is never stored in the
+repo. Once it's entered on a device, that device stays unlocked until you tap **Lock on this device**.
+Each card show also has a **Notes** box for your thoughts on the show; notes save with the rest of the log.
+A 4-digit code keeps casual visitors out but could be guessed by someone determined, so don't put
+anything truly sensitive in the notes.
 
 ## Adding a new era later
 Add an entry to `eras/eras.json` above `"other"` (id, name, years, set-name patterns), then create
