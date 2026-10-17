@@ -66,19 +66,18 @@ def check_pairing(p):
         need(is_money(it["paid"]), f"A card in '{p['name']}' has a bad price paid")
 
 
+B64_RE = re.compile(r"^[A-Za-z0-9+/]+={0,2}$")
+MAX_CT = 60000  # one encrypted card show (cards + notes)
+
+
 def check_show(s):
-    check_keys(s, ["id", "name", "date", "hours", "sales"], "A card show")
+    """Card shows arrive locked (encrypted on the phone with the Profit Log passcode).
+    The bot never sees the passcode or what's inside; it only checks the shape and stores it."""
+    check_keys(s, ["id", "iv", "ct"], "A card show")
     check_id(s["id"], "A card show")
-    check_str(s["name"], 60, "A show name")
-    check_str(s["date"], 10, "A show date")
-    need(is_money(s["hours"]), f"Show '{s['name']}' has bad hours")
-    need(isinstance(s["sales"], list) and len(s["sales"]) <= MAX_ITEMS, f"Show '{s['name']}' has too many cards")
-    for r in s["sales"]:
-        check_keys(r, ["id", "cardId", "label", "bought", "sold"], f"A card in show '{s['name']}'")
-        check_id(r["id"], "A sale")
-        need(r["cardId"] is None or (isinstance(r["cardId"], str) and len(r["cardId"]) <= 120), "A sale has a bad card id")
-        check_str(r["label"], 80, "A sale label")
-        need(is_money(r["bought"]) and is_money(r["sold"]), f"A card in show '{s['name']}' has a bad price")
+    need(isinstance(s["iv"], str) and len(s["iv"]) == 16 and B64_RE.match(s["iv"]), "A card show isn't locked properly (bad iv)")
+    need(isinstance(s["ct"], str) and 24 <= len(s["ct"]) <= MAX_CT and B64_RE.match(s["ct"]),
+         "A card show isn't locked properly, or its notes are too long")
 
 
 def apply(items, change, check, new_first):
@@ -148,6 +147,8 @@ def main():
             continue
         path = os.path.join(ROOT, fname)
         d = load(path, key)
+        if key == "shows":
+            need(isinstance(d.get("enc"), dict), "profitlog.json has no lock settings (enc), so locked card shows can't be saved")
         a, u, r = apply(d[key], change, check, new_first)
         d["version"] = stamp
         save(path, d)
