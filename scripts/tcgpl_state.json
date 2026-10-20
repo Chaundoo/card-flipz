@@ -1031,6 +1031,11 @@
 "synced": "2026-10-20",
 "variant": "Reverse Holofoil"
 },
+"charizard-19-113-84194": {
+"id": "019c975d-5f7a-7e1d-8763-315b34c929f9",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
 "charizard-20-149-84192-holo": {
 "id": "019c975d-5f75-76da-9bcf-0aca92f482e1",
 "synced": "2026-10-20",
@@ -1116,6 +1121,11 @@
 },
 "charizard-holo-rare-11-evolutions": {
 "id": "019c97ae-8991-77a2-bdfe-bee5cec2a02e",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
+"charizard-sm158-sm158-183966": {
+"id": "019c96af-23a3-7f6c-aa8a-663a8bb4e6fd",
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
@@ -1952,6 +1962,11 @@
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
+"dialga-3-95-84806-reverse-": {
+"id": "019c9761-97da-7c7c-8dd0-ef46ec8fcd54",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
 "dialga-4-100-84800-holofo": {
 "id": "019c9761-97ce-7d25-a8a8-335f01b40890",
 "synced": "2026-10-20",
@@ -2716,6 +2731,11 @@
 "id": "019c9763-c0e4-7048-816d-be3629ea6e0d",
 "synced": "2026-10-20",
 "variant": "Normal"
+},
+"feraligatr-25-95-85422": {
+"id": "019c9763-c0e9-7f87-b15b-a370f7293cb6",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
 },
 "feraligatr-8-123-85418": {
 "id": "019c9763-c0e2-7791-b9fc-10df3e7d83a5",
@@ -4528,6 +4548,11 @@
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
+"latios-ex-113-full-art-113-116-86676": {
+"id": "019c976c-9fd4-7b93-91b0-77ac2ee9ba15",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
 "latios-ex-86-116-86674-holo": {
 "id": "019c976c-9fd2-755b-ac0b-801cef0af99d",
 "synced": "2026-10-20",
@@ -5669,6 +5694,11 @@
 "synced": "2026-10-20",
 "variant": "Reverse Holofoil"
 },
+"mewtwo-53-113-87424-holofoil": {
+"id": "019c9770-ca2b-7688-8d4c-bc6e0f9b320f",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
 "mewtwo-9-100-87421": {
 "id": "019c9770-ca1b-7782-b6e9-4e1377b8cdf3",
 "synced": "2026-10-20",
@@ -5756,6 +5786,11 @@
 },
 "mewtwo-mew-gx-sm191-197856": {
 "id": "019c96b3-87c2-712d-8f49-3569cf5b369b",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
+"mewtwo-sm77-sm77-146982": {
+"id": "019c96ab-691c-7941-a673-0d57635e3494",
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
@@ -6432,6 +6467,11 @@
 "synced": "2026-10-20",
 "variant": "Normal"
 },
+"pikachu-39-99-88102": {
+"id": "019c9774-e2b4-772c-9af8-3dc72514e9d9",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
 "pikachu-43-95-88077-normal": {
 "id": "019c9793-edae-7446-bca6-e2af92584e8d",
 "synced": "2026-10-20",
@@ -6471,6 +6511,11 @@
 "id": "019c9774-e29e-7a61-9cc4-02b843c307a7",
 "synced": "2026-10-20",
 "variant": "Normal"
+},
+"pikachu-78-123-88095": {
+"id": "019c9774-e2b0-7a23-b1d1-f422c4ab1751",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
 },
 "pikachu-78-123-88095-non-ho": {
 "id": "019c9774-e2af-7fbd-992f-43d031ba74de",
@@ -7293,8 +7338,18 @@
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
+"reshiram-114-full-art-secret-rare-114-113-88711": {
+"id": "019c9779-1103-7a71-baa7-4959526db3f0",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
 "reshiram-17-116-88708-revers": {
 "id": "019c9779-10f9-7fda-8020-575304f31b7f",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
+"reshiram-26-114-88704": {
+"id": "019c9779-10ec-71b0-a2fa-7330af1be1cd",
 "synced": "2026-10-20",
 "variant": "Reverse Holofoil"
 },
@@ -7302,6 +7357,11 @@
 "id": "019c9779-10fc-75a0-b59d-6e7e6c98206c",
 "synced": "2026-10-20",
 "variant": "Holofoil"
+},
+"reshiram-28-113-88709-reverse-": {
+"id": "019c9779-10ff-7b1a-a2af-96f6a89e6d5b",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
 },
 "reshiram-charizard-gx-20-214-188409-holo": {
 "id": "019c96af-3b0b-7fd9-8838-178a8de28050",
@@ -7730,6 +7790,11 @@
 },
 "shining-ho-oh-sm70-146979-holo": {
 "id": "019c96ab-68b0-7f95-9e6c-f3b5ee441687",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
+"shining-jirachi-42-73-146701": {
+"id": "019c97b6-de0e-7ab7-b27e-e0cbd38bd9c9",
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
@@ -10187,6 +10252,7 @@
 "SM Promos": "pokemon--sm-promos",
 "SV: Black Bolt": "pokemon--sv-black-bolt",
 "Secret Wonders": "pokemon--secret-wonders",
+"Shining Legends": "pokemon--shining-legends",
 "Skyridge": "pokemon--skyridge",
 "Southern Islands": "pokemon--southern-islands",
 "Stormfront": "pokemon--stormfront",

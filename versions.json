@@ -1,13 +1,13 @@
 {
  "files": {
-  "candidates.json": "973946ce5b3b",
-  "eras/bw/bw.json": "3798f19dc9fc",
-  "eras/dp-hgss/dp-hgss.json": "3546f6b34dc1",
+  "candidates.json": "c1ff7b35708c",
+  "eras/bw/bw.json": "1cecbb9d70c0",
+  "eras/dp-hgss/dp-hgss.json": "2c03bd98d09c",
   "eras/eras.json": "69305f4aa2b7",
   "eras/ex/ex.json": "15c034b97393",
   "eras/me/me.json": "0bdf4ebff812",
   "eras/other/other.json": "fe84a83350fc",
-  "eras/sm/sm.json": "0504dd10ebaa",
+  "eras/sm/sm.json": "e4996cfb60c1",
   "eras/sv/sv.json": "eab2d3b71f3b",
   "eras/swsh/swsh.json": "783660f17f50",
   "eras/wotc/wotc.json": "867a086720f1",

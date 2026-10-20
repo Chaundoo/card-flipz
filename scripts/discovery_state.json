@@ -1692,6 +1692,136 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:feraligatr",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:reshiram",
+"set:Legendary Treasures",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:pikachu",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:pikachu",
+"set:Next Destinies",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:dialga",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:latios",
+"set:Plasma Freeze",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:reshiram",
+"set:Legendary Treasures",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:mewtwo",
+"set:SM Promos",
+"kind:promo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:charizard",
+"set:Legendary Treasures",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:reshiram",
+"set:Black and White",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:mewtwo",
+"set:Legendary Treasures",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:shining jirachi",
+"set:Shining Legends",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:charizard",
+"set:SM Promos",
+"kind:promo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
