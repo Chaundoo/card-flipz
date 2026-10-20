@@ -2727,6 +2727,11 @@
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },
+"feraligatr-20-123-85419": {
+"id": "019c9763-c0e5-7986-978b-5f1d911bc3fd",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
 "feraligatr-20-123-85419-non-ho": {
 "id": "019c9763-c0e4-7048-816d-be3629ea6e0d",
 "synced": "2026-10-20",
@@ -3457,6 +3462,11 @@
 "synced": "2026-10-20",
 "variant": "Normal"
 },
+"growlithe-65-123-85960": {
+"id": "019c9768-6dfe-75ae-9d45-1cf102beeb09",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
+},
 "growlithe-rc4": {
 "id": "019c9790-c4e6-7a8a-b342-3368f18270c2",
 "synced": "2026-10-20",
@@ -3542,6 +3552,11 @@
 "synced": "2026-10-20",
 "variant": "Normal"
 },
+"gyarados-4-123-85992": {
+"id": "019c9768-6e66-706a-94e1-5bca7c35a14d",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
 "gyarados-4-123-85992-revers": {
 "id": "019c9768-6e68-7c40-afb7-3c66e5ceb11f",
 "synced": "2026-10-20",
@@ -3551,6 +3566,11 @@
 "id": "019c9768-6e76-7ba3-9df5-6c4b02b74877",
 "synced": "2026-10-20",
 "variant": "Holofoil"
+},
+"gyarados-7-95-85999-reverse-": {
+"id": "019c9768-6e78-7f50-a56c-083fc629c2c2",
+"synced": "2026-10-20",
+"variant": "Reverse Holofoil"
 },
 "gyarados-8-107-85991-holofo": {
 "id": "019c9768-6e60-7f3f-866f-9eed5ff29b3a",
@@ -4412,6 +4432,11 @@
 },
 "lapras-ex-99-109-86626": {
 "id": "019c976c-9f7b-7321-84bd-d767fdf09344",
+"synced": "2026-10-20",
+"variant": "Holofoil"
+},
+"lapras-hgss14-hgss14-86621": {
+"id": "019c9791-e435-7d71-afcd-871b9a41db82",
 "synced": "2026-10-20",
 "variant": "Holofoil"
 },

@@ -1822,6 +1822,56 @@
 "price:$50-100"
 ],
 "v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:lapras",
+"set:HGSS Promos",
+"kind:promo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:growlithe",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:gyarados",
+"set:HeartGold SoulSilver",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:feraligatr",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-20",
+"f": [
+"pokemon:gyarados",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
