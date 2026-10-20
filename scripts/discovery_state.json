@@ -1512,6 +1512,186 @@
 "price:$20-50"
 ],
 "v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:leafeon",
+"set:Undaunted",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:leafeon",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:deoxys",
+"set:Call of Legends",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:zekrom",
+"set:Black and White",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:kyogre",
+"set:Dark Explorers",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:kyogre",
+"set:Dark Explorers",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:mew",
+"set:Dragons Exalted",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:kyogre",
+"set:Call of Legends",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:espeon",
+"set:Call of Legends",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:white kyurem",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:tyranitar",
+"set:Unleashed",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:black kyurem",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:gengar",
+"set:Generations",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:celebi",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:raikou",
+"set:Dark Explorers",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:jirachi",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:palkia",
+"set:Call of Legends",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-19",
+"f": [
+"pokemon:pikachu",
+"set:Boundaries Crossed",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
 }
 ]
 }
