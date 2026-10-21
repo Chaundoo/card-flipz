@@ -31,6 +31,11 @@
 "synced": "2026-10-21",
 "variant": "Reverse Holofoil"
 },
+"absol-team-plasma-67-116-83455": {
+"id": "019c9759-269c-7f8d-8047-14511a54baa9",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
+},
 "absol-xy178-158183-holofo": {
 "id": "019c96ab-9d58-7ed1-ac3e-c8a339e51577",
 "synced": "2026-10-21",
@@ -235,6 +240,11 @@
 "id": "019c97a1-f264-7948-b469-77b8216e9668",
 "synced": "2026-10-21",
 "variant": "Unlimited"
+},
+"arcanine-1-123-83586": {
+"id": "019c9759-2814-727f-9944-c27b84900b25",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
 },
 "arcanine-1-123-83586-holo": {
 "id": "019c9759-2813-7201-b2c7-cb95a4ed48fa",
@@ -3644,6 +3654,11 @@
 "synced": "2026-10-21",
 "variant": "Unlimited"
 },
+"haunter-35-102-86031": {
+"id": "019c9768-6ec7-78e4-9605-6fd0d41d82a2",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
+},
 "haunter-35-102-86031-normal": {
 "id": "019c9768-6ec6-7801-aac4-41d64b9e221a",
 "synced": "2026-10-21",
@@ -4663,6 +4678,11 @@
 "id": "019c9791-e4bc-7243-b66e-18f71fb08025",
 "synced": "2026-10-21",
 "variant": "Normal"
+},
+"leafeon-6-108-86682": {
+"id": "019c976c-9fe2-7c5d-9f05-37bdbda8470c",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
 },
 "leafeon-7-100-86677-holo-7": {
 "id": "019c976c-9fd6-78a3-a194-80824999dc52",
@@ -7706,6 +7726,11 @@
 "synced": "2026-10-21",
 "variant": "Normal"
 },
+"scizor-7-90-88963": {
+"id": "019c9795-04cd-7c7b-8271-8f518b9cc4d3",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
+},
 "scizor-7-90-88963-holofo": {
 "id": "019c9795-04cc-7144-9616-5acff3ebe91a",
 "synced": "2026-10-21",
@@ -8610,6 +8635,11 @@
 "id": "019c9781-a177-7da2-9f7a-46ad261b302a",
 "synced": "2026-10-21",
 "variant": "Unlimited Holofoil"
+},
+"typhlosion-35-95-90109": {
+"id": "019c9781-a192-7630-b25a-228c81c7b640",
+"synced": "2026-10-21",
+"variant": "Reverse Holofoil"
 },
 "typhlosion-ex-110-115-90112-holofo": {
 "id": "019c9781-a197-7e76-8233-aa3239cd314f",

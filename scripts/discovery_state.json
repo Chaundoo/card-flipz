@@ -1872,6 +1872,66 @@
 "price:$20-50"
 ],
 "v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:scizor",
+"set:Undaunted",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:leafeon",
+"set:Dark Explorers",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:arcanine",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:typhlosion",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:absol",
+"set:Plasma Freeze",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-21",
+"f": [
+"pokemon:haunter",
+"set:Triumphant",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
