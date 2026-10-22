@@ -2384,6 +2384,13 @@ function adminFeed(){
     var mins = (new Date(r.updated_at) - new Date(r.run_started_at || r.created_at))/60000;
     if(bot==="tcgcheck" && c==="success" && mins < 4) return;            /* wake-ups that weren't this week's slot */
     if((bot==="pages" || bot==="versions") && c==="success"){ quiet[bot].ok++; return; }
+    if((bot==="pages" || bot==="versions") && c==="cancelled"){          /* replaced by a newer publish that worked (or is still going) */
+      var t0 = new Date(r.created_at).getTime();
+      var replaced = runs.some(function(o){ if(o.id===r.id || botOfRun(o)!==bot) return false;
+        var dt = new Date(o.created_at).getTime() - t0;
+        return dt >= 0 && dt <= 3*60000 && (o.status!=="completed" || o.conclusion==="success"); });
+      if(replaced) return;
+    }
     var nm = BOTINFO[bot].name, level, head;
     if(running){ level = "run"; head = nm+" is running right now."; }
     else if(c==="success"){ level = "ok"; head = nm+" ran fine."; }
