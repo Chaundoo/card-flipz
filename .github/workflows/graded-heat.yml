@@ -1,0 +1,101 @@
+name: Graded Heat (watch PSA slabs that are heating up)
+
+# Checks PSA 10 / 9 prices for popular-Pokémon slabs (mostly 1999-2020 cards) with PokemonPriceTracker's
+# free API and scores which ones look ready to move. The site's "Graded Heat" tab shows the list.
+# Runs every day after the Flip Finder. Mon-Thu it also spends a few spare TCG Price Lookup requests
+# finding more cards to watch (Fri-Sun those stay free for card shows). It never changes the site's cards.
+on:
+  schedule:
+    # 16:13 UTC = 8:13 am Pacific (9:13 am in summer), every day
+    - cron: "13 16 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Test run: check and report, but save nothing"
+        type: boolean
+        default: false
+      cards:
+        description: "Max slabs to check this run (blank = what the free daily credits allow, about 30)"
+        default: ""
+      force_scan:
+        description: "Also look for new cards on Friday-Sunday (uses a few show-day requests)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: graded-heat
+  cancel-in-progress: false
+
+jobs:
+  heat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check graded prices and score the slabs
+        id: run
+        continue-on-error: true
+        env:
+          PPT_API_KEY: ${{ secrets.PPT_API_KEY }}
+          TCGPL_API_KEY: ${{ secrets.TCGPL_API_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          HEAT_CARDS: ${{ github.event.inputs.cards || '' }}
+          FORCE_POOL_SCAN: ${{ github.event.inputs.force_scan || 'false' }}
+        run: python3 scripts/graded_heat.py
+
+      - name: Save the Graded Heat list
+        if: always() && steps.run.outputs.saved == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp graded/heat.json graded/state.json /tmp/keep/
+          for try in 1 2 3; do
+            python3 scripts/build_versions.py
+            git add graded/heat.json graded/state.json versions.json
+            git diff --cached --quiet && { echo "Nothing to save."; break; }
+            git commit -q -m "Graded Heat $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} slabs (${{ steps.run.outputs.hot }} heating up)"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            git fetch -q origin main && git reset -q --hard origin/main
+            mkdir -p graded && cp /tmp/keep/heat.json /tmp/keep/state.json graded/
+            sleep $((try * 10))
+          done
+
+      # Only post (GitHub emails each comment) when something needs a look or you ran it by hand.
+      - name: Post the result to the "Graded Heat log" issue
+        if: always() && (steps.run.outputs.status == 'FAILED' || github.event_name == 'workflow_dispatch' || failure())
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ Graded Heat crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) · open the site's **Graded Heat** tab to see the list" >> run_report.md
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Graded Heat log") | .number' | head -n 1)
+          if [ -z "$num" ]; then
+            url=$(gh issue create --title "Graded Heat log" \
+              --body "The Graded Heat bot posts here when something needs a look and whenever you run it by hand.")
+            num="${url##*/}"
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if it had problems
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
+          exit 1
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: graded
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.run.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh
