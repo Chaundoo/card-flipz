@@ -816,7 +816,7 @@ def main():
     saved = not DRY and status != "FAILED" and bool(checked or scanned or not os.path.exists(HEAT))
     if saved:
         jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
-                     "pool": len(pool), "watched": watched, "cards": final}, separators=(",", ":"))
+                     "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "cards": final}, separators=(",", ":"))
         gstate["about"] = "Written by scripts/graded_heat.py: graded price snapshots, the extra card pool and when each card was checked. Not loaded by the site."
         jdump(GSTATE, gstate, separators=(",", ":"), sort_keys=True)
     return finish(status, report, saved=saved, total=len(final), hot=len(hot))
