@@ -2298,7 +2298,7 @@ function renderHeat(){
 }
 function htResults(){
   var D = HEAT.data || {}, all = D.cards || [];
-  if(!all.length) return '<div class="empty">'+(D.missing ?
+  if(!all.length) return '<div class="empty">'+(D.missing || D.needs_key ?
     'No graded data yet. The Graded Heat bot needs a free PokemonPriceTracker API key saved in GitHub as the <b>PPT_API_KEY</b> secret (see the README). After that it fills this list a little more every morning.' :
     'Nothing on the list yet. The bot checks about 30 slabs a morning, so the first ones show up after its next run.')+'</div>';
   var rows = htRows(), shown = rows.slice(0, 60), b = Number(HT.budget)||0;
