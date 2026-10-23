@@ -1,8 +1,13 @@
 {
-  "about": "How the 100 free TCG Price Lookup requests a day are shared. The count resets at 00:00 UTC (5 pm Pacific in summer, 4 pm in winter), so show days are UTC days. Edit and commit to change.",
+  "about": "How the 100 free TCG Price Lookup requests a day are shared. The count resets at 00:00 UTC (5 pm Pacific in summer, 4 pm in winter), so show days are UTC days. Edit and commit to change. graded_pool_max_requests: spare requests the Graded Heat bot may use Mon-Thu to find more cards (it still keeps keep_free_weekdays unused).",
   "price_update_max_requests": 60,
   "flip_finder_max_requests": 85,
   "keep_free_weekdays": 10,
   "keep_free_show_days": 70,
-  "show_days_utc": ["Fri", "Sat", "Sun"]
+  "show_days_utc": [
+    "Fri",
+    "Sat",
+    "Sun"
+  ],
+  "graded_pool_max_requests": 8
 }

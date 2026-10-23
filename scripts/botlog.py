@@ -17,6 +17,7 @@ KEEP_MAX = 400
 BOTS = {
     "price": "Daily price update",
     "finder": "Flip Finder",
+    "graded": "Graded Heat",
     "tcgcheck": "TCGplayer sales check",
     "addcard": "Add card from link",
     "approve": "Add Flip Finder cards",
