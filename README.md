@@ -36,6 +36,35 @@ run, are listed at the top, and a red notice shows on the other tabs (on devices
 Every workflow ends with `scripts/log_run.sh`, which adds the run to `botlog.json` (`scripts/botlog.py`, kept 35
 days). The tab also reads GitHub's public list of Actions runs to catch crashes and missed runs.
 
+## Graded Heat (passcode)
+The **Graded Heat** tab (same passcode as the Flip Finder) lists PSA 10 / PSA 9 slabs of popular Pokémon that look
+ready to move, filtered to the most you'd spend on one slab (type a budget, default $1,000; "PSA 10 or 9" shows a
+PSA 9 when the 10 is over budget). Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
+It only downloads `graded/heat.json` when you open the tab, so Quick check stays light on show-day data.
+
+**Setup (once):** make a free account at pokemonpricetracker.com, copy your API key, then in GitHub go to
+**Settings → Secrets and variables → Actions → New repository secret**, name it `PPT_API_KEY` and paste the key.
+Then Actions → *Graded Heat* → **Run workflow** to start it (or wait for the next morning).
+
+`.github/workflows/graded-heat.yml` runs `scripts/graded_heat.py` every morning (~8:13 am Pacific):
+* **Cards it watches:** popular Pokémon (the `popular` list in `discovery_config.json`) already on the site or in
+  the Flip Finder list, plus Mon–Thu a few spare TCG Price Lookup requests (`graded_pool_max_requests` in
+  `api_budget.json`, default 8) to find chase cards from eras the site barely has (Sword & Shield → Mega Evolution, more WOTC/EX).
+* **Prices:** PSA 10 / 9 eBay sold prices, sales counts and history from PokemonPriceTracker (free plan ≈ 30 slabs
+  a day). Every check is saved in `graded/state.json`, so it builds its own history over time. Hot cards are
+  re-checked every 3 days, others weekly, cold ones every 3 weeks.
+* **Heat score (0–100):** Pokémon popularity (tier 1 like Charizard/Gengar/Umbreon counts most), era (vintage and
+  mid-era above modern), PSA 10 change over 4 and 12 weeks (an early rise scores best; a card that already doubled
+  is marked "Already spiked" and ranks lower), sales picking up, the same Pokémon rising on its other slabs, upcoming
+  sets/products featuring it, thin sales (counts against) and low PSA 10 pop / gem rate (counts for).
+* **Stages:** Breaking out (PSA 10 up 12%+ in 4 weeks), Warming up (sales or sibling slabs rising while the price is
+  still flat — often the earliest sign), Steady, Already spiked, Cooling, First check.
+
+Settings: `scripts/graded_config.json` (tier-1 list, era points, how often to re-check, and the **catalysts** list:
+add a line when a new set or product spotlights a Pokémon; `kind: "reprint"` lowers the score instead). PSA
+population isn't on PokemonPriceTracker's free plan, so pop/gem rate only shows for cards with pop counts on the site.
+It's a watchlist, not a prediction: hype can be manufactured and reverse fast.
+
 ## Card file size
 Empty fields (graded prices and pop counts that were never filled in, blank gem/verdict/notes) are left out of
 the era files, so the phone downloads less. The site treats a missing field as empty. The bots
