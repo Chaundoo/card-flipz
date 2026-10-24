@@ -2212,7 +2212,8 @@ var HSTAGE = {
   steady:["Steady","","Price about flat."],
   spiked:["Already spiked","neg","PSA 10 already doubled. Buying now is chasing; it can keep going or drop back."],
   cooling:["Cooling","neg","PSA 10 down 12% or more."],
-  watching:["First check","","No trend yet. It fills in over the next weeks."]
+  watching:["First check","","No trend yet. It fills in over the next weeks."],
+  quiet:["Quiet","","Fewer than 2 PSA 10 sales in the last week, so the price shown is its usual (median) sale and there's no trend yet."]
 };
 var HERA = {vintage:["wotc","ex"], mid:["dp-hgss","bw","xy","sm","other"], modern:["swsh","sv","me"]};
 function htFile(path){
@@ -2371,7 +2372,7 @@ function htRow(x){
     '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span><span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
     '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th><th>Median</th><th>Sold 7d</th></tr>'+
       gr("PSA 10", c.p10, c.ch, c.med10, c.n10)+gr("PSA 9", c.p9, c.ch9, c.med9, c.n9)+'</table></div>'+
-    (c.chHow ? '<div class="sub" style="margin-top:-4px">Change is vs '+(c.chHow==="4 weeks"?'4 weeks ago':esc(c.chHow))+'. Median = typical sale over the last ~4 months.'+(c.wk10!=null?' Usually ~'+c.wk10+' PSA 10s sell a week.':'')+'</div>' : '')+
+    (c.chHow ? '<div class="sub" style="margin-top:-4px">Change is vs '+(c.chHow==="4 weeks"?'4 weeks ago':esc(c.chHow))+'. Median = typical sale over the last '+(c.medMo?(c.medMo>=24?Math.round(c.medMo/12)+' years':c.medMo+' months'):'few months')+'.'+(c.wk10!=null?' Usually ~'+c.wk10+' PSA 10s sell a week.':'')+'</div>' : '')+
     '<button type="button" class="btn ht-chbtn" data-hchart="'+esc(c.id)+'" aria-expanded="'+open+'">'+(open?'Hide chart':'📈 Price &amp; sales chart')+'</button>'+
     '<div class="ht-chbox" data-hbox="'+esc(c.id)+'"'+(open?'':' hidden')+'>'+(open?htChartHTML(c):'')+'</div>'+
     (c.why && c.why.length ? '<ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul>' : '')+
