@@ -53,16 +53,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p /tmp/keep && cp graded/heat.json graded/state.json /tmp/keep/
+          mkdir -p /tmp/keep && cp graded/heat.json graded/charts.json graded/state.json /tmp/keep/
           for try in 1 2 3; do
             python3 scripts/build_versions.py
-            git add graded/heat.json graded/state.json versions.json
+            git add graded/heat.json graded/charts.json graded/state.json versions.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
             git commit -q -m "Graded Heat $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} slabs (${{ steps.run.outputs.hot }} heating up)"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
             git fetch -q origin main && git reset -q --hard origin/main
-            mkdir -p graded && cp /tmp/keep/heat.json /tmp/keep/state.json graded/
+            mkdir -p graded && cp /tmp/keep/heat.json /tmp/keep/charts.json /tmp/keep/state.json graded/
             sleep $((try * 10))
           done
 
