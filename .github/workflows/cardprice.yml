@@ -1,0 +1,91 @@
+name: CardPrice (graded prices, pop counts, price history)
+
+# Looks up graded prices, PSA/CGC/BGS pop counts and price history on CardPrice.com's free API for the
+# slabs the Graded Heat bot watches, and saves them in graded/cardprice.json. Runs every morning just
+# before the Graded Heat bot, which merges this in. It never changes the site's cards.
+on:
+  schedule:
+    # 15:47 UTC = 7:47 am Pacific (8:47 am in summer), every day
+    - cron: "47 15 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Test run: look up and report, but save nothing"
+        type: boolean
+        default: false
+      cards:
+        description: "Max slabs to look up this run (blank = 150)"
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: cardprice
+  cancel-in-progress: false
+
+jobs:
+  cardprice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Look up slabs on CardPrice
+        id: run
+        continue-on-error: true
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          CP_CARDS: ${{ github.event.inputs.cards || '' }}
+        run: python3 scripts/cardprice_bot.py
+
+      - name: Save CardPrice data
+        if: always() && steps.run.outputs.saved == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp graded/cardprice.json /tmp/keep/
+          for try in 1 2 3; do
+            git add graded/cardprice.json
+            git diff --cached --quiet && { echo "Nothing to save."; break; }
+            git commit -q -m "CardPrice $(date -u +%Y-%m-%d): ${{ steps.run.outputs.checked }} slabs looked up"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            git fetch -q origin main && git reset -q --hard origin/main
+            mkdir -p graded && cp /tmp/keep/cardprice.json graded/
+            sleep $((try * 10))
+          done
+
+      - name: Post the result to the "Graded Heat log" issue
+        if: always() && (steps.run.outputs.status == 'FAILED' || github.event_name == 'workflow_dispatch' || failure())
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ The CardPrice bot crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Graded Heat log") | .number' | head -n 1)
+          if [ -z "$num" ]; then
+            url=$(gh issue create --title "Graded Heat log" \
+              --body "The Graded Heat and CardPrice bots post here when something needs a look and whenever you run them by hand.")
+            num="${url##*/}"
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if it had problems
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
+          exit 1
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: cardprice
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.run.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh
