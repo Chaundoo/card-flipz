@@ -16,6 +16,10 @@ on:
       cards:
         description: "Max slabs to look up this run (blank = 150)"
         default: ""
+      recheck:
+        description: "Look up slabs again even if checked in the last 3 days"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -38,6 +42,7 @@ jobs:
         env:
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
           CP_CARDS: ${{ github.event.inputs.cards || '' }}
+          CP_RECHECK_DAYS: ${{ github.event.inputs.recheck == 'true' && '0' || '' }}
         run: python3 scripts/cardprice_bot.py
 
       - name: Save CardPrice data
