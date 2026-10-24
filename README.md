@@ -36,15 +36,15 @@ run, are listed at the top, and a red notice shows on the other tabs (on devices
 Every workflow ends with `scripts/log_run.sh`, which adds the run to `botlog.json` (`scripts/botlog.py`, kept 35
 days). The tab also reads GitHub's public list of Actions runs to catch crashes and missed runs.
 
-## Graded Heat (passcode)
-The **Graded Heat** tab (same passcode as the Flip Finder) lists PSA 10 / PSA 9 slabs of popular Pokémon that look
+## Graded Slabs (passcode)
+The **Graded Slabs** tab (same passcode as the Flip Finder) lists PSA 10 / PSA 9 slabs of popular Pokémon that look
 ready to move, filtered to the most you'd spend on one slab (type a budget, default $1,000; "PSA 10 or 9" shows a
 PSA 9 when the 10 is over budget). Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
 It only downloads `graded/heat.json` when you open the tab, so Quick check stays light on show-day data.
 
 **Setup (once):** make a free account at pokemonpricetracker.com, copy your API key, then in GitHub go to
 **Settings → Secrets and variables → Actions → New repository secret**, name it `PPT_API_KEY` and paste the key.
-Then Actions → *Graded Heat* → **Run workflow** to start it (or wait for the next morning).
+Then Actions → *Graded Slabs* → **Run workflow** to start it (or wait for the next morning).
 
 `.github/workflows/graded-heat.yml` runs `scripts/graded_heat.py` every morning (~8:13 am Pacific):
 * **Cards it watches:** popular Pokémon (the `popular` list in `discovery_config.json`) already on the site or in

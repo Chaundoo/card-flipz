@@ -538,7 +538,36 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .log-lockrow{display:flex;justify-content:flex-end;margin-top:8px}
 .flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
 
-/* Graded Heat */
+
+/* Phone tabs: 4 on top, 3 below, every tab the same height, no empty gaps */
+body.phone .tabs{display:grid!important;grid-template-columns:repeat(12,1fr)!important;gap:4px}
+body.phone .tabs .tab{grid-column:span 3!important;min-height:44px;display:flex;align-items:center;justify-content:center;gap:4px;text-align:center;padding:6px 4px;font-size:13px;line-height:1.15}
+body.phone .tabs .tab:nth-child(n+5){grid-column:span 4!important}
+body.phone .tabs .tab .count{flex:none}
+
+/* One graded slab */
+.slab-back{margin:14px 0 4px}
+.slab-top{display:flex;gap:18px;align-items:flex-start;margin:10px 0 16px}
+.slab-art{flex:none;width:200px;aspect-ratio:63/88;border-radius:10px;overflow:hidden;background:var(--surface-2)}
+.slab-art img{width:100%;height:100%;object-fit:cover;display:block}
+.slab-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.slab-name{font-size:20px}
+.slab-prices{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.slab-pr{background:var(--surface-2);border:2px solid transparent;border-radius:10px;padding:7px 9px;display:flex;flex-direction:column;cursor:pointer}
+.slab-pr span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.slab-pr b{font-size:16px;font-variant-numeric:tabular-nums}
+.slab-pr.on{border-color:var(--ht-s3c,#1baf7a)}
+.slab-pr.over{opacity:.5}
+.slab-grades{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.chipbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:5px 11px;font-size:13px;font-weight:600;cursor:pointer}
+.chipbtn.on{background:var(--navy);color:var(--navy-ink);border-color:transparent}
+.slab-chg{font-size:14px;color:var(--muted);margin-bottom:6px}
+.slab-chg b{font-size:17px}
+.ht-cpt{fill:var(--ht-s3);stroke:var(--surface);stroke-width:2}
+.ht-big{max-height:380px}
+body.phone .slab-top{flex-direction:column;align-items:stretch}
+body.phone .slab-art{width:150px;align-self:center}
+/* Graded Slabs */
 .ht-score{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:52px;padding:4px 8px;border-radius:12px;background:var(--surface-2);color:var(--muted);line-height:1}
 .ht-score b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
 .ht-score small{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px}
@@ -728,7 +757,8 @@ function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){
 var S = load("flipdesk.settings", {vendor:75, psa:75, cgc:35, ebay:13.25});
 var VIEW = load("flipdesk.view", null);
 if(load("flipdesk.exit", "vendor")==="ebay") state.exit = "ebay"; /* ranks by vendor profit unless you picked eBay */
-var ADV = load("flipdesk.adv", false) === true; /* Advanced analytics (grading, pop, break-even): off by default */
+var ADV = false; /* Advanced analytics removed: the Graded Slabs tab covers graded prices, pop and grade jumps now */
+try{ localStorage.removeItem("flipdesk.adv"); }catch(e){}
 var ADV_SORTS = ["profit","roi","psa10","breakeven"];
 function setAdv(on){ ADV = !!on; save("flipdesk.adv", ADV); if(!ADV && ADV_SORTS.indexOf(state.sort)>=0) state.sort = "gap"; render(); }
 function applyView(){ document.body.classList.toggle("phone", VIEW==="phone"); }
@@ -1032,7 +1062,6 @@ function renderList(){
     '<select id="exitf" aria-label="Sell to"><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option></select>'+
     (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
     '<button class="btn'+(state.selecting?' dark':'')+'" id="selbtn" aria-pressed="'+!!state.selecting+'">'+(state.selecting?'Done selecting':'Select cards')+'</button>'+
-    '<button class="advbtn" id="advbtn" role="switch" aria-checked="'+ADV+'" title="Show grading values, population counts and break-even grades"><i aria-hidden="true"></i>Advanced analytics</button>'+
     '<button class="btn primary" id="addlink">+ Add from TCGplayer link</button>'+
   '</div>';
   h += '<div id="results">'+resultsHTML()+'</div>';
@@ -1052,7 +1081,7 @@ function renderList(){
   sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
   var bf = document.getElementById("basisf"); if(bf) bf.addEventListener("change", function(e){ state.basis = e.target.value; state.shown = PAGE; renderList(); });
   var xf = document.getElementById("exitf"); if(xf) xf.addEventListener("change", function(e){ state.exit = e.target.value; save("flipdesk.exit", state.exit); state.shown = PAGE; renderList(); });
-  document.getElementById("advbtn").addEventListener("click", function(){ setAdv(!ADV); var n = document.getElementById("advbtn"); if(n) n.focus(); });
+
   var addl = document.getElementById("addlink"); if(addl) addl.addEventListener("click", showAddLink);
   document.getElementById("selbtn").addEventListener("click", function(){ state.selecting = !state.selecting; if(!state.selecting) selected = []; var y = window.scrollY; render(); window.scrollTo(0,y); });
   bindResults();
@@ -1498,10 +1527,10 @@ function addCards(target, ids){
   changed(p); return p;
 }
 function tabs(){
-  var v = state.view, cur = v==="finder" ? "finder" : v==="heat" ? "heat" : (v==="check"||v==="budget") ? "check" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
+  var v = state.view, cur = v==="finder" ? "finder" : (v==="heat"||v==="slab") ? "heat" : (v==="check"||v==="budget") ? "check" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
   var fn = finderOpen() ? finderAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
-  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("heat","Graded Heat")+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log", logLocked() ? "Profit Log 🔒" : "Profit Log")+t("admin",adminTabLabel())+'</nav>';
+  return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("heat","Graded Slabs")+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log", logLocked() ? "Profit Log 🔒" : "Profit Log")+t("admin",adminTabLabel())+'</nav>';
 }
 function goPairs(pid){ state.view = pid ? "pairing" : "pairings"; state.pid = pid||null; state.confirmPairDel = false; state.selecting = false; selected = []; try{ history.replaceState(null,"","#"+(pid?"pairing:"+pid:"pairings")); }catch(e){} window.scrollTo(0,0); render(); }
 
@@ -1552,7 +1581,7 @@ function mountBar(){
 }
 /* reopen the same screen after a reload */
 function remember(){
-  var v = state.view, o = v==="finder" ? "finder" : v==="heat" ? "heat" : (v==="check"||v==="budget") ? "check" : v==="admin" ? "admin" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
+  var v = state.view, o = v==="finder" ? "finder" : v==="heat" ? "heat" : v==="slab" ? "slab:"+state.slabId : (v==="check"||v==="budget") ? "check" : v==="admin" ? "admin" : v==="pairing" ? "pairing:"+state.pid : v==="pairings" ? "pairings" : v==="show" ? "show:"+state.showId : v==="log" ? "log" : v==="detail" ? state.id : "";
   try{ sessionStorage.setItem("flipdesk.open", o); }catch(e){}
 }
 /* View-only visitors: keep their new pairings on this device instead. */
@@ -2054,7 +2083,7 @@ function sha256hex(t){
 }
 function renderFinderLock(){
   var h = header();
-  h += '<form class="flock" id="flock" autocomplete="off"><h2>'+(state.view==="heat"?"Graded Heat":"Flip Finder")+'</h2><p>Enter the 4-digit passcode to see '+(state.view==="heat"?"the graded slabs that are heating up":"new flip cards")+'.</p>'+
+  h += '<form class="flock" id="flock" autocomplete="off"><h2>'+((state.view==="heat"||state.view==="slab")?"Graded Slabs":"Flip Finder")+'</h2><p>Enter the 4-digit passcode to see '+((state.view==="heat"||state.view==="slab")?"the graded slabs that are heating up":"new flip cards")+'.</p>'+
     '<input id="flock-code" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="Passcode" autofocus>'+
     '<button class="btn primary" type="submit">Unlock</button><div class="msg" id="flock-msg" role="status"></div></form>';
   root.innerHTML = h;
@@ -2399,16 +2428,15 @@ function htRow(x){
   var img = c.image ? '<img data-hsrc="'+esc(c.image)+'" alt="">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
   var pop = '';
   var open = !!HTOPEN[c.id];
-  return '<div class="qc-row ht-row" data-hrow="'+esc(c.id)+'"><div class="qc-art">'+img+'</div><div class="qc-main">'+
-    '<div class="qc-head"><div class="qc-name" style="cursor:default"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></div>'+
+  return '<div class="qc-row ht-row" data-hrow="'+esc(c.id)+'"><button type="button" class="qc-art" data-slab="'+esc(c.id)+'" aria-label="Open '+esc(title(c))+'">'+img+'</button><div class="qc-main">'+
+    '<div class="qc-head"><button type="button" class="qc-name" data-slab="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></button>'+
     '<div class="ht-score '+lvl+'" title="Heat score 0–100: how much points to this slab moving up soon"><b>'+c.heat+'</b><small>heat</small></div></div>'+
     '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span><span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
     '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th><th>Median</th><th>Sold 7d</th></tr>'+
       gr("PSA 10", c.p10, c.ch, c.med10, c.n10)+gr("PSA 9", c.p9, c.ch9, c.med9, c.n9)+'</table></div>'+
     htPop(c)+
     (c.chHow ? '<div class="sub" style="margin-top:-4px">Change is vs '+(c.chHow==="4 weeks"?'4 weeks ago':esc(c.chHow))+'. Median = typical sale over the last '+(c.medMo?(c.medMo>=24?Math.round(c.medMo/12)+' years':c.medMo+' months'):'few months')+'.'+(c.wk10!=null?' Usually ~'+c.wk10+' PSA 10s sell a week.':'')+'</div>' : '')+
-    '<button type="button" class="btn ht-chbtn" data-hchart="'+esc(c.id)+'" aria-expanded="'+open+'">'+(open?'Hide chart':'📈 Price &amp; sales chart')+'</button>'+
-    '<div class="ht-chbox" data-hbox="'+esc(c.id)+'"'+(open?'':' hidden')+'>'+(open?htChartHTML(c):'')+'</div>'+
+    '<button type="button" class="btn ht-chbtn" data-slab="'+esc(c.id)+'">📈 Price history &amp; every grade →</button>'+
     (c.why && c.why.length ? '<ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul>' : '')+
     '<div class="sub">'+htLinks(c)+' · checked '+fmtDate(c.checked)+pop+'</div></div></div>';
 }
@@ -2416,10 +2444,10 @@ function renderHeat(){
   if(!finderOpen()) return renderFinderLock();
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
-  h += '<div class="pair-intro"><div><h2>Graded Heat</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
+  h += '<div class="pair-intro"><div><h2>Graded Slabs</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
     'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker and <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a>.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
   if(!D){
-    h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Heat list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
+    h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Slabs list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
     var rt = document.getElementById("ht-retry"); if(rt) rt.addEventListener("click", function(){ HEAT.err = ""; render(); });
     return;
@@ -2452,7 +2480,7 @@ function renderHeat(){
 function htResults(){
   var D = HEAT.data || {}, all = D.cards || [];
   if(!all.length) return '<div class="empty">'+(D.missing || D.needs_key ?
-    'No graded data yet. The Graded Heat bot needs a free PokemonPriceTracker API key saved in GitHub as the <b>PPT_API_KEY</b> secret (see the README). After that it fills this list a little more every morning.' :
+    'No graded data yet. The Graded Slabs bot needs a free PokemonPriceTracker API key saved in GitHub as the <b>PPT_API_KEY</b> secret (see the README). After that it fills this list a little more every morning.' :
     'Nothing on the list yet. The bot checks about 30 slabs a morning, so the first ones show up after its next run.')+'</div>';
   var rows = htRows(), shown = rows.slice(0, 60), b = Number(HT.budget)||0;
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
@@ -2468,6 +2496,7 @@ function htResults(){
 }
 function htBind(scope){
   bindRows(scope);
+  scope.querySelectorAll("[data-slab]").forEach(function(b){ b.addEventListener("click", function(){ goSlab(b.getAttribute("data-slab")); }); });
   scope.querySelectorAll("img[data-hsrc]").forEach(function(img){
     var u = img.getAttribute("data-hsrc"); img.removeAttribute("data-hsrc");
     img.setAttribute("data-full", u); img.loading = "lazy"; img.src = thumb({image:u});
@@ -2483,6 +2512,175 @@ function htBind(scope){
     });
   });
   scope.querySelectorAll("[data-hbox]").forEach(function(box){ var id = box.getAttribute("data-hbox"); if(HTOPEN[id] && HEAT.charts) htChartBind(box, byId[id]); });
+}
+
+/* ---------- One slab: every grade's price, pop, and its price history ----------
+   Opens when you tap a slab on the Graded Slabs tab. The long price history (back to ~2021, monthly early on and
+   daily lately) and today's prices for every grade come live from CardPrice.com's open API when the page opens
+   (one small download per slab); the bots' own eBay sales checks are drawn on top for PSA 10 / PSA 9. */
+var SLAB = {id:null, card:null, hist:null, err:"", loading:false, grade:"psa10", range:"1y"};
+var CP_API = "https://api.cardprice.com/api/";
+var SGRADES = [["psa10","PSA 10"],["grade9","Grade 9"],["grade95","9.5"],["grade8","Grade 8"],["grade7","Grade 7"],["cgc10","CGC 10"],["bgs10","BGS 10"],["sgc10","SGC 10"],["ungraded","Raw"]];
+var SRANGES = [["3m","3M",92],["6m","6M",183],["1y","1Y",366],["2y","2Y",731],["all","All",99999]];
+function goSlab(id){ state.view = "slab"; state.slabId = id; SLAB = {id:id, card:null, hist:null, err:"", loading:false, grade:SLAB.grade||"psa10", range:SLAB.range||"1y"};
+  try{ history.replaceState(null,"","#slab:"+id); }catch(e){} window.scrollTo(0,0); render(); }
+function slabCard(){ var l = (HEAT.data && HEAT.data.cards) || []; for(var i=0;i<l.length;i++) if(l[i].id===SLAB.id) return l[i]; return null; }
+function loadSlab(c){
+  if(SLAB.loading || SLAB.hist || SLAB.err) return;
+  if(!c || !c.cpid){ SLAB.err = "none"; return; }
+  SLAB.loading = true;
+  var want = SLAB.id;
+  function j(u){ return fetch(u).then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); }); }
+  Promise.all([
+    c.cpslug ? j(CP_API+"card/"+encodeURIComponent(c.cpslug)).catch(function(){ return null; }) : Promise.resolve(null),
+    j(CP_API+"graded-history?cardId="+encodeURIComponent(c.cpid)+"&days=3650&printing=")
+  ]).then(function(res){
+    if(SLAB.id!==want) return;
+    SLAB.card = res[0]; SLAB.hist = (res[1] && res[1].series) || [];
+  }).catch(function(e){ if(SLAB.id===want) SLAB.err = e.message || "no connection"; })
+    .then(function(){ if(SLAB.id!==want) return; SLAB.loading = false; if(state.view==="slab") render(); });
+  loadCharts(function(){ if(state.view==="slab" && SLAB.id===want) render(); });
+}
+/* every grade's latest price: CardPrice (live) first, then the list's numbers */
+function slabPrices(c){
+  var g = (SLAB.card && SLAB.card.graded) || {}, out = [];
+  SGRADES.forEach(function(x){ var v = Number(g[x[0]]); if(v>0) out.push({k:x[0], label:x[1], p:v, src:"CardPrice"}); });
+  if(!out.length){
+    if(c.p10) out.push({k:"psa10", label:"PSA 10", p:c.p10, src:"eBay sales"});
+    if(c.p9) out.push({k:"grade9", label:"PSA 9", p:c.p9, src:"eBay sales"});
+  }
+  return out;
+}
+function slabPop(c){
+  var pl = SLAB.card && SLAB.card.population, p = Object.assign({}, c.pop||{});
+  if(Array.isArray(pl)) pl.forEach(function(r){
+    if(!r || (r.printing && r.printing!=="")) return;
+    var co = String(r.company||"").toLowerCase(), d = Array.isArray(r.dist) ? r.dist : [];
+    if(co==="psa" && c.popSrc!=="your site"){ p.psa10 = r.gem!=null ? r.gem : d[9]; p.psa9 = d[8]; p.psaTotal = r.total; p.asOf = String(r.updated_at||"").slice(0,10); }
+    else if(co==="cgc"){ p.cgc10 = r.gem!=null ? r.gem : d[9]; }
+    else if(co==="bgs"){ p.bgs10 = r.gem!=null ? r.gem : d[9]; }
+  });
+  return Object.assign({}, c, {pop:p});
+}
+/* series for the chosen grade: [[time ms, $], ...] */
+function slabSeries(key){
+  var out = [];
+  if(!(SLAB.hist && SLAB.hist.length)){      /* CardPrice unreachable: use the weekly history the bot saved */
+    var g = key==="psa10" ? "g10" : key==="grade9" ? "g9" : null, c = slabCard();
+    var D = g && c && HEAT.charts && (HEAT.charts.cards[c.id]||{})[g];
+    if(D && D.cp){ var b = Date.parse(HEAT.charts.base+"T12:00:00Z"); return D.cp.map(function(p){ return [b+p[0]*86400000, p[1]]; }); }
+    return out;
+  }
+  (SLAB.hist||[]).forEach(function(r){ var v = Number(r[key]); var t = Date.parse(String(r.date||"")+"T12:00:00Z"); if(v>0 && !isNaN(t)) out.push([t, v]); });
+  return out.sort(function(a,b){ return a[0]-b[0]; });
+}
+/* the bots' own eBay checks for PSA 10 / 9 (from graded/charts.json) as [[t, $]] and sale dots [[t, $, n]] */
+function slabEbay(c, key){
+  var g = key==="psa10" ? "g10" : key==="grade9" ? "g9" : null;
+  var D = g && HEAT.charts && (HEAT.charts.cards[c.id]||{})[g];
+  if(!D) return {line:[], dots:[]};
+  var b = Date.parse(HEAT.charts.base+"T12:00:00Z"), day = 86400000;
+  return {line: D.line.map(function(p){ return [b+p[0]*day, p[1]]; }), dots: D.pts.map(function(p){ return [b+p[0]*day, p[1], p[2]]; })};
+}
+function slabChart(c){
+  var key = SLAB.grade, lab = (SGRADES.filter(function(x){ return x[0]===key; })[0]||[key,key])[1];
+  var rg = SRANGES.filter(function(r){ return r[0]===SLAB.range; })[0] || SRANGES[2];
+  var now = Date.now(), from = now - rg[2]*86400000;
+  var cp = slabSeries(key).filter(function(p){ return p[0]>=from; }), eb = slabEbay(c, key);
+  eb.line = eb.line.filter(function(p){ return p[0]>=from; }); eb.dots = eb.dots.filter(function(p){ return p[0]>=from; });
+  var pts = cp.concat(eb.line, eb.dots);
+  if(pts.length < 1) return '<div class="ht-ch-empty">No '+esc(lab)+' prices in this range'+(SLAB.loading?' yet (loading…)':'')+'. Try a longer range or another grade.</div>';
+  var xs = pts.map(function(p){ return p[0]; }), ys = pts.map(function(p){ return p[1]; });
+  var x0 = Math.min.apply(null,xs), x1 = Math.max(Math.max.apply(null,xs), Math.min(now, x0+14*86400000));
+  if(x1-x0 < 14*86400000) x0 = x1 - 14*86400000;
+  var Y = htNice(Math.min.apply(null,ys)*0.92, Math.max.apply(null,ys)*1.05);
+  var phone = VIEW==="phone", W = phone ? 360 : 760, H = phone ? 240 : 300, L = phone ? 48 : 62, R = 12, T = 14, B = 30;
+  function X(t){ return L + (t-x0)/(x1-x0)*(W-L-R); }
+  function Yp(v){ return T + (1-(v-Y.lo)/(Y.hi-Y.lo))*(H-T-B); }
+  var spanD = (x1-x0)/86400000, yr = spanD > 300;
+  function dl(t){ var d = new Date(t); return HMON[d.getUTCMonth()]+(yr?" ’"+String(d.getUTCFullYear()).slice(2):" "+d.getUTCDate()); }
+  var s = '<svg class="ht-chart ht-big" data-w="'+W+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(lab+' price history for '+title(c))+'">';
+  Y.ticks.forEach(function(v){ var y = Yp(v).toFixed(1); s += '<line class="ht-grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="ht-ax" x="'+(L-8)+'" y="'+y+'" dy="4" text-anchor="end">'+htMoney(v)+'</text>'; });
+  var nT = phone ? 3 : 5;
+  for(var i=0;i<=nT;i++){ var t = x0+(x1-x0)*i/nT; s += '<text class="ht-ax" x="'+X(t).toFixed(1)+'" y="'+(H-8)+'" text-anchor="'+(i===0?'start':i===nT?'end':'middle')+'">'+dl(t)+'</text>'; }
+  s += '<line class="ht-base" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>';
+  function path(arr, cls){ return arr.length>1 ? '<path class="'+cls+'" d="'+arr.map(function(p,i){ return (i?"L":"M")+X(p[0]).toFixed(1)+" "+Yp(p[1]).toFixed(1); }).join("")+'"/>' : ''; }
+  s += path(cp, "ht-cpline") + path(eb.line, "ht-line");
+  if(cp.length===1) s += '<circle class="ht-cpt" cx="'+X(cp[0][0]).toFixed(1)+'" cy="'+Yp(cp[0][1]).toFixed(1)+'" r="4"/>';
+  eb.line.forEach(function(p){ s += '<circle class="ht-lpt" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="4"/>'; });
+  eb.dots.forEach(function(p){ s += '<circle class="ht-dot" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="'+(4+Math.min(p[2]||1,6)*0.7).toFixed(1)+'"/>'; });
+  s += '<line class="ht-cross" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" visibility="hidden"/><rect class="ht-hit" x="'+L+'" y="0" width="'+(W-L-R)+'" height="'+(H-B)+'"/></svg>';
+  /* hover/tap points (one per date) */
+  var byT = {};
+  cp.forEach(function(p){ (byT[p[0]] = byT[p[0]]||{t:p[0]}).c = p[1]; });
+  eb.line.forEach(function(p){ (byT[p[0]] = byT[p[0]]||{t:p[0]}).m = p[1]; });
+  eb.dots.forEach(function(p){ var r = (byT[p[0]] = byT[p[0]]||{t:p[0]}); r.a = p[1]; r.n = p[2]; });
+  SLAB.pts = Object.keys(byT).map(function(k){ var r = byT[k]; r.cx = X(r.t); return r; });
+  var first = cp.length ? cp[0][1] : null, last = cp.length ? cp[cp.length-1][1] : null;
+  var chg = first && last ? (last/first-1)*100 : null;
+  var leg = '<div class="ht-legend">'+(cp.length?'<span><i class="k-cp"></i>'+esc(lab)+' price history (CardPrice)</span>':'')+(eb.line.length?'<span><i class="k-line"></i>Market price from eBay sales (last 7 days)</span>':'')+(eb.dots.length?'<span><i class="k-dot"></i>Days with eBay sales (bigger = more sold)</span>':'')+'</div>';
+  var rows = SLAB.pts.slice().sort(function(a,b){ return b.t-a.t; });
+  var tbl = '<details class="ht-tbl"><summary>Show as a table</summary><div class="tbl-wrap"><table class="qc-tbl"><tr><th>Date</th><th>'+esc(lab)+'</th><th>eBay market</th><th>eBay avg sale</th><th>Sold</th></tr>'+
+    rows.map(function(r){ var d = new Date(r.t); return '<tr><td>'+HMON[d.getUTCMonth()]+' '+d.getUTCDate()+', '+d.getUTCFullYear()+'</td><td>'+(r.c!=null?money(r.c,0):'—')+'</td><td>'+(r.m!=null?money(r.m,0):'—')+'</td><td>'+(r.a!=null?money(r.a,0):'—')+'</td><td>'+(r.n!=null?r.n:'—')+'</td></tr>'; }).join("")+'</table></div></details>';
+  var head = chg!=null ? '<div class="slab-chg"><b class="'+(chg>=0?'pos-t':'neg-t')+'">'+pct(chg)+'</b> over this range · '+money(first,0)+' → '+money(last,0)+'</div>' : '';
+  return head+'<div class="ht-ch-wrap" id="slab-cw">'+s+'<div class="ht-tip" hidden></div></div>'+leg+tbl;
+}
+function slabChartBind(){
+  var wrap = document.getElementById("slab-cw"); if(!wrap) return;
+  var svg = wrap.querySelector("svg"), tip = wrap.querySelector(".ht-tip"), cross = svg.querySelector(".ht-cross");
+  var VW = Number(svg.getAttribute("data-w")) || 760, lab = (SGRADES.filter(function(x){ return x[0]===SLAB.grade; })[0]||["",""])[1];
+  function show(ev){
+    var r = svg.getBoundingClientRect(), vx = (ev.clientX - r.left)/r.width*VW, best = null, bd = 1e9;
+    (SLAB.pts||[]).forEach(function(p){ var d = Math.abs(p.cx-vx); if(d<bd){ bd = d; best = p; } });
+    if(!best) return;
+    cross.setAttribute("x1", best.cx); cross.setAttribute("x2", best.cx); cross.setAttribute("visibility","visible");
+    tip.textContent = "";
+    var d = new Date(best.t), hb = document.createElement("b"); hb.textContent = HMON[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear(); tip.appendChild(hb);
+    function row(cls, text){ var e = document.createElement("div"); e.innerHTML = '<i class="'+cls+'"></i>'; e.appendChild(document.createTextNode(text)); tip.appendChild(e); }
+    if(best.c!=null) row("k-cp", lab+" "+money(best.c,0));
+    if(best.m!=null) row("k-line", "eBay market "+money(best.m,0));
+    if(best.a!=null) row("k-dot", "eBay avg sale "+money(best.a,0)+" · "+best.n+" sold");
+    tip.hidden = false;
+    var left = best.cx/VW*r.width; tip.style.left = Math.min(Math.max(left - tip.offsetWidth/2, 0), r.width - tip.offsetWidth)+"px";
+  }
+  svg.addEventListener("pointermove", show); svg.addEventListener("pointerdown", show);
+  svg.addEventListener("pointerleave", function(){ tip.hidden = true; cross.setAttribute("visibility","hidden"); });
+}
+function renderSlab(){
+  if(!finderOpen()) return renderFinderLock();
+  if(!HEAT.data && !HEAT.err){ loadHeat(); }
+  var h = header(), c = slabCard();
+  h += '<button class="btn ghost sm slab-back" id="slab-back">← Graded Slabs</button>';
+  if(!c){
+    h += '<div class="empty">'+(HEAT.data ? 'This slab isn’t on the list anymore.' : HEAT.err ? 'Couldn’t load the list ('+esc(HEAT.err)+').' : 'Loading…')+'</div>';
+    root.innerHTML = h; bindHeader(); document.getElementById("slab-back").addEventListener("click", goHeat); return;
+  }
+  loadSlab(c);
+  var st = HSTAGE[c.stage] || HSTAGE.steady, lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool", b = Number(HT.budget)||0;
+  var prices = slabPrices(c), have = {};
+  (SLAB.hist||[]).forEach(function(r){ SGRADES.forEach(function(x){ if(Number(r[x[0]])>0) have[x[0]] = 1; }); });
+  prices.forEach(function(p){ have[p.k] = 1; });
+  if(!have[SLAB.grade]) SLAB.grade = have.psa10 ? "psa10" : (Object.keys(have)[0] || "psa10");
+  var img = c.image ? '<img src="'+esc(c.image)+'" alt="'+esc(title(c))+'">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
+  h += '<div class="slab-top"><div class="slab-art">'+img+'</div><div class="slab-info">'+
+    '<div class="qc-head"><div class="qc-name" style="cursor:default"><b class="slab-name">'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></div>'+
+    '<div class="ht-score '+lvl+'" title="Heat score 0–100"><b>'+c.heat+'</b><small>heat</small></div></div>'+
+    '<div class="fflags">'+(c.prio!=null?'<span class="pill prio">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
+    '<div class="slab-prices">'+prices.map(function(p){ var over = b && p.p > b; return '<div class="slab-pr'+(over?' over':'')+(p.k===SLAB.grade?' on':'')+'" data-sg="'+p.k+'" role="button" tabindex="0"><span>'+esc(p.label)+'</span><b>'+money(p.p, p.p<100?2:0)+'</b></div>'; }).join("")+'</div>'+
+    '<div class="sub">'+(SLAB.card ? 'Today’s prices for every grade from <a href="https://cardprice.com/card/'+encodeURIComponent(c.cpslug||"")+'" target="_blank" rel="noopener">CardPrice.com</a>' : SLAB.loading ? 'Loading every grade’s price…' : 'PSA 10 / 9 from recent eBay sales')+(b?' · faded = over your '+money(b)+' budget':'')+'</div>'+
+    '</div></div>';
+  h += '<section class="block"><div class="ht-ch-top"><h3 style="margin:0">Price history</h3><div class="seg" role="group" aria-label="Range">'+SRANGES.map(function(r){ return '<button type="button" data-sr="'+r[0]+'" aria-pressed="'+(SLAB.range===r[0])+'">'+r[1]+'</button>'; }).join("")+'</div></div>'+
+    '<div class="slab-grades">'+SGRADES.filter(function(x){ return have[x[0]]; }).map(function(x){ return '<button type="button" class="chipbtn'+(SLAB.grade===x[0]?' on':'')+'" data-sg="'+x[0]+'">'+x[1]+'</button>'; }).join("")+'</div>'+
+    (SLAB.err && SLAB.err!=="none" ? '<p class="note">Couldn’t reach CardPrice live ('+esc(SLAB.err)+'), so this shows the weekly history the bot saved for PSA 10 / Grade 9.</p>' : SLAB.err==="none" ? '<p class="note">CardPrice hasn’t matched this slab yet, so only the bots’ own eBay checks are shown.</p>' : '')+
+    slabChart(c)+'<p class="note" style="margin:8px 0 0">“Grade 9” and “Grade 8” are any grading company. Long-run history is one price per month; recent months are daily.</p></section>';
+  h += '<section class="block"><h3>Population</h3>'+htPop(slabPop(c))+'</section>';
+  if(c.why && c.why.length) h += '<section class="block"><h3>Why it’s on the list</h3><ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul></section>';
+  h += '<p class="sub">'+htLinks(c)+(c.cpslug?' · <a class="tcglink" href="https://cardprice.com/card/'+encodeURIComponent(c.cpslug)+'" target="_blank" rel="noopener">CardPrice <span aria-hidden="true">↗</span></a>':'')+' · checked '+fmtDate(c.checked)+'</p>';
+  root.innerHTML = h; bindHeader(); bindRows(root); slabChartBind();
+  document.getElementById("slab-back").addEventListener("click", goHeat);
+  function redraw(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
+  root.querySelectorAll("[data-sg]").forEach(function(e){ function pick(ev){ if(ev.type==="keydown" && ev.key!=="Enter" && ev.key!==" ") return; SLAB.grade = e.getAttribute("data-sg"); redraw(); } e.addEventListener("click", pick); e.addEventListener("keydown", pick); });
+  root.querySelectorAll("[data-sr]").forEach(function(e){ e.addEventListener("click", function(){ SLAB.range = e.getAttribute("data-sr"); redraw(); }); });
 }
 
 /* ---------- Quick check ----------
@@ -2672,7 +2870,7 @@ var ADM = {log:null, runs:null, runsErr:"", loading:false, at:0, filter:"week"};
 var BOTINFO = {
   price:   {name:"Daily price update", wf:"price-refresh.yml", when:"Mon–Fri about 6:23 am"},
   finder:  {name:"Flip Finder", wf:"find-candidates.yml", when:"Mon–Thu about 7:47 am"},
-  graded:  {name:"Graded Heat", wf:"graded-heat.yml", when:"Every day about 9:13 am"},
+  graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"Every day about 9:13 am"},
   cardprice:{name:"CardPrice lookups", wf:"cardprice.yml", when:"Every day about 8:47 am"},
   tcgcheck:{name:"TCGplayer sales check", wf:"tcgplayer-check.yml", when:"Once a week, random time Mon–Thu"},
   addcard: {name:"Add card from link", wf:"add-card.yml", when:"When you add a card"},
@@ -2857,6 +3055,7 @@ function render(){
   if(state.view==="detail") renderDetail();
   else if(state.view==="finder") renderFinder();
   else if(state.view==="heat") renderHeat();
+  else if(state.view==="slab") renderSlab();
   else if(state.view==="check"||state.view==="budget") renderCheck();
   else if(state.view==="admin") renderAdmin();
   else if(state.view==="pairings") renderPairings();
@@ -2882,6 +3081,7 @@ document.addEventListener("focusout", function(){ setTimeout(function(){ var a =
   if(wasSent && !pendingCount()) state.notice = "Saved to GitHub. Everyone now sees your pairings and profit log changes.";
   if(id==="finder"){ state.view="finder"; }
   else if(id==="heat"){ state.view="heat"; }
+  else if(id && id.indexOf("slab:")===0){ state.view="slab"; state.slabId=id.slice(5); SLAB.id=state.slabId; }
   else if(id==="check"){ state.view="check"; }
   else if(id==="budget"){ state.view="check"; }
   else if(id==="admin"){ state.view="admin"; }
