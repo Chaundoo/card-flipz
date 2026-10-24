@@ -2386,7 +2386,7 @@ function htPop(c){
       (tot&&n10?'<span><b>'+pct1(s10)+'%</b> gem rate</span>':'')+
       (c.popCh!=null?'<span class="'+(c.popCh>=5?'neg-t':'')+'" title="Change in PSA 10 pop over about 4 weeks. Fast growth means more supply.">10s '+pct(c.popCh)+' in 4 wks</span>':'')+'</div>'+
     (tot ? '<div class="popbar" role="img" aria-label="PSA population: '+fmtN(n10)+' tens, '+fmtN(n9)+' nines, '+fmtN(rest)+' 8 or lower">'+seg("s10",n10,s10,"10s")+seg("s9",n9,s9,"9s")+'<i class="srest" title="8 or lower: '+fmtN(rest)+'"></i></div>' : '')+
-    '<div class="sub">'+(extra.length?extra.join(' · ')+' · ':'')+'Pop from '+esc(c.popSrc||"CardPrice")+(c.popSrc==="CardPrice"?' (<a href="https://cardprice.com" target="_blank" rel="noopener">cardprice.com</a>)':'')+'</div></div>';
+    '<div class="sub">'+(extra.length?extra.join(' · ')+' · ':'')+'Pop from '+esc(c.popSrc||"CardPrice")+(p.asOf?' as of '+fmtDate(p.asOf):'')+(c.popSrc==="CardPrice"?' (<a href="https://cardprice.com" target="_blank" rel="noopener">cardprice.com</a>)':'')+'</div></div>';
 }
 function htRow(x){
   var c = x.c, f = x.fit, st = HSTAGE[c.stage] || HSTAGE.steady, b = Number(HT.budget)||0;
