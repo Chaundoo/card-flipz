@@ -410,17 +410,18 @@ def extract(rec, ppt):
         v7 = o.get("dailyVolume7Day") if isinstance(o.get("dailyVolume7Day"), (int, float)) else 0
         n7 = int(round(v7 * 7))
         h = parse_history(ph.get(g)) if isinstance(ph, dict) and ph.get(g) else []
-        recent = [p for d, p, c in h if days_between(d) <= 14]
+        recent = [(p, c or 1) for d, p, c in h if days_between(d) <= 14]
+        fresh = True
         if med7 and n7 >= 2:
             p = med7
-        elif recent:
-            p = statistics.median(recent)
+        elif sum(c for _, c in recent) >= 2:
+            p = statistics.median([p for p, _ in recent])
         else:
-            p = med
+            p, fresh = med, False          # under 2 sales lately: show the usual price, but no trend from it
         if not p:
             continue
         out[g] = {"p": round(p, 2), "med": round(med, 2) if med else None, "n7": n7, "n": _count_of(o),
-                  "days": days, "last": _date_of(o.get("lastSaleDate") or ""), "trend": o.get("marketTrend")}
+                  "days": days, "last": _date_of(o.get("lastSaleDate") or ""), "trend": o.get("marketTrend"), "fresh": fresh}
         if h:
             out["hist"][g] = h
     img = rec.get("imageCdnUrl400") or rec.get("imageCdnUrl") or rec.get("imageUrl")
@@ -474,7 +475,7 @@ def momentum(st, grade="psa10"):
     c4 = change(ser, now, 28, 9)
     if c4 is not None:
         return c4, "4 weeks", now
-    if now and g.get("med"):
+    if now and g.get("med") and g.get("fresh", True):
         months = max(1, round((g.get("days") or 120) / 30))
         return (now / g["med"] - 1) * 100, f"its {months}-month median", now
     return None, None, now
@@ -513,7 +514,9 @@ def score(e, st, cfg, names, sp_heat):
     elif e["era"] not in cfg["modern_eras"] and e["era"] != "other":
         tail.append("Mid-era (2007–2019)")
 
-    stage = "watching"
+    stage = "watching" if g10.get("fresh", True) else "quiet"
+    if stage == "quiet":
+        why.append("Under 2 PSA 10 sales in the last week, so no trend yet")
     if m is not None:
         if m < 0:
             pts += max(-15, m * 0.5)
@@ -564,7 +567,7 @@ def score(e, st, cfg, names, sp_heat):
             why.append(f"{c['event']} ({when})")
         cats.append(c["event"])
     if usual is not None or n7 is not None:
-        if (usual or 0) < 0.5 and (n7 or 0) < 2:
+        if (usual or 0) < 0.5 and (n7 or 0) < 2 and stage != "quiet":
             pts -= 8
             why.append("Thin sales: hard to trust the price")
         elif (usual or 0) >= 3:
@@ -584,7 +587,7 @@ def score(e, st, cfg, names, sp_heat):
     heat = int(round(max(0, min(100, pts))))
     why += tail
     return {"p10": round(p10, 2) if p10 else None, "p9": round(p9, 2) if p9 else None,
-            "med10": g10.get("med"), "med9": g9.get("med"), "p8": (last.get("psa8") or {}).get("p"),
+            "med10": g10.get("med"), "med9": g9.get("med"), "medMo": max(1, round((g10.get("days") or 120) / 30)), "p8": (last.get("psa8") or {}).get("p"),
             "n10": n7, "wk10": r1(usual), "n9": g9.get("n7"), "last10": g10.get("last"),
             "ch": r1(m), "chHow": m_how, "ch9": r1(m9), "ch12": r1(ch12),
             "vol": r1(vol), "heat": heat, "stage": stage, "why": why[:7], "cat": cats,
@@ -631,7 +634,12 @@ def prior(e, cfg, names):
     sp = names.species(e["name"])
     p = names.prio_points(sp) * 1.5 + cfg["era_points"].get(e["era"], 5) * 1.5     # your priority list goes first
     nm = e.get("nm") or 0
-    p += math.log2(nm + 1) * 4
+    budget = float(cfg["budget_default"])
+    p += math.log2(min(nm, budget * 0.3) + 1) * 4
+    if nm > budget * 0.5:          # raw already this pricey: the PSA 10 is almost surely far over budget
+        p -= 25
+    elif nm > budget * 0.3:
+        p -= 8
     k = variant_kind(e.get("variant"))
     p += {"holo": 5, "reverse": -8, "nonholo": -3}[k]
     if re.search(r"1st edition|full art|secret|gold|shining|gold star|☆|crystal|rainbow|alt", f"{e.get('variant')} {e.get('name')}", re.I):
