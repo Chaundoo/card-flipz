@@ -2263,7 +2263,7 @@ function htFile(path){
 function loadHeat(){
   if(HEAT.loading) return; HEAT.loading = true;
   htFile("graded/heat.json").then(function(d){ HEAT.data = d || {cards:[]}; }).catch(function(e){ HEAT.err = e.message || "no connection"; })
-    .then(function(){ HEAT.loading = false; if(state.view==="heat") render(); });
+    .then(function(){ HEAT.loading = false; if(state.view==="heat"||state.view==="slab") render(); });
 }
 function loadCharts(done){
   if(HEAT.charts){ done(); return; }
