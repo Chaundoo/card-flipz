@@ -60,9 +60,10 @@ Then Actions → *Graded Heat* → **Run workflow** to start it (or wait for the
 * **Stages:** Breaking out (PSA 10 up 12%+ in 4 weeks), Warming up (sales or sibling slabs rising while the price is
   still flat — often the earliest sign), Steady, Already spiked, Cooling, First check.
 
-Settings: `scripts/graded_config.json` (tier-1 list, era points, how often to re-check, and the **catalysts** list:
+Settings: `scripts/graded_config.json` (your **priority** Pokémon list, most important first: their slabs on the verge show first and get checked first, then other popular Pokémon; era points, how often to re-check, and the **catalysts** list:
 add a line when a new set or product spotlights a Pokémon; `kind: "reprint"` lowers the score instead). PSA
 population isn't on PokemonPriceTracker's free plan, so pop/gem rate only shows for cards with pop counts on the site.
+**Charts:** each slab has a *Price & sales chart* (money over time): the line is the bot's price checks (median sale over the last 7 days), dots are days with sales (bigger = more sold), and the dashed line is the median over ~4 months. PokemonPriceTracker's free plan only shares the last few days of sales, so the chart grows each time the bot checks the slab. Chart points live in `graded/charts.json`, downloaded only when you open a chart.
 It's a watchlist, not a prediction: hype can be manufactured and reverse fast.
 
 ## Card file size

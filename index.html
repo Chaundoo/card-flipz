@@ -544,17 +544,40 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .ht-score small{font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px}
 .ht-score.hot{background:var(--neg-soft);color:var(--neg)}
 .ht-score.warm{background:var(--gold-soft);color:var(--gold-ink)}
-.ht-trend{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.ht-spark{flex:none;overflow:visible}
-.ht-spark path{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.ht-spark.up path{stroke:var(--pos)}
-.ht-spark.down path{stroke:var(--neg)}
+.pill.prio{background:var(--gold-soft);color:var(--gold-ink)}
+.ht-chbtn{align-self:flex-start;padding:6px 12px;font-size:13.5px}
+.ht-chbox{background:var(--surface-2);border-radius:12px;padding:10px 12px}
+.ht-ch-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ht-ch-empty{padding:18px 4px;color:var(--muted);font-size:14px}
+.ht-ch-wrap{position:relative}
+.ht-chart{width:100%;height:auto;display:block;touch-action:pan-y;--ht-s1:#2a78d6;--ht-s2:#eb6834}
+.ht-grid{stroke:var(--line);stroke-width:1}
+.ht-base{stroke:var(--muted);stroke-width:1}
+.ht-ax{font-size:11.5px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.ht-ref{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:5 4}
+.ht-reflab{font-size:11.5px;fill:var(--muted)}
+.ht-line{fill:none;stroke:var(--ht-s1);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.ht-lpt{fill:var(--ht-s1);stroke:var(--surface-2);stroke-width:2}
+.ht-dot{fill:var(--ht-s2);fill-opacity:.85;stroke:var(--surface-2);stroke-width:2}
+.ht-cross{stroke:var(--muted);stroke-width:1}
+.ht-hit{fill:transparent;cursor:crosshair}
+.ht-tip{position:absolute;top:0;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12.5px;line-height:1.45;box-shadow:0 4px 14px rgba(0,0,0,.18);white-space:nowrap;color:var(--ink)}
+.ht-tip div{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.ht-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted);margin-top:6px}
+.ht-legend span,.ht-tip div{display:inline-flex;align-items:center;gap:6px}
+.k-line{display:inline-block;width:14px;height:2px;border-radius:2px;background:#2a78d6}
+.k-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#eb6834}
+.k-ref{display:inline-block;width:14px;border-top:1.5px dashed var(--muted)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ht-chart{--ht-s1:#3987e5;--ht-s2:#d95926}:root:not([data-theme="light"]) .k-line{background:#3987e5}:root:not([data-theme="light"]) .k-dot{background:#d95926}}
+:root[data-theme="dark"] .ht-chart{--ht-s1:#3987e5;--ht-s2:#d95926}:root[data-theme="dark"] .k-line{background:#3987e5}:root[data-theme="dark"] .k-dot{background:#d95926}
+.ht-tbl{margin-top:6px;font-size:13.5px}.ht-tbl summary{cursor:pointer;color:var(--muted)}
 .ht-why{margin:0;padding:0 0 0 18px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .ht-why li::marker{color:var(--gold)}
 .ht-row .qc-head,body.phone .ht-row .qc-head{flex-direction:row;align-items:flex-start}
 .ht-row .qc-name{flex:1}
 .pill.fitp{background:var(--surface-2);color:var(--ink)}
 #ht-sort{padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--ink);font-size:14px;max-width:100%}
+.ht-row .qc-tbl th,.ht-row .qc-tbl td{padding-left:6px;padding-right:6px}
 .ht-row .qc-tbl td:nth-child(3),.ht-row .qc-tbl td:nth-child(4){font-size:13.5px}
 
 /* Quick check */
@@ -2175,28 +2198,41 @@ function renderFinder(){
 
 /* ---------- Graded Heat: PSA 10 / 9 slabs of popular Pokémon that look ready to move ----------
    graded/heat.json is written by scripts/graded_heat.py (GitHub Actions, every morning). It only loads when
-   this tab opens, so Quick check at shows doesn't download it. Same passcode as the Flip Finder. */
-var HEAT = {data:null, err:"", loading:false};
+   this tab opens, and graded/charts.json only when you open a chart, so Quick check at shows stays light.
+   Same passcode as the Flip Finder. */
+var HEAT = {data:null, err:"", loading:false, charts:null, chErr:"", chLoading:false};
 var HT_KEY = "cfz.heat";
-var HT = Object.assign({budget:1000, grades:"both", show:"bets", era:"", sort:"heat", q:""}, load(HT_KEY, {}));
-function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort}); }
+var HT = Object.assign({budget:1000, grades:"both", show:"bets", era:"", sort:"prio", q:""}, load(HT_KEY, {}));
+if(HT.sort==="heat" && !HT.v2){ HT.sort = "prio"; }
+var HTOPEN = {};   /* which charts are open: id -> "g10" | "g9" */
+function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1}); }
 var HSTAGE = {
-  breaking:["Breaking out","pos","PSA 10 price is rising (+12% or more in 4 weeks) but hasn't doubled yet."],
+  breaking:["Breaking out","pos","PSA 10 price is rising (+12% or more) but hasn't doubled yet."],
   warming:["Warming up","warnp","Sales are picking up, or this Pokémon's other slabs are rising, while this one's price is still flat. Often the earliest sign."],
-  steady:["Steady","","Price about flat over 4 weeks."],
-  spiked:["Already spiked","neg","PSA 10 already doubled in 4 weeks. Buying now is chasing; it can keep going or drop back."],
-  cooling:["Cooling","neg","PSA 10 down 12% or more in 4 weeks."],
-  watching:["First check","","Only one check so far, so there's no trend yet. It fills in over the next weeks."]
+  steady:["Steady","","Price about flat."],
+  spiked:["Already spiked","neg","PSA 10 already doubled. Buying now is chasing; it can keep going or drop back."],
+  cooling:["Cooling","neg","PSA 10 down 12% or more."],
+  watching:["First check","","No trend yet. It fills in over the next weeks."]
 };
 var HERA = {vintage:["wotc","ex"], mid:["dp-hgss","bw","xy","sm","other"], modern:["swsh","sv","me"]};
-function loadHeat(){
-  if(HEAT.loading) return; HEAT.loading = true;
-  var v = window.CFZ_VERS && window.CFZ_VERS.files && window.CFZ_VERS.files["graded/heat.json"];
-  fetch(v ? "graded/heat.json?v="+v : "graded/heat.json", v ? {} : {cache:"no-cache"}).then(function(r){
+function htFile(path){
+  var v = window.CFZ_VERS && window.CFZ_VERS.files && window.CFZ_VERS.files[path];
+  return fetch(v ? path+"?v="+v : path, v ? {} : {cache:"no-cache"}).then(function(r){
     if(r.status===404) return {cards:[], missing:true};
     if(!r.ok) throw new Error("HTTP "+r.status); return r.json();
-  }).then(function(d){ HEAT.data = d || {cards:[]}; }).catch(function(e){ HEAT.err = e.message || "no connection"; })
+  });
+}
+function loadHeat(){
+  if(HEAT.loading) return; HEAT.loading = true;
+  htFile("graded/heat.json").then(function(d){ HEAT.data = d || {cards:[]}; }).catch(function(e){ HEAT.err = e.message || "no connection"; })
     .then(function(){ HEAT.loading = false; if(state.view==="heat") render(); });
+}
+function loadCharts(done){
+  if(HEAT.charts){ done(); return; }
+  if(HEAT.chLoading) return; HEAT.chLoading = true;
+  htFile("graded/charts.json").then(function(d){ HEAT.charts = d && d.cards ? d : {base:"", cards:{}}; })
+    .catch(function(e){ HEAT.chErr = e.message || "no connection"; })
+    .then(function(){ HEAT.chLoading = false; done(); });
 }
 function goHeat(){ state.view = "heat"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#heat"); }catch(e){} window.scrollTo(0,0); render(); }
 /* which grade fits your budget: PSA 10 first, PSA 9 if allowed */
@@ -2206,6 +2242,9 @@ function htFit(c){
   if(HT.grades==="both" && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
   return null;
 }
+function htVerge(c){ return c.stage==="breaking" || c.stage==="warming"; }
+/* your priority Pokémon on the verge first, then other Pokémon on the verge, then the rest */
+function htGroup(c){ return htVerge(c) ? (c.prio!=null ? 0 : 1) : 2; }
 function htRows(){
   var list = ((HEAT.data && HEAT.data.cards) || []).map(function(c){ return {c:c, fit:htFit(c)}; }).filter(function(x){ return x.fit; });
   if(HT.show==="bets") list = list.filter(function(x){ return x.c.stage!=="spiked" && x.c.stage!=="cooling"; });
@@ -2216,20 +2255,12 @@ function htRows(){
   var s = HT.sort;
   list.sort(function(a,b){
     if(s==="cheap") return a.fit.p-b.fit.p;
-    if(s==="rise") return (b.c.ch4==null?-999:b.c.ch4)-(a.c.ch4==null?-999:a.c.ch4);
+    if(s==="rise") return (b.c.ch==null?-999:b.c.ch)-(a.c.ch==null?-999:a.c.ch);
     if(s==="sales") return (b.c.n10||0)-(a.c.n10||0);
+    if(s==="prio") return htGroup(a.c)-htGroup(b.c) || (b.c.heat||0)-(a.c.heat||0);
     return (b.c.heat||0)-(a.c.heat||0);
   });
   return list;
-}
-function htSpark(pts){
-  if(!pts || pts.length<2) return '';
-  var w = 160, h = 36, xs = pts.map(function(p){ return -p[0]; }), ys = pts.map(function(p){ return p[1]; });
-  var x0 = Math.min.apply(null,xs), x1 = Math.max.apply(null,xs), y0 = Math.min.apply(null,ys), y1 = Math.max.apply(null,ys);
-  if(x1===x0) return '';
-  var d = pts.map(function(p,i){ var x = (-p[0]-x0)/(x1-x0)*(w-4)+2, y = y1===y0 ? h/2 : h-2-(p[1]-y0)/(y1-y0)*(h-4); return (i?"L":"M")+x.toFixed(1)+" "+y.toFixed(1); }).join("");
-  var up = ys[ys.length-1] >= ys[0];
-  return '<svg class="ht-spark '+(up?'up':'down')+'" viewBox="0 0 '+w+' '+h+'" width="'+w+'" height="'+h+'" role="img" aria-label="PSA 10 price over the last '+(x1-x0+1)+' weeks: '+money(ys[0])+' to '+money(ys[ys.length-1])+'"><path d="'+d+'"/></svg>';
 }
 function htChg(v){ return v==null ? '<span class="dim">—</span>' : '<b class="'+(v>=0?'pos-t':'neg-t')+'">'+pct(v)+'</b>'; }
 function htLinks(c){
@@ -2239,23 +2270,110 @@ function htLinks(c){
   if(c.siteId && cardById(c.siteId)) l += ' · <button class="linkbtn" data-go="'+esc(c.siteId)+'">On the site</button>';
   return l;
 }
+
+/* ---- chart: money (y) over time (x). Line = the bot's price checks (last week's median sale);
+   dots = days with sales (average sale that day, bigger dot = more sold); dashed = median over ~4 months. */
+var HMON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function htDay(base, n){ var d = new Date(base+"T12:00:00"); d.setDate(d.getDate()+n); return d; }
+function htDLabel(d, yr){ return HMON[d.getMonth()]+" "+d.getDate()+(yr?", "+d.getFullYear():""); }
+function htNice(lo, hi){
+  if(hi<=lo){ hi = lo*1.2+1; lo = lo*0.8; }
+  var span = hi-lo, step = Math.pow(10, Math.floor(Math.log10(span/4))), m = span/4/step;
+  step *= m>5 ? 10 : m>2 ? 5 : m>1 ? 2 : 1;
+  var a = Math.max(0, Math.floor(lo/step)*step), b = Math.ceil(hi/step)*step, t = [];
+  for(var v=a; v<=b+1e-9; v+=step) t.push(v);
+  return {lo:a, hi:b, ticks:t};
+}
+function htMoney(v){ return v>=10000 ? "$"+(v/1000).toFixed(v>=100000?0:1).replace(/\.0$/,"")+"K" : money(v,0); }
+function htChartHTML(c){
+  var g = HTOPEN[c.id] || "g10", lab = g==="g10" ? "PSA 10" : "PSA 9";
+  var tabs = '<div class="seg" role="group" aria-label="Grade">'+[["g10","PSA 10"],["g9","PSA 9"]].map(function(o){ return '<button type="button" data-hcg="'+o[0]+'" aria-pressed="'+(g===o[0])+'">'+o[1]+'</button>'; }).join("")+'</div>';
+  var head = '<div class="ht-ch-top"><b>'+lab+' price &amp; sales</b>'+tabs+'</div>';
+  if(!HEAT.charts) return head+'<div class="ht-ch-empty">'+(HEAT.chErr ? 'Couldn’t load the chart ('+esc(HEAT.chErr)+').' : 'Loading chart…')+'</div>';
+  var D = (HEAT.charts.cards[c.id]||{})[g], base = HEAT.charts.base;
+  if(!D || (!D.line.length && !D.pts.length)) return head+'<div class="ht-ch-empty">No '+lab+' sales tracked yet for this slab.</div>';
+  var today = Math.round((Date.now() - new Date(base+"T12:00:00").getTime())/86400000);
+  var xs = D.line.map(function(p){ return p[0]; }).concat(D.pts.map(function(p){ return p[0]; }));
+  var ys = D.line.map(function(p){ return p[1]; }).concat(D.pts.map(function(p){ return p[1]; }));
+  if(D.ref) ys.push(D.ref[1]);
+  var x0 = Math.min.apply(null, xs), x1 = Math.max(today, Math.max.apply(null, xs));
+  x0 = Math.min(x0 - 2, x1 - 14);
+  var Y = htNice(Math.min.apply(null, ys)*0.92, Math.max.apply(null, ys)*1.05);
+  var phone = VIEW==="phone", W = phone ? 360 : 640, H = phone ? 230 : 240, L = phone ? 46 : 58, R = 10, T = 14, B = 30;
+  function X(d){ return L + (d-x0)/(x1-x0)*(W-L-R); }
+  function Yp(v){ return T + (1-(v-Y.lo)/(Y.hi-Y.lo))*(H-T-B); }
+  var s = '<svg class="ht-chart" data-w="'+W+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(lab+' price for '+title(c)+', '+htDLabel(htDay(base,x0),true)+' to '+htDLabel(htDay(base,x1),true))+'">';
+  Y.ticks.forEach(function(v){ var y = Yp(v).toFixed(1); s += '<line class="ht-grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="ht-ax" x="'+(L-8)+'" y="'+y+'" dy="4" text-anchor="end">'+htMoney(v)+'</text>'; });
+  var nT = phone ? 2 : 4, multiYr = htDay(base,x0).getFullYear()!==htDay(base,x1).getFullYear();
+  for(var i=0;i<=nT;i++){ var d = Math.round(x0+(x1-x0)*i/nT); s += '<text class="ht-ax" x="'+X(d).toFixed(1)+'" y="'+(H-8)+'" text-anchor="'+(i===0?'start':i===nT?'end':'middle')+'">'+htDLabel(htDay(base,d), multiYr)+'</text>'; }
+  s += '<line class="ht-base" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>';
+  if(D.ref){ var ry = Yp(D.ref[1]).toFixed(1); s += '<line class="ht-ref" x1="'+L+'" x2="'+(W-R)+'" y1="'+ry+'" y2="'+ry+'"/><text class="ht-reflab" x="'+(L+4)+'" y="'+ry+'" dy="-5">Median since '+htDLabel(htDay(base,D.ref[0]))+': '+htMoney(D.ref[1])+'</text>'; }
+  if(D.line.length>1) s += '<path class="ht-line" d="'+D.line.map(function(p,i){ return (i?"L":"M")+X(p[0]).toFixed(1)+" "+Yp(p[1]).toFixed(1); }).join("")+'"/>';
+  D.line.forEach(function(p){ s += '<circle class="ht-lpt" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="4"/>'; });
+  D.pts.forEach(function(p){ s += '<circle class="ht-dot" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="'+(4+Math.min(p[2]||1,6)*0.7).toFixed(1)+'"/>'; });
+  s += '<line class="ht-cross" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" visibility="hidden"/>';
+  s += '<rect class="ht-hit" x="'+L+'" y="0" width="'+(W-L-R)+'" height="'+(H-B)+'"/></svg>';
+  var leg = '<div class="ht-legend"><span><i class="k-line"></i>Market price (median sale, last 7 days)</span><span><i class="k-dot"></i>Days with sales (avg sale; bigger = more sold)</span>'+(D.ref?'<span><i class="k-ref"></i>Median since '+htDLabel(htDay(base,D.ref[0]))+'</span>':'')+'</div>';
+  var rows = {};
+  D.line.forEach(function(p){ (rows[p[0]] = rows[p[0]]||{}).m = p[1]; });
+  D.pts.forEach(function(p){ var r = (rows[p[0]] = rows[p[0]]||{}); r.a = p[1]; r.n = p[2]; });
+  var days = Object.keys(rows).map(Number).sort(function(a,b){ return b-a; });
+  var tbl = '<details class="ht-tbl"><summary>Show as a table</summary><div class="tbl-wrap"><table class="qc-tbl"><tr><th>Date</th><th>Market price</th><th>Avg sale</th><th>Sold</th></tr>'+
+    days.map(function(d){ var r = rows[d]; return '<tr><td>'+htDLabel(htDay(base,d),true)+'</td><td>'+(r.m!=null?money(r.m,0):'—')+'</td><td>'+(r.a!=null?money(r.a,0):'—')+'</td><td>'+(r.n!=null?r.n:'—')+'</td></tr>'; }).join("")+'</table></div></details>';
+  var note = D.line.length < 3 ? '<p class="note" style="margin:6px 0 0">The free price feed only shares the last few days of sales, so the bot builds this chart up each time it checks the slab (every 3 days while it’s hot, weekly otherwise).</p>' : '';
+  return head+'<div class="ht-ch-wrap" data-hcw="'+esc(c.id)+'">'+s+'<div class="ht-tip" hidden></div></div>'+leg+note+tbl;
+}
+function htChartBind(box, c){
+  box.querySelectorAll("[data-hcg]").forEach(function(b){ b.addEventListener("click", function(){ HTOPEN[c.id] = b.getAttribute("data-hcg"); box.innerHTML = htChartHTML(c); htChartBind(box, c); }); });
+  var wrap = box.querySelector(".ht-ch-wrap"); if(!wrap) return;
+  var g = HTOPEN[c.id] || "g10", D = (HEAT.charts.cards[c.id]||{})[g], base = HEAT.charts.base;
+  var svg = wrap.querySelector("svg"), tip = wrap.querySelector(".ht-tip"), cross = svg.querySelector(".ht-cross");
+  var pts = {};
+  D.line.forEach(function(p){ (pts[p[0]] = pts[p[0]]||{d:p[0]}).m = p[1]; });
+  D.pts.forEach(function(p){ var r = (pts[p[0]] = pts[p[0]]||{d:p[0]}); r.a = p[1]; r.n = p[2]; });
+  var list = Object.keys(pts).map(function(k){ return pts[k]; });
+  var VW = 640;
+  function show(ev){
+    var r = svg.getBoundingClientRect(); VW = Number(svg.getAttribute("data-w")) || 640; var vx = (ev.clientX - r.left) / r.width * VW;
+    var best = null, bd = 1e9;
+    list.forEach(function(p){ var dd = Math.abs(p.cx - vx); if(dd < bd){ bd = dd; best = p; } });
+    if(!best){ return; }
+    cross.setAttribute("x1", best.cx); cross.setAttribute("x2", best.cx); cross.setAttribute("visibility","visible");
+    tip.textContent = "";
+    var h = document.createElement("b"); h.textContent = htDLabel(htDay(base,best.d), true); tip.appendChild(h);
+    if(best.m!=null){ var a = document.createElement("div"); a.innerHTML = '<i class="k-line"></i>'; a.appendChild(document.createTextNode("Market "+money(best.m,0))); tip.appendChild(a); }
+    if(best.a!=null){ var b = document.createElement("div"); b.innerHTML = '<i class="k-dot"></i>'; b.appendChild(document.createTextNode("Avg sale "+money(best.a,0)+" · "+best.n+" sold")); tip.appendChild(b); }
+    tip.hidden = false;
+    var left = best.cx/VW*r.width; tip.style.left = Math.min(Math.max(left - tip.offsetWidth/2, 0), r.width - tip.offsetWidth)+"px";
+  }
+  /* x positions in viewBox units (same math as the drawing) */
+  var lines = svg.querySelectorAll(".ht-lpt"), dots = svg.querySelectorAll(".ht-dot");
+  D.line.forEach(function(p,i){ pts[p[0]].cx = Number(lines[i].getAttribute("cx")); });
+  D.pts.forEach(function(p,i){ pts[p[0]].cx = Number(dots[i].getAttribute("cx")); });
+  function hide(){ tip.hidden = true; cross.setAttribute("visibility","hidden"); }
+  svg.addEventListener("pointermove", show); svg.addEventListener("pointerdown", show); svg.addEventListener("pointerleave", hide);
+}
+
 function htRow(x){
   var c = x.c, f = x.fit, st = HSTAGE[c.stage] || HSTAGE.steady, b = Number(HT.budget)||0;
   var lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool";
-  function gr(label, p, ch, n, key){
+  function gr(label, p, ch, med, n){
     if(!p) return '';
     var over = b && p > b, pick = f.g===label;
-    return '<tr class="'+(pick?'best':'')+(over?' over':'')+'"><td>'+label+'</td><td class="qv"><b>'+money(p)+'</b></td><td>'+htChg(ch)+'</td><td>'+(key==="10"?htChg(c.ch12):'<span class="dim">—</span>')+'</td><td>'+(n!=null?fmtN(n):'—')+'</td></tr>';
+    return '<tr class="'+(pick?'best':'')+(over?' over':'')+'"><td>'+label+'</td><td class="qv"><b>'+money(p)+'</b></td><td>'+htChg(ch)+'</td><td>'+(med?money(med,0):'<span class="dim">—</span>')+'</td><td>'+(n!=null?fmtN(n):'—')+'</td></tr>';
   }
   var img = c.image ? '<img data-hsrc="'+esc(c.image)+'" alt="">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
   var pop = c.pop && c.pop.psa10 ? ' · '+fmtN(c.pop.psa10)+' PSA 10s'+(c.pop.psaTotal?' of '+fmtN(c.pop.psaTotal)+' graded':'') : '';
-  return '<div class="qc-row ht-row"><div class="qc-art">'+img+'</div><div class="qc-main">'+
+  var open = !!HTOPEN[c.id];
+  return '<div class="qc-row ht-row" data-hrow="'+esc(c.id)+'"><div class="qc-art">'+img+'</div><div class="qc-main">'+
     '<div class="qc-head"><div class="qc-name" style="cursor:default"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></div>'+
     '<div class="ht-score '+lvl+'" title="Heat score 0–100: how much points to this slab moving up soon"><b>'+c.heat+'</b><small>heat</small></div></div>'+
-    '<div class="fflags"><span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span><span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
-    '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Price</th><th>4 wk</th><th>12 wk</th><th>Sold</th></tr>'+
-      gr("PSA 10", c.p10, c.ch4, c.n10, "10")+gr("PSA 9", c.p9, c.ch4_9, c.n9, "9")+'</table></div>'+
-    (c.spark && c.spark.length>1 ? '<div class="ht-trend">'+htSpark(c.spark)+'<span class="sub">PSA 10, last '+(c.spark[0][0]+1)+' weeks'+(c.vol!=null?' · sales '+pct(c.vol)+' vs the month before':'')+'</span></div>' : '')+
+    '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span><span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
+    '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th><th>Median</th><th>Sold 7d</th></tr>'+
+      gr("PSA 10", c.p10, c.ch, c.med10, c.n10)+gr("PSA 9", c.p9, c.ch9, c.med9, c.n9)+'</table></div>'+
+    (c.chHow ? '<div class="sub" style="margin-top:-4px">Change is vs '+(c.chHow==="4 weeks"?'4 weeks ago':esc(c.chHow))+'. Median = typical sale over the last ~4 months.'+(c.wk10!=null?' Usually ~'+c.wk10+' PSA 10s sell a week.':'')+'</div>' : '')+
+    '<button type="button" class="btn ht-chbtn" data-hchart="'+esc(c.id)+'" aria-expanded="'+open+'">'+(open?'Hide chart':'📈 Price &amp; sales chart')+'</button>'+
+    '<div class="ht-chbox" data-hbox="'+esc(c.id)+'"'+(open?'':' hidden')+'>'+(open?htChartHTML(c):'')+'</div>'+
     (c.why && c.why.length ? '<ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul>' : '')+
     '<div class="sub">'+htLinks(c)+' · checked '+fmtDate(c.checked)+pop+'</div></div></div>';
 }
@@ -2263,8 +2381,8 @@ function renderHeat(){
   if(!finderOpen()) return renderFinderLock();
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
-  h += '<div class="pair-intro"><div><h2>Graded Heat</h2><p class="sub">PSA 10 and PSA 9 slabs of popular Pokémon, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
-    'Only slabs that fit your budget are shown. A bot updates this every morning.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
+  h += '<div class="pair-intro"><div><h2>Graded Heat</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
+    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. A bot updates this every morning.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
   if(!D){
     h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Heat list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
@@ -2278,7 +2396,7 @@ function renderHeat(){
       '<div class="bg-opt"><span class="lbl">Grades</span>'+seg("hg", [["10","PSA 10 only"],["both","PSA 10 or 9"]], HT.grades)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Era</span>'+seg("he", [["","All"],["vintage","Vintage"],["mid","Mid-era"],["modern","Modern"]], HT.era)+'</div>'+
-      '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="heat">Heat score</option><option value="rise">Biggest 4-week rise</option><option value="cheap">Cheapest</option><option value="sales">Most sales</option></select>'+
+      '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option></select>'+
         '<label class="search" style="flex:1 1 160px;min-width:0;margin:0"><input id="ht-q" type="search" placeholder="Pokémon or set" aria-label="Filter by Pokémon or set" value="'+esc(HT.q)+'"></label></div>'+
     '</div></div></div>';
   h += '<div id="ht-results">'+htResults()+'</div>';
@@ -2302,11 +2420,16 @@ function htResults(){
     'No graded data yet. The Graded Heat bot needs a free PokemonPriceTracker API key saved in GitHub as the <b>PPT_API_KEY</b> secret (see the README). After that it fills this list a little more every morning.' :
     'Nothing on the list yet. The bot checks about 30 slabs a morning, so the first ones show up after its next run.')+'</div>';
   var rows = htRows(), shown = rows.slice(0, 60), b = Number(HT.budget)||0;
-  var hot = rows.filter(function(x){ return x.c.stage==="breaking" || x.c.stage==="warming"; }).length;
-  var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up':'')+
+  var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
+  var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
     '. Prices are recent eBay sold prices; a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
   if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, “PSA 10 or 9”, or “All”.</div>';
-  return h+'<div class="qc-list">'+shown.map(htRow).join("")+'</div>'+(rows.length>shown.length?'<p class="note">Showing the top '+shown.length+'. Narrow it with the filters above.</p>':'');
+  var out = '', lastG = null;
+  shown.forEach(function(x){
+    if(HT.sort==="prio"){ var g = htGroup(x.c); if(g!==lastG){ out += '<h3 class="bg-h">'+(g===0?'★ Your Pokémon on the verge':g===1?'Other Pokémon on the verge':'Everything else')+'</h3>'; lastG = g; } }
+    out += htRow(x);
+  });
+  return h+'<div class="qc-list">'+out+'</div>'+(rows.length>shown.length?'<p class="note">Showing the top '+shown.length+'. Narrow it with the filters above.</p>':'');
 }
 function htBind(scope){
   bindRows(scope);
@@ -2314,6 +2437,17 @@ function htBind(scope){
     var u = img.getAttribute("data-hsrc"); img.removeAttribute("data-hsrc");
     img.setAttribute("data-full", u); img.loading = "lazy"; img.src = thumb({image:u});
   });
+  var byId = {}; ((HEAT.data && HEAT.data.cards) || []).forEach(function(c){ byId[c.id] = c; });
+  scope.querySelectorAll("[data-hchart]").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-hchart"), c = byId[id], box = scope.querySelector('[data-hbox="'+id+'"]');
+      if(HTOPEN[id]){ delete HTOPEN[id]; box.hidden = true; box.innerHTML = ""; btn.setAttribute("aria-expanded","false"); btn.innerHTML = '📈 Price &amp; sales chart'; return; }
+      HTOPEN[id] = "g10"; box.hidden = false; btn.setAttribute("aria-expanded","true"); btn.textContent = "Hide chart";
+      function draw(){ if(!HTOPEN[id]) return; box.innerHTML = htChartHTML(c); if(HEAT.charts) htChartBind(box, c); }
+      draw(); loadCharts(draw);
+    });
+  });
+  scope.querySelectorAll("[data-hbox]").forEach(function(box){ var id = box.getAttribute("data-hbox"); if(HTOPEN[id] && HEAT.charts) htChartBind(box, byId[id]); });
 }
 
 /* ---------- Quick check ----------
