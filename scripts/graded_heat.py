@@ -49,7 +49,8 @@ DISC_CFG = os.path.join(ROOT, "scripts", "discovery_config.json")
 DSTATE = os.path.join(ROOT, "scripts", "discovery_state.json")
 GDIR = os.path.join(ROOT, "graded")
 HEAT = os.path.join(GDIR, "heat.json")
-CHARTS = os.path.join(GDIR, "charts.json")      # chart points, only downloaded when you open a chart
+CHARTS = os.path.join(GDIR, "charts.json")
+CPFILE = os.path.join(GDIR, "cardprice.json")   # written by scripts/cardprice_bot.py (CardPrice.com)      # chart points, only downloaded when you open a chart
 GSTATE = os.path.join(GDIR, "state.json")
 CANDS = os.path.join(ROOT, "candidates.json")
 PPT_KEY = (os.environ.get("PPT_API_KEY") or "").strip()
@@ -478,7 +479,33 @@ def momentum(st, grade="psa10"):
     if now and g.get("med") and g.get("fresh", True):
         months = max(1, round((g.get("days") or 120) / 30))
         return (now / g["med"] - 1) * 100, f"its {months}-month median", now
+    cs = cp_series(st.get("_cp"), grade)
+    if cs:
+        c = change(cs, cs[-1][1], 28, 9)
+        if c is not None:
+            return c, "4 weeks (CardPrice)", now or cs[-1][1]
     return None, None, now
+
+
+def cp_series(cpc, grade="psa10"):
+    """CardPrice's price history for one grade, or the CardPrice bot's own daily checks: [(date, price, None)]."""
+    if not cpc:
+        return []
+    h = (cpc.get("hist") or {}).get(grade)
+    if h and len(h) >= 2:
+        return [(d, p, None) for d, p in h]
+    i = 1 if grade == "psa10" else 2
+    return [(x[0], x[i], None) for x in cpc.get("gsnaps", []) if len(x) > i and x[i]]
+
+
+def pop_change(cpc):
+    """% change in PSA 10 pop over ~4 weeks (from the CardPrice bot's checks): more 10s = more supply."""
+    snaps = [x for x in (cpc or {}).get("popsnaps", []) if x[1]]
+    if len(snaps) < 2:
+        return None
+    now = snaps[-1]
+    old = next((x for x in reversed(snaps[:-1]) if 21 <= days_between(x[0], now[0]) <= 45), None)
+    return (now[1] / old[1] - 1) * 100 if old and old[1] else None
 
 
 def sales_pace(g):
@@ -501,7 +528,15 @@ def score(e, st, cfg, names, sp_heat):
     m9, m9_how, p9 = momentum(st, "psa9")
     ch12 = change(series_of(st), p10, 84, 21)
     n7, usual, vol = sales_pace(g10)
-    pop = st.get("pop") or e.get("pop") or {}
+    cpc = st.get("_cp") or {}
+    # pop counts: your own (site) counts first, then CardPrice, then PokemonPriceTracker
+    if (e.get("pop") or {}).get("psa10"):
+        pop, pop_src = e["pop"], "your site"
+    elif (cpc.get("pop") or {}).get("psa10"):
+        pop, pop_src = cpc["pop"], "CardPrice"
+    else:
+        pop, pop_src = st.get("pop") or {}, "PokemonPriceTracker" if st.get("pop") else None
+    popch = pop_change(cpc)
     why, pts = [], 0.0
 
     pts += names.prio_points(sp)
@@ -582,6 +617,13 @@ def score(e, st, cfg, names, sp_heat):
             why.append(f"Only {pop['psa10']:,} PSA 10s")
         elif pop["psa10"] > 20000:
             pts -= 5
+    if popch is not None and popch >= 5:
+        pts -= min(8, popch * 0.5)
+        why.append(f"PSA 10 pop up {popch:.0f}% in 4 weeks (more supply)")
+    mv = st.get("_mover")
+    if mv is not None and mv > 0:
+        pts += min(6, mv * 0.2)
+        why.append(f"CardPrice: raw price up {mv:.0f}% this week")
     if stage == "spiked":                        # the move already happened: keep it visible, but not on top
         pts = min(pts * 0.7, 60)
     heat = int(round(max(0, min(100, pts))))
@@ -591,7 +633,8 @@ def score(e, st, cfg, names, sp_heat):
             "n10": n7, "wk10": r1(usual), "n9": g9.get("n7"), "last10": g10.get("last"),
             "ch": r1(m), "chHow": m_how, "ch9": r1(m9), "ch12": r1(ch12),
             "vol": r1(vol), "heat": heat, "stage": stage, "why": why[:7], "cat": cats,
-            "pop": {k: v for k, v in pop.items() if v} or None, "tier": tier, "sp": sp,
+            "pop": {k: v for k, v in pop.items() if v and k in ("psa10", "psa9", "psaTotal", "cgc10", "cgc9", "cgcTotal", "bgs10", "bgsTotal")} or None,
+            "popSrc": pop_src, "popCh": r1(popch), "cp": bool(cpc.get("graded")), "tier": tier, "sp": sp,
             "prio": names.rank.get(sp)}
 
 
@@ -608,8 +651,9 @@ def chart_data(st, base):
         line = [[day(s[0]), round(s[idx])] for s in st.get("snaps", []) if len(s) > idx and s[idx] and days_between(s[0]) <= 200]
         lg = last.get(g) or {}
         ref = [day(st["from"]), round(lg["med"])] if lg.get("med") and st.get("from") else None
-        if pts or line:
-            out["g10" if g == "psa10" else "g9"] = {"pts": pts, "line": line, **({"ref": ref} if ref else {})}
+        cps = [[day(d), round(p)] for d, p, _ in cp_series(st.get("_cp"), g) if days_between(d) <= 200 and day(d) >= 0]
+        if pts or line or cps:
+            out["g10" if g == "psa10" else "g9"] = {"pts": pts, "line": line, **({"ref": ref} if ref else {}), **({"cp": cps} if cps else {})}
     return out
 
 
@@ -647,7 +691,7 @@ def prior(e, cfg, names):
     return p
 
 
-def due_list(pool, gstate, cfg, names, budget):
+def due_list(pool, gstate, cfg, names, budget, cpcards=None):
     cards = gstate.setdefault("cards", {})
     rc = cfg["recheck_days"]
     urgent, fresh_vintage, fresh_modern, rest = [], [], [], []
@@ -656,8 +700,18 @@ def due_list(pool, gstate, cfg, names, budget):
             if not cards.get(key):
                 continue
         st = cards.get(key)
+        cpc = (cpcards or {}).get(key) or {}
+        cs = cp_series(cpc)
+        cp_rise = change(cs, cs[-1][1], 28, 9) if cs else None
         if not st or not st.get("checked"):
-            (fresh_modern if e["era"] in cfg["modern_eras"] else fresh_vintage).append((prior(e, cfg, names), key))
+            if cp_rise is not None and cp_rise >= 12:            # CardPrice sees it rising: check it with real sales first
+                urgent.append((500 + cp_rise, key))
+                continue
+            gp = cpc.get("graded") or {}
+            skip = gp and min(x for x in (gp.get("psa10"), gp.get("psa9")) if x) > budget * cfg["out_of_budget_multiple"] \
+                if (gp.get("psa10") or gp.get("psa9")) else False
+            pr = prior(e, cfg, names) - (40 if skip else 0)    # both grades far over budget: check much later
+            (fresh_modern if e["era"] in cfg["modern_eras"] else fresh_vintage).append((pr, key))
             continue
         if st.get("none"):                       # the API had no graded sales for it
             if days_between(st["checked"]) >= 45:
@@ -727,7 +781,9 @@ def main():
     # 2. graded prices
     budget = float(cfg["budget_default"])
     n = int(os.environ.get("HEAT_CARDS") or (cfg["ppt_max_credits"] // max(1, cfg["ppt_credits_per_card"])))
-    lists = due_list(pool, gstate, cfg, names, budget)
+    cpd = jload(CPFILE, {})
+    cpcards = cpd.get("cards") or {}
+    lists = due_list(pool, gstate, cfg, names, budget, cpcards)
     todo = plan(lists, n, cfg["modern_max_share"])
     ppt = PPT(cfg)
     checked, got, empty, stop = 0, 0, 0, None
@@ -782,22 +838,36 @@ def main():
                 st["img"] = x["img"]
 
     # 3. score everything we have prices for (species heat first, so siblings can use it)
+    # PokemonPriceTracker checks first; slabs only CardPrice has priced yet are listed from CardPrice
+    movers = {}
+    for g in (cpd.get("movers") or {}).get("gainers", []):
+        if g.get("id") and isinstance(g.get("pct"), (int, float)):
+            movers[str(g["id"])] = g["pct"]
     rows = []
-    for key, st in gstate["cards"].items():
-        if key in pool and st.get("last"):
-            rows.append((key, pool[key], st))
+    for key in pool:
+        st, cpc = gstate["cards"].get(key) or {}, cpcards.get(key) or {}
+        if not st.get("last") and not (cpc.get("graded") or {}):
+            continue
+        view = dict(st, _cp=cpc, _mover=movers.get(str(cpc.get("cpid") or "")))
+        if not st.get("last"):
+            gp = cpc["graded"]
+            view["last"] = {g: {"p": gp[g]} for g in ("psa10", "psa9") if gp.get(g)}   # CardPrice price; trend from its history
+            view["checked"] = cpc.get("checked")
+        rows.append((key, pool[key], view))
     first = {}
     for key, e, st in rows:
         c = momentum(st)[0]
         if c is not None:
             first.setdefault(names.species(e["name"]), []).append((key, c))
-    out = []
+    out, views = [], {}
     for key, e, st in rows:
         sp = names.species(e["name"])
         others = [c for k, c in first.get(sp, []) if k != key]
         sp_heat = {sp: (statistics.median(others), len(others))} if others else {}
         sc = score(e, st, cfg, names, sp_heat)
-        st["score"] = {k: sc[k] for k in ("heat", "stage", "p10", "p9")}
+        if key in gstate["cards"]:
+            gstate["cards"][key]["score"] = {k: sc[k] for k in ("heat", "stage", "p10", "p9")}
+        views[key] = st
         if not sc["p10"] and not sc["p9"]:
             continue
         if sc["p10"] and sc["p10"] < cfg["min_psa10_price"] and not sc["p9"]:
@@ -873,7 +943,7 @@ def main():
         jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
                      "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "cards": final}, separators=(",", ":"))
         base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=200)).isoformat()
-        charts = {c["id"]: chart_data(gstate["cards"][c["id"]], base) for c in final}
+        charts = {c["id"]: chart_data(views[c["id"]], base) for c in final}
         jdump(CHARTS, {"base": base, "generated": TODAY, "cards": {k: v for k, v in charts.items() if v}}, separators=(",", ":"))
         gstate["about"] = "Written by scripts/graded_heat.py: graded price snapshots, the extra card pool and when each card was checked. Not loaded by the site."
         jdump(GSTATE, gstate, separators=(",", ":"), sort_keys=True)

@@ -18,6 +18,7 @@ BOTS = {
     "price": "Daily price update",
     "finder": "Flip Finder",
     "graded": "Graded Heat",
+    "cardprice": "CardPrice lookups",
     "tcgcheck": "TCGplayer sales check",
     "addcard": "Add card from link",
     "approve": "Add Flip Finder cards",
