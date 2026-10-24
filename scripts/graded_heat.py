@@ -633,7 +633,7 @@ def score(e, st, cfg, names, sp_heat):
             "n10": n7, "wk10": r1(usual), "n9": g9.get("n7"), "last10": g10.get("last"),
             "ch": r1(m), "chHow": m_how, "ch9": r1(m9), "ch12": r1(ch12),
             "vol": r1(vol), "heat": heat, "stage": stage, "why": why[:7], "cat": cats,
-            "pop": {k: v for k, v in pop.items() if v and k in ("psa10", "psa9", "psaTotal", "cgc10", "cgc9", "cgcTotal", "bgs10", "bgsTotal")} or None,
+            "pop": {k: v for k, v in pop.items() if v and k in ("psa10", "psa9", "psaTotal", "cgc10", "cgc9", "cgcTotal", "bgs10", "bgsTotal", "asOf")} or None,
             "popSrc": pop_src, "popCh": r1(popch), "cp": bool(cpc.get("graded")), "tier": tier, "sp": sp,
             "prio": names.rank.get(sp)}
 
@@ -651,7 +651,7 @@ def chart_data(st, base):
         line = [[day(s[0]), round(s[idx])] for s in st.get("snaps", []) if len(s) > idx and s[idx] and days_between(s[0]) <= 200]
         lg = last.get(g) or {}
         ref = [day(st["from"]), round(lg["med"])] if lg.get("med") and st.get("from") else None
-        cps = [[day(d), round(p)] for d, p, _ in cp_series(st.get("_cp"), g) if days_between(d) <= 200 and day(d) >= 0]
+        cps = [[day(d), round(p)] for d, p, _ in cp_series(st.get("_cp"), g) if day(d) >= 0]
         if pts or line or cps:
             out["g10" if g == "psa10" else "g9"] = {"pts": pts, "line": line, **({"ref": ref} if ref else {}), **({"cp": cps} if cps else {})}
     return out
@@ -938,11 +938,11 @@ def main():
     except Exception as e:
         print(f"(admin log summary skipped: {e})")
 
-    saved = not DRY and status != "FAILED" and bool(checked or scanned or not os.path.exists(HEAT))
+    saved = not DRY and status != "FAILED" and bool(checked or scanned or cpcards or not os.path.exists(HEAT))
     if saved:
         jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
                      "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "cards": final}, separators=(",", ":"))
-        base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=200)).isoformat()
+        base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=365)).isoformat()
         charts = {c["id"]: chart_data(views[c["id"]], base) for c in final}
         jdump(CHARTS, {"base": base, "generated": TODAY, "cards": {k: v for k, v in charts.items() if v}}, separators=(",", ":"))
         gstate["about"] = "Written by scripts/graded_heat.py: graded price snapshots, the extra card pool and when each card was checked. Not loaded by the site."

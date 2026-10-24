@@ -12,7 +12,9 @@ then shows its pop counts and history, and checks the slabs CardPrice sees risin
 API (https://cardprice.com/developers, "shapes may evolve, so code defensively"):
   GET /api/search?q=...            -> {results:[{id, slug, name, set_name, number, price}], total}
   GET /api/card/:idOrSlug          -> {card:{id,name,number}, set:{id,name}, latestPrice, variants:[...], graded:{psa10, grade9, ...}, ...}
-  GET /api/history?cardId=&days=   -> a price series (format not documented; read defensively)
+  GET /api/graded-history?cardId=&days=&printing= -> {series:[{date, ungraded, grade7..grade95, psa10, bgs10, cgc10, sgc10}]}
+                                      (used by CardPrice's own card pages; monthly years back, daily lately)
+  population on /api/card: [{company:'psa', total, gem, dist:[count of 1s .. 10s], updated_at}]
   GET /api/movers?days=7&minPrice=25&limit=50 -> {gainers:[{name, card_id, current, previous, pct}], losers:[...]}
 Terms: free to display with attribution (the tab links to cardprice.com), not for resale or bulk
 redistribution. Only the slabs on the Graded Heat list are shown on the site.
@@ -156,6 +158,28 @@ def graded_prices(card):
     return out
 
 
+def pop_list(card):
+    """CardPrice's population: [{company:'psa', total, gem (= 10s), dist:[1s..10s]}, ...]."""
+    out = {}
+    for r in card.get("population") or []:
+        if not isinstance(r, dict) or r.get("printing") not in ("", None):
+            continue
+        co = str(r.get("company") or "").lower()
+        if co not in ("psa", "cgc", "bgs", "sgc", "tag"):
+            continue
+        dist = r.get("dist") if isinstance(r.get("dist"), list) else []
+        n10 = r.get("gem") if isinstance(r.get("gem"), int) else (dist[9] if len(dist) >= 10 else None)
+        if isinstance(n10, int):
+            out[f"{co}10"] = n10
+        if len(dist) >= 9 and isinstance(dist[8], int):
+            out[f"{co}9"] = dist[8]
+        if isinstance(r.get("total"), int):
+            out[f"{co}Total"] = r["total"]
+        if co == "psa" and r.get("updated_at"):
+            out["asOf"] = str(r["updated_at"])[:10]
+    return out
+
+
 def find_pop(obj, depth=0):
     """Look anywhere in the card for population counts. Returns {'psa10','psa9','psaTotal', 'cgc10', ...}."""
     out = {}
@@ -211,7 +235,25 @@ def read_pop_block(b):
     return out
 
 
+GH_KEYS = {"psa10": "psa10", "grade9": "psa9", "psa9": "psa9"}
+
+
 def history_series(h):
+    """/api/graded-history -> {'series': [{date, ungraded, grade9, psa10, ...}]}: monthly years back, daily lately."""
+    rows = (h or {}).get("series") if isinstance(h, dict) else None
+    if isinstance(rows, list) and rows and isinstance(rows[0], dict) and "psa10" in rows[0]:
+        out = {}
+        for r in rows:
+            d = gh._date_of(r.get("date") or "")
+            for k, ours in GH_KEYS.items():
+                p = gh.fnum(r.get(k))
+                if d and p:
+                    out.setdefault(ours, {})[d] = round(p, 2)
+        return {k: sorted(v.items()) for k, v in out.items()}
+    return history_series_any(h)
+
+
+def history_series_any(h):
     """CardPrice history -> {'raw': [(date, price)], 'psa10': [...], 'psa9': [...]} (whatever it carries)."""
     out = {}
     rows = h
@@ -270,7 +312,7 @@ def main():
         if c.get("none") and gh.days_between(c.get("checked", "")) < cfg["cp_retry_unmatched_days"]:
             continue
         age = gh.days_between(c.get("checked", ""))
-        if age < cfg["cp_recheck_days"]:
+        if age < int(os.environ.get("CP_RECHECK_DAYS") or cfg["cp_recheck_days"]):
             continue
         if not c and (not e.get("nm") or e["nm"] < cfg["min_raw_nm"]):
             continue
@@ -327,7 +369,7 @@ def main():
                 c["graded"] = gp
                 c.setdefault("gsnaps", [])
                 c["gsnaps"] = [s for s in c["gsnaps"] if s[0] != TODAY and gh.days_between(s[0]) <= 400] + [[TODAY, gp.get("psa10"), gp.get("psa9")]]
-            pop = find_pop(card)
+            pop = pop_list(card) or find_pop(card)
             if pop:
                 with_pop += 1
                 c["pop"] = pop
@@ -337,14 +379,15 @@ def main():
             if raw:
                 c["ch7"], c["ch30"] = raw[0].get("change7d"), raw[0].get("change30d")
             if c.get("cpid"):
-                h = cp.get("/api/history", {"cardId": c["cpid"], "days": cfg["cp_history_days"]})
+                # graded price history (the endpoint CardPrice's own card pages use for their PSA 10 chart)
+                h = cp.get("/api/graded-history", {"cardId": c["cpid"], "days": cfg["cp_history_days"], "printing": ""})
                 cp.note("history", h)
                 if not sample and h:
                     sample = {"card": json.dumps(card)[:700], "history": json.dumps(h)[:700]}
                 ser = history_series(h) if h else {}
                 if ser:
                     with_hist += 1
-                    c["hist"] = {k: weekly(v) for k, v in ser.items() if k in ("psa10", "psa9")}   # slabs only, one point a week
+                    c["hist"] = {k: weekly([x for x in v if gh.days_between(x[0]) <= 400], 60) for k, v in ser.items() if k in ("psa10", "psa9")}
         except Stop as x:
             stop = str(x)
             break

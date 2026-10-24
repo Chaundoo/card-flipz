@@ -8,7 +8,7 @@
   "cp_pause_seconds": 1.0,
   "cp_recheck_days": 3,
   "cp_retry_unmatched_days": 30,
-  "cp_history_days": 365,
+  "cp_history_days": 400,
   "cp_about": "CardPrice.com (scripts/cardprice_bot.py): free open API, 600 requests/min. ~3 requests per slab, so 150 slabs is ~450 a day.",
   "recheck_days": {
     "hot": 3,
