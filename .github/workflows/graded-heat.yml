@@ -1,7 +1,7 @@
-name: Graded Heat (watch PSA slabs that are heating up)
+name: Graded Slabs (watch PSA slabs that are heating up)
 
 # Checks PSA 10 / 9 prices for popular-Pokémon slabs (mostly 1999-2020 cards) with PokemonPriceTracker's
-# free API and scores which ones look ready to move. The site's "Graded Heat" tab shows the list.
+# free API and scores which ones look ready to move. The site's "Graded Slabs" tab shows the list.
 # Runs every day after the Flip Finder. Mon-Thu it also spends a few spare TCG Price Lookup requests
 # finding more cards to watch (Fri-Sun those stay free for card shows). It never changes the site's cards.
 on:
@@ -48,7 +48,7 @@ jobs:
           FORCE_POOL_SCAN: ${{ github.event.inputs.force_scan || 'false' }}
         run: python3 scripts/graded_heat.py
 
-      - name: Save the Graded Heat list
+      - name: Save the Graded Slabs list
         if: always() && steps.run.outputs.saved == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -58,7 +58,7 @@ jobs:
             python3 scripts/build_versions.py
             git add graded/heat.json graded/charts.json graded/state.json versions.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
-            git commit -q -m "Graded Heat $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} slabs (${{ steps.run.outputs.hot }} heating up)"
+            git commit -q -m "Graded Slabs $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} slabs (${{ steps.run.outputs.hot }} heating up)"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
             git fetch -q origin main && git reset -q --hard origin/main
@@ -72,13 +72,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          [ -f run_report.md ] || echo "## ❌ Graded Heat crashed. Open the Actions run for details." > run_report.md
+          [ -f run_report.md ] || echo "## ❌ Graded Slabs crashed. Open the Actions run for details." > run_report.md
           echo "" >> run_report.md
-          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) · open the site's **Graded Heat** tab to see the list" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) · open the site's **Graded Slabs** tab to see the list" >> run_report.md
           num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Graded Heat log") | .number' | head -n 1)
           if [ -z "$num" ]; then
             url=$(gh issue create --title "Graded Heat log" \
-              --body "The Graded Heat bot posts here when something needs a look and whenever you run it by hand.")
+              --body "The Graded Slabs bot posts here when something needs a look and whenever you run it by hand.")
             num="${url##*/}"
           fi
           gh issue comment "$num" --body-file run_report.md
