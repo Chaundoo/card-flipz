@@ -2,7 +2,7 @@
 """Graded Heat: watch PSA 10 / PSA 9 slabs of popular Pokémon and flag the ones that look ready to move.
 
 Runs in GitHub Actions every morning (.github/workflows/graded-heat.yml). Nothing on the site's card list
-is changed; it only writes graded/heat.json (what the site's "Graded Heat" tab shows) and
+is changed; it only writes graded/heat.json (what the site's "Graded Slabs" tab shows) and
 graded/state.json (its own memory: price snapshots, which cards it checked and when).
 
 Where the cards come from (the "pool")
@@ -874,7 +874,8 @@ def main():
             continue
         out.append(dict(id=key, name=e["name"], variant=e["variant"], set=e["set"], number=e["number"], era=e["era"],
                         image=e.get("image") or st.get("img") or "", tcgId=e["tcgId"], siteId=e.get("siteId"),
-                        checked=st.get("checked"), **sc))
+                        checked=st.get("checked"), cpid=(st.get("_cp") or {}).get("cpid") or None,
+                        cpslug=(st.get("_cp") or {}).get("slug") or None, **sc))
     # your priority Pokémon on the verge first, then other Pokémon on the verge, then everything else
     def group(c):
         verge = c["stage"] in ("breaking", "warming")
@@ -907,14 +908,14 @@ def main():
     secs = int(time.time() - t0)
     icon = {"OK": "✅", "PARTIAL": "⚠️", "FAILED": "❌"}[status]
     hot = [c for c in final if c["stage"] in ("breaking", "warming")][:8]
-    L = [f"## {icon} Graded Heat {status} — {TODAY}" + (" (test run, nothing saved)" if DRY else ""), ""]
+    L = [f"## {icon} Graded Slabs {status} — {TODAY}" + (" (test run, nothing saved)" if DRY else ""), ""]
     if stop:
         L += [f"Stopped early: {stop}.", ""]
     L += [f"- Slabs checked today: **{checked}** ({got} with PSA sales, {empty} with none) · API calls {ppt.used}" +
           (f" · credits left {ppt.credits_left}" if ppt.credits_left is not None else ""),
           f"- Pool: {len(pool)} popular-Pokémon cards ({watched} checked at least once)",
           f"- New cards from the set scan: {', '.join(scanned) if scanned else 'none today'} ({scan_used} TCG Price Lookup requests)",
-          f"- On the Graded Heat list: **{len(final)}** ({sum(1 for c in final if c['era'] in modern)} modern) · took {secs // 60}m {secs % 60}s"]
+          f"- On the Graded Slabs list: **{len(final)}** ({sum(1 for c in final if c['era'] in modern)} modern) · took {secs // 60}m {secs % 60}s"]
     if hot:
         L += ["", "**Heating up:**"] + [f"- {c['name']} ({c['set']} {c['number']}): PSA 10 ${c.get('p10', 0):,.0f}"
                                          f"{' (' + format(c['ch'], '+.0f') + '% vs ' + c['chHow'] + ')' if c.get('ch') is not None else ''} · heat {c['heat']} · {c['stage']}" for c in hot]
@@ -927,11 +928,11 @@ def main():
         import botlog
         test = "Test run (nothing saved): " if DRY else ""
         if status == "FAILED":
-            head = f"{test}Graded Heat failed: {stop or 'see details'}."
+            head = f"{test}Graded Slabs failed: {stop or 'see details'}."
         elif stop and not checked:
-            head = f"{test}Graded Heat: {stop}."
+            head = f"{test}Graded Slabs: {stop}."
         else:
-            head = (f"{test}Graded Heat checked {checked} slabs ({got} with PSA sales). "
+            head = (f"{test}Graded Slabs checked {checked} slabs ({got} with PSA sales). "
                     f"{len(final)} on the list, {len(hot)} heating up.")
         botlog.summary(head, {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"),
                        [f"{ppt.used} PokemonPriceTracker calls", f"{scan_used} TCG Price Lookup requests"])

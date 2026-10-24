@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """CardPrice bot: graded prices, PSA/CGC/BGS pop counts and price history from CardPrice.com's free API.
 
-Runs every morning before the Graded Heat bot (.github/workflows/cardprice.yml) and writes
+Runs every morning before the Graded Slabs bot (.github/workflows/cardprice.yml) and writes
 graded/cardprice.json, which scripts/graded_heat.py reads. It never changes the site's cards.
 
 Why a second source: PokemonPriceTracker's free plan checks ~30 slabs a day and only shares 3 days of
 history. CardPrice's API is open (no key), allows 600 requests a minute and shares graded prices, pop
-counts and a price-history series, so it can cover the whole pool every few days. The Graded Heat bot
+counts and a price-history series, so it can cover the whole pool every few days. The Graded Slabs bot
 then shows its pop counts and history, and checks the slabs CardPrice sees rising first.
 
 API (https://cardprice.com/developers, "shapes may evolve, so code defensively"):
@@ -17,7 +17,7 @@ API (https://cardprice.com/developers, "shapes may evolve, so code defensively")
   population on /api/card: [{company:'psa', total, gem, dist:[count of 1s .. 10s], updated_at}]
   GET /api/movers?days=7&minPrice=25&limit=50 -> {gainers:[{name, card_id, current, previous, pct}], losers:[...]}
 Terms: free to display with attribution (the tab links to cardprice.com), not for resale or bulk
-redistribution. Only the slabs on the Graded Heat list are shown on the site.
+redistribution. Only the slabs on the Graded Slabs list are shown on the site.
 
 Environment (optional): DRY_RUN "true" = report only; CP_CARDS = max cards this run; CP_BASE = API base (tests).
 """
@@ -305,7 +305,7 @@ def main():
     cp = CP(float(cfg["cp_pause_seconds"]))
     t0, problems, stop = time.time(), [], None
 
-    # what to check: slabs on the Graded Heat list first, then by the same priority as the PSA checks
+    # what to check: slabs on the Graded Slabs list first, then by the same priority as the PSA checks
     todo = []
     for key, e in pool.items():
         c = cards.get(key) or {}

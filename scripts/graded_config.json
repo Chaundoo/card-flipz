@@ -4,12 +4,12 @@
   "ppt_max_credits": 95,
   "ppt_credits_per_card": 3,
   "ppt_pause_seconds": 1.3,
-  "cp_max_cards": 150,
+  "cp_max_cards": 400,
   "cp_pause_seconds": 1.0,
   "cp_recheck_days": 3,
   "cp_retry_unmatched_days": 30,
   "cp_history_days": 400,
-  "cp_about": "CardPrice.com (scripts/cardprice_bot.py): free open API, 600 requests/min. ~3 requests per slab, so 150 slabs is ~450 a day.",
+  "cp_about": "CardPrice.com (scripts/cardprice_bot.py): free open API, 600 requests/min. ~2 requests per slab, so 400 slabs is ~800 a day (the whole pool about every 4 days).",
   "recheck_days": {
     "hot": 3,
     "normal": 7,
@@ -19,7 +19,7 @@
   "out_of_budget_multiple": 3,
   "min_psa10_price": 40,
   "min_raw_nm": 4,
-  "list_size": 160,
+  "list_size": 500,
   "modern_max_share": 0.25,
   "pool_scan_max_requests": 8,
   "pool_scan_eras": [
