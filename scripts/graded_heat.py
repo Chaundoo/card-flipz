@@ -49,6 +49,7 @@ DISC_CFG = os.path.join(ROOT, "scripts", "discovery_config.json")
 DSTATE = os.path.join(ROOT, "scripts", "discovery_state.json")
 GDIR = os.path.join(ROOT, "graded")
 HEAT = os.path.join(GDIR, "heat.json")
+CHARTS = os.path.join(GDIR, "charts.json")      # chart points, only downloaded when you open a chart
 GSTATE = os.path.join(GDIR, "state.json")
 CANDS = os.path.join(ROOT, "candidates.json")
 PPT_KEY = (os.environ.get("PPT_API_KEY") or "").strip()
@@ -97,12 +98,14 @@ def fnum(v):
 
 # ---------------------------------------------------------------- which Pokémon, which tier
 class Names:
+    """Your priority list (in order) comes first; the Flip Finder's 'popular' list fills in the rest."""
     def __init__(self, cfg, dcfg):
-        t1 = cfg["tier1"]
-        allp = list(dict.fromkeys(t1 + dcfg.get("popular", [])))
-        allp.sort(key=len, reverse=True)          # "Mewtwo" before "Mew", "Ho-Oh" etc.
+        prio = cfg["priority"]
+        allp = list(dict.fromkeys(prio + dcfg.get("popular", [])))
+        allp.sort(key=len, reverse=True)          # "Mewtwo" before "Mew", "Alolan Ninetales" before "Ninetales"
         self.res = [(p, re.compile(r"(?<![A-Za-z])" + re.escape(p) + r"(?![A-Za-z])", re.I)) for p in allp]
-        self.t1 = set(t1)
+        self.rank = {p: i for i, p in enumerate(prio)}
+        self.n = max(1, len(prio))
         self.stamp = [re.compile(p, re.I) for p in dcfg.get("stamp_patterns", [])]
         self.skip = [re.compile(p, re.I) for p in dcfg.get("skip_name_patterns", [])]
 
@@ -113,7 +116,13 @@ class Names:
         return None
 
     def tier(self, sp):
-        return 1 if sp in self.t1 else 2 if sp else 0
+        return 1 if sp in self.rank else 2 if sp else 0
+
+    def prio_points(self, sp):
+        """24 for the first name on your list, sliding to 14 for the last; 6 for other popular Pokémon."""
+        if sp in self.rank:
+            return 24 - 10 * self.rank[sp] / self.n
+        return 6 if sp else 0
 
     def bad(self, name, variant):
         text = f"{name or ''} {variant or ''}"
@@ -265,7 +274,7 @@ class PPT:
             self.used += 1
             try:
                 with urllib.request.urlopen(req, timeout=40) as r:
-                    for h in ("X-RateLimit-Remaining", "X-Credits-Remaining", "X-Daily-Credits-Remaining"):
+                    for h in ("X-RateLimit-Total-Remaining", "X-RateLimit-Daily-Remaining", "X-RateLimit-Remaining"):
                         if r.headers.get(h):
                             try:
                                 self.credits_left = int(float(r.headers.get(h)))
@@ -311,7 +320,7 @@ def _date_of(v):
     return None
 
 
-PRICE_KEYS = ("smartMarketPrice", "medianPrice", "median", "averagePrice", "average", "avg", "marketPrice", "market", "price", "value")
+PRICE_KEYS = ("medianPrice", "median", "averagePrice", "average", "avg", "marketPrice", "market", "price", "value")
 COUNT_KEYS = ("count", "salesCount", "sales", "volume", "totalSales", "n")
 DATE_KEYS = ("date", "day", "d", "timestamp", "saleDate", "time")
 
@@ -377,32 +386,44 @@ def pick_record(recs, entry):
 
 
 def extract(rec, ppt):
-    """PokemonPriceTracker card -> {'psa10': {'p','n','last'}, ..., 'hist': {'psa10': [...]}, 'pop': {...}}"""
+    """PokemonPriceTracker card -> per grade {'p': price now, 'med': ~4-month median, 'n7': sold last 7 days,
+    'n': sold in the window, 'days': window length, 'last': last sale}, 'hist': {grade: [(date, avg, count)]}.
+
+    Their API: ebay.salesByGrade.psa10 has medianPrice / count over the whole window (dateRangeStart..End,
+    about 4 months), marketPriceMedian7Day and dailyVolume7Day for the last week. smartMarketPrice is
+    skipped on purpose: it can be one odd sale (e.g. $122 for a $2,000+ slab). ebay.priceHistory.psa10 is
+    {date: {average, count}} but the free plan only gives the last ~3 days, so the bot keeps its own."""
     ppt.keys |= set(rec.keys())
-    ebay = rec.get("ebay") or {}
-    if isinstance(ebay, dict):
-        ppt.keys |= {"ebay." + k for k in ebay.keys()}
-    sbg = (ebay.get("salesByGrade") if isinstance(ebay, dict) else None) or rec.get("salesByGrade") or {}
-    out = {"hist": {}}
+    ebay = rec.get("ebay") if isinstance(rec.get("ebay"), dict) else {}
+    ppt.keys |= {"ebay." + k for k in ebay.keys()}
+    sbg = ebay.get("salesByGrade") or {}
+    d0, d1 = _date_of(ebay.get("dateRangeStart") or ""), _date_of(ebay.get("dateRangeEnd") or "") or TODAY
+    days = max(7, days_between(d0, d1)) if d0 else None
+    out = {"hist": {}, "from": d0}
+    ph = ebay.get("priceHistory") or {}
     for g in GRADES:
-        o = sbg.get(g) or sbg.get(g.upper()) or sbg.get(g.replace("psa", "psa_")) or {}
-        p = _price_of(o)
-        if p:
-            out[g] = {"p": round(p, 2), "n": _count_of(o), "last": _date_of(o.get("lastSaleDate") or o.get("lastSold") or "")}
-    ph = (ebay.get("priceHistory") if isinstance(ebay, dict) else None) or rec.get("priceHistory") or {}
-    if isinstance(ph, dict):
-        for g in ("psa10", "psa9"):
-            h = ph.get(g) or ph.get(g.upper())
-            if h:
-                out["hist"][g] = parse_history(h)
-    pop = rec.get("population") or rec.get("populationByGrader") or {}
-    psa = (pop.get("PSA") or pop.get("psa")) if isinstance(pop, dict) else None
-    if isinstance(psa, dict):
-        p10 = psa.get("10") or psa.get("psa10") or psa.get("grade10")
-        tot = psa.get("total") or psa.get("totalPopulation")
-        if isinstance(p10, (int, float)):
-            out["pop"] = {"psa10": int(p10), "psaTotal": int(tot) if isinstance(tot, (int, float)) else None}
-    img = rec.get("imageCdnUrl") or rec.get("imageUrl") or rec.get("image")
+        o = sbg.get(g) or {}
+        if not isinstance(o, dict):
+            continue
+        med = fnum(o.get("medianPrice")) or fnum(o.get("averagePrice"))
+        med7 = fnum(o.get("marketPriceMedian7Day"))
+        v7 = o.get("dailyVolume7Day") if isinstance(o.get("dailyVolume7Day"), (int, float)) else 0
+        n7 = int(round(v7 * 7))
+        h = parse_history(ph.get(g)) if isinstance(ph, dict) and ph.get(g) else []
+        recent = [p for d, p, c in h if days_between(d) <= 14]
+        if med7 and n7 >= 2:
+            p = med7
+        elif recent:
+            p = statistics.median(recent)
+        else:
+            p = med
+        if not p:
+            continue
+        out[g] = {"p": round(p, 2), "med": round(med, 2) if med else None, "n7": n7, "n": _count_of(o),
+                  "days": days, "last": _date_of(o.get("lastSaleDate") or ""), "trend": o.get("marketTrend")}
+        if h:
+            out["hist"][g] = h
+    img = rec.get("imageCdnUrl400") or rec.get("imageCdnUrl") or rec.get("imageUrl")
     if isinstance(img, str) and img.startswith("https://"):
         out["img"] = img
     return out
@@ -410,15 +431,10 @@ def extract(rec, ppt):
 
 # ---------------------------------------------------------------- series + score
 def series_of(st, grade="psa10"):
-    """Our snapshots merged with the API history: sorted [(date, price, count)]."""
-    pts = {}
-    for d, p, n in st.get("hist", {}).get(grade, []):
-        pts[d] = (p, n)
+    """The bot's own price checks for one grade: sorted [(date, price, sold-last-7-days)]."""
     idx = {"psa10": 1, "psa9": 3}[grade]
-    for s in st.get("snaps", []):
-        if len(s) > idx and s[idx]:
-            pts[s[0]] = (s[idx], pts.get(s[0], (None, None))[1])
-    return sorted((d, p, n) for d, (p, n) in pts.items())
+    return sorted((s[0], s[idx], s[idx + 1] if len(s) > idx + 1 else None) for s in st.get("snaps", [])
+                  if len(s) > idx and s[idx])
 
 
 def price_near(series, days_back, tol):
@@ -431,32 +447,11 @@ def price_near(series, days_back, tol):
     return best[1] if best else None
 
 
-def recent_level(series, days=10):
-    """Median of the last ~10 days of points (one odd sale doesn't swing it)."""
-    pts = [p for d, p, _ in series if days_between(d) <= days]
-    return statistics.median(pts) if pts else (series[-1][1] if series else None)
-
-
 def change(series, now, days_back, tol):
     then = price_near(series, days_back, tol)
     if now and then:
         return (now / then - 1) * 100
     return None
-
-
-def volume_change(st, series):
-    """Sales in the last 30 days vs the 30 before (from history counts), else from snapshot sale counts."""
-    a = sum(n for d, p, n in series if n and days_between(d) <= 30)
-    b = sum(n for d, p, n in series if n and 30 < days_between(d) <= 60)
-    if a and b >= 2:
-        return (a / b - 1) * 100, a
-    snaps = [s for s in st.get("snaps", []) if len(s) > 2 and s[2]]
-    if len(snaps) >= 2:
-        now = snaps[-1]
-        old = next((s for s in reversed(snaps[:-1]) if 21 <= days_between(s[0], now[0]) <= 60), None)
-        if old and old[2] >= 2:
-            return (now[2] / old[2] - 1) * 100, now[2]
-    return None, (snaps[-1][2] if snaps else None)
 
 
 def catalysts_for(sp, cfg):
@@ -470,68 +465,92 @@ def catalysts_for(sp, cfg):
     return out
 
 
+def momentum(st, grade="psa10"):
+    """(change %, how it was measured, price now). 4-week change from the bot's own checks once it has them;
+    until then, the last week's median vs the slab's median over PokemonPriceTracker's ~4-month window."""
+    g = (st.get("last") or {}).get(grade) or {}
+    now = g.get("p")
+    ser = series_of(st, grade)
+    c4 = change(ser, now, 28, 9)
+    if c4 is not None:
+        return c4, "4 weeks", now
+    if now and g.get("med"):
+        months = max(1, round((g.get("days") or 120) / 30))
+        return (now / g["med"] - 1) * 100, f"its {months}-month median", now
+    return None, None, now
+
+
+def sales_pace(g):
+    """(sold last 7 days, usual sold per week over the window, % change)"""
+    n7, n, days = g.get("n7"), g.get("n"), g.get("days")
+    if n is None or not days:
+        return n7, None, None
+    usual = n / days * 7
+    if usual < 0.5 or n < 4:
+        return n7, usual, None
+    return n7, usual, ((n7 or 0) / usual - 1) * 100
+
+
 def score(e, st, cfg, names, sp_heat):
     sp = names.species(e["name"])
     tier = names.tier(sp)
-    s10 = series_of(st, "psa10")
-    s9 = series_of(st, "psa9")
     last = st.get("last") or {}
-    p10 = recent_level(s10) or (last.get("psa10") or {}).get("p")
-    p9 = recent_level(s9) or (last.get("psa9") or {}).get("p")
-    ch4 = change(s10, p10, 28, 9)
-    ch12 = change(s10, p10, 84, 21)
-    ch4_9 = change(s9, p9, 28, 9)
-    vol, sold = volume_change(st, s10)
-    n10 = (last.get("psa10") or {}).get("n")
+    g10, g9 = last.get("psa10") or {}, last.get("psa9") or {}
+    m, m_how, p10 = momentum(st, "psa10")
+    m9, m9_how, p9 = momentum(st, "psa9")
+    ch12 = change(series_of(st), p10, 84, 21)
+    n7, usual, vol = sales_pace(g10)
     pop = st.get("pop") or e.get("pop") or {}
     why, pts = [], 0.0
 
-    pts += {1: 18, 2: 9}.get(tier, 0)
+    pts += names.prio_points(sp)
     pts += cfg["era_points"].get(e["era"], 5)
     tail = []                                    # (shown last: true of most cards on the list)
     if tier == 1:
-        tail.append(f"{sp} is a top-tier Pokémon")
+        tail.append(f"{sp} is on your priority list (#{names.rank[sp] + 1})")
     if e["era"] in ("wotc", "ex"):
         tail.append("Vintage (1999–2007)")
     elif e["era"] not in cfg["modern_eras"] and e["era"] != "other":
         tail.append("Mid-era (2007–2019)")
 
     stage = "watching"
-    if ch4 is not None:
-        if ch4 < 0:
-            pts += max(-15, ch4 * 0.5)
-        elif ch4 <= 60:
-            pts += ch4 * 0.45
-        elif ch4 < 100:
-            pts += 27 - (ch4 - 60) * 0.3
+    if m is not None:
+        if m < 0:
+            pts += max(-15, m * 0.5)
+        elif m <= 60:
+            pts += m * 0.45
+        elif m < 100:
+            pts += 27 - (m - 60) * 0.3
         else:
-            pts += max(0, 12 - (ch4 - 100) * 0.05)
-        if ch4 >= 100:
+            pts += max(0, 12 - (m - 100) * 0.05)
+        if m >= 100:
             stage = "spiked"
-            why.append(f"PSA 10 already up {ch4:.0f}% in 4 weeks (you'd be chasing)")
-        elif ch4 >= 12:
+            why.append(f"PSA 10 already up {m:.0f}% vs {m_how} (you'd be chasing)")
+        elif m >= 12:
             stage = "breaking"
-            why.append(f"PSA 10 up {ch4:.0f}% in 4 weeks")
-        elif ch4 <= -12:
+            why.append(f"PSA 10 up {m:.0f}% vs {m_how}")
+        elif m <= -12:
             stage = "cooling"
-            why.append(f"PSA 10 down {abs(ch4):.0f}% in 4 weeks")
+            why.append(f"PSA 10 down {abs(m):.0f}% vs {m_how}")
         else:
             stage = "steady"
-        if ch12 is not None:
-            a = ch4 - ch12 / 3
+        if ch12 is not None and m_how == "4 weeks":
+            a = m - ch12 / 3
             pts += max(-5, min(8, a * 0.15))
-            if a > 10 and 0 <= ch4 < 100:
+            if a > 10 and 0 <= m < 100:
                 why.append("Rise is speeding up")
     if vol is not None:
         pts += max(-6, min(12, vol * 0.12))
         if vol >= 30:
-            why.append(f"Sales up {vol:.0f}% (volume often moves before price)")
+            why.append(f"{n7} PSA 10s sold this week vs about {usual:.1f} a week before (volume often moves before price)")
             if stage in ("steady", "watching"):
                 stage = "warming"
+        elif vol <= -50:
+            why.append("Sales slowing down")
     sib = sp_heat.get(sp)
-    if sib and sib[1] >= 2 and sib[0] > 8 and (ch4 is None or ch4 < sib[0]):
-        pts += max(0, min(12, (sib[0] - max(ch4 or 0, 0)) * 0.3))
-        why.append(f"{sp} heating up on {sib[1]} other slabs (typical {sib[0]:+.0f}% in 4 weeks)")
+    if sib and sib[1] >= 2 and sib[0] > 8 and (m is None or m < sib[0]):
+        pts += max(0, min(12, (sib[0] - max(m or 0, 0)) * 0.3))
+        why.append(f"{sp} heating up on {sib[1]} other slabs (typical {sib[0]:+.0f}%)")
         if stage in ("steady", "watching"):
             stage = "warming"
     cats = []
@@ -544,17 +563,17 @@ def score(e, st, cfg, names, sp_heat):
             when = f"in {until} days" if until > 0 else "today" if until == 0 else f"{-until} days ago"
             why.append(f"{c['event']} ({when})")
         cats.append(c["event"])
-    if n10 is not None:
-        if n10 < 2:
+    if usual is not None or n7 is not None:
+        if (usual or 0) < 0.5 and (n7 or 0) < 2:
             pts -= 8
             why.append("Thin sales: hard to trust the price")
-        elif n10 >= 10:
+        elif (usual or 0) >= 3:
             pts += 4
     if pop.get("psa10"):
-        g = pop["psa10"] / pop["psaTotal"] * 100 if pop.get("psaTotal") else None
-        if g is not None and g < 10:
+        gr = pop["psa10"] / pop["psaTotal"] * 100 if pop.get("psaTotal") else None
+        if gr is not None and gr < 10:
             pts += 5
-            why.append(f"Low gem rate ({g:.0f}% get a 10)")
+            why.append(f"Low gem rate ({gr:.0f}% get a 10)")
         if pop["psa10"] < 300:
             pts += 4
             why.append(f"Only {pop['psa10']:,} PSA 10s")
@@ -564,12 +583,31 @@ def score(e, st, cfg, names, sp_heat):
         pts = min(pts * 0.7, 60)
     heat = int(round(max(0, min(100, pts))))
     why += tail
-    spark = weekly(s10)
     return {"p10": round(p10, 2) if p10 else None, "p9": round(p9, 2) if p9 else None,
-            "p8": (last.get("psa8") or {}).get("p"), "n10": n10, "n9": (last.get("psa9") or {}).get("n"),
-            "last10": (last.get("psa10") or {}).get("last"), "ch4": r1(ch4), "ch12": r1(ch12), "ch4_9": r1(ch4_9),
-            "vol": r1(vol), "heat": heat, "stage": stage, "why": why[:7], "spark": spark, "cat": cats,
-            "pop": {k: v for k, v in pop.items() if v} or None, "tier": tier, "sp": sp}
+            "med10": g10.get("med"), "med9": g9.get("med"), "p8": (last.get("psa8") or {}).get("p"),
+            "n10": n7, "wk10": r1(usual), "n9": g9.get("n7"), "last10": g10.get("last"),
+            "ch": r1(m), "chHow": m_how, "ch9": r1(m9), "ch12": r1(ch12),
+            "vol": r1(vol), "heat": heat, "stage": stage, "why": why[:7], "cat": cats,
+            "pop": {k: v for k, v in pop.items() if v} or None, "tier": tier, "sp": sp,
+            "prio": names.rank.get(sp)}
+
+
+def chart_data(st, base):
+    """Per grade: 'pts' = days with sales [day, avg sale $, how many], 'line' = the bot's checks
+    [day, median $], 'ref' = [from-day, median $ over the API's window]. Days count from base."""
+    out = {}
+    b = datetime.date.fromisoformat(base)
+    def day(d):
+        return (datetime.date.fromisoformat(d) - b).days
+    last = st.get("last") or {}
+    for g, idx in (("psa10", 1), ("psa9", 3)):
+        pts = [[day(d), round(p), c or 0] for d, p, c in (st.get("hist") or {}).get(g, []) if p and days_between(d) <= 200]
+        line = [[day(s[0]), round(s[idx])] for s in st.get("snaps", []) if len(s) > idx and s[idx] and days_between(s[0]) <= 200]
+        lg = last.get(g) or {}
+        ref = [day(st["from"]), round(lg["med"])] if lg.get("med") and st.get("from") else None
+        if pts or line:
+            out["g10" if g == "psa10" else "g9"] = {"pts": pts, "line": line, **({"ref": ref} if ref else {})}
+    return out
 
 
 def r1(x):
@@ -591,7 +629,7 @@ def weekly(series, weeks=26):
 # ---------------------------------------------------------------- what to check today
 def prior(e, cfg, names):
     sp = names.species(e["name"])
-    p = {1: 30, 2: 14}.get(names.tier(sp), 0) + cfg["era_points"].get(e["era"], 5) * 1.5
+    p = names.prio_points(sp) * 1.5 + cfg["era_points"].get(e["era"], 5) * 1.5     # your priority list goes first
     nm = e.get("nm") or 0
     p += math.log2(nm + 1) * 4
     k = variant_kind(e.get("variant"))
@@ -689,8 +727,12 @@ def main():
         stop = "the PPT_API_KEY secret isn't set yet, so no graded prices were checked (see the README)"
     else:
         errors_row = 0
+        per = max(1, int(cfg["ppt_credits_per_card"]))
         for key in todo:
             e = pool[key]
+            if ppt.credits_left is not None and ppt.credits_left < per + 2:
+                stop = f"today's free PokemonPriceTracker credits are nearly used ({ppt.credits_left} left)"
+                break
             try:
                 recs = ppt.card(e["tcgId"])
                 errors_row = 0
@@ -721,8 +763,10 @@ def main():
                     merged = {d: (p, c) for d, p, c in st.get("hist", {}).get(g, [])}
                     merged.update({d: (p, c) for d, p, c in h})
                     st.setdefault("hist", {})[g] = [[d, round(p, 2), c] for d, (p, c) in sorted(merged.items()) if days_between(d) <= 200]
-            snap = [TODAY, (x.get("psa10") or {}).get("p"), (x.get("psa10") or {}).get("n"),
-                    (x.get("psa9") or {}).get("p"), (x.get("psa9") or {}).get("n")]
+            snap = [TODAY, (x.get("psa10") or {}).get("p"), (x.get("psa10") or {}).get("n7"),
+                    (x.get("psa9") or {}).get("p"), (x.get("psa9") or {}).get("n7")]
+            if x.get("from"):
+                st["from"] = x["from"]
             st["snaps"] = [s for s in st.get("snaps", []) if s[0] != TODAY and days_between(s[0]) <= 400] + [snap]
             if x.get("pop"):
                 st["pop"] = x["pop"]
@@ -736,8 +780,7 @@ def main():
             rows.append((key, pool[key], st))
     first = {}
     for key, e, st in rows:
-        s10 = series_of(st)
-        c = change(s10, recent_level(s10), 28, 9)
+        c = momentum(st)[0]
         if c is not None:
             first.setdefault(names.species(e["name"]), []).append((key, c))
     out = []
@@ -754,7 +797,11 @@ def main():
         out.append(dict(id=key, name=e["name"], variant=e["variant"], set=e["set"], number=e["number"], era=e["era"],
                         image=e.get("image") or st.get("img") or "", tcgId=e["tcgId"], siteId=e.get("siteId"),
                         checked=st.get("checked"), **sc))
-    out.sort(key=lambda c: -c["heat"])
+    # your priority Pokémon on the verge first, then other Pokémon on the verge, then everything else
+    def group(c):
+        verge = c["stage"] in ("breaking", "warming")
+        return 0 if verge and c.get("prio") is not None else 1 if verge else 2
+    out.sort(key=lambda c: (group(c), -c["heat"]))
     modern = set(cfg["modern_eras"])
     cap = int(cfg["list_size"] * cfg["modern_max_share"])
     final, mcount = [], 0
@@ -792,7 +839,7 @@ def main():
           f"- On the Graded Heat list: **{len(final)}** ({sum(1 for c in final if c['era'] in modern)} modern) · took {secs // 60}m {secs % 60}s"]
     if hot:
         L += ["", "**Heating up:**"] + [f"- {c['name']} ({c['set']} {c['number']}): PSA 10 ${c.get('p10', 0):,.0f}"
-                                         f"{' (' + format(c['ch4'], '+.0f') + '% 4 wk)' if c.get('ch4') is not None else ''} · heat {c['heat']} · {c['stage']}" for c in hot]
+                                         f"{' (' + format(c['ch'], '+.0f') + '% vs ' + c['chHow'] + ')' if c.get('ch') is not None else ''} · heat {c['heat']} · {c['stage']}" for c in hot]
     if ppt.keys:
         L += ["", "<details><summary>Fields the API returned (for tuning)</summary>", "", "`" + ", ".join(sorted(ppt.keys)) + "`", "</details>"]
     if problems:
@@ -817,6 +864,9 @@ def main():
     if saved:
         jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
                      "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "cards": final}, separators=(",", ":"))
+        base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=200)).isoformat()
+        charts = {c["id"]: chart_data(gstate["cards"][c["id"]], base) for c in final}
+        jdump(CHARTS, {"base": base, "generated": TODAY, "cards": {k: v for k, v in charts.items() if v}}, separators=(",", ":"))
         gstate["about"] = "Written by scripts/graded_heat.py: graded price snapshots, the extra card pool and when each card was checked. Not loaded by the site."
         jdump(GSTATE, gstate, separators=(",", ":"), sort_keys=True)
     return finish(status, report, saved=saved, total=len(final), hot=len(hot))
