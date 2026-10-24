@@ -65,7 +65,13 @@ class CP:
                 if e.code in (401, 403):
                     raise Stop(f"CardPrice refused the request (HTTP {e.code}); the API may need a key now. {body}")
                 if e.code == 429:
-                    time.sleep(float(e.headers.get("Retry-After") or 30) + 1)
+                    try:
+                        wait = float(e.headers.get("Retry-After") or 30)
+                    except ValueError:
+                        wait = 30
+                    if wait > 120:
+                        raise Stop(f"CardPrice asked to wait {int(wait)} s (rate limit); stopped for today")
+                    time.sleep(wait + 1)
                     continue
                 if e.code >= 500 and attempt < 2:
                     time.sleep(6 * (attempt + 1))

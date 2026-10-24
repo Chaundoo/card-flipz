@@ -293,7 +293,13 @@ class PPT:
                 if e.code == 402 or (e.code == 429 and re.search(r"credit|daily|quota|limit", body, re.I) and attempt == 2):
                     raise PPTStop(f"PokemonPriceTracker's daily credits are used up (HTTP {e.code})")
                 if e.code == 429:
-                    time.sleep(float(e.headers.get("Retry-After") or 20) + 1)
+                    try:
+                        wait = float(e.headers.get("Retry-After") or 20)
+                    except ValueError:
+                        wait = 20
+                    if wait > 90 or re.search(r"daily|credit|quota", body, re.I):
+                        raise PPTStop(f"PokemonPriceTracker's daily credits are used up (it asked to wait {int(wait)} s)")
+                    time.sleep(wait + 1)
                     continue
                 if e.code == 404:
                     return []
