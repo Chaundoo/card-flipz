@@ -1,6 +1,47 @@
 {
 "about": "Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.",
-"declined": {},
+"declined": {
+"019c96a9-c2ed-7296-a5eb-fe182abbd65c": {
+"card": "Garchomp Spirit Link (Non-Holo) XY Promos XY169",
+"until": "2027-01-23"
+},
+"019c975b-48e7-71d6-a885-cc2eaa21041f": {
+"card": "Blastoise (Holo) Plasma Blast 16/101",
+"until": "2027-01-23"
+},
+"019c975b-4a21-7949-8089-ff83cbd64f57": {
+"card": "Bulbasaur (Reverse Holo) Dark Explorers 1/108",
+"until": "2027-01-23"
+},
+"019c975d-60b9-7eb6-a791-de37c9c530ec": {
+"card": "Clefairy (Reverse Holo) Call of Legends 54/95",
+"until": "2027-01-23"
+},
+"019c9763-c02b-7c20-a817-1104c041f241": {
+"card": "Espeon (Reverse Holo) Dark Explorers 48/108",
+"until": "2027-01-23"
+},
+"019c9768-6e07-7500-bd2f-2816ff8a6a67": {
+"card": "Growlithe (11) (Reverse Holo) Next Destinies 11/99",
+"until": "2027-01-23"
+},
+"019c9774-e0f9-7fc5-af27-5bd5b038656a": {
+"card": "Oshawott (Reverse Holo) Boundaries Crossed 39/149",
+"until": "2027-01-23"
+},
+"019c9779-10f0-7f04-8b36-dfc1bebf4595": {
+"card": "Reshiram - BW23 (Holo) Black and White Promos BW23",
+"until": "2027-01-23"
+},
+"019c9779-1106-7a87-8048-c3600d9d3bbb": {
+"card": "Reshiram EX (Holo) Next Destinies 22/99",
+"until": "2027-01-23"
+},
+"019c9791-e474-7799-978b-052dce264e4b": {
+"card": "Larvitar (51) (Reverse Holo) Unleashed 51/95",
+"until": "2027-01-23"
+}
+},
 "dismissed": [],
 "setlist": {
 "fetched": "2026-10-15",
@@ -1932,6 +1973,106 @@
 "price:$20-50"
 ],
 "v": 1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:espeon",
+"set:Dark Explorers",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:clefairy",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:larvitar",
+"set:Unleashed",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:bulbasaur",
+"set:Dark Explorers",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:reshiram",
+"set:Black and White Promos",
+"kind:promo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:garchomp spirit link",
+"set:XY Promos",
+"kind:promo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:growlithe",
+"set:Next Destinies",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:oshawott",
+"set:Boundaries Crossed",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:reshiram",
+"set:Next Destinies",
+"kind:holo",
+"price:under $20"
+],
+"v": -1
+},
+{
+"d": "2026-10-25",
+"f": [
+"pokemon:blastoise",
+"set:Plasma Blast",
+"kind:holo",
+"price:under $20"
+],
+"v": -1
 }
 ]
 }
