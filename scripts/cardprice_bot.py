@@ -27,6 +27,7 @@ import urllib.request, urllib.error, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp
 import graded_heat as gh
+import slab_sources
 
 ROOT = rp.ROOT
 OUT = os.path.join(ROOT, "graded", "cardprice.json")
@@ -35,7 +36,8 @@ BASE = (os.environ.get("CP_BASE") or "https://api.cardprice.com").rstrip("/")
 DRY = (os.environ.get("DRY_RUN") or "").lower() == "true"
 TODAY = rp.TODAY
 UA = "card-flipz-graded-heat/1.0 (+https://github.com/Chaundoo/card-flipz; cached daily)"
-DEFAULTS = {"cp_max_cards": 150, "cp_pause_seconds": 1.0, "cp_recheck_days": 3, "cp_retry_unmatched_days": 30, "cp_history_days": 365}
+DEFAULTS = {"cp_max_cards": 150, "cp_pause_seconds": 1.0, "cp_recheck_days": 3, "cp_retry_unmatched_days": 30, "cp_history_days": 365,
+            "cp_over_cap_recheck_days": 30}
 
 
 class Stop(Exception):
@@ -309,7 +311,9 @@ def main():
     cards = data.setdefault("cards", {})
     on_list = {c["id"] for c in gh.jload(gh.HEAT, {}).get("cards", [])}
     cp = CP(float(cfg["cp_pause_seconds"]))
+    src = slab_sources.Sources(cfg)      # shared record: who checked each slab, and your price cap
     t0, problems, stop = time.time(), [], None
+    over_cap = 0
 
     # what to check: slabs on the Graded Slabs list first, then by the same priority as the PSA checks
     todo = []
@@ -321,6 +325,11 @@ def main():
         if age < int(os.environ.get("CP_RECHECK_DAYS") or cfg["cp_recheck_days"]):
             continue
         if not c and (not e.get("nm") or e["nm"] < cfg["min_raw_nm"]):
+            continue
+        # over your cap in both PSA 10 and PSA 9: only re-check now and then, in case the price drops
+        own = [(x[0], x[1], x[2]) for x in c.get("gsnaps", [])]
+        if src.over_cap(key, own) and age < cfg["cp_over_cap_recheck_days"]:
+            over_cap += 1
             continue
         rank = (0 if key in on_list else 1 if c else 2, -gh.prior(e, cfg, names))
         todo.append((rank, key))
@@ -355,6 +364,7 @@ def main():
                     hit = match(e, (s or {}).get("results") if isinstance(s, dict) else s)
                 if not hit:
                     c.update({"none": True, "checked": TODAY})
+                    src.record(key, "cardprice", found=False)
                     checked += 1
                     continue
                 c.pop("none", None)
@@ -370,6 +380,7 @@ def main():
             c["cpid"] = str(inner.get("id") or c.get("cpid") or "")
             c["checked"] = TODAY
             gp = graded_prices(card)
+            src.record(key, "cardprice", gp.get("psa10"), gp.get("psa9"))
             if gp:
                 with_graded += 1
                 c["graded"] = gp
@@ -411,6 +422,7 @@ def main():
         L += [f"Stopped early: {stop}.", ""]
     L += [f"- Cards looked up: **{checked}** · found on CardPrice {matched} · with graded prices {with_graded} · with pop counts {with_pop} · with price history {with_hist}",
           f"- API calls: {cp.used} · took {secs // 60}m {secs % 60}s",
+          f"- Skipped {over_cap} slabs over your ${src.cap:,.0f} cap (max_slab_price; re-checked every {cfg['cp_over_cap_recheck_days']} days in case they drop)",
           f"- CardPrice movers (7 days): {len((data.get('movers') or {}).get('gainers', []))} gainers saved"]
     if cp.keys:
         L += ["", "<details><summary>Fields CardPrice returned (for tuning)</summary>", ""] + \
@@ -433,6 +445,7 @@ def main():
         data.update({"about": "Written by scripts/cardprice_bot.py from CardPrice.com's free API (cardprice.com). Read by scripts/graded_heat.py.",
                      "generated": TODAY})
         gh.jdump(OUT, data, separators=(",", ":"), sort_keys=True)
+        src.save()
     open(rp.REPORT, "w", encoding="utf-8").write(report)
     print(report)
     if os.environ.get("GITHUB_OUTPUT"):

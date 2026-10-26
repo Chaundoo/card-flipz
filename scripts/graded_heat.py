@@ -42,6 +42,7 @@ import urllib.request, urllib.error, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp     # TCG Price Lookup client + price helpers
 import add_card as ac           # era guess + printing labels
+import slab_sources             # shared record of which source checked each slab + your price cap
 
 ROOT = rp.ROOT
 CFG_PATH = os.path.join(ROOT, "scripts", "graded_config.json")
@@ -50,7 +51,9 @@ DSTATE = os.path.join(ROOT, "scripts", "discovery_state.json")
 GDIR = os.path.join(ROOT, "graded")
 HEAT = os.path.join(GDIR, "heat.json")
 CHARTS = os.path.join(GDIR, "charts.json")
-CPFILE = os.path.join(GDIR, "cardprice.json")   # written by scripts/cardprice_bot.py (CardPrice.com)      # chart points, only downloaded when you open a chart
+CPFILE = os.path.join(GDIR, "cardprice.json")   # written by scripts/cardprice_bot.py (CardPrice.com)
+PAFILE = os.path.join(GDIR, "pokemonapi.json")  # written by scripts/pokemon_api_bot.py (pokemon-api.com)
+TAFILE = os.path.join(GDIR, "tcgapi.json")      # written by scripts/tcgapi_bot.py (tcgapi.net eBay comps)
 GSTATE = os.path.join(GDIR, "state.json")
 CANDS = os.path.join(ROOT, "candidates.json")
 PPT_KEY = (os.environ.get("PPT_API_KEY") or "").strip()
@@ -684,7 +687,7 @@ def prior(e, cfg, names):
     sp = names.species(e["name"])
     p = names.prio_points(sp) * 1.5 + cfg["era_points"].get(e["era"], 5) * 1.5     # your priority list goes first
     nm = e.get("nm") or 0
-    budget = float(cfg["budget_default"])
+    budget = slab_sources.cap_of(cfg)
     p += math.log2(min(nm, budget * 0.3) + 1) * 4
     if nm > budget * 0.5:          # raw already this pricey: the PSA 10 is almost surely far over budget
         p -= 25
@@ -697,9 +700,18 @@ def prior(e, cfg, names):
     return p
 
 
-def due_list(pool, gstate, cfg, names, budget, cpcards=None):
+def own_prices(st):
+    """The bot's own PSA 10 / 9 checks as [(date, p10, p9)] (for the price-cap test)."""
+    return [(x[0], x[1], x[3] if len(x) > 3 else None) for x in (st or {}).get("snaps", [])]
+
+
+def due_list(pool, gstate, cfg, names, budget, cpcards=None, src=None, skipped=None):
+    """Which slabs to spend today's PokemonPriceTracker credits on. Slabs over your cap (both PSA 10 and 9)
+    are skipped, and so are slabs pokemon-api.com checked in the last couple of days, unless they're heating
+    up (those get both sources on purpose). Among the rest, the ones no sales source has seen longest go first."""
     cards = gstate.setdefault("cards", {})
     rc = cfg["recheck_days"]
+    skipped = skipped if skipped is not None else {}
     urgent, fresh_vintage, fresh_modern, rest = [], [], [], []
     for key, e in pool.items():
         if not e.get("nm") or e["nm"] < cfg["min_raw_nm"]:
@@ -707,6 +719,16 @@ def due_list(pool, gstate, cfg, names, budget, cpcards=None):
                 continue
         st = cards.get(key)
         cpc = (cpcards or {}).get(key) or {}
+        if src is not None:
+            extra = own_prices(st) + [(x[0], x[1], x[2] if len(x) > 2 else None) for x in cpc.get("gsnaps", [])]
+            if src.over_cap(key, extra):
+                skipped["over_cap"] = skipped.get("over_cap", 0) + 1
+                continue
+            sc0 = (st or {}).get("score") or {}
+            hot0 = sc0.get("heat", 0) >= 60 or sc0.get("stage") in ("breaking", "warming")
+            if not hot0 and src.other_sales_checked_recently(key, "ppt"):
+                skipped["other"] = skipped.get("other", 0) + 1
+                continue
         cs = cp_series(cpc)
         cp_rise = change(cs, cs[-1][1], 28, 9) if cs else None
         if not st or not st.get("checked"):
@@ -717,6 +739,8 @@ def due_list(pool, gstate, cfg, names, budget, cpcards=None):
             skip = gp and min(x for x in (gp.get("psa10"), gp.get("psa9")) if x) > budget * cfg["out_of_budget_multiple"] \
                 if (gp.get("psa10") or gp.get("psa9")) else False
             pr = prior(e, cfg, names) - (40 if skip else 0)    # both grades far over budget: check much later
+            if cpc.get("none") or not gp:
+                pr += 10                                        # CardPrice couldn't price it: this bot is the only way
             (fresh_modern if e["era"] in cfg["modern_eras"] else fresh_vintage).append((pr, key))
             continue
         if st.get("none"):                       # the API had no graded sales for it
@@ -724,6 +748,8 @@ def due_list(pool, gstate, cfg, names, budget, cpcards=None):
                 rest.append((days_between(st["checked"]), key))
             continue
         age = days_between(st["checked"])
+        if src is not None:
+            age = min(age, src.sales_age(key))   # a recent pokemon-api.com check counts too
         sc = st.get("score") or {}
         p9, p10 = sc.get("p9") or 0, sc.get("p10") or 0
         if p9 > budget * cfg["out_of_budget_multiple"] or (p10 and p10 < cfg["min_psa10_price"]):
@@ -785,11 +811,15 @@ def main():
         pool.setdefault(k, v)
 
     # 2. graded prices
-    budget = float(cfg["budget_default"])
+    budget = slab_sources.cap_of(cfg)          # max_slab_price: nothing over this gets looked up or listed
+    src = slab_sources.Sources(cfg)
     n = int(os.environ.get("HEAT_CARDS") or (cfg["ppt_max_credits"] // max(1, cfg["ppt_credits_per_card"])))
     cpd = jload(CPFILE, {})
     cpcards = cpd.get("cards") or {}
-    lists = due_list(pool, gstate, cfg, names, budget, cpcards)
+    pacards = (jload(PAFILE, {}) or {}).get("cards") or {}
+    tacards = (jload(TAFILE, {}) or {}).get("cards") or {}
+    skipped = {}
+    lists = due_list(pool, gstate, cfg, names, budget, cpcards, src, skipped)
     todo = plan(lists, n, cfg["modern_max_share"])
     ppt = PPT(cfg)
     checked, got, empty, stop = 0, 0, 0, None
@@ -824,6 +854,7 @@ def main():
             if not any(g in x for g in GRADES):
                 st["none"] = True
                 empty += 1
+                src.record(key, "ppt", found=False)
                 continue
             got += 1
             st.pop("none", None)
@@ -838,6 +869,7 @@ def main():
             if x.get("from"):
                 st["from"] = x["from"]
             st["snaps"] = [s for s in st.get("snaps", []) if s[0] != TODAY and days_between(s[0]) <= 400] + [snap]
+            src.record(key, "ppt", snap[1], snap[3], snap[2], snap[4])
             if x.get("pop"):
                 st["pop"] = x["pop"]
             if x.get("img") and not e.get("image"):
@@ -851,11 +883,35 @@ def main():
             movers[str(g["id"])] = g["pct"]
     rows = []
     for key in pool:
-        st, cpc = gstate["cards"].get(key) or {}, cpcards.get(key) or {}
-        if not st.get("last") and not (cpc.get("graded") or {}):
+        st, cpc, pac, tac = gstate["cards"].get(key) or {}, cpcards.get(key) or {}, pacards.get(key) or {}, tacards.get(key) or {}
+        if not st.get("last") and not (cpc.get("graded") or {}) and not (pac.get("psa10") or pac.get("psa9")) \
+                and not (tac.get("psa10") or tac.get("psa9")):
             continue
-        view = dict(st, _cp=cpc, _mover=movers.get(str(cpc.get("cpid") or "")))
-        if not st.get("last"):
+        view = dict(st, _cp=cpc, _pa=pac, _mover=movers.get(str(cpc.get("cpid") or "")))
+        if not st.get("last") and (tac.get("psa10") or tac.get("psa9")):
+            # tcgapi.net's cleaned eBay comps when PokemonPriceTracker hasn't checked it: same shape as its data
+            # (price, usual median, sold last 7 days / in the window), its own snapshots for the 4-week change,
+            # and the individual sales as chart dots
+            view["last"] = {g: dict(tac[g]) for g in ("psa10", "psa9") if (tac.get(g) or {}).get("p")}
+            view["snaps"] = tac.get("snaps") or []
+            view["hist"] = {}
+            for g in ("psa10", "psa9"):
+                days = {}
+                for d, p in tac.get(g + "_sales") or []:
+                    days.setdefault(d, []).append(p)
+                if days:
+                    view["hist"][g] = [(d, statistics.median(v), len(v)) for d, v in sorted(days.items())]
+            w = (tac.get("psa10") or tac.get("psa9") or {}).get("days") or 90
+            view["from"] = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=w)).isoformat()
+            view["checked"] = tac.get("checked")
+            view["_src"] = "tcgapi.net"
+        elif not st.get("last") and (pac.get("psa10") or pac.get("psa9")):
+            # pokemon-api.com's eBay median (and how many sold) when PokemonPriceTracker hasn't checked it yet
+            view["last"] = {g: {"p": pac[g]["p"], "fresh": (pac[g].get("n") or 0) >= 2}
+                            for g in ("psa10", "psa9") if (pac.get(g) or {}).get("p")}
+            view["checked"] = pac.get("checked")
+            view["_src"] = "pokemon-api.com"
+        elif not st.get("last"):
             gp = cpc["graded"]
             view["last"] = {g: {"p": gp[g]} for g in ("psa10", "psa9") if gp.get(g)}   # CardPrice price; trend from its history
             view["checked"] = cpc.get("checked")
@@ -871,6 +927,15 @@ def main():
         others = [c for k, c in first.get(sp, []) if k != key]
         sp_heat = {sp: (statistics.median(others), len(others))} if others else {}
         sc = score(e, st, cfg, names, sp_heat)
+        cf = src.conflict(key, "p10") or src.conflict(key, "p9")
+        if cf:
+            # the two eBay-sales sources disagree by more than disagree_pct: don't trust either until checked
+            sc["stage"] = "conflict"
+            sc["heat"] = min(sc["heat"], 45)
+            sc["why"] = [f"Price sources disagree: {' vs '.join(f'{n} ${p:,.0f}' for n, p in cf)}. Check the sold listings"] + sc["why"][:6]
+            sc["conflict"] = [[n, p] for n, p in cf]
+        if st.get("_src"):
+            sc["priceSrc"] = st["_src"]
         if key in gstate["cards"]:
             gstate["cards"][key]["score"] = {k: sc[k] for k in ("heat", "stage", "p10", "p9")}
         views[key] = st
@@ -878,6 +943,9 @@ def main():
             continue
         if sc["p10"] and sc["p10"] < cfg["min_psa10_price"] and not sc["p9"]:
             continue
+        if not ((sc["p10"] and sc["p10"] <= budget) or (sc["p9"] and sc["p9"] <= budget)):
+            skipped["listed_over_cap"] = skipped.get("listed_over_cap", 0) + 1
+            continue                             # over your cap in both grades: not shown
         out.append(dict(id=key, name=e["name"], variant=e["variant"], set=e["set"], number=e["number"], era=e["era"],
                         image=e.get("image") or st.get("img") or "", tcgId=e["tcgId"], siteId=e.get("siteId"),
                         checked=st.get("checked"), cpid=(st.get("_cp") or {}).get("cpid") or None,
@@ -920,11 +988,17 @@ def main():
     L += [f"- Slabs checked today: **{checked}** ({got} with PSA sales, {empty} with none) · API calls {ppt.used}" +
           (f" · credits left {ppt.credits_left}" if ppt.credits_left is not None else ""),
           f"- Pool: {len(pool)} popular-Pokémon cards ({watched} checked at least once)",
+          f"- Price cap ${budget:,.0f} (max_slab_price): {skipped.get('over_cap', 0)} slabs over it skipped (no credits spent), "
+          f"{skipped.get('listed_over_cap', 0)} left off the list · {skipped.get('other', 0)} skipped because tcgapi.net or pokemon-api.com just checked them",
+          f"- Flagged because two price sources disagree: {sum(1 for c in final if c['stage'] == 'conflict')}",
           f"- New cards from the set scan: {', '.join(scanned) if scanned else 'none today'} ({scan_used} TCG Price Lookup requests)",
           f"- On the Graded Slabs list: **{len(final)}** ({sum(1 for c in final if c['era'] in modern)} modern) · took {secs // 60}m {secs % 60}s"]
     if hot:
-        L += ["", "**Heating up:**"] + [f"- {c['name']} ({c['set']} {c['number']}): PSA 10 ${c.get('p10', 0):,.0f}"
-                                         f"{' (' + format(c['ch'], '+.0f') + '% vs ' + c['chHow'] + ')' if c.get('ch') is not None else ''} · heat {c['heat']} · {c['stage']}" for c in hot]
+        def fit(c):                              # the grade you can afford: PSA 10 if under the cap, else PSA 9
+            return (f"PSA 10 ${c['p10']:,.0f}" if c.get("p10") and c["p10"] <= budget else
+                    f"PSA 9 ${c['p9']:,.0f} (PSA 10 ${c.get('p10') or 0:,.0f})")
+        L += ["", "**Heating up:**"] + [f"- {c['name']} ({c['set']} {c['number']}): {fit(c)}"
+                                         f"{' · PSA 10 ' + format(c['ch'], '+.0f') + '% vs ' + c['chHow'] if c.get('ch') is not None else ''} · heat {c['heat']} · {c['stage']}" for c in hot]
     if ppt.keys:
         L += ["", "<details><summary>Fields the API returned (for tuning)</summary>", "", "`" + ", ".join(sorted(ppt.keys)) + "`", "</details>"]
     if problems:
@@ -954,6 +1028,7 @@ def main():
         jdump(CHARTS, {"base": base, "generated": TODAY, "cards": {k: v for k, v in charts.items() if v}}, separators=(",", ":"))
         gstate["about"] = "Written by scripts/graded_heat.py: graded price snapshots, the extra card pool and when each card was checked. Not loaded by the site."
         jdump(GSTATE, gstate, separators=(",", ":"), sort_keys=True)
+        src.save()
     return finish(status, report, saved=saved, total=len(final), hot=len(hot))
 
 

@@ -19,6 +19,8 @@ BOTS = {
     "finder": "Flip Finder",
     "graded": "Graded Slabs",
     "cardprice": "CardPrice lookups",
+    "ta": "tcgapi.net comps",
+    "pa": "pokemon-api.com lookups",
     "tcgcheck": "TCGplayer sales check",
     "addcard": "Add card from link",
     "approve": "Add Flip Finder cards",
