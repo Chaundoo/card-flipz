@@ -73,9 +73,9 @@ free tier doesn't include them; the bot stops without using more requests.
 
 **pokemon-api.com setup (once):** make a free RapidAPI account, open pokemon-api.com's API on RapidAPI (link on
 pokemon-api.com), subscribe to the free **Basic** plan, copy your `X-RapidAPI-Key`, and save it as the repository secret
-`POKEMON_API_KEY` (Settings → Secrets and variables → Actions). Check the plan page for whether its 100 requests are per
-day or per month and whether extra requests are billed. The bot never passes `pa_max_per_day` (3) or `pa_max_per_month`
-(95) and stops when RapidAPI says only `pa_keep_free` (5) are left; if the quota is per day, raise `pa_max_per_day` to ~90. Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
+`POKEMON_API_KEY` (Settings → Secrets and variables → Actions). The free Basic plan is 100 requests a day (30 a minute),
+and requests over 100 are billed, so the bot never passes `pa_max_per_day` (90) and also stops when RapidAPI says only
+`pa_keep_free` (5) are left. Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
 It only downloads `graded/heat.json` when you open the tab, so Quick check stays light on show-day data.
 
 **Setup (once):** make a free account at pokemonpricetracker.com, copy your API key, then in GitHub go to
