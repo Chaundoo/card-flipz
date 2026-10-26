@@ -2073,6 +2073,36 @@
 "price:under $20"
 ],
 "v": -1
+},
+{
+"d": "2026-10-26",
+"f": [
+"pokemon:deoxys",
+"set:Call of Legends",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-26",
+"f": [
+"pokemon:groudon",
+"set:Dark Explorers",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-26",
+"f": [
+"pokemon:entei",
+"set:Call of Legends",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }
