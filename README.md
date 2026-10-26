@@ -38,15 +38,51 @@ days). The tab also reads GitHub's public list of Actions runs to catch crashes 
 
 ## Graded Slabs (passcode)
 The **Graded Slabs** tab (same passcode as the Flip Finder) lists PSA 10 / PSA 9 slabs of popular Pokémon that look
-ready to move, filtered to the most you'd spend on one slab (type a budget, default $1,000; "PSA 10 or 9" shows a
-PSA 9 when the 10 is over budget). Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
+ready to move, filtered to the most you'd spend on one slab (the budget box starts at the bots' price cap; "PSA 10 or 9"
+shows a PSA 9 when the 10 is over budget).
+
+**Price cap (`max_slab_price` in `scripts/graded_config.json`, now $1,500):** the bots only spend requests on, and the
+tab only lists, slabs with a PSA 10 or PSA 9 at or under this. Change the number and commit to raise or lower it; the
+next morning's runs and the tab's default budget follow it. When only the PSA 10 price is known, the PSA 9 is guessed at
+about a third of it (`sources.psa9_share_of_psa10_guess`). CardPrice still re-checks over-cap slabs every 30 days
+(`cp_over_cap_recheck_days`) so slabs that drop back under the cap come back.
+
+**Four slab bots, one after another every morning** (they share the concurrency group `graded-bots`):
+1. **CardPrice lookups** (`cardprice.yml`, ~8:47 am Pacific in summer): the broad sweep of graded price estimates, pop
+   counts and price history (free, ~400 slabs a day).
+2. **tcgapi.net comps** (`tcgapi.yml`, starts when CardPrice finishes): individual eBay sold listings, one request per
+   slab (free plan ~1,000 a day; capped at `ta_max_per_day`). It keeps only real PSA 10 / PSA 9 sales of the right card
+   (drops other graders, lots, proxies, Japanese prints, titles without the card number, accepted Best Offers) and drops
+   price outliers (modified z-score over 3.5, or outside 0.5×–2× the median with fewer than 4 sales), then takes the
+   median. With the biggest allowance, it does the broad rotation of eBay sales.
+3. **pokemon-api.com lookups** (`pokemon-api.yml`, starts when tcgapi.net finishes): eBay PSA 10 / 9 median and how many
+   sold, a few slabs a day, spent on slabs heating up, your priority Pokémon, and slabs CardPrice couldn't price.
+4. **Graded Slabs** (`graded-heat.yml`, starts when pokemon-api.com finishes): PokemonPriceTracker checks (~30 slabs a
+   day), then scores everything and writes the tab's list. A slab PokemonPriceTracker hasn't checked uses tcgapi.net's
+   cleaned comps (with chart dots), then pokemon-api.com, then CardPrice.
+`graded/sources.json` records which source last checked each slab, when, and the prices it saw. The three eBay-sales
+bots (tcgapi.net, PokemonPriceTracker, pokemon-api.com) skip slabs another one of them checked in the last 2 days
+(`sources.skip_if_other_checked_days`) and otherwise take the slabs no sales source has seen longest. Slabs heating up
+are the exception: they get a second source on purpose, and if two disagree by more than 25% (`sources.disagree_pct`)
+the slab is marked **Check prices** instead of trusting either. Running a slab bot by hand does not start the next one
+(so a day's requests aren't spent twice).
+
+**tcgapi.net setup (once):** make a free account at tcgapi.net, create an API key, and save it as the repository secret
+`TCGAPI_KEY` (Settings → Secrets and variables → Actions). If its first run says eBay comps aren't on your plan, the
+free tier doesn't include them; the bot stops without using more requests.
+
+**pokemon-api.com setup (once):** make a free RapidAPI account, open pokemon-api.com's API on RapidAPI (link on
+pokemon-api.com), subscribe to the free **Basic** plan, copy your `X-RapidAPI-Key`, and save it as the repository secret
+`POKEMON_API_KEY` (Settings → Secrets and variables → Actions). Check the plan page for whether its 100 requests are per
+day or per month and whether extra requests are billed. The bot never passes `pa_max_per_day` (3) or `pa_max_per_month`
+(95) and stops when RapidAPI says only `pa_keep_free` (5) are left; if the quota is per day, raise `pa_max_per_day` to ~90. Mostly 1999–2020 cards, with modern cards capped at about a quarter of the list.
 It only downloads `graded/heat.json` when you open the tab, so Quick check stays light on show-day data.
 
 **Setup (once):** make a free account at pokemonpricetracker.com, copy your API key, then in GitHub go to
 **Settings → Secrets and variables → Actions → New repository secret**, name it `PPT_API_KEY` and paste the key.
 Then Actions → *Graded Slabs* → **Run workflow** to start it (or wait for the next morning).
 
-`.github/workflows/graded-heat.yml` runs `scripts/graded_heat.py` every morning (~8:13 am Pacific):
+`.github/workflows/graded-heat.yml` runs `scripts/graded_heat.py` every morning, right after the pokemon-api.com bot:
 * **Cards it watches:** popular Pokémon (the `popular` list in `discovery_config.json`) already on the site or in
   the Flip Finder list, plus Mon–Thu a few spare TCG Price Lookup requests (`graded_pool_max_requests` in
   `api_budget.json`, default 8) to find chase cards from eras the site barely has (Sword & Shield → Mega Evolution, more WOTC/EX).

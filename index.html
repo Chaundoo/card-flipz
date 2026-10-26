@@ -2241,8 +2241,12 @@ var HEAT = {data:null, err:"", loading:false, charts:null, chErr:"", chLoading:f
 var HT_KEY = "cfz.heat";
 var HT = Object.assign({budget:1000, grades:"both", show:"bets", era:"", sort:"prio", q:""}, load(HT_KEY, {}));
 if(HT.sort==="heat" && !HT.v2){ HT.sort = "prio"; }
+if(!HT.v3){ HT.budget = null; }   /* blank budget = the bots' price cap (max_slab_price in scripts/graded_config.json) */
 var HTOPEN = {};   /* which charts are open: id -> "g10" | "g9" */
-function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1}); }
+function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1, v3:1}); }
+/* the budget you typed, or the bots' price cap when you haven't typed one */
+function htCap(){ return Number(HEAT.data && HEAT.data.budget)||0; }
+function htBudget(){ return HT.budget!=null ? (+HT.budget||0) : htCap(); }
 var HSTAGE = {
   breaking:["Breaking out","pos","PSA 10 price is rising (+12% or more) but hasn't doubled yet."],
   warming:["Warming up","warnp","Sales are picking up, or this Pokémon's other slabs are rising, while this one's price is still flat. Often the earliest sign."],
@@ -2250,7 +2254,8 @@ var HSTAGE = {
   spiked:["Already spiked","neg","PSA 10 already doubled. Buying now is chasing; it can keep going or drop back."],
   cooling:["Cooling","neg","PSA 10 down 12% or more."],
   watching:["First check","","No trend yet. It fills in over the next weeks."],
-  quiet:["Quiet","","Fewer than 2 PSA 10 sales in the last week, so the price shown is its usual (median) sale and there's no trend yet."]
+  quiet:["Quiet","","Fewer than 2 PSA 10 sales in the last week, so the price shown is its usual (median) sale and there's no trend yet."],
+  conflict:["Check prices","warnp","Two eBay-sales sources (tcgapi.net, PokemonPriceTracker, pokemon-api.com) disagree on this slab's price by more than 25%, so the bot isn't trusting either one. Check eBay sold listings or 130point before buying."]
 };
 var HERA = {vintage:["wotc","ex"], mid:["dp-hgss","bw","xy","sm","other"], modern:["swsh","sv","me"]};
 function htFile(path){
@@ -2275,7 +2280,7 @@ function loadCharts(done){
 function goHeat(){ state.view = "heat"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#heat"); }catch(e){} window.scrollTo(0,0); render(); }
 /* which grade fits your budget: PSA 10 first, PSA 9 if allowed */
 function htFit(c){
-  var b = Number(HT.budget)||0;
+  var b = htBudget();
   if(c.p10 && (!b || c.p10 <= b)) return {g:"PSA 10", p:c.p10};
   if(HT.grades==="both" && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
   return null;
@@ -2418,7 +2423,7 @@ function htPop(c){
     '<div class="sub">'+(extra.length?extra.join(' · ')+' · ':'')+'Pop from '+esc(c.popSrc||"CardPrice")+(p.asOf?' as of '+fmtDate(p.asOf):'')+(c.popSrc==="CardPrice"?' (<a href="https://cardprice.com" target="_blank" rel="noopener">cardprice.com</a>)':'')+'</div></div>';
 }
 function htRow(x){
-  var c = x.c, f = x.fit, st = HSTAGE[c.stage] || HSTAGE.steady, b = Number(HT.budget)||0;
+  var c = x.c, f = x.fit, st = HSTAGE[c.stage] || HSTAGE.steady, b = htBudget();
   var lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool";
   function gr(label, p, ch, med, n){
     if(!p) return '';
@@ -2445,7 +2450,7 @@ function renderHeat(){
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
   h += '<div class="pair-intro"><div><h2>Graded Slabs</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
-    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker and <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a>.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
+    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from tcgapi.net, PokemonPriceTracker, pokemon-api.com and <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a>, and only for slabs with a PSA 10 or 9 at or under '+(htCap()?money(htCap()):'your cap')+'.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
   if(!D){
     h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Slabs list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
@@ -2453,8 +2458,8 @@ function renderHeat(){
     return;
   }
   function seg(id, opts, cur){ return '<div class="seg" role="group">'+opts.map(function(o){ return '<button type="button" data-'+id+'="'+o[0]+'" aria-pressed="'+(cur===o[0])+'">'+o[1]+'</button>'; }).join("")+'</div>'; }
-  h += '<div class="bg-form"><div class="bg-cash"><label class="bg-amt"><span aria-hidden="true">$</span><input id="ht-budget" type="number" inputmode="decimal" min="0" step="50" aria-label="Most you’d spend on one slab" placeholder="Most you’d spend on one slab" value="'+esc(HT.budget||"")+'"></label>'+
-    '<div class="bg-quick">'+[250,500,1000,2000].map(function(v){ return '<button type="button" class="btn" data-hb="'+v+'">$'+v.toLocaleString("en-US")+'</button>'; }).join("")+'<button type="button" class="btn" data-hb="0">Any</button></div></div>'+
+  h += '<div class="bg-form"><div class="bg-cash"><label class="bg-amt"><span aria-hidden="true">$</span><input id="ht-budget" type="number" inputmode="decimal" min="0" step="50" aria-label="Most you’d spend on one slab" placeholder="Most you’d spend on one slab" value="'+esc(htBudget()||"")+'"></label>'+
+    '<div class="bg-quick">'+[250,500,1000].filter(function(v){ return !htCap() || v<htCap(); }).concat(htCap()?[htCap()]:[2000]).map(function(v){ return '<button type="button" class="btn" data-hb="'+v+'">$'+v.toLocaleString("en-US")+'</button>'; }).join("")+'<button type="button" class="btn" data-hb="0">Any</button></div></div>'+
     '<div class="bg-opts-wrap"><div class="bg-opts" style="margin-top:0">'+
       '<div class="bg-opt"><span class="lbl">Grades</span>'+seg("hg", [["10","PSA 10 only"],["both","PSA 10 or 9"]], HT.grades)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
@@ -2482,7 +2487,7 @@ function htResults(){
   if(!all.length) return '<div class="empty">'+(D.missing || D.needs_key ?
     'No graded data yet. The Graded Slabs bot needs a free PokemonPriceTracker API key saved in GitHub as the <b>PPT_API_KEY</b> secret (see the README). After that it fills this list a little more every morning.' :
     'Nothing on the list yet. The bot checks about 30 slabs a morning, so the first ones show up after its next run.')+'</div>';
-  var rows = htRows(), shown = rows.slice(0, 60), b = Number(HT.budget)||0;
+  var rows = htRows(), shown = rows.slice(0, 60), b = htBudget();
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
   var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
     '. Prices are recent eBay sold prices; a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
@@ -2656,7 +2661,7 @@ function renderSlab(){
     root.innerHTML = h; bindHeader(); document.getElementById("slab-back").addEventListener("click", goHeat); return;
   }
   loadSlab(c);
-  var st = HSTAGE[c.stage] || HSTAGE.steady, lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool", b = Number(HT.budget)||0;
+  var st = HSTAGE[c.stage] || HSTAGE.steady, lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool", b = htBudget();
   var prices = slabPrices(c), have = {};
   (SLAB.hist||[]).forEach(function(r){ SGRADES.forEach(function(x){ if(Number(r[x[0]])>0) have[x[0]] = 1; }); });
   prices.forEach(function(p){ have[p.k] = 1; });
@@ -2870,8 +2875,10 @@ var ADM = {log:null, runs:null, runsErr:"", loading:false, at:0, filter:"week"};
 var BOTINFO = {
   price:   {name:"Daily price update", wf:"price-refresh.yml", when:"Mon–Fri about 6:23 am"},
   finder:  {name:"Flip Finder", wf:"find-candidates.yml", when:"Mon–Thu about 7:47 am"},
-  graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"Every day about 9:13 am"},
+  graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"Every day after the pokemon-api.com bot"},
   cardprice:{name:"CardPrice lookups", wf:"cardprice.yml", when:"Every day about 8:47 am"},
+  ta:      {name:"tcgapi.net comps", wf:"tcgapi.yml", when:"Every day right after CardPrice"},
+  pa:      {name:"pokemon-api.com lookups", wf:"pokemon-api.yml", when:"Every day right after tcgapi.net"},
   tcgcheck:{name:"TCGplayer sales check", wf:"tcgplayer-check.yml", when:"Once a week, random time Mon–Thu"},
   addcard: {name:"Add card from link", wf:"add-card.yml", when:"When you add a card"},
   approve: {name:"Add Flip Finder cards", wf:"approve-candidates.yml", when:"When you pick Flip Finder cards"},
@@ -2944,9 +2951,10 @@ function adminIssues(){
   var out = [], F = adminFeed().feed, since3 = Date.now()-3*86400000;
   F.forEach(function(x){ if((x.level==="fail" || x.level==="warn") && x.d.getTime() >= since3 && !x.dry) out.push({level:x.level, text:x.name+" ("+whenText(x.d)+"): "+x.headline, url:x.url, item:x}); });
   if(ADM.runs){
-    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["graded",16,13,[0,1,2,3,4,5,6],"Every day"],["cardprice",15,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
+    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["cardprice",15,47,[0,1,2,3,4,5,6],"Every day"],["ta",15,47,[0,1,2,3,4,5,6],"Every day"],["pa",15,47,[0,1,2,3,4,5,6],"Every day"],["graded",15,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
       var slot = lastSlot(s[1], s[2], s[4]); if(!slot) return;
-      var ran = ADM.runs.some(function(r){ return botOfRun(r)===s[0] && r.event==="schedule" && new Date(r.created_at) >= new Date(slot.getTime()-30*60000); });
+      /* the tcgapi.net, pokemon-api.com and Graded Slabs bots start when the bot before them finishes (event "workflow_run") */
+      var ran = ADM.runs.some(function(r){ return botOfRun(r)===s[0] && (r.event==="schedule" || r.event==="workflow_run") && r.conclusion!=="skipped" && new Date(r.created_at) >= new Date(slot.getTime()-30*60000); });
       if(!ran) out.push({level:"warn", text:BOTINFO[s[0]].name+" didn't run on "+slot.toLocaleDateString("en-US",{weekday:"long"})+" ("+BOTINFO[s[0]].when+"). GitHub sometimes skips a scheduled run; if it keeps happening, tell Claude."});
     });
   }
@@ -2998,7 +3006,7 @@ function renderAdmin(){
     issues.map(function(i,n){ return '<li>'+esc(i.text)+(i.item?' <button class="linkbtn" data-copy="'+n+'">Copy for Claude</button>':'')+(i.url?' <a href="'+esc(i.url)+'" target="_blank" rel="noopener">Open run ↗</a>':'')+'</li>'; }).join("")+'</ul></div>';
   if(ADM.runsErr) h += '<p class="note">Couldn’t read GitHub’s run list ('+esc(ADM.runsErr)+'), so only the bots’ own log is shown and missed runs can’t be spotted. Try Refresh later.</p>';
   /* per-bot status */
-  var main = ["price","finder","graded","cardprice","tcgcheck","addcard","approve","save"];
+  var main = ["price","finder","cardprice","ta","pa","graded","tcgcheck","addcard","approve","save"];
   h += '<section class="block"><h3>Bots at a glance</h3><div class="adm-bots">'+main.map(function(k){
     var last = feed.filter(function(x){ return x.bot===k && x.level!=="run" && !x.dry; })[0], n = feed.filter(function(x){ return x.bot===k && !x.dry; }).length;
     return '<div class="adm-bot '+(last?last.level:'none')+'"><div class="adm-bot-top"><b>'+esc(BOTINFO[k].name)+'</b><span class="adm-dot" aria-hidden="true">'+(last?LVL[last.level][0]:'·')+'</span></div>'+
