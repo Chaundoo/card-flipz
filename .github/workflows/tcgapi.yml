@@ -1,0 +1,99 @@
+name: tcgapi.net (eBay sold comps for slabs)
+
+# Fourth slab source: individual eBay sold listings (comps) from tcgapi.net's free API. The bot keeps only real
+# PSA 10 / PSA 9 sales of the right card (title filter), drops accepted Best Offers and price outliers, then
+# takes the median. Runs every morning right after CardPrice, then hands off to the pokemon-api.com bot.
+# It has the biggest free allowance of the sales sources, so it does the broad rotation: slabs no sales
+# source has seen for the longest time, plus a second opinion on slabs heating up. Skips slabs over your cap
+# (max_slab_price) and slabs PokemonPriceTracker or pokemon-api.com checked in the last 2 days.
+# Saves graded/tcgapi.json and graded/sources.json. It never changes the site's cards.
+on:
+  workflow_run:
+    workflows: ["CardPrice (graded prices, pop counts, price history)"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Test run: look up and report, but save nothing (still uses requests)"
+        type: boolean
+        default: false
+      cards:
+        description: "Max slabs to look up this run (blank = ta_max_slabs, 400). One request each."
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+# one group for all three slab bots, so only one of them writes graded/sources.json at a time
+concurrency:
+  group: graded-bots
+  cancel-in-progress: false
+
+jobs:
+  tcgapi:
+    # chain runs only: skip when CardPrice was started by hand (so today's requests aren't spent twice)
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.event != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Look up eBay comps on tcgapi.net
+        id: run
+        continue-on-error: true
+        env:
+          TCGAPI_KEY: ${{ secrets.TCGAPI_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+          TA_CARDS: ${{ github.event.inputs.cards || '' }}
+        run: python3 scripts/tcgapi_bot.py
+
+      - name: Save tcgapi.net data
+        if: always() && steps.run.outputs.saved == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp graded/tcgapi.json graded/sources.json /tmp/keep/
+          for try in 1 2 3; do
+            git add graded/tcgapi.json graded/sources.json
+            git diff --cached --quiet && { echo "Nothing to save."; break; }
+            git commit -q -m "tcgapi.net $(date -u +%Y-%m-%d): ${{ steps.run.outputs.checked }} slabs looked up"
+            if git push -q; then break; fi
+            echo "Push raced with another save; retrying ($try)"
+            git fetch -q origin main && git reset -q --hard origin/main
+            mkdir -p graded && cp /tmp/keep/tcgapi.json /tmp/keep/sources.json graded/
+            sleep $((try * 10))
+          done
+
+      - name: Post the result to the "Graded Heat log" issue
+        if: always() && (steps.run.outputs.status == 'FAILED' || github.event_name == 'workflow_dispatch' || failure())
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -f run_report.md ] || echo "## ❌ The tcgapi.net bot crashed. Open the Actions run for details." > run_report.md
+          echo "" >> run_report.md
+          echo "[Run details](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> run_report.md
+          num=$(gh issue list --state open --limit 100 --json number,title -q '.[] | select(.title=="Graded Heat log") | .number' | head -n 1)
+          if [ -z "$num" ]; then
+            url=$(gh issue create --title "Graded Heat log" \
+              --body "The slab bots post here when something needs a look and whenever you run them by hand.")
+            num="${url##*/}"
+          fi
+          gh issue comment "$num" --body-file run_report.md
+
+      - name: Mark the run as failed if it had problems
+        if: steps.run.outcome == 'failure'
+        run: |
+          echo "Status: ${{ steps.run.outputs.status }} — see the log issue."
+          exit 1
+
+      - name: Write to the site's admin log
+        if: always()
+        env:
+          BOT: ta
+          JOB_STATUS: ${{ job.status }}
+          RUN_STATUS: ${{ steps.run.outputs.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EVENT: ${{ github.event_name }}
+          DRY: ${{ github.event.inputs.dry_run || 'false' }}
+        run: bash scripts/log_run.sh

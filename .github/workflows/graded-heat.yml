@@ -2,12 +2,15 @@ name: Graded Slabs (watch PSA slabs that are heating up)
 
 # Checks PSA 10 / 9 prices for popular-Pokémon slabs (mostly 1999-2020 cards) with PokemonPriceTracker's
 # free API and scores which ones look ready to move. The site's "Graded Slabs" tab shows the list.
-# Runs every day after the Flip Finder. Mon-Thu it also spends a few spare TCG Price Lookup requests
-# finding more cards to watch (Fri-Sun those stay free for card shows). It never changes the site's cards.
+# Runs every day right after the pokemon-api.com bot (the chain is CardPrice -> tcgapi.net -> pokemon-api.com
+# -> this), so it builds the list with all four sources from the same morning. Only slabs with a PSA 10 or 9 at or under your cap
+# (max_slab_price in scripts/graded_config.json) get looked up or listed. Mon-Thu it also spends a few spare
+# TCG Price Lookup requests finding more cards to watch (Fri-Sun those stay free for card shows).
+# It never changes the site's cards.
 on:
-  schedule:
-    # 16:13 UTC = 8:13 am Pacific (9:13 am in summer), every day
-    - cron: "13 16 * * *"
+  workflow_run:
+    workflows: ["pokemon-api.com (graded eBay prices)"]
+    types: [completed]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -26,12 +29,18 @@ permissions:
   contents: write
   issues: write
 
+# one group for all four slab bots, so only one of them writes graded/sources.json at a time
 concurrency:
-  group: graded-heat
+  group: graded-bots
   cancel-in-progress: false
 
 jobs:
   heat:
+    # chain runs only: skip when the run before it was started by hand (so a manual CardPrice or
+    # pokemon-api run doesn't spend today's PokemonPriceTracker credits a second time)
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.event != 'workflow_dispatch' && github.event.workflow_run.conclusion != 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -53,16 +62,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p /tmp/keep && cp graded/heat.json graded/charts.json graded/state.json /tmp/keep/
+          mkdir -p /tmp/keep && cp graded/heat.json graded/charts.json graded/state.json graded/sources.json /tmp/keep/
           for try in 1 2 3; do
             python3 scripts/build_versions.py
-            git add graded/heat.json graded/charts.json graded/state.json versions.json
+            git add graded/heat.json graded/charts.json graded/state.json graded/sources.json versions.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
             git commit -q -m "Graded Slabs $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} slabs (${{ steps.run.outputs.hot }} heating up)"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
             git fetch -q origin main && git reset -q --hard origin/main
-            mkdir -p graded && cp /tmp/keep/heat.json /tmp/keep/charts.json /tmp/keep/state.json graded/
+            mkdir -p graded && cp /tmp/keep/heat.json /tmp/keep/charts.json /tmp/keep/state.json /tmp/keep/sources.json graded/
             sleep $((try * 10))
           done
 

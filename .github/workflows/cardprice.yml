@@ -1,8 +1,10 @@
 name: CardPrice (graded prices, pop counts, price history)
 
 # Looks up graded prices, PSA/CGC/BGS pop counts and price history on CardPrice.com's free API for the
-# slabs the Graded Slabs bot watches, and saves them in graded/cardprice.json. Runs every morning just
-# before the Graded Slabs bot, which merges this in. It never changes the site's cards.
+# slabs the Graded Slabs bot watches, and saves them in graded/cardprice.json. Runs every morning first;
+# when it finishes, the tcgapi.net bot starts, then pokemon-api.com, then the Graded Slabs bot, which merges everything.
+# Slabs over your price cap (max_slab_price in scripts/graded_config.json) are only re-checked monthly.
+# It never changes the site's cards.
 on:
   schedule:
     # 15:47 UTC = 7:47 am Pacific (8:47 am in summer), every day
@@ -25,8 +27,9 @@ permissions:
   contents: write
   issues: write
 
+# one group for all four slab bots, so only one of them writes graded/sources.json at a time
 concurrency:
-  group: cardprice
+  group: graded-bots
   cancel-in-progress: false
 
 jobs:
@@ -50,15 +53,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p /tmp/keep && cp graded/cardprice.json /tmp/keep/
+          mkdir -p /tmp/keep && cp graded/cardprice.json graded/sources.json /tmp/keep/
           for try in 1 2 3; do
-            git add graded/cardprice.json
+            git add graded/cardprice.json graded/sources.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
             git commit -q -m "CardPrice $(date -u +%Y-%m-%d): ${{ steps.run.outputs.checked }} slabs looked up"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
             git fetch -q origin main && git reset -q --hard origin/main
-            mkdir -p graded && cp /tmp/keep/cardprice.json graded/
+            mkdir -p graded && cp /tmp/keep/cardprice.json /tmp/keep/sources.json graded/
             sleep $((try * 10))
           done
 
