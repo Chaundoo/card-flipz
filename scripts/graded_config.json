@@ -34,14 +34,14 @@
     "/cards",
     "/pokemon/cards"
   ],
-  "pa_max_per_day": 3,
-  "pa_max_per_month": 95,
+  "pa_max_per_day": 90,
+  "pa_max_per_month": 2700,
   "pa_keep_free": 5,
   "pa_pause_seconds": 2.5,
   "pa_recheck_days": 14,
   "pa_hot_recheck_days": 3,
   "pa_retry_unmatched_days": 45,
-  "pa_about": "pokemon-api.com via RapidAPI (scripts/pokemon_api_bot.py, secret POKEMON_API_KEY). Free plan: 100 requests. pa_max_per_day / pa_max_per_month are hard caps the bot never passes, and it also stops when RapidAPI says only pa_keep_free requests are left, so it can't run into paid overage. If your RapidAPI plan page says the 100 is per DAY, raise pa_max_per_day to about 90; if it's per MONTH, leave 3 a day / 95 a month.",
+  "pa_about": "pokemon-api.com via RapidAPI (scripts/pokemon_api_bot.py, secret POKEMON_API_KEY). Free Basic plan: 100 requests a DAY, 30 a minute; requests over 100 are billed ($0.005 each). The bot stops at pa_max_per_day (90) and also when RapidAPI says only pa_keep_free (5) are left, so it stays inside the free 100.",
   "recheck_days": {
     "hot": 3,
     "normal": 7,

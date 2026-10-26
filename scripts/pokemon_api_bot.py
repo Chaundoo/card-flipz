@@ -15,7 +15,8 @@ The free plan is small, so this bot is picky about where each request goes:
   couple of days (graded/sources.json keeps track).
 
 Request limits (scripts/graded_config.json):
-  pa_max_per_day / pa_max_per_month  hard caps the bot never goes past (it counts its own requests)
+  pa_max_per_day / pa_max_per_month  hard caps the bot never goes past (it counts its own requests);
+                                      the free Basic plan is 100 a day, so the default is 90 a day
   pa_keep_free                        stop when RapidAPI says this many or fewer requests are left
 RapidAPI may bill for requests over a plan's quota, so keep both caps under the free plan's limit.
 
