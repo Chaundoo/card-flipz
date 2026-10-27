@@ -50,26 +50,43 @@ about a third of it (`sources.psa9_share_of_psa10_guess`). CardPrice still re-ch
 **Four slab bots, one after another every morning** (they share the concurrency group `graded-bots`):
 1. **CardPrice lookups** (`cardprice.yml`, ~8:47 am Pacific in summer): the broad sweep of graded price estimates, pop
    counts and price history (free, ~400 slabs a day).
-2. **tcgapi.net comps** (`tcgapi.yml`, starts when CardPrice finishes): individual eBay sold listings, one request per
-   slab (free plan ~1,000 a day; capped at `ta_max_per_day`). It keeps only real PSA 10 / PSA 9 sales of the right card
-   (drops other graders, lots, proxies, Japanese prints, titles without the card number, accepted Best Offers) and drops
-   price outliers (modified z-score over 3.5, or outside 0.5×–2× the median with fewer than 4 sales), then takes the
-   median. With the biggest allowance, it does the broad rotation of eBay sales.
-3. **pokemon-api.com lookups** (`pokemon-api.yml`, starts when tcgapi.net finishes): eBay PSA 10 / 9 median and how many
-   sold, a few slabs a day, spent on slabs heating up, your priority Pokémon, and slabs CardPrice couldn't price.
+2. **tcgapi.dev raw radar** (`tcgapi.yml`, starts when CardPrice finishes): tcgapi.dev's **free** plan has no eBay or
+   graded data, so this bot doesn't price slabs. It watches the raw (ungraded) TCGplayer market price of slab-pool cards
+   and its 7 / 30-day change. Cards whose raw price is rising (`ta_riser_7d` / `ta_riser_30d`) jump to the front of the
+   Graded Slabs bot's sales checks and get a small heat bonus (shared with CardPrice's movers, never both). Slabs heating
+   up go first, then mid-era cards. **Never more than 90 of the free 100 requests per UTC day**: its own count saved in
+   `graded/tcgapi.json` (test runs count too), tcgapi.dev's own counter (stops at 10 left), and a stop on any
+   rate-limit answer. `ta_max_per_day` can't be set above 90.
+3. **pokemon-api.com lookups** (`pokemon-api.yml`, starts when tcgapi.dev finishes): eBay PSA 10 / 9 median and how many
+   sold, spent on slabs heating up, your priority Pokémon (mid-era first), and slabs CardPrice couldn't price.
 4. **Graded Slabs** (`graded-heat.yml`, starts when pokemon-api.com finishes): PokemonPriceTracker checks (~30 slabs a
-   day), then scores everything and writes the tab's list. A slab PokemonPriceTracker hasn't checked uses tcgapi.net's
-   cleaned comps (with chart dots), then pokemon-api.com, then CardPrice.
-`graded/sources.json` records which source last checked each slab, when, and the prices it saw. The three eBay-sales
-bots (tcgapi.net, PokemonPriceTracker, pokemon-api.com) skip slabs another one of them checked in the last 2 days
-(`sources.skip_if_other_checked_days`) and otherwise take the slabs no sales source has seen longest. Slabs heating up
-are the exception: they get a second source on purpose, and if two disagree by more than 25% (`sources.disagree_pct`)
-the slab is marked **Check prices** instead of trusting either. Running a slab bot by hand does not start the next one
-(so a day's requests aren't spent twice).
+   day), then the price check, then scores everything and writes the tab's list.
 
-**tcgapi.net setup (once):** make a free account at tcgapi.net, create an API key, and save it as the repository secret
-`TCGAPI_KEY` (Settings → Secrets and variables → Actions). If its first run says eBay comps aren't on your plan, the
-free tier doesn't include them; the bot stops without using more requests.
+**Mid-era first:** `focus_eras` in `scripts/graded_config.json` (DP/HGSS, Black & White, XY, Sun & Moon) are checked
+first by every slab bot and score a little higher (`era_points`, `focus_sort_bonus`). Change the list to change the focus.
+
+**The price check (which PSA 10 / 9 price to believe)** — `scripts/slab_sources.py`. Every source gets things wrong in
+its own way (pokemon-api.com matching the wrong card, one odd PokemonPriceTracker sale, a CardPrice estimate far off), so
+the tab no longer shows whichever price came in last. For each slab the bot collects every source's price plus the PSA 10
+/ Grade 9 saved on your site's card, then:
+- throws out prices that can't be right for that card's raw NM price (a PSA 10 under ~1× raw or over ~250× raw, a PSA 9
+  under ~0.6× or over ~40×; `sources.raw_bounds`),
+- combines the rest as a weighted median (sales count, recency, and each source's track record — `trust` in
+  `graded/sources.json`, learned every morning), throwing out any more than 60% from the others,
+- makes sure PSA 10 is above PSA 9 (re-doing the less certain grade, or flagging both),
+- gives each slab a confidence: **confirmed** (2+ sources agree within 25%), one sales source, **CardPrice estimate
+  only**, or **unconfirmed**. Unconfirmed slabs show **Verify price** instead of Breaking out / Warming up, and their
+  trend and heat are held back. CardPrice-only trends need a 25%+ rise to count as Breaking out, and a 100%+ jump with no
+  sales behind it is treated as a data glitch.
+The "Why it's on the list" notes say which prices were ignored and why. `graded/sources.json` also records which source
+last checked each slab; PokemonPriceTracker and pokemon-api.com skip slabs the other checked in the last 2 days
+(`sources.skip_if_other_checked_days`), except slabs heating up, which get a second source on purpose. Running a slab bot
+by hand does not start the next one (so a day's requests aren't spent twice).
+
+**tcgapi.dev setup (once):** make a free account at [tcgapi.dev](https://tcgapi.dev/signup/), create an API key (it
+starts with `tcg_live_`), and save it as the repository secret `TCGAPI_KEY` (Settings → Secrets and variables →
+Actions), replacing the old tcgapi.net key. Stay on the free plan: the bot only uses free endpoints. The free plan is
+for non-commercial use; check tcgapi.dev's terms if the site is used for a business.
 
 **pokemon-api.com setup (once):** make a free RapidAPI account, open pokemon-api.com's API on RapidAPI (link on
 pokemon-api.com), subscribe to the free **Basic** plan, copy your `X-RapidAPI-Key`, and save it as the repository secret
