@@ -2,6 +2,42 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — TCGplayer sales check 2026-10-26
+
+- Cards looked up on TCGplayer: **150** in 16m 59s (another 63 waited for next week)
+- ✅ Prices checked against real sales: **150**
+- ➖ No sales in 90 days (kept old prices): 0
+- ❌ Blocked by TCGplayer: **0**
+- ⚠️ Errors: 0 · no history: 0 · printing unclear: 0
+
+**Prices that moved 15%+ after checking real sales (50):**
+- Rayquaza (Holo) — Call of Legends 20/95 [estimate, top flip]: DMG $22.14 → $26.78
+- Lugia EX (Full Art) — Plasma Storm 134/135 [estimate, top flip]: NM $725.00 → $3,499.99, LP $725.00 → $1,849.99, MP $725.00 → $1,499.99
+- Gyarados (Reverse Holo) — Call of Legends 7/95 [estimate, top flip]: NM $142.50 → $35.00, LP $43.74 → $35.00 est., MP $43.74 → $35.00 est., DMG $12.04 → $6.93
+- Dark Tyranitar (Holo · EX Team Rocket Returns) — Deck Exclusives 020/109 [estimate, top flip]: NM $57.23 → $109.92 est., LP $57.23 → $69.99
+- Ampharos (Non-Holo) — Aquapolis 001/147 [estimate, top flip]: NM $33.67 → $28.61, LP $33.67 → $28.61 est.
+- Snorlax Lv.X (Holo) — Rising Rivals 111/111 [top flip]: DMG $243.18 → $299.99
+- Mewtwo (Holo · Delta Species) — EX Delta Species 12/113 [top flip]: MP $200.01 → $240.00
+- Groudon (Shiny) (Holo) — Call of Legends SL4 [top flip]: DMG $200.00 → $163.26 est.
+- Umbreon (Unlimited Holo) — Neo Discovery 13/75 [top flip]: LP $675.00 → $899.99
+- Darkrai (Promo · Holo) — Diamond and Pearl Promos DP24 [top flip]: DMG $3.95 → $4.63
+- Reshiram (Reverse Holo) — Plasma Freeze 17/116 [top flip]: MP $3.60 → $5.52, DMG $0.55 → $2.85 est.
+- Dragonite (Holo · Dragon Vault) — Blister Exclusives 005/020 [top flip]: NM $48.11 → $35.00
+- Ho-Oh (Holo) — POP Series 5 001/017 [top flip]: NM $79.12 → $66.93, DMG $4.33 → $5.00
+- Heatran LV.X (Promo · Holo) — Diamond and Pearl Promos DP31 [top flip]: NM $85.98 → $54.97, MP $15.56 → $21.48
+- Ninetales (Reverse Holo) — Call of Legends 17/95 [Flip Finder]: MP $23.56 → $27.50
+- Charizard (Reverse Holo) — Boundaries Crossed 20/149 [Flip Finder]: NM $49.00 → $79.99
+- Vaporeon (Reverse Holo) — Call of Legends 52/95 [Flip Finder]: NM $53.40 → $33.48, LP $19.88 → $27.98, MP $13.23 → $10.94
+- Houndoom (Reverse Holo) — Call of Legends 10/95 [Flip Finder]: NM $41.67 → $33.94, LP $16.08 → $19.47
+- Ditto (Reverse Holo) — Boundaries Crossed 108/149 [Flip Finder]: LP $64.21 → $89.24
+- Reshiram (Holo) — Black and White 26/114 [Flip Finder]: NM $12.47 → $9.02, LP $5.11 → $4.29, DMG $0.69 → $0.99
+- Garchomp (91) (Reverse Holo) — Dragons Exalted 91/124 [Flip Finder]: NM $19.34 → $27.41, LP $8.00 → $15.00, MP $6.67 → $8.00, DMG $1.45 → $5.10 est.
+- Zoroark (Holo) — Next Destinies 102/99 [Flip Finder]: DMG $97.95 → $148.90
+- Mew (Holo · Delta Species) — POP Series 5 003/017 [estimate]: DMG $168.62 → $207.00
+- Deoxys (Reverse Holo · Delta Species - Attack Forme) — EX Holon Phantoms 3/110 [estimate]: NM $261.78 → $196.31 est., MP $100.00 → $74.99
+- Mudkip (Reverse Holo · 010 (e-League) — Nintendo Promos 010 [estimate]: MP $75.00 → $107.82
+- …and 25 more
+
 ## ✅ OK — price update 2026-10-26
 
 Stopped early: request budget for this run used (the rest is kept free).
