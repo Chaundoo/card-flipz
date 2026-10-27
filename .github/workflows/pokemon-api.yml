@@ -1,15 +1,15 @@
 name: pokemon-api.com (graded eBay prices)
 
 # Third slab source: PSA 10 / 9 eBay median prices and how many sold, from pokemon-api.com (RapidAPI free
-# plan). Runs every morning right after the tcgapi.net bot finishes, then hands off to the Graded Slabs bot.
+# plan). Runs every morning right after the tcgapi.dev bot finishes, then hands off to the Graded Slabs bot.
 # Only a few requests a day (hard caps in scripts/graded_config.json: pa_max_per_day / pa_max_per_month,
 # and it stops when RapidAPI says only pa_keep_free are left), spent on: slabs heating up (as a cross-check),
 # your priority Pokémon, and slabs CardPrice couldn't price. Skips slabs over your cap (max_slab_price) and
-# slabs tcgapi.net or PokemonPriceTracker checked in the last 2 days. Saves graded/pokemonapi.json and graded/sources.json.
+# slabs PokemonPriceTracker checked in the last 2 days. Saves graded/pokemonapi.json and graded/sources.json.
 # It never changes the site's cards.
 on:
   workflow_run:
-    workflows: ["tcgapi.net (eBay sold comps for slabs)"]
+    workflows: ["tcgapi.dev (raw price radar for slabs)"]
     types: [completed]
   workflow_dispatch:
     inputs:
