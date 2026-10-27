@@ -1,51 +1,63 @@
 #!/usr/bin/env python3
-"""tcgapi.net bot: real eBay sold comps for PSA 10 / PSA 9 slabs (the fourth slab source).
+"""tcgapi.dev bot: a raw-price radar for the slab pool (FREE plan only, never more than 100 requests a day).
 
-Runs every morning right after the CardPrice bot and before the pokemon-api.com and Graded Slabs bots
-(.github/workflows/tcgapi.yml). Writes graded/tcgapi.json, which scripts/graded_heat.py reads, and records
-every check in graded/sources.json. It never changes the site's cards.
+What it does and why
+  tcgapi.dev's free plan has no eBay or graded data (that's Pro, $49.99/mo), so this bot does NOT price slabs
+  and never writes graded/sources.json. It does the one job none of the other slab bots do: it watches the
+  RAW (ungraded) TCGplayer market price of the cards in the slab pool, with its 24-hour, 7-day and 30-day
+  change. Raw prices often start climbing before the slabs do, so:
+    * a card whose raw price is rising gets checked with real eBay sales by the Graded Slabs bot first
+      (graded_heat.py moves it to the front of the queue), and
+    * it adds a "Raw TCGplayer price up X%" point to the slab's heat score (one bonus shared with CardPrice's
+      movers, so the two never double-count).
+  It also gives the price check a fresh raw price for cards that aren't on your site.
 
-Why it's useful: it returns individual sold listings (title, price, date), not just an average, so this bot
-can throw out the junk itself before taking a median:
-  * title filter: the grade must be "PSA 10" / "PSA 9"; drops other graders (CGC, BGS, SGC, TAG, ACE), lots,
-    bundles, proxies, "you pick" listings, Japanese/Chinese/Korean prints, damaged or cracked slabs, and any
-    title that doesn't carry the card's number;
-  * accepted Best Offers are dropped when the API marks them (eBay shows the asking price, not what sold);
-  * price outliers: with 4+ sales, any sale whose modified z-score is over 3.5 is dropped
-        z = 0.6745 (price - median) / MAD     (MAD = median of each sale's distance from the median)
-    with fewer, anything above 2x or below 0.5x the median is dropped.
+Which cards (no overlap with the other bots)
+  Slabs that are heating up / need verifying first, then mid-era cards (focus_eras in graded_config.json:
+  DP/HGSS, Black & White, XY, Sun & Moon), then the rest by your priority list. It skips slabs over your price
+  cap and cards it checked recently (ta_recheck_days; heating-up ones every ta_hot_recheck_days).
 
-Sharing the work (graded/sources.json): it has the biggest free allowance of the sales sources, so it does the
-broad rotation of eBay comps. It skips slabs over your cap (max_slab_price), slabs PokemonPriceTracker or
-pokemon-api.com checked in the last couple of days (except slabs heating up, which get a second opinion), and
-otherwise takes the slabs no sales source has seen for the longest time.
+The 100-a-day limit (free plan; resets at midnight UTC = 4 or 5 pm Pacific)
+  Three separate guards, any one of them stops the bot:
+    1. Its own count, saved in graded/tcgapi.json per UTC day (manual runs and test runs count too), never past
+       ta_max_per_day (90). The setting can't be raised past FREE_PLAN_DAILY - ta_keep_free (90) by mistake.
+    2. tcgapi.dev's own counter (X-RateLimit-Remaining header / rate_limit.daily_remaining): it stops when the
+       server says ta_keep_free (10) or fewer are left, even if its own count got lost.
+    3. A "rate limit" (HTTP 429) answer stops it at once; it never retries one.
+  Each request is counted before it's sent, retries included.
 
-Request limits (scripts/graded_config.json): ta_max_per_day (hard cap, counted by the bot itself),
-ta_max_slabs (per run), ta_pause_seconds. One request per slab.
+Requests: a card it hasn't seen costs 2 (look up the card by its TCGplayer id, once, then its prices);
+after that 1 per check. About 45-90 cards a day.
 
-API (https://tcgapi.net, Authorization: Bearer <key>):
-  GET https://api.tcgapi.net/v1/comps?q=base+set+charizard   -> recent eBay sold listings
-Environment: TCGAPI_KEY (GitHub secret) · DRY_RUN "true" = report only · TA_CARDS = max slabs this run ·
-TA_BASE = API base URL (testing).
+API (https://tcgapi.dev, header X-API-Key: tcg_live_...):
+  GET /v1/cards/tcgplayer/{tcgplayerId}  -> {"data": {"id", "name", "prices": [{printing, market_price, price_change_24h}]}}
+  GET /v1/cards/{id}/prices               -> {"data": [{printing, market_price, price_change_24h / _7d / _30d}]}
+Environment: TCGAPI_KEY (GitHub secret, free key from tcgapi.dev) · DRY_RUN "true" = report only (requests
+still count) · TA_CARDS = max cards this run · TA_BASE = API base URL (testing).
 """
-import json, os, re, sys, time, statistics
+import json, os, re, sys, time, math, datetime
 import urllib.request, urllib.error, urllib.parse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp
 import graded_heat as gh
-import cardprice_bot as cpb
 import slab_sources
 
 ROOT = rp.ROOT
 OUT = os.path.join(ROOT, "graded", "tcgapi.json")
 KEY = (os.environ.get("TCGAPI_KEY") or "").strip()
 DRY = (os.environ.get("DRY_RUN") or "").lower() == "true"
-TODAY = rp.TODAY
-UA = "card-flipz-graded-heat/1.0 (+https://github.com/Chaundoo/card-flipz)"
-DEFAULTS = {"ta_base": "https://api.tcgapi.net/v1", "ta_max_per_day": 900, "ta_max_slabs": 400, "ta_pause_seconds": 1.0,
-            "ta_recheck_days": 5, "ta_hot_recheck_days": 2, "ta_retry_empty_days": 21, "ta_window_days": 90,
-            "ta_keep_sales": 12}
+TODAY = rp.TODAY                                         # Pacific date, for "checked" (same as the other bots)
+UA = "card-flipz-raw-radar/2.0 (+https://github.com/Chaundoo/card-flipz)"
+FREE_PLAN_DAILY = 100                                    # tcgapi.dev free plan: 100 requests per UTC day
+DEFAULTS = {"ta_base": "https://api.tcgapi.dev/v1", "ta_max_per_day": 90, "ta_keep_free": 10, "ta_max_per_run": 90,
+            "ta_pause_seconds": 1.0, "ta_recheck_days": 10, "ta_hot_recheck_days": 3, "ta_retry_unmatched_days": 60,
+            "ta_riser_7d": 10, "ta_riser_30d": 15, "ta_min_market": 3, "min_raw_nm": 4}
+
+
+def utc_day():
+    """The quota day: tcgapi.dev resets at midnight UTC, not Pacific midnight."""
+    return datetime.datetime.now(datetime.timezone.utc).date().isoformat()
 
 
 class Stop(Exception):
@@ -55,49 +67,58 @@ class Stop(Exception):
 class TA:
     def __init__(self, cfg, usage):
         self.base = (os.environ.get("TA_BASE") or cfg["ta_base"]).rstrip("/")
-        self.pause, self.max_day, self.usage = float(cfg["ta_pause_seconds"]), int(cfg["ta_max_per_day"]), usage
-        self.used, self.last, self.left, self.keys = 0, 0.0, None, set()
+        self.pause = float(cfg["ta_pause_seconds"])
+        self.keep_free = max(5, int(cfg["ta_keep_free"]))
+        # never above what the free plan allows minus the safety margin, whatever the config says
+        self.max_day = min(int(cfg["ta_max_per_day"]), FREE_PLAN_DAILY - self.keep_free)
+        self.usage, self.day = usage, utc_day()
+        self.used, self.last, self.server_left, self.server_limit = 0, 0.0, None, None
+
+    def count_today(self):
+        return int(self.usage["days"].get(self.day, 0))
 
     def room(self):
-        n = self.max_day - self.usage["days"].get(rp.TODAY, 0)
-        if self.left is not None:
-            n = min(n, self.left - 5)
+        n = self.max_day - self.count_today()
+        if self.server_left is not None:
+            n = min(n, self.server_left - self.keep_free)
         return max(0, n)
 
-    def get(self, path, params):
-        if self.room() <= 0:
-            raise Stop("reached today's request cap")
-        url = self.base + path + "?" + urllib.parse.urlencode(params)
+    def get(self, path):
         for attempt in range(2):
+            if self.room() <= 0:
+                raise Stop("reached today's request cap" if self.server_left is None or self.server_left > self.keep_free
+                           else f"tcgapi.dev says only {self.server_left} requests are left today")
             wait = self.pause - (time.time() - self.last)
             if wait > 0:
                 time.sleep(wait)
             self.last = time.time()
-            self.used += 1
-            self.usage["days"][TODAY] = self.usage["days"].get(TODAY, 0) + 1
-            req = urllib.request.Request(url, headers={"Authorization": f"Bearer {KEY}", "Accept": "application/json", "User-Agent": UA})
+            self.used += 1                                # counted before sending, so a crash can't lose it
+            self.usage["days"][self.day] = self.count_today() + 1
+            req = urllib.request.Request(self.base + path, headers={"X-API-Key": KEY, "Accept": "application/json", "User-Agent": UA})
             try:
                 with urllib.request.urlopen(req, timeout=30) as r:
                     self._limits(r.headers)
-                    return json.loads(r.read().decode("utf-8", "replace"))
+                    j = json.loads(r.read().decode("utf-8", "replace"))
+                    self._limits_body(j)
+                    return j
             except urllib.error.HTTPError as e:
                 self._limits(e.headers)
-                body = e.read().decode("utf-8", "replace")[:200]
+                body = e.read().decode("utf-8", "replace")[:300]
                 if e.code == 404:
                     return None
                 if e.code == 401:
-                    raise Stop(f"tcgapi.net refused the key (HTTP 401). Check the TCGAPI_KEY secret. {body}")
-                if e.code in (402, 403):
-                    raise Stop(f"tcgapi.net says eBay comps aren't available on this key's plan (HTTP {e.code}). {body}")
+                    raise Stop(f"tcgapi.dev refused the key (HTTP 401). Check the TCGAPI_KEY secret: it should be a free "
+                               f"tcgapi.dev key starting with tcg_live_. {body[:120]}")
+                if e.code == 403:
+                    raise Stop(f"tcgapi.dev says this needs a paid plan (HTTP 403); the bot only uses free endpoints, "
+                               f"so tell Claude what it said. {body[:120]}")
                 if e.code == 429:
-                    if re.search(r"day|daily|quota|limit exceeded", body, re.I):
-                        raise Stop(f"tcgapi.net's daily limit is used up (HTTP 429). {body}")
-                    time.sleep(30)
-                    continue
+                    self.server_left = 0
+                    raise Stop("tcgapi.dev's daily limit is used up (HTTP 429), stopped without retrying")
                 if e.code >= 500 and attempt == 0:
                     time.sleep(8)
                     continue
-                raise RuntimeError(f"HTTP {e.code}: {body}")
+                raise RuntimeError(f"HTTP {e.code}: {body[:140]}")
             except (urllib.error.URLError, TimeoutError) as e:
                 if attempt == 0:
                     time.sleep(8)
@@ -106,158 +127,103 @@ class TA:
         raise RuntimeError("gave up after retries")
 
     def _limits(self, h):
-        for k in ("X-RateLimit-Remaining-Day", "X-RateLimit-Daily-Remaining", "X-Daily-Remaining"):
-            v = (h or {}).get(k)
+        h = h or {}
+        for k, attr in (("X-RateLimit-Remaining", "server_left"), ("X-RateLimit-Limit", "server_limit")):
+            v = h.get(k)
             if v is not None:
                 try:
-                    self.left = int(float(v))
+                    setattr(self, attr, int(float(v)))
                 except ValueError:
                     pass
 
+    def _limits_body(self, j):
+        rl = j.get("rate_limit") if isinstance(j, dict) else None
+        if isinstance(rl, dict) and isinstance(rl.get("daily_remaining"), (int, float)):
+            self.server_left = int(rl["daily_remaining"])
 
-# ---------------------------------------------------------------- reading comps
-def sales_of(j, keys=None):
-    """Any reasonable comps response -> [{'title','price','date','offer','grader','grade'}]."""
-    rows = j
-    if isinstance(j, dict):
-        for k in ("comps", "sales", "sold", "results", "items", "data", "listings"):
-            if isinstance(j.get(k), list):
-                rows = j[k]
-                break
-            if isinstance(j.get(k), dict):
-                return sales_of(j[k], keys)
+
+# ---------------------------------------------------------------- reading the answers
+def unwrap(j):
+    return j.get("data") if isinstance(j, dict) and "data" in j else j
+
+
+def price_rows(j):
+    """Any prices answer -> [{'pr', 'm', 'ch24', 'ch7', 'ch30'}] (one per printing)."""
+    d = unwrap(j)
+    if isinstance(d, dict) and isinstance(d.get("prices"), list):
+        d = d["prices"]
+    rows = d if isinstance(d, list) else [d] if isinstance(d, dict) else []
     out = []
-    for r in rows if isinstance(rows, list) else []:
+    for r in rows:
         if not isinstance(r, dict):
             continue
-        if keys is not None:
-            keys |= {"sale." + k for k in r.keys()}
-        title = r.get("title") or r.get("name") or r.get("listing_title") or ""
-        price = None
-        for k in ("sold_price", "price", "sale_price", "total_price", "amount", "value"):
+        m = gh.fnum(r.get("market_price"))
+        if not m:
+            continue
+        def pct(k):
             v = r.get(k)
-            if isinstance(v, dict):
-                v = v.get("value") or v.get("amount")
-            price = gh.fnum(v)
-            if price:
-                break
-        date = next((gh._date_of(r.get(k)) for k in ("sold_date", "date", "end_date", "ended_at", "sold_at", "dateSold", "timestamp")
-                     if gh._date_of(r.get(k))), None)
-        offer = any(r.get(k) is True for k in ("best_offer", "bestOffer", "best_offer_accepted", "offer_accepted"))
-        grader = str(r.get("grader") or r.get("grading_company") or "").lower()
-        grade = str(r.get("grade") or "").strip()
-        if title and price:
-            out.append({"title": title, "price": price, "date": date, "offer": offer, "grader": grader, "grade": grade})
+            return round(float(v), 1) if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+        out.append({"pr": str(r.get("printing") or "Normal"), "m": round(m, 2), "ch24": pct("price_change_24h"),
+                    "ch7": pct("price_change_7d"), "ch30": pct("price_change_30d")})
     return out
 
 
-JUNK = re.compile(r"\b(lot|lots|bundle|set of|x\s?\d|\d\s?x\b|proxy|custom|fan ?art|reprint|orica|you pick|pick your|choose|"
-                  r"read|crack|cracked|damaged|scratched|chipped|japanese|japan|jpn|chinese|korean|sealed|pack|box|binder|"
-                  r"empty|case only|slab only|no card|cgc|bgs|beckett|sgc|tag grad\w*|tag \d+|ace grad\w*|ace \d+)\b", re.I)
-
-
-def num_regex(num):
-    """'114' -> matches 114 / 114/119 / #114; 'tg6' -> matches TG06 / TG6 (not 1140 or 2114)."""
-    m = re.match(r"([a-z]*)(\d+)$", num or "")
-    if not m:
-        return re.compile(r"(?<![0-9a-z])" + re.escape(num or "") + r"(?![0-9a-z])", re.I)
-    return re.compile(r"(?<![0-9a-z])" + m.group(1) + r"\s*0*" + m.group(2) + r"(?![0-9])", re.I)
-
-
-def grade_of(s, num):
-    """'psa10' / 'psa9' / None for one sale, using the API's grade fields if it has them, else the title."""
-    t = s["title"]
-    if JUNK.search(t):
+def choose(rows, e):
+    """The printing that is this card: by the pool's variant (holo / reverse / non-holo), then the one whose
+    price is closest to the card's raw NM price if it has one."""
+    if not rows:
         return None
-    if num and not num_regex(num).search(t):
-        return None                                      # title doesn't carry this card's number
-    if s.get("grader") and s["grader"] != "psa":
+    kind = gh.variant_kind(e.get("variant"))
+    def fits(pr):
+        p = pr.lower()
+        if kind == "reverse":
+            return "reverse" in p or ("foil" in p and "holo" not in p)
+        if kind == "nonholo":
+            return p in ("normal", "unlimited", "1st edition") or ("normal" in p and "foil" not in p)
+        return "holo" in p or "foil" in p
+    pool = [r for r in rows if fits(r["pr"])] or rows
+    nm = e.get("nm")
+    if nm:
+        return min(pool, key=lambda r: abs(math.log(r["m"] / nm)))
+    return max(pool, key=lambda r: r["m"])
+
+
+def own_change(snaps, days):
+    """% change vs the bot's own check closest to `days` ago (within a week), or None."""
+    if not snaps:
         return None
-    if s.get("grade"):
-        g = re.sub(r"\.0$", "", s["grade"])
-        return {"10": "psa10", "9": "psa9"}.get(g)
-    m = re.findall(r"\bpsa\s*[-:#]?\s*(?:gem\s*(?:mt|mint)|mint|nm-mt|nm)?\s*(10|9(?:\.5)?|[1-8](?:\.5)?)\b", t, re.I)
-    if len(set(m)) != 1:                                 # no grade, or several grades in one title
-        return None
-    return {"10": "psa10", "9": "psa9"}.get(m[0])
-
-
-def clean(prices):
-    """Drop price outliers. Returns (kept, dropped)."""
-    if len(prices) < 2:
-        return prices, []
-    med = statistics.median(prices)
-    if len(prices) >= 4:
-        mad = statistics.median([abs(p - med) for p in prices])
-        if mad > 0:
-            keep = [p for p in prices if abs(0.6745 * (p - med) / mad) <= 3.5]
-            return keep, [p for p in prices if p not in keep]
-    keep = [p for p in prices if 0.5 * med <= p <= 2 * med]
-    return keep, [p for p in prices if p not in keep]
-
-
-def summarize(sales, num, window):
-    """-> {'psa10': {...}, 'psa9': {...}} with p (median of the last 14 days if 2+ sales, else of the window),
-    med (window median), n (sales in window), n7 (last 7 days), days, last, sales [[date, price]]; and drop counts."""
-    out, dropped = {}, {"title": 0, "offer": 0, "price": 0}
-    by = {"psa10": [], "psa9": []}
-    for s in sales:
-        if s["offer"]:
-            dropped["offer"] += 1
-            continue
-        g = grade_of(s, num)
-        if not g or g not in by:
-            dropped["title"] += 1
-            continue
-        if s["date"] and gh.days_between(s["date"]) > window:
-            continue
-        by[g].append((s["date"] or TODAY, s["price"]))
-    for g, rows in by.items():
-        keep, bad = clean([p for _, p in rows])
-        dropped["price"] += len(bad)
-        rows = [(d, p) for d, p in rows if p in keep]
-        if not rows:
-            continue
-        rows.sort()
-        recent = [p for d, p in rows if gh.days_between(d) <= 14]
-        med = statistics.median(p for _, p in rows)
-        out[g] = {"p": round(statistics.median(recent) if len(recent) >= 2 else med, 2), "med": round(med, 2),
-                  "n": len(rows), "n7": sum(1 for d, _ in rows if gh.days_between(d) <= 7), "days": window,
-                  "last": rows[-1][0], "fresh": len(recent) >= 2, "sales": [[d, round(p, 2)] for d, p in rows]}
-    return out, dropped
-
-
-def query_for(e):
-    name = re.sub(r"\s+", " ", e["name"]).strip()
-    s = re.sub(r"\b(SWSH\d+|SV\d+|SM\d+|XY\d+|BW\d+)\s*:\s*", "", e.get("set") or "")
-    return f"{name} {cpb.gh_num(e['number'])} {s} PSA".strip()
+    now = snaps[-1][1]
+    best = None
+    for d, m in snaps[:-1]:
+        gap = abs(gh.days_between(d) - days)
+        if gap <= 7 and (best is None or gap < best[0]):
+            best = (gap, m)
+    return round((now / best[1] - 1) * 100, 1) if best and best[1] else None
 
 
 # ---------------------------------------------------------------- what to check
-def pick(pool, gstate, src, cards, cfg, names, limit):
-    hot, rest = [], []
+def pick(pool, gstate, src, cards, cfg, names):
     gcards = gstate.get("cards") or {}
+    todo = []
     for key, e in pool.items():
         mine = cards.get(key) or {}
         age = gh.days_between(mine.get("checked", ""))
-        if mine.get("empty") and age < cfg["ta_retry_empty_days"]:
-            continue
-        own = [(s[0], s[1], s[3]) for s in (gcards.get(key) or {}).get("snaps", [])]
-        if src.over_cap(key, own):
-            continue
-        if not src.slabs.get(str(key)) and (e.get("nm") or 0) > src.cap * 0.3:
-            continue                                     # never priced, raw already pricey: slabs likely over the cap
+        if mine.get("none"):
+            if age < cfg["ta_retry_unmatched_days"]:
+                continue
         sc = (gcards.get(key) or {}).get("score") or {}
-        if sc.get("stage") in ("breaking", "warming", "conflict") or sc.get("heat", 0) >= 60:
-            if age >= cfg["ta_hot_recheck_days"]:
-                hot.append((-sc.get("heat", 0), key))    # a second opinion on purpose
+        hot = sc.get("stage") in ("breaking", "warming", "verify", "conflict") or sc.get("heat", 0) >= 60 \
+            or gh.raw_riser(mine, cfg)
+        if not hot and (e.get("nm") or 0) < cfg["min_raw_nm"]:
             continue
-        if age < cfg["ta_recheck_days"] or src.other_sales_checked_recently(key, "ta"):
+        own = [(s[0], s[1], s[3] if len(s) > 3 else None) for s in (gcards.get(key) or {}).get("snaps", [])]
+        if src.over_cap(key, own, raw=e.get("nm")):
+            continue                                     # the slabs are over your cap: the raw trend won't matter
+        if age < (cfg["ta_hot_recheck_days"] if hot else cfg["ta_recheck_days"]):
             continue
-        rest.append((-src.sales_age(key), -gh.prior(e, cfg, names), key))
-    hot.sort()
-    rest.sort()
-    return ([k for _, k in hot] + [x[-1] for x in rest])[:limit]
+        todo.append((0 if hot else 1, 0 if gh.focus(e, cfg) else 1, -min(age, 90), -gh.prior(e, cfg, names), key))
+    todo.sort()
+    return [x[-1] for x in todo]
 
 
 # ---------------------------------------------------------------- main
@@ -270,107 +236,135 @@ def main():
     for k, v in (gstate.get("pool") or {}).items():
         pool.setdefault(k, v)
     data = gh.jload(OUT, {})
+    if "usage" in data and not isinstance((data.get("usage") or {}).get("days"), dict):
+        data["usage"] = {}
+    if data.get("api") != "tcgapi.dev":                  # old tcgapi.net file (that API never existed): start fresh
+        data = {"usage": data.get("usage") or {}}
     cards = data.setdefault("cards", {})
     usage = data.get("usage") or {}
     usage["days"] = {d: n for d, n in (usage.get("days") or {}).items() if gh.days_between(d) <= 31}
-    src = slab_sources.Sources(cfg)
+    src = slab_sources.Sources(cfg)                      # read only: this bot never writes graded/sources.json
     api = TA(cfg, usage)
     t0, problems, stop = time.time(), [], None
-    checked = priced = 0
-    dropped = {"title": 0, "offer": 0, "price": 0}
-    lines = []
+    checked = resolved = unmatched = 0
+    errors_row = 0
+    risers = []
 
     if not KEY:
         stop = "the TCGAPI_KEY secret isn't set yet, so nothing was looked up (see the README)"
         todo = []
     else:
-        todo = pick(pool, gstate, src, cards, cfg, names, int(os.environ.get("TA_CARDS") or cfg["ta_max_slabs"]))
+        todo = pick(pool, gstate, src, cards, cfg, names)
+    limit = int(os.environ.get("TA_CARDS") or cfg["ta_max_per_run"])
 
+    done = []
     for key in todo:
-        if api.room() <= 0:
+        if checked >= limit or api.room() <= 0:
             break
         e = pool[key]
+        done.append(key)
+        c = cards.get(key) or {}
         try:
-            j = api.get("/comps", {"q": query_for(e)})
+            first = None
+            if not c.get("id"):
+                j = api.get(f"/cards/tcgplayer/{int(e['tcgId'])}")
+                d = unwrap(j) if j else None
+                if not isinstance(d, dict) or not d.get("id"):
+                    cards[key] = {"none": 1, "checked": TODAY}
+                    unmatched += 1
+                    errors_row = 0
+                    continue
+                c = {**c, "id": d["id"]}
+                c.pop("none", None)
+                resolved += 1
+                first = price_rows(j)                    # market + 24h change, in case there's no room for more
+            rows = None
+            if api.room() > 0:
+                j = api.get(f"/cards/{urllib.parse.quote(str(c['id']))}/prices")
+                rows = price_rows(j) if j else []
+            rows = rows or first or []
+            errors_row = 0
         except Stop as x:
+            if c.get("id"):
+                cards[key] = {**cards.get(key, {}), **c}
             stop = str(x)
             break
         except Exception as x:
             problems.append(f"{e['name']} ({e['set']}): {str(x)[:140]}")
-            if len(problems) >= 4 and not checked:
-                stop = "4 lookups in a row failed, so tcgapi.net may be down; stopped to be safe"
+            errors_row += 1
+            if errors_row >= 4:
+                stop = "4 lookups in a row failed, so tcgapi.dev may be down; stopped to be safe"
                 break
             continue
         checked += 1
-        if isinstance(j, dict):
-            api.keys |= set(j.keys())
-        sales = sales_of(j, api.keys)
-        s, d = summarize(sales, cpb.num_core(e["number"]), int(cfg["ta_window_days"]))
-        for k in dropped:
-            dropped[k] += d[k]
-        c = cards.setdefault(key, {})
         c["checked"] = TODAY
-        p10, p9 = (s.get("psa10") or {}), (s.get("psa9") or {})
-        src.record(key, "ta", p10.get("p"), p9.get("p"), p10.get("n"), p9.get("n"), found=bool(s))
-        if not s:
-            c["empty"] = True
+        r = choose(rows, e)
+        if not r:
+            c["noprice"] = 1
+            cards[key] = c
             continue
-        c.pop("empty", None)
-        priced += 1
-        keep = int(cfg["ta_keep_sales"])
-        for g in ("psa10", "psa9"):
-            if g in s:
-                c[g] = {k: v for k, v in s[g].items() if k != "sales"}
-                old = {(a, b) for a, b in (c.get(g + "_sales") or [])}
-                c[g + "_sales"] = sorted(old | {tuple(x) for x in s[g]["sales"]})[-keep:]
-                c[g + "_sales"] = [list(x) for x in c[g + "_sales"] if gh.days_between(x[0]) <= 200]
-            else:
-                c.pop(g, None)
-        c["snaps"] = [x for x in c.get("snaps", []) if x[0] != TODAY and gh.days_between(x[0]) <= 400] + \
-                     [[TODAY, p10.get("p"), p10.get("n7"), p9.get("p"), p9.get("n7")]]
-        if len(lines) < 15:
-            lines.append(f"- {e['name']} ({e['set']} {e['number']}): PSA 10 {('$' + format(p10['p'], ',.0f') + ' (' + str(p10['n']) + ' sold)') if p10 else '—'}"
-                         f" · PSA 9 {('$' + format(p9['p'], ',.0f') + ' (' + str(p9['n']) + ' sold)') if p9 else '—'}")
+        c.pop("noprice", None)
+        c.update({"pr": r["pr"], "m": r["m"], "ch24": r["ch24"], "ch7": r["ch7"], "ch30": r["ch30"]})
+        c["snaps"] = [s for s in c.get("snaps", []) if s[0] != TODAY and gh.days_between(s[0]) <= 400] + [[TODAY, r["m"]]]
+        if c["ch30"] is None:
+            c["ch30"] = own_change(c["snaps"], 30)
+        if c["ch7"] is None:
+            c["ch7"] = own_change(c["snaps"], 7)
+        c = {k: v for k, v in c.items() if v is not None}
+        cards[key] = c
+        if gh.raw_riser(c, cfg):
+            risers.append((max(c.get("ch30") or 0, c.get("ch7") or 0), e, c))
 
     data["usage"] = usage
-    status = "FAILED" if stop and ("refused" in stop or "plan" in stop) else \
-             "PARTIAL" if (stop and "cap" not in stop) or (problems and not checked) else "OK"
+    status = "FAILED" if stop and ("refused" in stop or "paid plan" in stop) else \
+             "PARTIAL" if (stop and "cap" not in stop and "left today" not in stop and "used up" not in stop) or (problems and not checked) else "OK"
     secs = int(time.time() - t0)
     icon = {"OK": "✅", "PARTIAL": "⚠️", "FAILED": "❌"}[status]
-    L = [f"## {icon} tcgapi.net {status} — {TODAY}" + (" (test run, nothing saved)" if DRY else ""), ""]
+    focus_n = sum(1 for k in done if gh.focus(pool[k], cfg) and (cards.get(k) or {}).get("checked") == TODAY and not (cards.get(k) or {}).get("none"))
+    L = [f"## {icon} tcgapi.dev raw radar {status} — {TODAY}" + (" (test run, only the request count saved)" if DRY else ""), ""]
     if stop:
         L += [f"Stopped: {stop}.", ""]
-    L += [f"- Slabs looked up: **{checked}** · with PSA 10 / 9 eBay sales {priced} · requests {api.used} "
-          f"({usage['days'].get(TODAY, 0)} of {cfg['ta_max_per_day']} allowed today)",
-          f"- Sales thrown out: {dropped['title']} by title (wrong grade/grader, lots, other cards…), "
-          f"{dropped['offer']} accepted Best Offers, {dropped['price']} price outliers",
-          f"- Price cap ${src.cap:,.0f} (max_slab_price) · took {secs // 60}m {secs % 60}s"]
-    if lines:
-        L += [""] + lines
-    if api.keys:
-        L += ["", "<details><summary>Fields the API returned (for tuning)</summary>", "", "`" + ", ".join(sorted(api.keys)[:80]) + "`", "</details>"]
+    L += [f"- Cards checked: **{checked}** ({min(focus_n, checked)} mid-era) · new cards matched {resolved}, not on tcgapi.dev {unmatched}",
+          f"- Requests: {api.used} this run · **{api.count_today()} of {api.max_day}** allowed today (UTC day {api.day}; free plan "
+          f"{FREE_PLAN_DAILY}/day, {api.keep_free} always kept spare)"
+          + (f" · tcgapi.dev says {api.server_left} left" if api.server_left is not None else ""),
+          f"- Raw risers (30-day ≥ {cfg['ta_riser_30d']}% or 7-day ≥ {cfg['ta_riser_7d']}%): **{len(risers)}**, "
+          "queued for a real eBay sales check by the Graded Slabs bot",
+          f"- Due but not reached today: {max(0, len(todo) - len(done))} · took {secs // 60}m {secs % 60}s"]
+    if risers:
+        risers.sort(key=lambda x: -x[0])
+        L += ["", "**Raw price rising:**"] + [
+            f"- {e['name']} ({e['set']} {e['number']}): raw ${c['m']:,.2f}"
+            + (f" · 7d {c['ch7']:+.0f}%" if c.get("ch7") is not None else "")
+            + (f" · 30d {c['ch30']:+.0f}%" if c.get("ch30") is not None else "") for _, e, c in risers[:15]]
     if problems:
         L += ["", f"**Problems ({len(problems)}):**"] + [f"- {p}" for p in problems[:10]]
     report = "\n".join(L) + "\n"
     try:
         import botlog
         if not KEY:
-            head = "tcgapi.net isn't set up yet: add the TCGAPI_KEY secret (see the README)."
+            head = "tcgapi.dev isn't set up yet: add a free tcgapi.dev key as the TCGAPI_KEY secret (see the README)."
         elif status == "FAILED":
-            head = f"tcgapi.net failed: {stop}."
+            head = f"tcgapi.dev failed: {stop}."
         else:
-            head = f"tcgapi.net looked up {checked} slabs: {priced} with PSA 10 / 9 eBay sales."
-        botlog.summary(("Test run (nothing saved): " if DRY else "") + head,
+            head = f"tcgapi.dev checked {checked} raw prices: {len(risers)} rising."
+        botlog.summary(("Test run: " if DRY else "") + head,
                        "warn" if not KEY else {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"),
-                       [f"{api.used} requests", f"{dropped['price']} outlier sales dropped"])
+                       [f"{api.count_today()}/{api.max_day} requests today", f"{len(risers)} raw risers"])
     except Exception as x:
         print(f"(admin log summary skipped: {x})")
-    saved = not DRY and api.used > 0
+    saved = api.used > 0
     if saved:
-        data.update({"about": "Written by scripts/tcgapi_bot.py from tcgapi.net eBay comps. Read by scripts/graded_heat.py.",
-                     "generated": TODAY})
-        gh.jdump(OUT, data, separators=(",", ":"), sort_keys=True)
-        src.save()
+        if DRY:                                          # a test run saves only the request count
+            old = gh.jload(OUT, {})
+            old["usage"] = usage
+            gh.jdump(OUT, old, separators=(",", ":"), sort_keys=True)
+        else:
+            data.update({"api": "tcgapi.dev", "generated": TODAY,
+                         "about": "Written by scripts/tcgapi_bot.py: raw (ungraded) TCGplayer market price and its 24h / 7d / 30d "
+                                  "change from tcgapi.dev's free plan, per slab-pool card (key = TCGplayer id). Read by "
+                                  "scripts/graded_heat.py. usage.days = requests per UTC day (free plan: 100)."})
+            gh.jdump(OUT, data, separators=(",", ":"), sort_keys=True)
     open(rp.REPORT, "w", encoding="utf-8").write(report)
     print(report)
     if os.environ.get("GITHUB_OUTPUT"):

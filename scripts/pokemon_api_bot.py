@@ -8,11 +8,13 @@ It never changes the site's cards.
 The free plan is small, so this bot is picky about where each request goes:
   1. Slabs that are heating up (breaking out / warming up): checked here too, on purpose, as a cross-check of
      PokemonPriceTracker. If the two disagree by more than 25% the Graded Slabs tab flags the slab.
-  2. Your priority Pokémon (scripts/graded_config.json "priority"), slabs no sales source has looked at for
-     the longest time first.
+  2. Your priority Pokémon (scripts/graded_config.json "priority"): mid-era cards first (focus_eras), then
+     the slabs no sales source has looked at for the longest time.
   3. Slabs CardPrice couldn't price.
   It skips anything over your price cap (max_slab_price) and anything PokemonPriceTracker checked in the last
   couple of days (graded/sources.json keeps track).
+  Its prices go through the price check in scripts/slab_sources.py before they're shown: on its own it often
+  matches the wrong card (e.g. a Base Set Blastoise PSA 10 at $112), and those prices get thrown out.
 
 Request limits (scripts/graded_config.json):
   pa_max_per_day / pa_max_per_month  hard caps the bot never goes past (it counts its own requests);
@@ -174,23 +176,24 @@ def pick(pool, gstate, src, cards, cpcards, cfg, names, limit):
         if mine.get("none") and gh.days_between(mine.get("checked", "")) < cfg["pa_retry_unmatched_days"]:
             continue
         own = [(s[0], s[1], s[3]) for s in (gcards.get(key) or {}).get("snaps", [])]
-        if src.over_cap(key, own):
+        if src.over_cap(key, own, raw=e.get("nm")):
             continue
         sc = (gcards.get(key) or {}).get("score") or {}
         age = gh.days_between(mine.get("checked", ""))
         is_hot = sc.get("stage") in ("breaking", "warming") or sc.get("heat", 0) >= 60
-        if is_hot and src.known_affordable(key, own):
+        if is_hot and src.known_affordable(key, own, raw=e.get("nm")):
             if age >= cfg["pa_hot_recheck_days"]:
                 hot.append((-sc.get("heat", 0), key))           # cross-check on purpose, even if PPT just looked
             continue
         if age < cfg["pa_recheck_days"] or src.other_sales_checked_recently(key, "pa"):
             continue
         cpc = cpcards.get(key) or {}
+        mid = 0 if gh.focus(e, cfg) else 1                      # mid-era (focus_eras) first
         if names.tier(names.species(e["name"])) == 1:
-            prio.append((-src.sales_age(key), -gh.prior(e, cfg, names), key))
+            prio.append((mid, -src.sales_age(key), -gh.prior(e, cfg, names), key))
         elif cpc.get("none") or not cpc.get("graded"):
             if (e.get("nm") or 0) <= src.cap * 0.3:              # raw already pricey: the slabs are likely over the cap
-                unpriced.append((-src.sales_age(key), -gh.prior(e, cfg, names), key))
+                unpriced.append((mid, -src.sales_age(key), -gh.prior(e, cfg, names), key))
     hot.sort(); prio.sort(); unpriced.sort()
     out = []
     for lst in ([k for _, k in hot], [x[-1] for x in prio], [x[-1] for x in unpriced]):

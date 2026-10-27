@@ -328,10 +328,10 @@ def main():
             continue
         # over your cap in both PSA 10 and PSA 9: only re-check now and then, in case the price drops
         own = [(x[0], x[1], x[2]) for x in c.get("gsnaps", [])]
-        if src.over_cap(key, own) and age < cfg["cp_over_cap_recheck_days"]:
+        if src.over_cap(key, own, raw=e.get("nm")) and age < cfg["cp_over_cap_recheck_days"]:
             over_cap += 1
             continue
-        rank = (0 if key in on_list else 1 if c else 2, -gh.prior(e, cfg, names))
+        rank = (0 if key in on_list else 1 if c else 2, 0 if gh.focus(e, cfg) else 1, -gh.prior(e, cfg, names))   # mid-era first
         todo.append((rank, key))
     todo.sort()
     limit = int(os.environ.get("CP_CARDS") or cfg["cp_max_cards"])
