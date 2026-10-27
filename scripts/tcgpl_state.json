@@ -421,6 +421,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"articuno-ex-team-plasma-132-full-art-132-135-83657": {
+"id": "019c9759-2876-7d9d-a208-92366ed365e8",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
 "articuno-sm144-180520-holofo": {
 "id": "019c96af-1835-72e8-bc7d-c2b74fbc0472",
 "synced": "2026-10-27",
@@ -961,6 +966,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"celebi-ex-141-full-art-141-149-84153": {
+"id": "019c975d-5f22-797d-b92e-958c0c62a7c7",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
 "celebi-ex-9-149-84152": {
 "id": "019c975d-5f21-717a-92af-3ff564ee235a",
 "synced": "2026-10-27",
@@ -1078,6 +1088,11 @@
 },
 "charizard-6-108-84188-holofo": {
 "id": "019c975d-5f69-7414-a2a1-48188460ac4a",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
+"charizard-braixen-gx-sm230-sm230-205163": {
+"id": "019c96b8-b671-7719-8f6b-2b29d9df0036",
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
@@ -1341,6 +1356,11 @@
 },
 "cresselia-dp51-84469": {
 "id": "019c978e-e8cf-74f6-9395-124a71ecaa85",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
+"cresselia-ex-143-full-art-143-149-84471": {
+"id": "019c975f-773c-7227-8f50-913d627ed34f",
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
@@ -2318,6 +2338,11 @@
 "id": "019c9761-98cd-7bc8-b4ce-1b0c1055b8ec",
 "synced": "2026-10-27",
 "variant": "Normal"
+},
+"dragonite-gx-sm156-sm156-178692": {
+"id": "019c96ad-4fa8-72b7-93df-de1205e902ad",
+"synced": "2026-10-27",
+"variant": "Holofoil"
 },
 "dratini-26-97-84932-revers": {
 "id": "019c978f-b76f-7322-ace5-2b5600833ccc",
@@ -5474,6 +5499,11 @@
 "synced": "2026-10-27",
 "variant": "Normal"
 },
+"magikarp-72-123-87032": {
+"id": "019c976e-bd86-7029-8287-5eab977780fd",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
 "magikarp-wailord-gx-sm166-181694": {
 "id": "019c96af-1de1-7bf2-9a31-f63f83b49d4f",
 "synced": "2026-10-27",
@@ -6684,6 +6714,11 @@
 "synced": "2026-10-27",
 "variant": "Normal"
 },
+"pikachu-26-83-113684": {
+"id": "019c97a8-80ce-7a32-baf8-1140a0a41713",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
 "pikachu-27-111-92202-revers": {
 "id": "019c9787-85e5-781f-bde4-ded5d55865ea",
 "synced": "2026-10-27",
@@ -7127,6 +7162,11 @@
 },
 "psyduck-32-149-88441": {
 "id": "019c9776-f799-7905-8149-82367305c2ae",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
+"psyduck-33-33-149-88442": {
+"id": "019c9776-f79c-7511-81a2-6ef9d0ea3694",
 "synced": "2026-10-27",
 "variant": "Reverse Holofoil"
 },
@@ -8490,6 +8530,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"suicune-shiny-sl11-89606": {
+"id": "019c977f-8181-790d-8245-b7e2610482fb",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
 "swalot-50-101-89670-revers": {
 "id": "019c977f-8220-7233-a946-9dc460267a91",
 "synced": "2026-10-27",
@@ -8750,6 +8795,11 @@
 "synced": "2026-10-27",
 "variant": "Normal"
 },
+"totodile-74-95-90003": {
+"id": "019c9781-a060-79c2-a06c-9c1b3138f1a2",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
 "toxicroak-ex-102-106-91240-holofo": {
 "id": "019c9785-bf02-7310-b2ba-6c7727162e20",
 "synced": "2026-10-27",
@@ -8925,6 +8975,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"ultra-necrozma-gx-secret-78-70-175508": {
+"id": "019c97c1-499c-7384-a7d4-f2ae625212f3",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
 "umbreon-010-090-125044-holofo": {
 "id": "019c9619-8238-7b38-bb80-36d3f41b909c",
 "synced": "2026-10-27",
@@ -9060,6 +9115,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"umbreon-team-plasma-64-116-90152": {
+"id": "019c9781-a1ee-7268-9ecd-a46647ea6005",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
 "umbreon-xy96-114005": {
 "id": "019c96a7-ef7a-733b-b952-33f9127a6377",
 "synced": "2026-10-27",
@@ -9150,6 +9210,11 @@
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },
+"vaporeon-team-plasma-20-116-90291": {
+"id": "019c9781-a33c-7068-99bb-8b9eef54b74f",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
 "venomoth-111-144-90300-non-ho": {
 "id": "019c9781-a358-72a3-bf0c-119c12a39879",
 "synced": "2026-10-27",
@@ -9212,6 +9277,11 @@
 },
 "venusaur-28-100-90318": {
 "id": "019c9797-4f61-7427-831f-a7a336aec8ce",
+"synced": "2026-10-27",
+"variant": "Reverse Holofoil"
+},
+"venusaur-3-108-90322": {
+"id": "019c9783-adc8-7e91-97d1-7bbc7a63afa9",
 "synced": "2026-10-27",
 "variant": "Reverse Holofoil"
 },
@@ -9547,6 +9617,11 @@
 },
 "zekrom-114-full-art-114-114-90738": {
 "id": "019c9785-bda2-71cb-b206-86fc8d298f9d",
+"synced": "2026-10-27",
+"variant": "Holofoil"
+},
+"zekrom-115-full-art-secret-rare-115-113-90739": {
+"id": "019c9785-bda4-780b-adca-fdcc00760f3b",
 "synced": "2026-10-27",
 "variant": "Holofoil"
 },

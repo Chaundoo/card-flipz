@@ -2103,6 +2103,156 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:umbreon",
+"set:Plasma Freeze",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:charizard & braixen",
+"set:SM Promos",
+"kind:promo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:zekrom",
+"set:Legendary Treasures",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:dragonite",
+"set:SM Promos",
+"kind:promo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:magikarp",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:vaporeon",
+"set:Plasma Freeze",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:articuno",
+"set:Plasma Storm",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:pikachu",
+"set:Generations",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:totodile",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:suicune",
+"set:Call of Legends",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:psyduck",
+"set:Boundaries Crossed",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:celebi",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:venusaur",
+"set:Dark Explorers",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:cresselia",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-27",
+"f": [
+"pokemon:ultra necrozma",
+"set:Dragon Majesty",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
