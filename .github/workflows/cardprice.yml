@@ -2,7 +2,7 @@ name: CardPrice (graded prices, pop counts, price history)
 
 # Looks up graded prices, PSA/CGC/BGS pop counts and price history on CardPrice.com's free API for the
 # slabs the Graded Slabs bot watches, and saves them in graded/cardprice.json. Runs every morning first;
-# when it finishes, the tcgapi.dev bot starts, then pokemon-api.com, then the Graded Slabs bot, which merges everything.
+# when it finishes, the pokemon-api.com bot starts, then the Graded Slabs bot, which merges everything.
 # Slabs over your price cap (max_slab_price in scripts/graded_config.json) are only re-checked monthly.
 # It never changes the site's cards.
 on:

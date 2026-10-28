@@ -2,7 +2,7 @@ name: Graded Slabs (watch PSA slabs that are heating up)
 
 # Checks PSA 10 / 9 prices for popular-Pokémon slabs (mostly 1999-2020 cards) with PokemonPriceTracker's
 # free API and scores which ones look ready to move. The site's "Graded Slabs" tab shows the list.
-# Runs every day right after the pokemon-api.com bot (the chain is CardPrice -> tcgapi.dev -> pokemon-api.com
+# Runs every day right after the pokemon-api.com bot (the chain is CardPrice -> pokemon-api.com
 # -> this), so it builds the list with all four sources from the same morning. Only slabs with a PSA 10 or 9 at or under your cap
 # (max_slab_price in scripts/graded_config.json) get looked up or listed. Mon-Thu it also spends a few spare
 # TCG Price Lookup requests finding more cards to watch (Fri-Sun those stay free for card shows).
