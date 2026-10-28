@@ -19,7 +19,7 @@ BOTS = {
     "finder": "Flip Finder",
     "graded": "Graded Slabs",
     "cardprice": "CardPrice lookups",
-    "ta": "tcgapi.dev raw radar",
+    "ta": "tcgapi bot (removed)",
     "pa": "pokemon-api.com lookups",
     "tcgcheck": "TCGplayer sales check",
     "addcard": "Add card from link",

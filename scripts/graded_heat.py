@@ -27,7 +27,7 @@ How a slab is scored ("heat", 0-100)
   - how popular the Pokémon is (tier 1 like Charizard / Gengar / Umbreon count most)
   - era: mid-era (2007-2019: DP/HGSS, Black & White, XY, Sun & Moon) scores highest and is checked first
     ("focus_eras" in scripts/graded_config.json), then vintage, then modern
-  - the raw (ungraded) TCGplayer price rising (tcgapi.dev bot, CardPrice movers): raw often moves first
+  - the raw (ungraded) price rising (CardPrice movers): raw often moves first
   - PSA 10 price change over ~4 and ~12 weeks: an early rise (+5% to +60%) scores best; a card that
     already doubled is marked "Already spiked" (you'd be chasing it)
   - more sales than before (volume often rises before price does)
@@ -61,7 +61,6 @@ HEAT = os.path.join(GDIR, "heat.json")
 CHARTS = os.path.join(GDIR, "charts.json")
 CPFILE = os.path.join(GDIR, "cardprice.json")   # written by scripts/cardprice_bot.py (CardPrice.com)
 PAFILE = os.path.join(GDIR, "pokemonapi.json")  # written by scripts/pokemon_api_bot.py (pokemon-api.com)
-TAFILE = os.path.join(GDIR, "tcgapi.json")      # written by scripts/tcgapi_bot.py (tcgapi.dev raw TCGplayer price radar)
 GSTATE = os.path.join(GDIR, "state.json")
 CANDS = os.path.join(ROOT, "candidates.json")
 PPT_KEY = (os.environ.get("PPT_API_KEY") or "").strip()
@@ -658,27 +657,10 @@ def score(e, st, cfg, names, sp_heat):
     if popch is not None and popch >= 5:
         pts -= min(8, popch * 0.5)
         why.append(f"PSA 10 pop up {popch:.0f}% in 4 weeks (more supply)")
-    # raw (ungraded) price rising: CardPrice's weekly movers and the tcgapi.dev radar (TCGplayer market,
-    # 7 / 30-day change). One bonus for the stronger signal, not one each, so the two don't double-count.
-    raw_sig = []
     mv = st.get("_mover")
     if mv is not None and mv > 0:
-        raw_sig.append((min(6, mv * 0.2), f"CardPrice: raw price up {mv:.0f}% this week"))
-    ta = st.get("_ta") or {}
-    if ta and days_between(ta.get("checked", "")) <= 10 and (ta.get("m") or 0) >= cfg.get("ta_min_market", 3):
-        c7, c30 = ta.get("ch7"), ta.get("ch30")
-        if c30 is not None and c30 >= cfg.get("ta_riser_30d", 15):
-            raw_sig.append((min(8, c30 * 0.2), f"Raw TCGplayer price up {c30:.0f}% in 30 days (raw often moves before slabs)"))
-        elif c7 is not None and c7 >= cfg.get("ta_riser_7d", 10):
-            raw_sig.append((min(6, c7 * 0.3), f"Raw TCGplayer price up {c7:.0f}% this week"))
-        elif c30 is not None and c30 <= -15:
-            raw_sig.append((-3, f"Raw TCGplayer price down {abs(c30):.0f}% in 30 days"))
-    if raw_sig:
-        b, w = max(raw_sig, key=lambda x: x[0])
-        pts += b
-        why.append(w)
-        if b >= 3 and stage in ("steady", "watching"):
-            stage = "warming"
+        pts += min(6, mv * 0.2)
+        why.append(f"CardPrice: raw price up {mv:.0f}% this week")
     if stage == "spiked":                        # the move already happened: keep it visible, but not on top
         pts = min(pts * 0.7, 60)
     heat = int(round(max(0, min(100, pts))))
@@ -693,13 +675,11 @@ def score(e, st, cfg, names, sp_heat):
             "prio": names.rank.get(sp)}
 
 
-def verify(sc, e, st, src, key, cfg, tac, quality):
+def verify(sc, e, st, src, key, cfg, quality):
     """Run the slab's prices through the price check (slab_sources.consensus) and fix up the score:
     the shown PSA 10 / 9 become the checked prices, a trend measured on a price the other sources don't back
     up is dropped, and a slab whose price can't be confirmed can't show as "Breaking out" / "Warming up"."""
     raw = e.get("nm")
-    if tac and tac.get("m") and days_between(tac.get("checked", "")) <= 14 and (e.get("src") != "site" or not raw):
-        raw = tac["m"]                                   # fresher raw price for cards that aren't on the site
     extra = [{"src": "site", "g": g, "p": p} for g, p in (e.get("sg") or {}).items()]
     fresh = [s for s, r in (src.slabs.get(str(key)) or {}).items()
              if s in slab_sources.ALL_SOURCES and slab_sources.days_since(r.get("d")) <= src.fresh_days and (r.get("p10") or r.get("p9"))]
@@ -812,13 +792,6 @@ def focus(e, cfg):
     return (e or {}).get("era") in cfg.get("focus_eras", ["dp-hgss", "bw", "xy", "sm"])
 
 
-def raw_riser(ta, cfg):
-    """True when the tcgapi.dev radar saw this card's raw price rising lately."""
-    if not ta or days_between(ta.get("checked", "")) > 10 or (ta.get("m") or 0) < cfg.get("ta_min_market", 3):
-        return False
-    return (ta.get("ch30") or 0) >= cfg.get("ta_riser_30d", 15) or (ta.get("ch7") or 0) >= cfg.get("ta_riser_7d", 10)
-
-
 def prior(e, cfg, names):
     sp = names.species(e["name"])
     p = names.prio_points(sp) * 1.5 + cfg["era_points"].get(e["era"], 5) * 1.5     # your priority list goes first
@@ -841,10 +814,10 @@ def own_prices(st):
     return [(x[0], x[1], x[3] if len(x) > 3 else None) for x in (st or {}).get("snaps", [])]
 
 
-def due_list(pool, gstate, cfg, names, budget, cpcards=None, src=None, skipped=None, tacards=None):
+def due_list(pool, gstate, cfg, names, budget, cpcards=None, src=None, skipped=None):
     """Which slabs to spend today's PokemonPriceTracker credits on. Slabs over your cap (both PSA 10 and 9)
     are skipped, and so are slabs pokemon-api.com checked in the last couple of days, unless they're heating
-    up (those get both sources on purpose). Slabs whose raw price is rising (CardPrice or the tcgapi.dev radar)
+    up (those get both sources on purpose). Slabs whose raw price is rising (CardPrice)
     jump the queue. Among the rest, mid-era first (focus_eras), then the ones no sales source has seen longest.
     -> (urgent, fresh focus-era, fresh other vintage, fresh modern, rest)"""
     cards = gstate.setdefault("cards", {})
@@ -870,14 +843,9 @@ def due_list(pool, gstate, cfg, names, budget, cpcards=None, src=None, skipped=N
                 continue
         cs = cp_series(cpc)
         cp_rise = change(cs, cs[-1][1], 28, 9) if cs else None
-        ta = (tacards or {}).get(key) or {}
-        ta_rise = raw_riser(ta, cfg)
         if not st or not st.get("checked"):
             if cp_rise is not None and cp_rise >= 12:            # CardPrice sees it rising: check it with real sales first
                 urgent.append((500 + cp_rise + (fb if focus(e, cfg) else 0), key))
-                continue
-            if ta_rise:                                          # raw price rising (tcgapi.dev): same idea
-                urgent.append((450 + max(ta.get("ch30") or 0, ta.get("ch7") or 0) + (fb if focus(e, cfg) else 0), key))
                 continue
             gp = cpc.get("graded") or {}
             skip = gp and min(x for x in (gp.get("psa10"), gp.get("psa9")) if x) > budget * cfg["out_of_budget_multiple"] \
@@ -901,7 +869,7 @@ def due_list(pool, gstate, cfg, names, budget, cpcards=None, src=None, skipped=N
         p9, p10 = sc.get("p9") or 0, sc.get("p10") or 0
         if p9 > budget * cfg["out_of_budget_multiple"] or (p10 and p10 < cfg["min_psa10_price"]):
             need = rc["out_of_budget"]
-        elif sc.get("heat", 0) >= 60 or sc.get("stage") in ("breaking", "warming", "spiked", "verify") or ta_rise:
+        elif sc.get("heat", 0) >= 60 or sc.get("stage") in ("breaking", "warming", "spiked", "verify"):
             need = rc["hot"]
         elif sc.get("heat", 0) < 30:
             need = rc["cold"]
@@ -967,9 +935,8 @@ def main():
     cpd = jload(CPFILE, {})
     cpcards = cpd.get("cards") or {}
     pacards = (jload(PAFILE, {}) or {}).get("cards") or {}
-    tacards = (jload(TAFILE, {}) or {}).get("cards") or {}
     skipped = {}
-    lists = due_list(pool, gstate, cfg, names, budget, cpcards, src, skipped, tacards)
+    lists = due_list(pool, gstate, cfg, names, budget, cpcards, src, skipped)
     todo = plan(lists, n, cfg["modern_max_share"])
     ppt = PPT(cfg)
     checked, got, empty, stop = 0, 0, 0, None
@@ -1033,11 +1000,10 @@ def main():
             movers[str(g["id"])] = g["pct"]
     rows = []
     for key in pool:
-        st, cpc, pac, tac = gstate["cards"].get(key) or {}, cpcards.get(key) or {}, pacards.get(key) or {}, tacards.get(key) or {}
+        st, cpc, pac = gstate["cards"].get(key) or {}, cpcards.get(key) or {}, pacards.get(key) or {}
         if not st.get("last") and not (cpc.get("graded") or {}) and not (pac.get("psa10") or pac.get("psa9")):
             continue
-        # _ta = the tcgapi.dev raw-price radar for this card (raw TCGplayer market and its 7 / 30-day change)
-        view = dict(st, _cp=cpc, _pa=pac, _ta=tac, _mover=movers.get(str(cpc.get("cpid") or "")), _srckey="ppt")
+        view = dict(st, _cp=cpc, _pa=pac, _mover=movers.get(str(cpc.get("cpid") or "")), _srckey="ppt")
         if not st.get("last") and (pac.get("psa10") or pac.get("psa9")):
             # pokemon-api.com's eBay median (and how many sold) when PokemonPriceTracker hasn't checked it yet
             view["last"] = {g: {"p": pac[g]["p"], "fresh": (pac[g].get("n") or 0) >= 2}
@@ -1062,7 +1028,7 @@ def main():
         others = [c for k, c in first.get(sp, []) if k != key]
         sp_heat = {sp: (statistics.median(others), len(others))} if others else {}
         sc = score(e, st, cfg, names, sp_heat)
-        verify(sc, e, st, src, key, cfg, st.get("_ta") or {}, quality)
+        verify(sc, e, st, src, key, cfg, quality)
         if st.get("_src"):
             sc["priceSrc"] = st["_src"]
         if key in gstate["cards"]:

@@ -14,8 +14,6 @@ Sources:  "cardprice" (CardPrice.com, free and fast: the broad daily sweep of es
           "ppt"       (PokemonPriceTracker, ~30 slabs a day: eBay sales counts and history)
           "pa"        (pokemon-api.com via RapidAPI, ~90 slabs a day: eBay median and how many sold)
           "site"      (the PSA 10 / Grade 9 values saved on your own site's cards; passed in, not stored here)
-The tcgapi.dev bot is NOT a slab source: its free plan has no eBay data, so it watches raw (ungraded)
-TCGplayer prices instead (graded/tcgapi.json) and never writes here.
 
 Which price to believe (consensus(), used by the Graded Slabs bot and the price-cap test). Each source
 gets things wrong in its own way (one odd sale, the wrong card matched, an estimate far off), so no single
@@ -35,7 +33,7 @@ source is trusted on its own:
      "Breaking out" / "Warming up"; they show "Verify price" instead.
 
 The workflows for all the slab bots share one GitHub Actions concurrency group and run one after another
-(CardPrice -> tcgapi.dev -> pokemon-api.com -> Graded Slabs), so only one bot ever writes this file at a time.
+(CardPrice -> pokemon-api.com -> Graded Slabs), so only one bot ever writes this file at a time.
 """
 import json, os, math, datetime
 
@@ -139,7 +137,7 @@ class Sources:
         return self.get(key, source).get("d")
 
     def sales_age(self, key):
-        """Days since any eBay-sales source (tcgapi.net, PokemonPriceTracker, pokemon-api.com) looked at this slab (9999 = never)."""
+        """Days since any eBay-sales source (PokemonPriceTracker, pokemon-api.com) looked at this slab (9999 = never)."""
         return min((days_since(self.last_checked(key, s)) for s in SALES_SOURCES if self.last_checked(key, s)), default=9999)
 
     def other_sales_checked_recently(self, key, me):
@@ -316,7 +314,7 @@ class Sources:
         return bool((p10 and p10 <= self.cap) or (p9 and p9 <= self.cap))
 
     def conflict(self, key, grade="p10", days=7):
-        """If two or more eBay-sales sources (tcgapi.net, PokemonPriceTracker, pokemon-api.com) priced this grade in
+        """If two or more eBay-sales sources (PokemonPriceTracker, pokemon-api.com) priced this grade in
         the last `days` days and disagree by more than disagree_pct, return [(source name, price), ...]; else None.
         (CardPrice's graded price is an estimate, not a recent-sales median, so it isn't used to flag.)"""
         seen = [(NAMES[s], r[grade]) for s, r in (self.slabs.get(str(key)) or {}).items()
