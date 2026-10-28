@@ -2459,7 +2459,7 @@ function renderHeat(){
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
   h += '<div class="pair-intro"><div><h2>Graded Slabs</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
-    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker, pokemon-api.com, <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> and your own cards’ graded values, cross-checked against each other and the raw price (✓ = confirmed by 2+ sources), plus raw-price trends from tcgapi.dev. Mid-era cards get looked at first. Only slabs with a PSA 10 or 9 at or under '+(htCap()?money(htCap()):'your cap')+' are listed.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
+    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker, pokemon-api.com, <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> and your own cards’ graded values, cross-checked against each other and the raw price (✓ = confirmed by 2+ sources). Mid-era cards get looked at first. Only slabs with a PSA 10 or 9 at or under '+(htCap()?money(htCap()):'your cap')+' are listed.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
   if(!D){
     h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Slabs list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
@@ -2886,8 +2886,8 @@ var BOTINFO = {
   finder:  {name:"Flip Finder", wf:"find-candidates.yml", when:"Mon–Thu about 7:47 am"},
   graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"Every day after the pokemon-api.com bot"},
   cardprice:{name:"CardPrice lookups", wf:"cardprice.yml", when:"Every day about 8:47 am"},
-  ta:      {name:"tcgapi.dev raw radar", wf:"tcgapi.yml", when:"Every day right after CardPrice"},
-  pa:      {name:"pokemon-api.com lookups", wf:"pokemon-api.yml", when:"Every day right after tcgapi.dev"},
+  ta:      {name:"tcgapi bot (removed)", wf:"tcgapi.yml", when:"Removed"},
+  pa:      {name:"pokemon-api.com lookups", wf:"pokemon-api.yml", when:"Every day right after CardPrice"},
   tcgcheck:{name:"TCGplayer sales check", wf:"tcgplayer-check.yml", when:"Once a week, random time Mon–Thu"},
   addcard: {name:"Add card from link", wf:"add-card.yml", when:"When you add a card"},
   approve: {name:"Add Flip Finder cards", wf:"approve-candidates.yml", when:"When you pick Flip Finder cards"},
@@ -2960,9 +2960,9 @@ function adminIssues(){
   var out = [], F = adminFeed().feed, since3 = Date.now()-3*86400000;
   F.forEach(function(x){ if((x.level==="fail" || x.level==="warn") && x.d.getTime() >= since3 && !x.dry) out.push({level:x.level, text:x.name+" ("+whenText(x.d)+"): "+x.headline, url:x.url, item:x}); });
   if(ADM.runs){
-    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["cardprice",15,47,[0,1,2,3,4,5,6],"Every day"],["ta",15,47,[0,1,2,3,4,5,6],"Every day"],["pa",15,47,[0,1,2,3,4,5,6],"Every day"],["graded",15,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
+    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["cardprice",15,47,[0,1,2,3,4,5,6],"Every day"],["pa",15,47,[0,1,2,3,4,5,6],"Every day"],["graded",15,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
       var slot = lastSlot(s[1], s[2], s[4]); if(!slot) return;
-      /* the tcgapi.dev, pokemon-api.com and Graded Slabs bots start when the bot before them finishes (event "workflow_run") */
+      /* the pokemon-api.com and Graded Slabs bots start when the bot before them finishes (event "workflow_run") */
       var ran = ADM.runs.some(function(r){ return botOfRun(r)===s[0] && (r.event==="schedule" || r.event==="workflow_run") && r.conclusion!=="skipped" && new Date(r.created_at) >= new Date(slot.getTime()-30*60000); });
       if(!ran) out.push({level:"warn", text:BOTINFO[s[0]].name+" didn't run on "+slot.toLocaleDateString("en-US",{weekday:"long"})+" ("+BOTINFO[s[0]].when+"). GitHub sometimes skips a scheduled run; if it keeps happening, tell Claude."});
     });
@@ -3015,7 +3015,7 @@ function renderAdmin(){
     issues.map(function(i,n){ return '<li>'+esc(i.text)+(i.item?' <button class="linkbtn" data-copy="'+n+'">Copy for Claude</button>':'')+(i.url?' <a href="'+esc(i.url)+'" target="_blank" rel="noopener">Open run ↗</a>':'')+'</li>'; }).join("")+'</ul></div>';
   if(ADM.runsErr) h += '<p class="note">Couldn’t read GitHub’s run list ('+esc(ADM.runsErr)+'), so only the bots’ own log is shown and missed runs can’t be spotted. Try Refresh later.</p>';
   /* per-bot status */
-  var main = ["price","finder","cardprice","ta","pa","graded","tcgcheck","addcard","approve","save"];
+  var main = ["price","finder","cardprice","pa","graded","tcgcheck","addcard","approve","save"];
   h += '<section class="block"><h3>Bots at a glance</h3><div class="adm-bots">'+main.map(function(k){
     var last = feed.filter(function(x){ return x.bot===k && x.level!=="run" && !x.dry; })[0], n = feed.filter(function(x){ return x.bot===k && !x.dry; }).length;
     return '<div class="adm-bot '+(last?last.level:'none')+'"><div class="adm-bot-top"><b>'+esc(BOTINFO[k].name)+'</b><span class="adm-dot" aria-hidden="true">'+(last?LVL[last.level][0]:'·')+'</span></div>'+

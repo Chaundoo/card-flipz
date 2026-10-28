@@ -47,19 +47,12 @@ next morning's runs and the tab's default budget follow it. When only the PSA 10
 about a third of it (`sources.psa9_share_of_psa10_guess`). CardPrice still re-checks over-cap slabs every 30 days
 (`cp_over_cap_recheck_days`) so slabs that drop back under the cap come back.
 
-**Four slab bots, one after another every morning** (they share the concurrency group `graded-bots`):
+**Three slab bots, one after another every morning** (they share the concurrency group `graded-bots`):
 1. **CardPrice lookups** (`cardprice.yml`, ~8:47 am Pacific in summer): the broad sweep of graded price estimates, pop
    counts and price history (free, ~400 slabs a day).
-2. **tcgapi.dev raw radar** (`tcgapi.yml`, starts when CardPrice finishes): tcgapi.dev's **free** plan has no eBay or
-   graded data, so this bot doesn't price slabs. It watches the raw (ungraded) TCGplayer market price of slab-pool cards
-   and its 7 / 30-day change. Cards whose raw price is rising (`ta_riser_7d` / `ta_riser_30d`) jump to the front of the
-   Graded Slabs bot's sales checks and get a small heat bonus (shared with CardPrice's movers, never both). Slabs heating
-   up go first, then mid-era cards. **Never more than 90 of the free 100 requests per UTC day**: its own count saved in
-   `graded/tcgapi.json` (test runs count too), tcgapi.dev's own counter (stops at 10 left), and a stop on any
-   rate-limit answer. `ta_max_per_day` can't be set above 90.
-3. **pokemon-api.com lookups** (`pokemon-api.yml`, starts when tcgapi.dev finishes): eBay PSA 10 / 9 median and how many
+2. **pokemon-api.com lookups** (`pokemon-api.yml`, starts when CardPrice finishes): eBay PSA 10 / 9 median and how many
    sold, spent on slabs heating up, your priority Pokémon (mid-era first), and slabs CardPrice couldn't price.
-4. **Graded Slabs** (`graded-heat.yml`, starts when pokemon-api.com finishes): PokemonPriceTracker checks (~30 slabs a
+3. **Graded Slabs** (`graded-heat.yml`, starts when pokemon-api.com finishes): PokemonPriceTracker checks (~30 slabs a
    day), then the price check, then scores everything and writes the tab's list.
 
 **Mid-era first:** `focus_eras` in `scripts/graded_config.json` (DP/HGSS, Black & White, XY, Sun & Moon) are checked
@@ -82,11 +75,6 @@ The "Why it's on the list" notes say which prices were ignored and why. `graded/
 last checked each slab; PokemonPriceTracker and pokemon-api.com skip slabs the other checked in the last 2 days
 (`sources.skip_if_other_checked_days`), except slabs heating up, which get a second source on purpose. Running a slab bot
 by hand does not start the next one (so a day's requests aren't spent twice).
-
-**tcgapi.dev setup (once):** make a free account at [tcgapi.dev](https://tcgapi.dev/signup/), create an API key (it
-starts with `tcg_live_`), and save it as the repository secret `TCGAPI_KEY` (Settings → Secrets and variables →
-Actions), replacing the old tcgapi.net key. Stay on the free plan: the bot only uses free endpoints. The free plan is
-for non-commercial use; check tcgapi.dev's terms if the site is used for a business.
 
 **pokemon-api.com setup (once):** make a free RapidAPI account, open pokemon-api.com's API on RapidAPI (link on
 pokemon-api.com), subscribe to the free **Basic** plan, copy your `X-RapidAPI-Key`, and save it as the repository secret
