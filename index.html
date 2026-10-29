@@ -572,14 +572,47 @@ body.phone .tabs .tab .count{flex:none}
 .slab-pr.on{border-color:var(--ht-s3c,#1baf7a)}
 .slab-pr.over{opacity:.5}
 .slab-grades{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+/* PriceCharting-style price history */
+.pc-block{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface)}
+.pc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.pc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.pc-zl{font-size:13px;color:var(--muted);padding:0 6px 0 4px;align-self:center}
+.pc-legend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px;justify-content:flex-end}
+.pc-key{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:99px;padding:5px 11px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:line-through}
+.pc-key.on{color:var(--ink);text-decoration:none;border-color:currentColor}
+.pc-key i,.pc-sw{display:inline-block;width:16px;height:3px;border-radius:2px;background:var(--pc-c)}
+.pc-key:not(.on) i{opacity:.35}
+.pc-chart{width:100%;height:auto;display:block;touch-action:pan-y;max-height:440px}
+.pc-line{fill:none;stroke:var(--pc-c);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.pc-pt{fill:var(--pc-c)}
+.pc-wrap .ht-tip div{display:flex}
+.pc-chg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;margin-top:6px;align-items:center}
+.pc-chg span{display:inline-flex;align-items:center;gap:6px}
+.pc-chg small{color:var(--muted)}
+.g-raw{--pc-c:#2a78d6}.g-7{--pc-c:#8a90a0}.g-8{--pc-c:#9b59d0}.g-9{--pc-c:#d99a00}.g-95{--pc-c:#12a37f}.g-10{--pc-c:#e0433a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .g-raw{--pc-c:#5b9cf0}:root:not([data-theme="light"]) .g-7{--pc-c:#a3a9b8}:root:not([data-theme="light"]) .g-8{--pc-c:#b98be6}:root:not([data-theme="light"]) .g-9{--pc-c:#f0bd2a}:root:not([data-theme="light"]) .g-95{--pc-c:#2cc79d}:root:not([data-theme="light"]) .g-10{--pc-c:#f2685f}}
+:root[data-theme="dark"] .g-raw{--pc-c:#5b9cf0}:root[data-theme="dark"] .g-7{--pc-c:#a3a9b8}:root[data-theme="dark"] .g-8{--pc-c:#b98be6}:root[data-theme="dark"] .g-9{--pc-c:#f0bd2a}:root[data-theme="dark"] .g-95{--pc-c:#2cc79d}:root[data-theme="dark"] .g-10{--pc-c:#f2685f}
+/* sparkline in each Graded Slabs row */
+.ht-spark{display:flex;align-items:center;gap:10px;margin:2px 0 6px;cursor:pointer;background:none;border:0;padding:0;color:inherit;font:inherit;text-align:left;width:100%}
+.ht-spark svg{flex:1 1 auto;max-width:340px;height:44px}
+.ht-spark path{fill:none;stroke:var(--pc-c);stroke-width:2;stroke-linejoin:round}
+.ht-spark .ar{fill:var(--pc-c);opacity:.12;stroke:none}
+.ht-spark small{color:var(--muted);font-size:12px;white-space:nowrap}
+.ht-budget{margin:0 0 10px;max-width:520px}
+.ht-grades{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;margin:-2px 0 6px}
+.ht-grades span{color:var(--muted)} .ht-grades b{color:var(--ink);font-variant-numeric:tabular-nums}
 .chipbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:5px 11px;font-size:13px;font-weight:600;cursor:pointer}
 .chipbtn.on{background:var(--navy);color:var(--navy-ink);border-color:transparent}
 .slab-chg{font-size:14px;color:var(--muted);margin-bottom:6px}
 .slab-chg b{font-size:17px}
 .ht-cpt{fill:var(--ht-s3);stroke:var(--surface);stroke-width:2}
 .ht-big{max-height:380px}
-body.phone .slab-top{flex-direction:column;align-items:stretch}
-body.phone .slab-art{width:150px;align-self:center}
+body.phone .slab-top{flex-direction:row;align-items:flex-start;gap:12px;flex-wrap:wrap}
+body.phone .slab-art{width:96px;align-self:flex-start}
+body.phone .slab-info{flex:1 1 200px}
+body.phone .slab-prices{grid-template-columns:repeat(3,1fr)}
+body.phone .pc-block{padding:12px 10px}
+body.phone .pc-legend{justify-content:flex-start}
 /* Graded Slabs */
 .ht-score{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:52px;padding:4px 8px;border-radius:12px;background:var(--surface-2);color:var(--muted);line-height:1}
 .ht-score b{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -2323,25 +2356,28 @@ var HEAT = {data:null, err:"", loading:false, charts:null, chErr:"", chLoading:f
 var HT_KEY = "cfz.heat";
 var HT = Object.assign({budget:1000, grades:"both", show:"bets", era:"", sort:"prio", q:""}, load(HT_KEY, {}));
 if(HT.sort==="heat" && !HT.v2){ HT.sort = "prio"; }
-if(!HT.v3){ HT.budget = null; }   /* blank budget = the bots' price cap (max_slab_price in scripts/graded_config.json) */
+if(!HT.v4){ HT.budget = 1500; }   /* the bots no longer have a price cap: your budget slider (start where the old cap was) */
 var HTOPEN = {};   /* which charts are open: id -> "g10" | "g9" */
-function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1, v3:1}); }
+function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1, v3:1, v4:1}); }
 /* the budget you typed, or the bots' price cap when you haven't typed one */
 function htCap(){ return Number(HEAT.data && HEAT.data.budget)||0; }
-function htBudget(){ return HT.budget!=null ? (+HT.budget||0) : (Number(GS.max_slab_price)||htCap()); }
+function htBudget(){ return +HT.budget||0; }   /* 0 = any price */
+/* budget slider steps (the last one = any price) */
+var HBSTEPS = [50,75,100,150,200,250,300,400,500,600,750,1000,1250,1500,2000,2500,3000,4000,5000,7500,10000,15000,20000,0];
+function hbIndex(v){ v = +v||0; if(!v) return HBSTEPS.length-1; for(var i=0;i<HBSTEPS.length-1;i++) if(HBSTEPS[i]>=v) return i; return HBSTEPS.length-1; }
+function hbLabel(v){ return v ? "$"+Number(v).toLocaleString("en-US") : "Any price"; }
 /* "What to look for": what the three slab bots watch (saved into scripts/graded_config.json via a GitHub issue).
    Eras: tap to cycle watched → ★ checked first → off. The list below follows these right away. */
-var GS_KEY = "cfz.gradedSet", GS_KEYS = ["eras","focus_eras","grades","max_slab_price","min_psa10_price","modern_max_share"];
-var GS_DEF = {eras:["wotc","ex","dp-hgss","bw","xy","sm","swsh","sv","me","other"], focus_eras:["dp-hgss","bw","xy","sm"], grades:["psa10","psa9"], max_slab_price:1500, min_psa10_price:40, modern_max_share:0.25};
-function gsSaved(){ var s = (HEAT.data && HEAT.data.settings) || {}, o = {}; GS_KEYS.forEach(function(k){ var v = s[k]; o[k] = (v==null || (k==="eras"||k==="grades") && !v.length) ? GS_DEF[k] : v; if(Array.isArray(o[k])) o[k] = o[k].slice(); });
-  if(!s.max_slab_price && htCap()) o.max_slab_price = htCap(); return o; }
+var GS_KEY = "cfz.gradedSet", GS_KEYS = ["eras","focus_eras","grades","min_psa10_price","modern_max_share"];
+var GS_DEF = {eras:["wotc","ex","dp-hgss","bw","xy","sm","swsh","sv","me","other"], focus_eras:["dp-hgss","bw","xy","sm"], grades:["psa10","psa9"], min_psa10_price:40, modern_max_share:0.25};
+function gsSaved(){ var s = (HEAT.data && HEAT.data.settings) || {}, o = {}; GS_KEYS.forEach(function(k){ var v = s[k]; o[k] = (v==null || (k==="eras"||k==="grades") && !v.length) ? GS_DEF[k] : v; if(Array.isArray(o[k])) o[k] = o[k].slice(); }); return o; }
 var GS = null;   /* filled once graded/heat.json has loaded */
 function gsInit(){ if(GS) return; var d = load(GS_KEY, null), s = gsSaved(); GS = {}; GS_KEYS.forEach(function(k){ GS[k] = d && d[k]!=null ? d[k] : s[k]; }); if(gsSame(GS, s)){ try{ localStorage.removeItem(GS_KEY); }catch(e){} } }
 function gsSame(a, b){ return GS_KEYS.every(function(k){ return Array.isArray(a[k]) ? a[k].slice().sort().join()===b[k].slice().sort().join() : Number(a[k])===Number(b[k]); }); }
 function gsSummary(g){
   var short = {"dp-hgss":"DP/HGSS", bw:"B&W", xy:"XY", sm:"SM", swsh:"SWSH", sv:"SV", me:"Mega", wotc:"WotC", ex:"EX", other:"Promos"};
   var e = g.eras.length>=ERAS.length ? "All eras" : g.eras.map(function(id){ return (g.focus_eras.indexOf(id)>=0?"★":"")+(short[id]||id); }).join(", ");
-  return e+" · "+g.grades.map(function(x){ return x==="psa10"?"PSA 10":"PSA 9"; }).join(" + ")+" · up to $"+Number(g.max_slab_price).toLocaleString("en-US")+" · PSA 10 ≥ $"+g.min_psa10_price;
+  return e+" · "+g.grades.map(function(x){ return x==="psa10"?"PSA 10":"PSA 9"; }).join(" + ")+" · PSA 10 ≥ $"+g.min_psa10_price;
 }
 var HSTAGE = {
   breaking:["Breaking out","pos","PSA 10 price is rising (+12% or more) but hasn't doubled yet."],
@@ -2388,7 +2424,7 @@ function htVerge(c){ return c.stage==="breaking" || c.stage==="warming"; }
 function htConf(c){
   var s = (c.srcs||[]).join(" + ");
   if(c.conf==="high") return '<span class="pill pos" title="Confirmed: '+esc(s)+' agree within 25%">✓ Price confirmed</span>';
-  if(c.conf==="est") return '<span class="pill" title="Only CardPrice’s estimate so far; no recent sales behind it yet. Check eBay sold before buying.">Estimate</span>';
+  if(c.conf==="est") return '<span class="pill" title="CardPrice’s price (built from recent sales). In an Oct 2026 check it was within ~3% of eBay sold for slabs that sell often; thinly traded slabs can be further off.">CardPrice price</span>';
   if((c.conf==="low"||c.conf==="none") && c.stage!=="verify" && c.stage!=="conflict") return '<span class="pill warnp" title="Only one source or a single sale. Check eBay sold before buying.">Unconfirmed price</span>';
   return '';
 }
@@ -2528,13 +2564,27 @@ function htPop(c){
     (tot ? '<div class="popbar" role="img" aria-label="PSA population: '+fmtN(n10)+' tens, '+fmtN(n9)+' nines, '+fmtN(rest)+' 8 or lower">'+seg("s10",n10,s10,"10s")+seg("s9",n9,s9,"9s")+'<i class="srest" title="8 or lower: '+fmtN(rest)+'"></i></div>' : '')+
     '<div class="sub">'+(extra.length?extra.join(' · ')+' · ':'')+'Pop from '+esc(c.popSrc||"CardPrice")+(p.asOf?' as of '+fmtDate(p.asOf):'')+(c.popSrc==="CardPrice"?' (<a href="https://cardprice.com" target="_blank" rel="noopener">cardprice.com</a>)':'')+'</div></div>';
 }
+/* little 6-month price line in each row (CardPrice's weekly PSA 10, or Grade 9); tap it for the full chart */
+function htSpark(c){
+  var v = c.spark; if(!v || v.length<4) return '';
+  var W = 340, H = 44, lo = Math.min.apply(null,v), hi = Math.max.apply(null,v); if(hi===lo){ hi = lo+1; }
+  var pts = v.map(function(p,i){ return [i/(v.length-1)*W, 4+(1-(p-lo)/(hi-lo))*(H-8)]; });
+  var d = pts.map(function(p,i){ return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1); }).join("");
+  var ch = (v[v.length-1]/v[0]-1)*100;
+  return '<button type="button" class="ht-spark '+(c.sparkG==="Grade 9"?'g-9':'g-10')+'" data-slab="'+esc(c.id)+'" aria-label="Open the price history"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><path class="ar" d="'+d+'L'+W+' '+H+'L0 '+H+'Z"/><path d="'+d+'"/></svg>'+
+    '<small>'+esc(c.sparkG||"PSA 10")+' · 6 mo<br><b class="'+(ch>=0?'pos-t':'neg-t')+'">'+pct(ch)+'</b></small></button>';
+}
+function htOther(c){
+  var g = [["9.5",c.p95],["8",c.p8],["7",c.p7],["Raw",c.raw]].filter(function(x){ return x[1]; });
+  return g.length ? '<div class="ht-grades">'+g.map(function(x){ return '<span>'+x[0]+' <b>'+money(x[1], x[1]<100?2:0)+'</b></span>'; }).join("")+'</div>' : '';
+}
 function htRow(x){
   var c = x.c, f = x.fit, st = HSTAGE[c.stage] || HSTAGE.steady, b = htBudget();
   var lvl = c.heat>=70 ? "hot" : c.heat>=50 ? "warm" : "cool";
   function gr(label, p, ch, med, n){
     if(!p) return '';
     var over = b && p > b, pick = f.g===label;
-    return '<tr class="'+(pick?'best':'')+(over?' over':'')+'"><td>'+label+'</td><td class="qv"><b>'+money(p)+'</b></td><td>'+htChg(ch)+'</td><td>'+(med?money(med,0):'<span class="dim">—</span>')+'</td><td>'+(n!=null?fmtN(n):'—')+'</td></tr>';
+    return '<tr class="'+(pick?'best':'')+(over?' over':'')+'"><td>'+label+'</td><td class="qv"><b>'+money(p)+'</b></td><td>'+htChg(ch)+'</td>'+(c.med10||c.n10!=null?'<td>'+(med?money(med,0):'<span class="dim">—</span>')+'</td><td>'+(n!=null?fmtN(n):'—')+'</td>':'')+'</tr>';
   }
   var img = c.image ? '<img data-hsrc="'+esc(c.image)+'" alt="">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
   var pop = '';
@@ -2543,11 +2593,13 @@ function htRow(x){
     '<div class="qc-head"><button type="button" class="qc-name" data-slab="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></button>'+
     '<div class="ht-score '+lvl+'" title="Heat score 0–100: how much points to this slab moving up soon"><b>'+c.heat+'</b><small>heat</small></div></div>'+
     '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span>'+htConf(c)+'<span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
-    '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th><th>Median</th><th>Sold 7d</th></tr>'+
+    htSpark(c)+
+    '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th>'+(c.med10||c.n10!=null?'<th>Median</th><th>Sold 7d</th>':'')+'</tr>'+
       gr("PSA 10", c.p10, c.ch, c.med10, c.n10)+gr("PSA 9", c.p9, c.ch9, c.med9, c.n9)+'</table></div>'+
+    htOther(c)+
     htPop(c)+
     (c.chHow ? '<div class="sub" style="margin-top:-4px">Change is vs '+(c.chHow==="4 weeks"?'4 weeks ago':esc(c.chHow))+'. Median = typical sale over the last '+(c.medMo?(c.medMo>=24?Math.round(c.medMo/12)+' years':c.medMo+' months'):'few months')+'.'+(c.wk10!=null?' Usually ~'+c.wk10+' PSA 10s sell a week.':'')+'</div>' : '')+
-    '<button type="button" class="btn ht-chbtn" data-slab="'+esc(c.id)+'">📈 Price history &amp; every grade →</button>'+
+    '<button type="button" class="btn ht-chbtn" data-slab="'+esc(c.id)+'">📈 Price history chart · every grade →</button>'+
     (c.why && c.why.length ? '<ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul>' : '')+
     '<div class="sub">'+htLinks(c)+' · checked '+fmtDate(c.checked)+pop+'</div></div></div>';
 }
@@ -2556,7 +2608,7 @@ function renderHeat(){
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
   h += '<div class="pair-intro"><div><h2>Graded Slabs</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
-    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker, pokemon-api.com, <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> and your own cards’ graded values, cross-checked against each other and the raw price (✓ = confirmed by 2+ sources). ★ eras get looked at first. Change what the bots watch under “What to look for”.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
+    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget slider are shown. Prices and history come from <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> (it checks every slab in the pool once a day, spread over 4 runs), cross-checked against your own cards’ graded values and the raw price. Tap a slab for its full price chart with every grade. ★ eras get looked at first. Change what the bot watches under “What to look for”.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · '+fmtN((D.cards||[]).length)+' slabs priced from a pool of '+fmtN(D.pool||0)+' cards.' : '')+'</p></div></div>';
   if(!D){
     h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Slabs list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
@@ -2566,8 +2618,8 @@ function renderHeat(){
   gsInit();
   h += gsPanel();
   function seg(id, opts, cur){ return '<div class="seg" role="group">'+opts.map(function(o){ return '<button type="button" data-'+id+'="'+o[0]+'" aria-pressed="'+(cur===o[0])+'">'+o[1]+'</button>'; }).join("")+'</div>'; }
-  h += '<div class="bg-form"><div class="bg-cash"><label class="bg-amt"><span aria-hidden="true">$</span><input id="ht-budget" type="number" inputmode="decimal" min="0" step="50" aria-label="Most you’d spend on one slab" placeholder="Most you’d spend on one slab" value="'+esc(htBudget()||"")+'"></label>'+
-    '<div class="bg-quick">'+[250,500,1000].filter(function(v){ return v<(Number(GS.max_slab_price)||htCap()||2000); }).concat([Number(GS.max_slab_price)||htCap()||2000]).map(function(v){ return '<button type="button" class="btn" data-hb="'+v+'">$'+v.toLocaleString("en-US")+'</button>'; }).join("")+'<button type="button" class="btn" data-hb="0">Any</button></div></div>'+
+  h += '<div class="bg-form"><div class="ffs-sl ht-budget"><label for="ht-budget"><span>Your budget per slab<output id="ht-budget-v">'+hbLabel(htBudget())+'</output></span>'+
+    '<input type="range" id="ht-budget" min="0" max="'+(HBSTEPS.length-1)+'" step="1" value="'+hbIndex(htBudget())+'" aria-label="Your budget per slab"></label></div>'+
     '<div class="bg-opts-wrap"><div class="bg-opts" style="margin-top:0">'+
       '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option><option value="pop">Lowest PSA 10 pop</option></select>'+
@@ -2580,9 +2632,9 @@ function renderHeat(){
   function refresh(){ htSave(); box.innerHTML = htResults(); htBind(box); }
   function redraw(){ htSave(); var y = window.scrollY; render(); window.scrollTo(0,y); }
   htBind(box);
-  var bi = document.getElementById("ht-budget"), bt = null;
-  bi.addEventListener("input", function(){ clearTimeout(bt); bt = setTimeout(function(){ var v = parseFloat(bi.value); HT.budget = isNaN(v)||v<0 ? 0 : v; refresh(); }, 250); });
-  root.querySelectorAll("[data-hb]").forEach(function(b){ b.addEventListener("click", function(){ HT.budget = Number(b.getAttribute("data-hb")); bi.value = HT.budget || ""; refresh(); }); });
+  var bi = document.getElementById("ht-budget"), bo = document.getElementById("ht-budget-v");
+  bi.addEventListener("input", function(){ bo.textContent = hbLabel(HBSTEPS[+bi.value]); });
+  bi.addEventListener("change", function(){ HT.budget = HBSTEPS[+bi.value]; bo.textContent = hbLabel(HT.budget); refresh(); });
   gsBind(redraw);
   [["hs","show"]].forEach(function(p){ root.querySelectorAll("[data-"+p[0]+"]").forEach(function(b){ b.addEventListener("click", function(){ HT[p[1]] = b.getAttribute("data-"+p[0]); redraw(); }); }); });
   so.addEventListener("change", function(){ HT.sort = so.value; refresh(); });
@@ -2595,7 +2647,6 @@ function gsPanel(){
     return '<label for="gss-'+id+'"><span>'+label+'<output id="gss-'+id+'-v">'+show(val)+'</output></span>'+
       '<input type="range" id="gss-'+id+'" data-gs="'+id+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+esc(val)+'"></label>';
   }
-  var cap = Number(GS.max_slab_price)||1500;
   return '<details class="bg-opts-wrap ffs" id="gss"'+(state.gssOpen?' open':'')+'><summary><span>What to look for'+(dirty?' <span class="pill warnp">Not saved</span>':'')+'</span><span class="sub">'+esc(gsSummary(GS))+'</span></summary><div class="bg-opts">'+
     '<div class="bg-opt"><span class="lbl">Eras</span><div><div class="ffs-eras">'+ERAS.map(function(e){
       var on = GS.eras.indexOf(e.id)>=0, st = on && GS.focus_eras.indexOf(e.id)>=0;
@@ -2604,7 +2655,6 @@ function gsPanel(){
     '<div class="bg-opt"><span class="lbl">Grades</span><div class="ffs-eras">'+[["psa10","PSA 10"],["psa9","PSA 9"]].map(function(g){ var on = GS.grades.indexOf(g[0])>=0;
       return '<button type="button" class="chipbtn'+(on?' on':'')+'" data-gsgrade="'+g[0]+'" aria-pressed="'+on+'">'+g[1]+'</button>'; }).join("")+'</div></div>'+
     '<div class="ffs-sl">'+
-      sl("max_slab_price","Most you’d pay per slab",100,Math.max(5000,cap),50,cap,function(v){ return "$"+Number(v).toLocaleString("en-US"); })+
       sl("min_psa10_price","Skip PSA 10s under",0,500,10,GS.min_psa10_price,function(v){ return "$"+v; })+
       sl("modern_max_share","Modern slabs, at most",0,100,5,Math.round(GS.modern_max_share*100),function(v){ return v+"% of the list"; })+
     '</div>'+
@@ -2631,7 +2681,7 @@ function gsBind(redraw){
     var k = r.getAttribute("data-gs"), o = document.getElementById("gss-"+k+"-v");
     function val(){ return k==="modern_max_share" ? Number(r.value)/100 : Number(r.value); }
     r.addEventListener("input", function(){ o.textContent = k==="modern_max_share" ? r.value+"% of the list" : "$"+Number(r.value).toLocaleString("en-US"); });
-    r.addEventListener("change", function(){ GS[k] = val(); if(k==="max_slab_price") HT.budget = null; changed(); });
+    r.addEventListener("change", function(){ GS[k] = val(); changed(); });
   });
   var sv = document.getElementById("gss-save"); if(sv) sv.addEventListener("click", function(){
     var s = {}; GS_KEYS.forEach(function(k){ s[k] = Array.isArray(GS[k]) ? GS[k].slice() : Number(GS[k]); });
@@ -2641,7 +2691,7 @@ function gsBind(redraw){
     window.open("https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body), "_blank", "noopener");
     state.gssMsg = "Sent to GitHub. Press Create there; the slab bots use these from their next morning run.";
     redraw(); });
-  var rs = document.getElementById("gss-reset"); if(rs) rs.addEventListener("click", function(){ GS = gsSaved(); try{ localStorage.removeItem(GS_KEY); }catch(e){} state.gssMsg = ""; HT.budget = null; redraw(); });
+  var rs = document.getElementById("gss-reset"); if(rs) rs.addEventListener("click", function(){ GS = gsSaved(); try{ localStorage.removeItem(GS_KEY); }catch(e){} state.gssMsg = ""; redraw(); });
 }
 function htResults(){
   var D = HEAT.data || {}, all = D.cards || [];
@@ -2651,7 +2701,7 @@ function htResults(){
   var rows = htRows(), shown = rows.slice(0, 60), b = htBudget();
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
   var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
-    '. Prices are recent eBay sold prices; a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
+    '. Prices are CardPrice’s current prices (from recent sales); a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
   if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, turning on PSA 9 or more eras under “What to look for”, or “All”.</div>';
   var out = '', lastG = null;
   shown.forEach(function(x){
@@ -2687,7 +2737,7 @@ function htBind(scope){
 var SLAB = {id:null, card:null, hist:null, err:"", loading:false, grade:"psa10", range:"1y"};
 var CP_API = "https://api.cardprice.com/api/";
 var SGRADES = [["psa10","PSA 10"],["grade9","Grade 9"],["grade95","9.5"],["grade8","Grade 8"],["grade7","Grade 7"],["cgc10","CGC 10"],["bgs10","BGS 10"],["sgc10","SGC 10"],["ungraded","Raw"]];
-var SRANGES = [["3m","3M",92],["6m","6M",183],["1y","1Y",366],["2y","2Y",731],["all","All",99999]];
+var SRANGES = [["6m","6m",183],["1y","1y",366],["5y","5y",1827],["all","All",99999]];
 function goSlab(id){ state.view = "slab"; state.slabId = id; SLAB = {id:id, card:null, hist:null, err:"", loading:false, grade:SLAB.grade||"psa10", range:SLAB.range||"1y"};
   try{ history.replaceState(null,"","#slab:"+id); }catch(e){} window.scrollTo(0,0); render(); }
 function slabCard(){ var l = (HEAT.data && HEAT.data.cards) || []; for(var i=0;i<l.length;i++) if(l[i].id===SLAB.id) return l[i]; return null; }
@@ -2748,53 +2798,76 @@ function slabEbay(c, key){
   var b = Date.parse(HEAT.charts.base+"T12:00:00Z"), day = 86400000;
   return {line: D.line.map(function(p){ return [b+p[0]*day, p[1]]; }), dots: D.pts.map(function(p){ return [b+p[0]*day, p[1], p[2]]; })};
 }
-function slabChart(c){
-  var key = SLAB.grade, lab = (SGRADES.filter(function(x){ return x[0]===key; })[0]||[key,key])[1];
-  var rg = SRANGES.filter(function(r){ return r[0]===SLAB.range; })[0] || SRANGES[2];
-  var now = Date.now(), from = now - rg[2]*86400000;
-  var cp = slabSeries(key).filter(function(p){ return p[0]>=from; }), eb = slabEbay(c, key);
-  eb.line = eb.line.filter(function(p){ return p[0]>=from; }); eb.dots = eb.dots.filter(function(p){ return p[0]>=from; });
-  var pts = cp.concat(eb.line, eb.dots);
-  if(pts.length < 1) return '<div class="ht-ch-empty">No '+esc(lab)+' prices in this range'+(SLAB.loading?' yet (loading…)':'')+'. Try a longer range or another grade.</div>';
-  var xs = pts.map(function(p){ return p[0]; }), ys = pts.map(function(p){ return p[1]; });
-  var x0 = Math.min.apply(null,xs), x1 = Math.max(Math.max.apply(null,xs), Math.min(now, x0+14*86400000));
-  if(x1-x0 < 14*86400000) x0 = x1 - 14*86400000;
-  var Y = htNice(Math.min.apply(null,ys)*0.92, Math.max.apply(null,ys)*1.05);
-  var phone = VIEW==="phone", W = phone ? 360 : 760, H = phone ? 240 : 300, L = phone ? 48 : 62, R = 12, T = 14, B = 30;
-  function X(t){ return L + (t-x0)/(x1-x0)*(W-L-R); }
-  function Yp(v){ return T + (1-(v-Y.lo)/(Y.hi-Y.lo))*(H-T-B); }
-  var spanD = (x1-x0)/86400000, yr = spanD > 300;
-  function dl(t){ var d = new Date(t); return HMON[d.getUTCMonth()]+(yr?" ’"+String(d.getUTCFullYear()).slice(2):" "+d.getUTCDate()); }
-  var s = '<svg class="ht-chart ht-big" data-w="'+W+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(lab+' price history for '+title(c))+'">';
-  Y.ticks.forEach(function(v){ var y = Yp(v).toFixed(1); s += '<line class="ht-grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="ht-ax" x="'+(L-8)+'" y="'+y+'" dy="4" text-anchor="end">'+htMoney(v)+'</text>'; });
-  var nT = phone ? 3 : 5;
-  for(var i=0;i<=nT;i++){ var t = x0+(x1-x0)*i/nT; s += '<text class="ht-ax" x="'+X(t).toFixed(1)+'" y="'+(H-8)+'" text-anchor="'+(i===0?'start':i===nT?'end':'middle')+'">'+dl(t)+'</text>'; }
-  s += '<line class="ht-base" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>';
-  function path(arr, cls){ return arr.length>1 ? '<path class="'+cls+'" d="'+arr.map(function(p,i){ return (i?"L":"M")+X(p[0]).toFixed(1)+" "+Yp(p[1]).toFixed(1); }).join("")+'"/>' : ''; }
-  s += path(cp, "ht-cpline") + path(eb.line, "ht-line");
-  if(cp.length===1) s += '<circle class="ht-cpt" cx="'+X(cp[0][0]).toFixed(1)+'" cy="'+Yp(cp[0][1]).toFixed(1)+'" r="4"/>';
-  eb.line.forEach(function(p){ s += '<circle class="ht-lpt" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="4"/>'; });
-  eb.dots.forEach(function(p){ s += '<circle class="ht-dot" cx="'+X(p[0]).toFixed(1)+'" cy="'+Yp(p[1]).toFixed(1)+'" r="'+(4+Math.min(p[2]||1,6)*0.7).toFixed(1)+'"/>'; });
-  s += '<line class="ht-cross" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" visibility="hidden"/><rect class="ht-hit" x="'+L+'" y="0" width="'+(W-L-R)+'" height="'+(H-B)+'"/></svg>';
-  /* hover/tap points (one per date) */
-  var byT = {};
-  cp.forEach(function(p){ (byT[p[0]] = byT[p[0]]||{t:p[0]}).c = p[1]; });
-  eb.line.forEach(function(p){ (byT[p[0]] = byT[p[0]]||{t:p[0]}).m = p[1]; });
-  eb.dots.forEach(function(p){ var r = (byT[p[0]] = byT[p[0]]||{t:p[0]}); r.a = p[1]; r.n = p[2]; });
-  SLAB.pts = Object.keys(byT).map(function(k){ var r = byT[k]; r.cx = X(r.t); return r; });
-  var first = cp.length ? cp[0][1] : null, last = cp.length ? cp[cp.length-1][1] : null;
-  var chg = first && last ? (last/first-1)*100 : null;
-  var leg = '<div class="ht-legend">'+(cp.length?'<span><i class="k-cp"></i>'+esc(lab)+' price history (CardPrice)</span>':'')+(eb.line.length?'<span><i class="k-line"></i>Market price from eBay sales (last 7 days)</span>':'')+(eb.dots.length?'<span><i class="k-dot"></i>Days with eBay sales (bigger = more sold)</span>':'')+'</div>';
-  var rows = SLAB.pts.slice().sort(function(a,b){ return b.t-a.t; });
-  var tbl = '<details class="ht-tbl"><summary>Show as a table</summary><div class="tbl-wrap"><table class="qc-tbl"><tr><th>Date</th><th>'+esc(lab)+'</th><th>eBay market</th><th>eBay avg sale</th><th>Sold</th></tr>'+
-    rows.map(function(r){ var d = new Date(r.t); return '<tr><td>'+HMON[d.getUTCMonth()]+' '+d.getUTCDate()+', '+d.getUTCFullYear()+'</td><td>'+(r.c!=null?money(r.c,0):'—')+'</td><td>'+(r.m!=null?money(r.m,0):'—')+'</td><td>'+(r.a!=null?money(r.a,0):'—')+'</td><td>'+(r.n!=null?r.n:'—')+'</td></tr>'; }).join("")+'</table></div></details>';
-  var head = chg!=null ? '<div class="slab-chg"><b class="'+(chg>=0?'pos-t':'neg-t')+'">'+pct(chg)+'</b> over this range · '+money(first,0)+' → '+money(last,0)+'</div>' : '';
-  return head+'<div class="ht-ch-wrap" id="slab-cw">'+s+'<div class="ht-tip" hidden></div></div>'+leg+tbl;
+/* PriceCharting-style price history: one line per grade (CardPrice's history: monthly years back, daily lately).
+   Tap a grade in the legend to show or hide it; zoom 6M / 1Y / 5Y / All; Linear or Log scale (Log keeps raw
+   and PSA 10 readable on one chart). */
+var SLINES = [["ungraded","Ungraded","g-raw"],["grade7","7","g-7"],["grade8","8","g-8"],["grade9","9","g-9"],["grade95","9.5","g-95"],["psa10","PSA 10","g-10"]];
+var SL_KEY = "cfz.slabLines";
+function slabOn(){ var o = load(SL_KEY, null); return (o && o.on) ? o : {on:{psa10:1, grade9:1}, log:false}; }
+function slabSeriesAll(){
+  var out = {};
+  SLINES.forEach(function(g){ out[g[0]] = []; });
+  if(SLAB.hist && SLAB.hist.length){
+    SLAB.hist.forEach(function(r){ var t = Date.parse(String(r.date||"")+"T12:00:00Z"); if(isNaN(t)) return;
+      SLINES.forEach(function(g){ var v = Number(r[g[0]]); if(v>0) out[g[0]].push([t, v]); }); });
+  } else {                                   /* CardPrice unreachable: the weekly PSA 10 / Grade 9 history the bot saved */
+    var c = slabCard(), C = HEAT.charts && c && HEAT.charts.cards[c.id], b = HEAT.charts ? Date.parse(HEAT.charts.base+"T12:00:00Z") : 0;
+    [["psa10","g10"],["grade9","g9"]].forEach(function(p){ var D = C && C[p[1]]; if(D && D.cp) out[p[0]] = D.cp.map(function(x){ return [b+x[0]*86400000, x[1]]; }); });
+  }
+  Object.keys(out).forEach(function(k){ out[k].sort(function(a,b){ return a[0]-b[0]; }); });
+  return out;
 }
-function slabChartBind(){
+function slabChart(c){
+  var O = slabOn(), all = slabSeriesAll(), rg = SRANGES.filter(function(r){ return r[0]===SLAB.range; })[0] || SRANGES[1];
+  var now = Date.now(), from = now - rg[2]*86400000;
+  var have = SLINES.filter(function(g){ return all[g[0]].length; });
+  var legend = '<div class="pc-legend" role="group" aria-label="Grades on the chart">'+have.map(function(g){ var on = !!O.on[g[0]];
+    return '<button type="button" class="pc-key '+g[2]+(on?' on':'')+'" data-sl="'+g[0]+'" aria-pressed="'+on+'"><i></i>'+g[1]+'</button>'; }).join("")+'</div>';
+  var top = '<div class="pc-top"><div class="seg" role="group" aria-label="Zoom"><span class="pc-zl">Zoom</span>'+SRANGES.map(function(r){ return '<button type="button" data-sr="'+r[0]+'" aria-pressed="'+(SLAB.range===r[0])+'">'+r[1]+'</button>'; }).join("")+'</div>'+
+    '<div class="seg" role="group" aria-label="Scale"><button type="button" data-slog="0" aria-pressed="'+!O.log+'">Linear</button><button type="button" data-slog="1" aria-pressed="'+!!O.log+'">Log</button></div></div>';
+  if(!have.length) return top+'<div class="ht-ch-empty">'+(SLAB.loading ? 'Loading the price history…' : 'No price history for this slab yet.')+'</div>';
+  var shown = have.filter(function(g){ return O.on[g[0]]; }).map(function(g){ return {g:g, pts:all[g[0]].filter(function(p){ return p[0]>=from; })}; }).filter(function(s){ return s.pts.length; });
+  if(!shown.length) return top+legend+'<div class="ht-ch-empty">Tap a grade above to show it'+(have.some(function(g){ return O.on[g[0]]; })?' (or pick a longer zoom)':'')+'.</div>';
+  var xs = [], ys = [];
+  shown.forEach(function(s){ s.pts.forEach(function(p){ xs.push(p[0]); ys.push(p[1]); }); });
+  var x0 = Math.min.apply(null,xs), x1 = Math.max.apply(null,xs);
+  if(x1-x0 < 14*86400000) x0 = x1 - 14*86400000;
+  var lg = !!O.log, lo = Math.min.apply(null,ys), hi = Math.max.apply(null,ys), Y, ticks;
+  if(lg){ var a = Math.floor(Math.log10(lo*0.9)), z = Math.ceil(Math.log10(hi*1.1)); if(z===a) z = a+1; Y = {lo:Math.pow(10,a), hi:Math.pow(10,z)}; ticks = [];
+    for(var e=a;e<=z;e++){ [1,2,5].forEach(function(m){ var v = m*Math.pow(10,e); if(v>=Y.lo && v<=Y.hi) ticks.push(v); }); }
+    if(ticks.length>7) ticks = ticks.filter(function(v){ return /^1/.test(String(v)); }); }
+  else { Y = htNice(0, hi*1.06); ticks = Y.ticks; }
+  var phone = VIEW==="phone", W = phone ? 380 : 900, H = phone ? 270 : 380, L = phone ? 50 : 64, R = 14, T = 16, B = 32;
+  function X(t){ return L + (t-x0)/(x1-x0)*(W-L-R); }
+  function Yp(v){ var f = lg ? (Math.log10(v)-Math.log10(Y.lo))/(Math.log10(Y.hi)-Math.log10(Y.lo)) : (v-Y.lo)/(Y.hi-Y.lo); return T + (1-f)*(H-T-B); }
+  var spanD = (x1-x0)/86400000, yr = spanD > 300;
+  function dl(t){ var d = new Date(t); return HMON[d.getUTCMonth()]+(yr?" "+d.getUTCFullYear():" "+d.getUTCDate()); }
+  var s = '<svg class="pc-chart" data-w="'+W+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc('Price history for '+title(c))+'">';
+  ticks.forEach(function(v){ var y = Yp(v).toFixed(1); s += '<line class="ht-grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="ht-ax" x="'+(L-8)+'" y="'+y+'" dy="4" text-anchor="end">'+htMoney(v)+'</text>'; });
+  var nT = phone ? 3 : 6;
+  for(var i=0;i<=nT;i++){ var t = x0+(x1-x0)*i/nT; s += '<text class="ht-ax" x="'+X(t).toFixed(1)+'" y="'+(H-9)+'" text-anchor="'+(i===0?'start':i===nT?'end':'middle')+'">'+dl(t)+'</text>'; }
+  s += '<line class="ht-base" x1="'+L+'" x2="'+(W-R)+'" y1="'+(H-B)+'" y2="'+(H-B)+'"/>';
+  shown.forEach(function(sr){
+    s += sr.pts.length>1 ? '<path class="pc-line '+sr.g[2]+'" d="'+sr.pts.map(function(p,i){ return (i?"L":"M")+X(p[0]).toFixed(1)+" "+Yp(p[1]).toFixed(1); }).join("")+'"/>'
+      : '<circle class="pc-pt '+sr.g[2]+'" cx="'+X(sr.pts[0][0]).toFixed(1)+'" cy="'+Yp(sr.pts[0][1]).toFixed(1)+'" r="4"/>';
+  });
+  s += '<line class="ht-cross" x1="0" x2="0" y1="'+T+'" y2="'+(H-B)+'" visibility="hidden"/><rect class="ht-hit" x="'+L+'" y="0" width="'+(W-L-R)+'" height="'+(H-B)+'"/></svg>';
+  var byT = {};
+  shown.forEach(function(sr){ sr.pts.forEach(function(p){ var r = byT[p[0]] = byT[p[0]] || {t:p[0], v:{}}; r.v[sr.g[0]] = p[1]; }); });
+  SLAB.pts = Object.keys(byT).map(function(k){ var r = byT[k]; r.cx = X(r.t); return r; });
+  SLAB.shown = shown.map(function(sr){ return sr.g; });
+  var chg = shown.map(function(sr){ var f = sr.pts[0][1], l = sr.pts[sr.pts.length-1][1]; return '<span><i class="pc-sw '+sr.g[2]+'"></i>'+sr.g[1]+' <b class="'+(l>=f?'pos-t':'neg-t')+'">'+pct((l/f-1)*100)+'</b> <small>'+money(f,0)+' → '+money(l,0)+'</small></span>'; }).join("");
+  var rows = SLAB.pts.slice().sort(function(a,b){ return b.t-a.t; }).slice(0, 400);
+  var tbl = '<details class="ht-tbl"><summary>Show as a table</summary><div class="tbl-wrap"><table class="qc-tbl"><tr><th>Date</th>'+shown.map(function(sr){ return '<th>'+sr.g[1]+'</th>'; }).join("")+'</tr>'+
+    rows.map(function(r){ var d = new Date(r.t); return '<tr><td>'+HMON[d.getUTCMonth()]+' '+d.getUTCDate()+', '+d.getUTCFullYear()+'</td>'+shown.map(function(sr){ var v = r.v[sr.g[0]]; return '<td>'+(v!=null?money(v,0):'—')+'</td>'; }).join("")+'</tr>'; }).join("")+'</table></div></details>';
+  return top+legend+'<div class="ht-ch-wrap pc-wrap" id="slab-cw">'+s+'<div class="ht-tip" hidden></div></div><div class="pc-chg">'+chg+' <small class="dim">over this range</small></div>'+tbl;
+}
+function slabChartBind(redraw){
+  root.querySelectorAll("[data-sl]").forEach(function(b){ b.addEventListener("click", function(){ var O = slabOn(), k = b.getAttribute("data-sl"); if(O.on[k]) delete O.on[k]; else O.on[k] = 1; save(SL_KEY, O); redraw(); }); });
+  root.querySelectorAll("[data-slog]").forEach(function(b){ b.addEventListener("click", function(){ var O = slabOn(); O.log = b.getAttribute("data-slog")==="1"; save(SL_KEY, O); redraw(); }); });
   var wrap = document.getElementById("slab-cw"); if(!wrap) return;
   var svg = wrap.querySelector("svg"), tip = wrap.querySelector(".ht-tip"), cross = svg.querySelector(".ht-cross");
-  var VW = Number(svg.getAttribute("data-w")) || 760, lab = (SGRADES.filter(function(x){ return x[0]===SLAB.grade; })[0]||["",""])[1];
+  var VW = Number(svg.getAttribute("data-w")) || 900;
   function show(ev){
     var r = svg.getBoundingClientRect(), vx = (ev.clientX - r.left)/r.width*VW, best = null, bd = 1e9;
     (SLAB.pts||[]).forEach(function(p){ var d = Math.abs(p.cx-vx); if(d<bd){ bd = d; best = p; } });
@@ -2802,10 +2875,8 @@ function slabChartBind(){
     cross.setAttribute("x1", best.cx); cross.setAttribute("x2", best.cx); cross.setAttribute("visibility","visible");
     tip.textContent = "";
     var d = new Date(best.t), hb = document.createElement("b"); hb.textContent = HMON[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear(); tip.appendChild(hb);
-    function row(cls, text){ var e = document.createElement("div"); e.innerHTML = '<i class="'+cls+'"></i>'; e.appendChild(document.createTextNode(text)); tip.appendChild(e); }
-    if(best.c!=null) row("k-cp", lab+" "+money(best.c,0));
-    if(best.m!=null) row("k-line", "eBay market "+money(best.m,0));
-    if(best.a!=null) row("k-dot", "eBay avg sale "+money(best.a,0)+" · "+best.n+" sold");
+    (SLAB.shown||[]).slice().reverse().forEach(function(g){ var v = best.v[g[0]]; if(v==null) return;
+      var e = document.createElement("div"); e.innerHTML = '<i class="pc-sw '+g[2]+'"></i>'; e.appendChild(document.createTextNode(g[1]+" "+money(v,0))); tip.appendChild(e); });
     tip.hidden = false;
     var left = best.cx/VW*r.width; tip.style.left = Math.min(Math.max(left - tip.offsetWidth/2, 0), r.width - tip.offsetWidth)+"px";
   }
@@ -2826,26 +2897,25 @@ function renderSlab(){
   var prices = slabPrices(c), have = {};
   (SLAB.hist||[]).forEach(function(r){ SGRADES.forEach(function(x){ if(Number(r[x[0]])>0) have[x[0]] = 1; }); });
   prices.forEach(function(p){ have[p.k] = 1; });
-  if(!have[SLAB.grade]) SLAB.grade = have.psa10 ? "psa10" : (Object.keys(have)[0] || "psa10");
   var img = c.image ? '<img src="'+esc(c.image)+'" alt="'+esc(title(c))+'">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
   h += '<div class="slab-top"><div class="slab-art">'+img+'</div><div class="slab-info">'+
     '<div class="qc-head"><div class="qc-name" style="cursor:default"><b class="slab-name">'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></div>'+
     '<div class="ht-score '+lvl+'" title="Heat score 0–100"><b>'+c.heat+'</b><small>heat</small></div></div>'+
     '<div class="fflags">'+(c.prio!=null?'<span class="pill prio">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span>'+htConf(c)+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
-    '<div class="slab-prices">'+prices.map(function(p){ var over = b && p.p > b; return '<div class="slab-pr'+(over?' over':'')+(p.k===SLAB.grade?' on':'')+'" data-sg="'+p.k+'" role="button" tabindex="0"><span>'+esc(p.label)+'</span><b>'+money(p.p, p.p<100?2:0)+'</b></div>'; }).join("")+'</div>'+
+    '<div class="slab-prices">'+prices.map(function(p){ var over = b && p.p > b; return '<div class="slab-pr'+(over?' over':'')+(slabOn().on[p.k]?' on':'')+'" data-sg="'+p.k+'" role="button" tabindex="0"><span>'+esc(p.label)+'</span><b>'+money(p.p, p.p<100?2:0)+'</b></div>'; }).join("")+'</div>'+
     '<div class="sub">'+(SLAB.card ? 'Today’s prices for every grade from <a href="https://cardprice.com/card/'+encodeURIComponent(c.cpslug||"")+'" target="_blank" rel="noopener">CardPrice.com</a>' : SLAB.loading ? 'Loading every grade’s price…' : 'PSA 10 / 9 from recent eBay sales')+(b?' · faded = over your '+money(b)+' budget':'')+'</div>'+
     '</div></div>';
-  h += '<section class="block"><div class="ht-ch-top"><h3 style="margin:0">Price history</h3><div class="seg" role="group" aria-label="Range">'+SRANGES.map(function(r){ return '<button type="button" data-sr="'+r[0]+'" aria-pressed="'+(SLAB.range===r[0])+'">'+r[1]+'</button>'; }).join("")+'</div></div>'+
-    '<div class="slab-grades">'+SGRADES.filter(function(x){ return have[x[0]]; }).map(function(x){ return '<button type="button" class="chipbtn'+(SLAB.grade===x[0]?' on':'')+'" data-sg="'+x[0]+'">'+x[1]+'</button>'; }).join("")+'</div>'+
-    (SLAB.err && SLAB.err!=="none" ? '<p class="note">Couldn’t reach CardPrice live ('+esc(SLAB.err)+'), so this shows the weekly history the bot saved for PSA 10 / Grade 9.</p>' : SLAB.err==="none" ? '<p class="note">CardPrice hasn’t matched this slab yet, so only the bots’ own eBay checks are shown.</p>' : '')+
-    slabChart(c)+'<p class="note" style="margin:8px 0 0">“Grade 9” and “Grade 8” are any grading company. Long-run history is one price per month; recent months are daily.</p></section>';
+  h += '<section class="block pc-block"><div class="pc-head"><h3 style="margin:0">Price history</h3><a class="tcglink" href="https://www.pricecharting.com/search-products?type=prices&q='+encodeURIComponent((c.name+" "+String(c.number||"").split("/")[0]+" "+c.set).replace(/\s+/g," ").trim())+'" target="_blank" rel="noopener">Full sales list on PriceCharting <span aria-hidden="true">↗</span></a></div>'+
+    (SLAB.err && SLAB.err!=="none" ? '<p class="note">Couldn’t reach CardPrice live ('+esc(SLAB.err)+'), so this shows the weekly PSA 10 / Grade 9 history the bot saved.</p>' : SLAB.err==="none" ? '<p class="note">CardPrice hasn’t matched this slab yet, so there’s no long history for it.</p>' : '')+
+    slabChart(c)+'<p class="note" style="margin:8px 0 0">From <a href="https://cardprice.com/card/'+encodeURIComponent(c.cpslug||"")+'" target="_blank" rel="noopener">CardPrice.com</a>. Grades 7–9.5 are any grading company; PSA 10 is PSA only. Older history is one price per month; recent months are daily.</p></section>';
   h += '<section class="block"><h3>Population</h3>'+htPop(slabPop(c))+'</section>';
   if(c.why && c.why.length) h += '<section class="block"><h3>Why it’s on the list</h3><ul class="ht-why">'+c.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul></section>';
   h += '<p class="sub">'+htLinks(c)+(c.cpslug?' · <a class="tcglink" href="https://cardprice.com/card/'+encodeURIComponent(c.cpslug)+'" target="_blank" rel="noopener">CardPrice <span aria-hidden="true">↗</span></a>':'')+' · checked '+fmtDate(c.checked)+'</p>';
-  root.innerHTML = h; bindHeader(); bindRows(root); slabChartBind();
+  root.innerHTML = h; bindHeader(); bindRows(root);
   document.getElementById("slab-back").addEventListener("click", goHeat);
   function redraw(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
-  root.querySelectorAll("[data-sg]").forEach(function(e){ function pick(ev){ if(ev.type==="keydown" && ev.key!=="Enter" && ev.key!==" ") return; SLAB.grade = e.getAttribute("data-sg"); redraw(); } e.addEventListener("click", pick); e.addEventListener("keydown", pick); });
+  slabChartBind(redraw);
+  root.querySelectorAll("[data-sg]").forEach(function(e){ function pick(ev){ if(ev.type==="keydown" && ev.key!=="Enter" && ev.key!==" ") return; var k = e.getAttribute("data-sg"), O = slabOn(); if(SLINES.some(function(g){ return g[0]===k; })){ O.on[k] = 1; save(SL_KEY, O); } redraw(); } e.addEventListener("click", pick); e.addEventListener("keydown", pick); });
   root.querySelectorAll("[data-sr]").forEach(function(e){ e.addEventListener("click", function(){ SLAB.range = e.getAttribute("data-sr"); redraw(); }); });
 }
 
@@ -3036,10 +3106,8 @@ var ADM = {log:null, runs:null, runsErr:"", loading:false, at:0, filter:"week"};
 var BOTINFO = {
   price:   {name:"Daily price update", wf:"price-refresh.yml", when:"Mon–Fri about 6:23 am"},
   finder:  {name:"Flip Finder", wf:"find-candidates.yml", when:"Mon–Thu about 7:47 am"},
-  graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"Every day after the pokemon-api.com bot"},
-  cardprice:{name:"CardPrice lookups", wf:"cardprice.yml", when:"Every day about 8:47 am"},
-  ta:      {name:"tcgapi bot (removed)", wf:"tcgapi.yml", when:"Removed"},
-  pa:      {name:"pokemon-api.com lookups", wf:"pokemon-api.yml", when:"Every day right after CardPrice"},
+  graded:  {name:"Graded Slabs", wf:"graded-heat.yml", when:"After each CardPrice run"},
+  cardprice:{name:"CardPrice lookups", wf:"cardprice.yml", when:"4 times a day (about 5:47 am, 10:23 am, 3:11 pm, 8:37 pm)"},
   tcgcheck:{name:"TCGplayer sales check", wf:"tcgplayer-check.yml", when:"Once a week, random time Mon–Thu"},
   addcard: {name:"Add card from link", wf:"add-card.yml", when:"When you add a card"},
   approve: {name:"Add Flip Finder cards", wf:"approve-candidates.yml", when:"When you pick Flip Finder cards"},
@@ -3071,8 +3139,10 @@ function loadAdmin(force){
     .catch(function(){ ADM.loading = false; });
 }
 /* one feed: bot-log entries, plus Actions runs that left no entry (older runs, crashes, publishes) */
+/* bots that are switched off or removed: left out of the Admin tab (pokemon-api.com, PokemonPriceTracker, tcgapi) */
+var ADM_OFF = ["pa","ta","ppt"];
 function adminFeed(){
-  var log = ADM.log || [], runs = ADM.runs || [], byRun = {}, feed = [], cut = Date.now()-7*86400000;
+  var log = (ADM.log || []).filter(function(e){ return ADM_OFF.indexOf(e.bot)<0; }), runs = ADM.runs || [], byRun = {}, feed = [], cut = Date.now()-7*86400000;
   log.forEach(function(e){ var id = runIdOf(e.run); if(id) byRun[id] = e;
     var d = new Date(e.t); if(d.getTime() >= cut) feed.push({d:d, bot:e.bot, name:e.name||(BOTINFO[e.bot]||{}).name||e.bot, level:e.level, headline:e.headline, facts:e.facts||[], details:e.details||"", url:e.run, dry:e.dry, event:e.event}); });
   var quiet = {pages:{ok:0}, versions:{ok:0}};
@@ -3112,7 +3182,7 @@ function adminIssues(){
   var out = [], F = adminFeed().feed, since3 = Date.now()-3*86400000;
   F.forEach(function(x){ if((x.level==="fail" || x.level==="warn") && x.d.getTime() >= since3 && !x.dry) out.push({level:x.level, text:x.name+" ("+whenText(x.d)+"): "+x.headline, url:x.url, item:x}); });
   if(ADM.runs){
-    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["cardprice",15,47,[0,1,2,3,4,5,6],"Every day"],["pa",15,47,[0,1,2,3,4,5,6],"Every day"],["graded",15,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
+    [["price",13,23,[1,2,3,4,5],"Mon–Fri"],["finder",14,47,[1,2,3,4],"Mon–Thu"],["cardprice",13,47,[0,1,2,3,4,5,6],"Every day"],["cardprice",18,23,[0,1,2,3,4,5,6],"Every day"],["cardprice",23,11,[0,1,2,3,4,5,6],"Every day"],["cardprice",4,37,[0,1,2,3,4,5,6],"Every day"],["graded",13,47,[0,1,2,3,4,5,6],"Every day"]].forEach(function(s){
       var slot = lastSlot(s[1], s[2], s[4]); if(!slot) return;
       /* the pokemon-api.com and Graded Slabs bots start when the bot before them finishes (event "workflow_run") */
       var ran = ADM.runs.some(function(r){ return botOfRun(r)===s[0] && (r.event==="schedule" || r.event==="workflow_run") && r.conclusion!=="skipped" && new Date(r.created_at) >= new Date(slot.getTime()-30*60000); });
@@ -3167,7 +3237,7 @@ function renderAdmin(){
     issues.map(function(i,n){ return '<li>'+esc(i.text)+(i.item?' <button class="linkbtn" data-copy="'+n+'">Copy for Claude</button>':'')+(i.url?' <a href="'+esc(i.url)+'" target="_blank" rel="noopener">Open run ↗</a>':'')+'</li>'; }).join("")+'</ul></div>';
   if(ADM.runsErr) h += '<p class="note">Couldn’t read GitHub’s run list ('+esc(ADM.runsErr)+'), so only the bots’ own log is shown and missed runs can’t be spotted. Try Refresh later.</p>';
   /* per-bot status */
-  var main = ["price","finder","cardprice","pa","graded","tcgcheck","addcard","approve","save"];
+  var main = ["price","finder","cardprice","graded","tcgcheck","addcard","approve","save"];
   h += '<section class="block"><h3>Bots at a glance</h3><div class="adm-bots">'+main.map(function(k){
     var last = feed.filter(function(x){ return x.bot===k && x.level!=="run" && !x.dry; })[0], n = feed.filter(function(x){ return x.bot===k && !x.dry; }).length;
     return '<div class="adm-bot '+(last?last.level:'none')+'"><div class="adm-bot-top"><b>'+esc(BOTINFO[k].name)+'</b><span class="adm-dot" aria-hidden="true">'+(last?LVL[last.level][0]:'·')+'</span></div>'+
