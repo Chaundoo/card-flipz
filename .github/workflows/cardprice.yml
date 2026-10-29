@@ -1,14 +1,18 @@
 name: CardPrice (graded prices, pop counts, price history)
 
 # Looks up graded prices, PSA/CGC/BGS pop counts and price history on CardPrice.com's free API for the
-# slabs the Graded Slabs bot watches, and saves them in graded/cardprice.json. Runs every morning first;
-# when it finishes, the pokemon-api.com bot starts, then the Graded Slabs bot, which merges everything.
-# Slabs over your price cap (max_slab_price in scripts/graded_config.json) are only re-checked monthly.
-# It never changes the site's cards.
+# slabs the Graded Slabs bot watches, and saves them in graded/cardprice.json. CardPrice is the main slab
+# source: every slab in the pool is checked once a day, spread over 4 runs with random pauses between calls
+# (each run takes its share of what's still due; the last one finishes the pool). After each run the
+# Graded Slabs bot rebuilds the list. It never changes the site's cards.
+# The run times must match cp_slots_pacific in scripts/graded_config.json.
 on:
   schedule:
-    # 15:47 UTC = 7:47 am Pacific (8:47 am in summer), every day
-    - cron: "47 15 * * *"
+    # Pacific standard time (an hour later in summer): 5:47 am, 10:23 am, 3:11 pm, 8:37 pm
+    - cron: "47 13 * * *"
+    - cron: "23 18 * * *"
+    - cron: "11 23 * * *"
+    - cron: "37 4 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -16,10 +20,10 @@ on:
         type: boolean
         default: false
       cards:
-        description: "Max slabs to look up this run (blank = 400)"
+        description: "Max slabs to look up this run (blank = this run's share of today's pool)"
         default: ""
       recheck:
-        description: "Look up slabs again even if checked in the last 3 days"
+        description: "Look up slabs again even if already checked today"
         type: boolean
         default: false
 
@@ -35,7 +39,7 @@ concurrency:
 jobs:
   cardprice:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v5
 

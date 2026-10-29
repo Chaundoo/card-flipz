@@ -7,10 +7,11 @@ name: pokemon-api.com (graded eBay prices)
 # your priority Pokémon, and slabs CardPrice couldn't price. Skips slabs over your cap (max_slab_price) and
 # slabs PokemonPriceTracker checked in the last 2 days. Saves graded/pokemonapi.json and graded/sources.json.
 # It never changes the site's cards.
+#
+# SWITCHED OFF (Oct 2026): its PSA 10 prices came in ~30% under eBay sold prices. It no longer runs after
+# CardPrice, and the Graded Slabs bot ignores its old prices ("sources_off" in scripts/graded_config.json).
+# To switch it back on: restore the workflow_run trigger below and remove "pa" from sources_off.
 on:
-  workflow_run:
-    workflows: ["CardPrice (graded prices, pop counts, price history)"]
-    types: [completed]
   workflow_dispatch:
     inputs:
       dry_run:
