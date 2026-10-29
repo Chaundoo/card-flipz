@@ -1,6 +1,6 @@
 name: Add Flip Finder cards
 
-# Runs when you (or a collaborator) open an issue titled "Add candidates: ..." or "Flip Finder settings: ..." — the Flip Finder tab's
+# Runs when you (or a collaborator) open an issue titled "Add candidates: ..." or "Flip Finder settings: ..." or "Graded settings: ..." — the Flip Finder tab's
 # "Add to site" / "Hide" buttons fill it in. Issues from anyone else are ignored.
 # Uses no TCG Price Lookup requests: the prices were saved when the card was found.
 on:
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   approve:
-    if: (startsWith(github.event.issue.title, 'Add candidates') || startsWith(github.event.issue.title, 'Flip Finder settings')) && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    if: (startsWith(github.event.issue.title, 'Add candidates') || startsWith(github.event.issue.title, 'Flip Finder settings') || startsWith(github.event.issue.title, 'Graded settings')) && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -35,8 +35,8 @@ jobs:
             status=$(grep -o 'status=.*' "$GITHUB_OUTPUT" | tail -n 1 | cut -d= -f2)
             [ "$status" = "added" ] || break
             python3 scripts/build_versions.py
-            git add eras candidates.json versions.json scripts/tcgpl_state.json scripts/discovery_state.json scripts/discovery_config.json
-            git commit -q -m "${{ startsWith(github.event.issue.title, 'Flip Finder settings') && 'Flip Finder settings' || 'Add Flip Finder cards' }} (#${{ github.event.issue.number }})"
+            git add eras candidates.json versions.json scripts/tcgpl_state.json scripts/discovery_state.json scripts/discovery_config.json scripts/graded_config.json graded/heat.json
+            git commit -q -m "${{ startsWith(github.event.issue.title, 'Graded settings') && 'Graded Slabs settings' || startsWith(github.event.issue.title, 'Flip Finder settings') && 'Flip Finder settings' || 'Add Flip Finder cards' }} (#${{ github.event.issue.number }})"
             if git push -q; then break; fi
             echo "Push raced with another save; retrying ($try)"
             [ "$try" = "3" ] && printf '\n\n⚠️ Could not save after 3 tries because other updates kept saving at the same time. Pick the cards again on the Flip Finder tab.\n' >> run_report.md
