@@ -2,6 +2,9 @@
   "about": "Settings for the Graded Heat bot (scripts/graded_heat.py). Edit and commit to change what it watches. Nothing here touches the cards on the site.",
   "max_slab_price": 1500,
   "max_slab_price_about": "The most you'd pay for one slab (PSA 10 or PSA 9). All three slab bots skip slabs over this in both grades (no requests spent on them) and the Graded Slabs tab only lists slabs with a PSA 10 or PSA 9 at or under it. Change the number and commit; the next morning's runs use it. CardPrice still re-checks over-cap slabs every cp_over_cap_recheck_days days so ones that drop back under come back.",
+  "eras": ["wotc", "ex", "dp-hgss", "bw", "xy", "sm", "swsh", "sv", "me", "other"],
+  "grades": ["psa10", "psa9"],
+  "eras_about": "eras: which eras' slabs the slab bots look at at all (no requests spent on the others; empty = every era). grades: which grades count when deciding whether a slab fits your cap and gets listed. Both are set from the Graded Slabs tab's 'What to look for' panel, along with focus_eras, max_slab_price, min_psa10_price and modern_max_share.",
   "focus_eras": [
     "dp-hgss",
     "bw",

@@ -214,6 +214,7 @@ def main():
     pool = {str(k): v for k, v in gh.pool_from_site(names, manifest).items()}
     for k, v in (gstate.get("pool") or {}).items():
         pool.setdefault(k, v)
+    pool = gh.watch_filter(pool, cfg)          # only the eras you watch (Graded Slabs tab settings)
     data = gh.jload(OUT, {})
     cards = data.setdefault("cards", {})
     usage = data.get("usage") or {}

@@ -12,6 +12,10 @@ The same workflow also handles "Flip Finder settings: ..." issues from the tab's
                         "stale_days":3, "snooze_days":30}}
   -> saved into scripts/discovery_config.json for the next searches, and cards on the list that no longer
      match are taken off right away.
+And "Graded settings: ..." issues from the Graded Slabs tab's "What to look for" panel:
+    {"v":1, "graded":{"eras":[...], "focus_eras":[...], "grades":["psa10","psa9"], "max_slab_price":1500,
+                      "min_psa10_price":40, "modern_max_share":0.25}}
+  -> saved into scripts/graded_config.json; the three slab bots use them from their next run.
 Every pick is also remembered (Pokémon, set, card type, price range) so the Flip Finder ranks
 similar cards lower (declined/hidden) or higher (added) on its next search.
 
@@ -64,7 +68,12 @@ def parse(text):
         return None, "The card list in this issue isn't valid JSON, so nothing was changed."
     if not isinstance(p, dict) or p.get("v") != 1:
         return None, "This issue isn't in a format I know (expected version 1)."
-    ids = {"settings": None}
+    ids = {"settings": None, "graded": None}
+    if "graded" in p:
+        g, err = check_graded(p["graded"])
+        if err:
+            return None, err
+        ids["graded"] = g
     if "settings" in p:
         s, err = check_settings(p["settings"])
         if err:
@@ -139,10 +148,80 @@ def apply_settings(s):
     return "\n".join(L)
 
 
+GCFG = os.path.join(ROOT, "scripts", "graded_config.json")
+GLIMITS = {"max_slab_price": (50, 50000), "min_psa10_price": (0, 10000), "modern_max_share": (0, 1)}
+
+
+def check_graded(s):
+    """Validate the Graded Slabs settings sent from the site. Returns (clean dict, error)."""
+    if not isinstance(s, dict):
+        return None, "The Graded Slabs settings in this issue aren't readable, so nothing was changed."
+    known = {e["id"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    o = {}
+    for k in ("eras", "focus_eras"):
+        if k in s:
+            v = s[k]
+            if not isinstance(v, list) or not all(isinstance(x, str) and x in known for x in v):
+                return None, f"The '{k}' list has an era the site doesn't know, so nothing was changed."
+            o[k] = list(dict.fromkeys(v))
+    if "eras" in o and not o["eras"]:
+        return None, "Watch at least one era, so nothing was changed."
+    if "focus_eras" in o and "eras" in o:
+        o["focus_eras"] = [x for x in o["focus_eras"] if x in o["eras"]]
+    if "grades" in s:
+        v = s["grades"]
+        if not isinstance(v, list) or not v or not all(x in ("psa10", "psa9") for x in v):
+            return None, "Pick PSA 10, PSA 9 or both, so nothing was changed."
+        o["grades"] = list(dict.fromkeys(v))
+    for k, (lo, hi) in GLIMITS.items():
+        if k in s:
+            v = s[k]
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not lo <= v <= hi:
+                return None, f"The setting '{k}' should be a number from {lo} to {hi}, so nothing was changed."
+            o[k] = int(v) if float(v).is_integer() and k != "modern_max_share" else round(float(v), 2)
+    if not o:
+        return None, "No settings were sent, so nothing was changed."
+    return o, None
+
+
+def apply_graded(s):
+    cfg = json.load(open(GCFG, encoding="utf-8"))
+    before = {k: cfg.get(k) for k in s}
+    cfg.update(s)
+    if cfg.get("eras"):
+        cfg["focus_eras"] = [x for x in cfg.get("focus_eras") or [] if x in cfg["eras"]]
+    with open(GCFG, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    heat_path = os.path.join(ROOT, "graded", "heat.json")      # so the tab shows the new settings right away
+    if os.path.exists(heat_path):
+        import graded_heat as gh
+        hd = json.load(open(heat_path, encoding="utf-8"))
+        hd["settings"] = gh.settings_of(cfg)
+        hd["budget"] = float(cfg["max_slab_price"])
+        hd["version"] = str(int(time.time()))
+        with open(heat_path, "w", encoding="utf-8") as f:
+            json.dump(hd, f, ensure_ascii=False, separators=(",", ":"))
+    names = {e["id"]: e["name"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    eras = cfg.get("eras") or [e for e in names]
+    L = ["⚙️ Graded Slabs settings saved. The slab bots (CardPrice, PokemonPriceTracker, pokemon-api.com) use them from their next morning run:", "",
+         f"- Eras watched: {', '.join(names.get(e, e) for e in eras)}",
+         f"- Checked first: {', '.join(names.get(e, e) for e in cfg.get('focus_eras') or []) or 'none (all equal)'}",
+         f"- Grades: {' and '.join(g.upper().replace('PSA', 'PSA ') for g in cfg.get('grades') or ['psa10', 'psa9'])}",
+         f"- Most you'd pay per slab: ${cfg['max_slab_price']:,}",
+         f"- Skip PSA 10s under: ${cfg['min_psa10_price']:,}",
+         f"- Modern slabs: up to {round(cfg['modern_max_share'] * 100)}% of the list"]
+    if all(before.get(k) == cfg.get(k) for k in s):
+        L += ["", "(These were already the settings, so nothing changed.)"]
+    return "\n".join(L)
+
+
 def main():
     ids, err = parse(issue_text())
     if err:
         return out("failed", "❌ " + err)
+    if ids["graded"]:
+        return out("added", apply_graded(ids["graded"]))
     if ids["settings"]:
         return out("added", apply_settings(ids["settings"]))
     if not ids["add"] and not ids["hide"] and not ids["decline"]:

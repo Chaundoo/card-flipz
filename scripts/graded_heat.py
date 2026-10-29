@@ -207,7 +207,7 @@ def scan_pool(gstate, cfg, names, manifest, problems):
     cards_by_era = {}
     for e in manifest["eras"]:
         cards_by_era[e["id"]] = jload(os.path.join(rp.ERAS_DIR, e["id"], e["id"] + ".json"), {}).get("cards", [])
-    want = cfg["pool_scan_eras"]
+    want = [x for x in cfg["pool_scan_eras"] if watched_era(x, cfg)]   # only eras you watch
     skip_sets = [s.lower() for s in jload(DISC_CFG, {}).get("skip_sets", [])]
     done = gstate.setdefault("poolsets", {})
     todo = []
@@ -787,6 +787,26 @@ def weekly(series, weeks=26):
 
 
 # ---------------------------------------------------------------- what to check today
+def watched_era(era, cfg):
+    """True for the eras the slab bots look at at all ("eras" in graded_config.json; empty = every era).
+    Set from the Graded Slabs tab's "What to look for" panel."""
+    eras = cfg.get("eras") or []
+    return not eras or era in eras
+
+
+GSET_KEYS = ("eras", "focus_eras", "grades", "max_slab_price", "min_psa10_price", "modern_max_share")
+
+
+def settings_of(cfg):
+    """What the Graded Slabs tab's "What to look for" panel shows (saved into graded/heat.json)."""
+    return {k: cfg.get(k) for k in GSET_KEYS}
+
+
+def watch_filter(pool, cfg):
+    """Only the slabs from eras you watch (so no requests are spent on the others)."""
+    return {k: v for k, v in pool.items() if watched_era((v or {}).get("era"), cfg)}
+
+
 def focus(e, cfg):
     """True for the eras you want looked at first (focus_eras in graded_config.json: mid-era by default)."""
     return (e or {}).get("era") in cfg.get("focus_eras", ["dp-hgss", "bw", "xy", "sm"])
@@ -927,6 +947,7 @@ def main():
     pool = {str(k): v for k, v in pool_from_site(names, manifest).items()}
     for k, v in (gstate.get("pool") or {}).items():
         pool.setdefault(k, v)
+    pool = watch_filter(pool, cfg)
 
     # 2. graded prices
     budget = slab_sources.cap_of(cfg)          # max_slab_price: nothing over this gets looked up or listed
@@ -1038,7 +1059,8 @@ def main():
             continue
         if sc["p10"] and sc["p10"] < cfg["min_psa10_price"] and not sc["p9"]:
             continue
-        if not ((sc["p10"] and sc["p10"] <= budget) or (sc["p9"] and sc["p9"] <= budget)):
+        grades = cfg.get("grades") or ["psa10", "psa9"]    # which grades you'd buy (Graded Slabs tab settings)
+        if not ((sc["p10"] and sc["p10"] <= budget and "psa10" in grades) or (sc["p9"] and sc["p9"] <= budget and "psa9" in grades)):
             skipped["listed_over_cap"] = skipped.get("listed_over_cap", 0) + 1
             continue                             # over your cap in both grades: not shown
         out.append(dict(id=key, name=e["name"], variant=e["variant"], set=e["set"], number=e["number"], era=e["era"],
@@ -1124,7 +1146,8 @@ def main():
     saved = not DRY and status != "FAILED" and bool(checked or scanned or cpcards or not os.path.exists(HEAT))
     if saved:
         jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
-                     "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "cards": final}, separators=(",", ":"))
+                     "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "settings": settings_of(cfg),
+                     "cards": final}, separators=(",", ":"))
         base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=365)).isoformat()
         charts = {c["id"]: chart_data(views[c["id"]], base) for c in final}
         jdump(CHARTS, {"base": base, "generated": TODAY, "cards": {k: v for k, v in charts.items() if v}}, separators=(",", ":"))
