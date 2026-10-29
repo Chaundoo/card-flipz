@@ -8,7 +8,6 @@
     "dp-hgss",
     "bw",
     "xy",
-    "sm",
     "swsh",
     "sv",
     "me",
@@ -23,7 +22,9 @@
     "dp-hgss",
     "bw",
     "xy",
-    "sm"
+    "ex",
+    "wotc",
+    "other"
   ],
   "focus_about": "The eras every slab bot looks at first and ranks a little higher (mid-era: DP/HGSS, Black & White, XY, Sun & Moon, 2007-2019). focus_priority_bonus: how far ahead they go in the check queues; focus_sort_bonus: heat points added when sorting the Graded Slabs list. Change the list (era ids from eras/eras.json) and commit.",
   "focus_priority_bonus": 15,
