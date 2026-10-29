@@ -7,6 +7,8 @@ daily price update, so it uses API requests the price update and your show-day c
 What it does
   1. Gets the list of sets from TCG Price Lookup (one request, remembered for 30 days) and keeps the
      2010-2020 era sets (settings in scripts/discovery_config.json).
+     Which eras to scan, and the profit / return / buy-price limits, can be changed from the site's
+     Flip Finder tab ("What to look for"); that saves them into scripts/discovery_config.json.
   2. Scans the sets that were scanned longest ago (never-scanned first) until the request budget is
      used up. Every card is checked at the vendor rate in the settings (default 70%).
   3. Keeps cards with a good condition flip: buy one condition, sell one step up to a vendor, buy price
@@ -15,6 +17,8 @@ What it does
      league, championship...), since vendors rarely want those.
      Cards you declined ("Not for me" on the site) stay away for decline_days, and the finder learns
      from your picks: Pokémon, sets and card types you keep declining rank lower, ones you add rank higher.
+     Cards that sit on the list untouched for stale_days (default 3) are taken off and marked
+     "not interested for now" for snooze_days (default 30), so the list stays fresh.
   4. Writes candidates.json (ranked, with the condition prices). The site's "Flip Finder" tab shows it and
      you choose which cards move into the site. Nothing is added to the site by this script.
 
@@ -89,9 +93,40 @@ def set_year(s):
     return None
 
 
+YEAR_ERAS = [(2003, "wotc"), (2007, "ex"), (2010, "dp-hgss"), (2013, "bw"), (2016, "xy"), (2019, "sm"),
+             (2022, "swsh"), (2024, "sv"), (9999, "me")]
+
+
+def set_era(name, year=None, manifest=None):
+    """Era id for a set: the site's era name patterns first, then the release year."""
+    manifest = manifest or jload(rp.MANIFEST, {"eras": []})
+    e = ac.era_for(name, manifest, {})
+    if e != "other" or not year:
+        return e
+    return next(eid for y, eid in YEAR_ERAS if year <= y)
+
+
+def settings_of(cfg):
+    """The settings the site shows and can change (also saved into candidates.json)."""
+    return {k: cfg.get(k) for k in ("eras", "min_net", "min_roi_pct", "min_buy", "max_buy", "stale_days", "snooze_days", "vendor_pct")}
+
+
+def fits(c, cfg):
+    """Does a listed card still match the current settings (era + a flip inside the limits)?"""
+    eras = cfg.get("eras") or []
+    if eras and c.get("era") and c["era"] not in eras:
+        return False
+    r = routes({k: (v["price"], v.get("est", False)) for k, v in (c.get("raw") or {}).items()
+                if isinstance(v, dict) and num(v.get("price"))}, cfg["vendor_pct"])
+    return any(cfg["min_buy"] <= x["buy"] <= cfg["max_buy"] and x["net"] >= cfg["min_net"] and x["roi"] >= cfg["min_roi_pct"]
+               for x in r)
+
+
 def pick_sets(raw_sets, cfg):
     """[{'name','slug','year'}] for the sets to watch."""
     lo, hi = cfg["years"]
+    eras = cfg.get("eras") or []
+    manifest = jload(rp.MANIFEST, {"eras": []})
     fallback = {rp.norm(n) for n in cfg["sets_fallback"]}
     skip = [s.lower() for s in cfg["skip_sets"]]
     out = []
@@ -105,7 +140,10 @@ def pick_sets(raw_sets, cfg):
         if any(x in name.lower() for x in skip):
             continue
         y = set_year(s)
-        ok = (lo <= y <= hi) if y else (rp.norm(name) in fallback)
+        if eras:
+            ok = set_era(name, y, manifest) in eras
+        else:
+            ok = (lo <= y <= hi) if y else (rp.norm(name) in fallback)
         if ok:
             out.append({"name": name, "slug": slug, "year": y})
     return out
@@ -146,7 +184,10 @@ def fallback_sets(dstate, cfg):
     """No set list: use the fallback names, with slugs we already know or the usual pokemon--<name> pattern."""
     known = jload(rp.STATE, {}).get("sets", {})
     out = []
+    eras = cfg.get("eras") or []
     for n in cfg["sets_fallback"]:
+        if eras and set_era(n) not in eras:
+            continue
         slug = known.get(n) or "pokemon--" + re.sub(r"[^a-z0-9]+", "-", n.lower().replace("&", "and")).strip("-")
         out.append({"name": n, "slug": slug, "year": None})
     return out
@@ -458,7 +499,27 @@ def main():
             continue                                  # its set was re-checked and it no longer qualifies
         if days_ago(c.get("updated") or "") > cfg["max_age_days"]:
             continue                                  # price info too old
+        if not fits(c, cfg):
+            continue                                  # outside your Flip Finder settings (era / profit / return / price)
         keep.append(c)
+    # ---- cards you left alone for stale_days: off the list, "not interested for now" for snooze_days
+    stale_days, snooze = int(cfg.get("stale_days") or 0), int(cfg.get("snooze_days") or 30)
+    snoozed = []
+    if stale_days > 0:
+        until = (datetime.date.fromisoformat(TODAY) + datetime.timedelta(days=snooze)).isoformat()
+        dstate.setdefault("declined", {})
+        dstate.setdefault("taste", [])
+        def stale(c):
+            return days_ago(c.get("found") or TODAY) >= stale_days
+        for c in keep + list(fresh_by_key.values()):
+            if stale(c) and c.get("pkey"):
+                dstate["declined"][c["pkey"]] = {"until": until, "auto": True,
+                                                 "card": f"{c['name']} ({c['variant']}) {c['set']} {c['number']}"}
+                dstate["taste"].append({"d": TODAY, "v": -0.5, "f": features(c)})   # a light "not for me"
+                snoozed.append(c)
+        keep = [c for c in keep if not stale(c)]
+        fresh_by_key = {k: c for k, c in fresh_by_key.items() if not stale(c)}
+        dstate["taste"] = dstate["taste"][-600:]
     for c in keep + list(fresh_by_key.values()):     # re-rank everything with what your picks taught it
         c.setdefault("base", c.get("score", 0))
         c["score"] = round(c["base"] * taste_factor(c, ctx.taste), 1)
@@ -485,7 +546,12 @@ def main():
         f" stamped {ctx.count['stamped']}, not a popular Pokémon {ctx.count['unpopular']}, trainers/energy {ctx.count['trainer'] + ctx.count['energy']},"
         f" missing prices {ctx.count['noprice']}, no good flip {ctx.count['noflip']}, no TCGplayer id {ctx.count['notcg']})",
         f"- On the Flip Finder list now: **{len(merged)}** ({new_count} new today) · took {secs // 60}m {secs % 60}s",
+        f"- Settings: eras {', '.join(cfg.get('eras') or []) or 'years ' + str(cfg['years'])}; buy ${cfg['min_buy']}-${cfg['max_buy']},"
+        f" profit ≥ ${cfg['min_net']}, return ≥ {cfg['min_roi_pct']}%",
     ]
+    if snoozed:
+        L += [f"- Untouched for {stale_days}+ days, so taken off and marked not interested for {snooze} days: **{len(snoozed)}**"
+              + " (" + ", ".join(f"{c['name']} ({c['variant']})" for c in snoozed[:12]) + (" …" if len(snoozed) > 12 else "") + ")"]
     if ctx.keys:
         L += ["", "<details><summary>Fields the API returned (for tuning)</summary>", "",
               "Card fields: `" + ", ".join(sorted(ctx.keys)) + "`", "",
@@ -512,6 +578,8 @@ def main():
                     f"looked at {ctx.count['seen']:,} cards and found {ctx.count['kept']} flips. "
                     f"{len(merged)} cards on the list now ({new_count} new).")
         facts = [f"Used {api.used} of {cfg['daily_requests']} API requests"]
+        if snoozed:
+            facts.append(f"{len(snoozed)} untouched cards taken off for {snooze} days")
         if stop_reason and status != "FAILED":
             facts.append(f"Stopped early: {stop_reason}")
         if problems:
@@ -524,7 +592,8 @@ def main():
     if saved:
         stamp = str(int(time.time()))
         jdump(CANDS, {"version": stamp, "generated": TODAY, "vendor_pct": cfg["vendor_pct"],
-                      "sets_scanned": len(scanned), "sets_watched": len(set_pool), "cards": merged}, separators=(",", ":"))
+                      "sets_scanned": len(scanned), "sets_watched": len(set_pool), "settings": settings_of(cfg),
+                      "cards": merged}, separators=(",", ":"))
         dstate["about"] = ("Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets "
                            "the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.")
         jdump(DSTATE, dstate, indent=0, sort_keys=True)

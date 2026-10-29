@@ -7,6 +7,11 @@ The site's Flip Finder tab opens an issue titled "Add candidates: ..." whose bod
              its era file, so the vendor and condition-flip numbers work right away.
   decline -> "Not for me": removed from the list and not suggested again for decline_days (90).
   hide    -> removed from the list and never suggested again.
+The same workflow also handles "Flip Finder settings: ..." issues from the tab's "What to look for" panel:
+    {"v":1, "settings":{"eras":["bw","xy"], "min_net":5, "min_roi_pct":25, "min_buy":5, "max_buy":250,
+                        "stale_days":3, "snooze_days":30}}
+  -> saved into scripts/discovery_config.json for the next searches, and cards on the list that no longer
+     match are taken off right away.
 Every pick is also remembered (Pokémon, set, card type, price range) so the Flip Finder ranks
 similar cards lower (declined/hidden) or higher (added) on its next search.
 
@@ -59,7 +64,12 @@ def parse(text):
         return None, "The card list in this issue isn't valid JSON, so nothing was changed."
     if not isinstance(p, dict) or p.get("v") != 1:
         return None, "This issue isn't in a format I know (expected version 1)."
-    ids = {}
+    ids = {"settings": None}
+    if "settings" in p:
+        s, err = check_settings(p["settings"])
+        if err:
+            return None, err
+        ids["settings"] = s
     for key in ("add", "decline", "hide"):
         v = p.get(key, [])
         if not isinstance(v, list) or len(v) > MAX_IDS or not all(isinstance(x, str) and ID_RE.match(x) for x in v):
@@ -70,10 +80,71 @@ def parse(text):
     return ids, None
 
 
+LIMITS = {"min_net": (0, 500), "min_roi_pct": (0, 500), "min_buy": (0, 2000), "max_buy": (1, 2000),
+          "stale_days": (0, 60), "snooze_days": (1, 365)}
+
+
+def check_settings(s):
+    """Validate the settings sent from the site. Returns (clean dict, error)."""
+    if not isinstance(s, dict):
+        return None, "The settings in this issue aren't readable, so nothing was changed."
+    known = {e["id"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    out_ = {}
+    if "eras" in s:
+        e = s["eras"]
+        if not isinstance(e, list) or not e or not all(isinstance(x, str) and x in known for x in e):
+            return None, "Pick at least one era (and only eras the site knows), so nothing was changed."
+        out_["eras"] = list(dict.fromkeys(e))
+    for k, (lo, hi) in LIMITS.items():
+        if k in s:
+            v = s[k]
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not lo <= v <= hi:
+                return None, f"The setting '{k}' should be a number from {lo} to {hi}, so nothing was changed."
+            out_[k] = int(v) if float(v).is_integer() else round(float(v), 2)
+    if not out_:
+        return None, "No settings were sent, so nothing was changed."
+    return out_, None
+
+
+def apply_settings(s):
+    """Save the new settings and take cards that no longer match off the list. Returns the reply text."""
+    cfg = json.load(open(dc.CFG_PATH, encoding="utf-8"))
+    before = {k: cfg.get(k) for k in s}
+    cfg.update(s)
+    if cfg.get("min_buy", 0) > cfg.get("max_buy", 300):
+        cfg["min_buy"], cfg["max_buy"] = cfg["max_buy"], cfg["min_buy"]
+    with open(dc.CFG_PATH, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    cands = json.load(open(CANDS, encoding="utf-8")) if os.path.exists(CANDS) else {"cards": []}
+    keep = [c for c in cands.get("cards", []) if isinstance(c, dict) and dc.fits(c, cfg)]
+    gone = len(cands.get("cards", [])) - len(keep)
+    cands["cards"] = keep
+    cands["settings"] = dc.settings_of(cfg)
+    cands["version"] = str(int(time.time()))
+    with open(CANDS, "w", encoding="utf-8") as f:
+        json.dump(cands, f, ensure_ascii=False, separators=(",", ":"))
+    names = {e["id"]: e["name"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    L = ["⚙️ Flip Finder settings saved. The next search (Monday-Thursday morning) uses them:", "",
+         f"- Eras: {', '.join(names.get(e, e) for e in cfg.get('eras') or []) or 'years ' + str(cfg.get('years'))}",
+         f"- Buy price: ${cfg['min_buy']} to ${cfg['max_buy']}",
+         f"- Profit per card (vendor at {cfg['vendor_pct']}%): at least ${cfg['min_net']}",
+         f"- Return: at least {cfg['min_roi_pct']}%",
+         f"- Untouched cards come off the list after {cfg.get('stale_days')} days and stay away {cfg.get('snooze_days')} days"]
+    changed = [k for k in s if before.get(k) != cfg.get(k)]
+    if not changed:
+        L += ["", "(These were already the settings, so nothing changed.)"]
+    if gone:
+        L += ["", f"🧹 Took {gone} card{'s' if gone != 1 else ''} that no longer match off the list now."]
+    return "\n".join(L)
+
+
 def main():
     ids, err = parse(issue_text())
     if err:
         return out("failed", "❌ " + err)
+    if ids["settings"]:
+        return out("added", apply_settings(ids["settings"]))
     if not ids["add"] and not ids["hide"] and not ids["decline"]:
         return out("nothing", "ℹ️ No cards were picked, so nothing changed.")
 
