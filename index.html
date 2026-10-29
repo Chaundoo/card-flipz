@@ -537,6 +537,8 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .ffs-sl input[type=range]{width:100%;accent-color:var(--navy);margin:0}
 .ffs-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ffs-act .msg{font-size:13px;color:var(--muted);flex:1 1 220px}
+.ffs-eras .chipbtn.star{background:var(--gold);color:#1b1400;border-color:transparent}
+.ffs-legend{font-size:12.5px;color:var(--muted);margin:4px 0 0}
 .flock{max-width:340px;margin:28px auto;padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);text-align:center}
 .flock h2{margin:0 0 6px}
 .flock p{margin:0 0 14px;color:var(--muted);font-size:14px}
@@ -2326,7 +2328,21 @@ var HTOPEN = {};   /* which charts are open: id -> "g10" | "g9" */
 function htSave(){ save(HT_KEY, {budget:HT.budget, grades:HT.grades, show:HT.show, era:HT.era, sort:HT.sort, v2:1, v3:1}); }
 /* the budget you typed, or the bots' price cap when you haven't typed one */
 function htCap(){ return Number(HEAT.data && HEAT.data.budget)||0; }
-function htBudget(){ return HT.budget!=null ? (+HT.budget||0) : htCap(); }
+function htBudget(){ return HT.budget!=null ? (+HT.budget||0) : (Number(GS.max_slab_price)||htCap()); }
+/* "What to look for": what the three slab bots watch (saved into scripts/graded_config.json via a GitHub issue).
+   Eras: tap to cycle watched → ★ checked first → off. The list below follows these right away. */
+var GS_KEY = "cfz.gradedSet", GS_KEYS = ["eras","focus_eras","grades","max_slab_price","min_psa10_price","modern_max_share"];
+var GS_DEF = {eras:["wotc","ex","dp-hgss","bw","xy","sm","swsh","sv","me","other"], focus_eras:["dp-hgss","bw","xy","sm"], grades:["psa10","psa9"], max_slab_price:1500, min_psa10_price:40, modern_max_share:0.25};
+function gsSaved(){ var s = (HEAT.data && HEAT.data.settings) || {}, o = {}; GS_KEYS.forEach(function(k){ var v = s[k]; o[k] = (v==null || (k==="eras"||k==="grades") && !v.length) ? GS_DEF[k] : v; if(Array.isArray(o[k])) o[k] = o[k].slice(); });
+  if(!s.max_slab_price && htCap()) o.max_slab_price = htCap(); return o; }
+var GS = null;   /* filled once graded/heat.json has loaded */
+function gsInit(){ if(GS) return; var d = load(GS_KEY, null), s = gsSaved(); GS = {}; GS_KEYS.forEach(function(k){ GS[k] = d && d[k]!=null ? d[k] : s[k]; }); if(gsSame(GS, s)){ try{ localStorage.removeItem(GS_KEY); }catch(e){} } }
+function gsSame(a, b){ return GS_KEYS.every(function(k){ return Array.isArray(a[k]) ? a[k].slice().sort().join()===b[k].slice().sort().join() : Number(a[k])===Number(b[k]); }); }
+function gsSummary(g){
+  var short = {"dp-hgss":"DP/HGSS", bw:"B&W", xy:"XY", sm:"SM", swsh:"SWSH", sv:"SV", me:"Mega", wotc:"WotC", ex:"EX", other:"Promos"};
+  var e = g.eras.length>=ERAS.length ? "All eras" : g.eras.map(function(id){ return (g.focus_eras.indexOf(id)>=0?"★":"")+(short[id]||id); }).join(", ");
+  return e+" · "+g.grades.map(function(x){ return x==="psa10"?"PSA 10":"PSA 9"; }).join(" + ")+" · up to $"+Number(g.max_slab_price).toLocaleString("en-US")+" · PSA 10 ≥ $"+g.min_psa10_price;
+}
 var HSTAGE = {
   breaking:["Breaking out","pos","PSA 10 price is rising (+12% or more) but hasn't doubled yet."],
   warming:["Warming up","warnp","Sales are picking up, or this Pokémon's other slabs are rising, while this one's price is still flat. Often the earliest sign."],
@@ -2361,9 +2377,10 @@ function loadCharts(done){
 function goHeat(){ state.view = "heat"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#heat"); }catch(e){} window.scrollTo(0,0); render(); }
 /* which grade fits your budget: PSA 10 first, PSA 9 if allowed */
 function htFit(c){
-  var b = htBudget();
-  if(c.p10 && (!b || c.p10 <= b)) return {g:"PSA 10", p:c.p10};
-  if(HT.grades==="both" && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
+  var b = htBudget(), gr = GS ? GS.grades : ["psa10","psa9"], mn = GS ? Number(GS.min_psa10_price)||0 : 0;
+  if(c.p10 && c.p10 < mn && !c.p9) return null;
+  if(gr.indexOf("psa10")>=0 && c.p10 && c.p10 >= mn && (!b || c.p10 <= b)) return {g:"PSA 10", p:c.p10};
+  if(gr.indexOf("psa9")>=0 && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
   return null;
 }
 function htVerge(c){ return c.stage==="breaking" || c.stage==="warming"; }
@@ -2381,7 +2398,7 @@ function htRows(){
   var list = ((HEAT.data && HEAT.data.cards) || []).map(function(c){ return {c:c, fit:htFit(c)}; }).filter(function(x){ return x.fit; });
   if(HT.show==="bets") list = list.filter(function(x){ return x.c.stage!=="spiked" && x.c.stage!=="cooling"; });
   else if(HT.show==="spiked") list = list.filter(function(x){ return x.c.stage==="spiked"; });
-  if(HT.era) list = list.filter(function(x){ return (HERA[HT.era]||[]).indexOf(x.c.era)>=0; });
+  if(GS) list = list.filter(function(x){ return GS.eras.indexOf(x.c.era||"other")>=0; });
   var q = sFold(HT.q).trim();
   if(q) list = list.filter(function(x){ return sFold(x.c.name+" "+x.c.set+" "+x.c.number).indexOf(q)>=0; });
   var s = HT.sort;
@@ -2539,20 +2556,20 @@ function renderHeat(){
   if(!HEAT.data && !HEAT.err) loadHeat();
   var h = header(), D = HEAT.data;
   h += '<div class="pair-intro"><div><h2>Graded Slabs</h2><p class="sub">PSA 10 and PSA 9 slabs, mostly 1999–2020 cards, scored on whether they look ready to move: price starting to climb, sales picking up, the same Pokémon rising on other cards, and new sets that put it in the spotlight. '+
-    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker, pokemon-api.com, <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> and your own cards’ graded values, cross-checked against each other and the raw price (✓ = confirmed by 2+ sources). Mid-era cards get looked at first. Only slabs with a PSA 10 or 9 at or under '+(htCap()?money(htCap()):'your cap')+' are listed.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
+    'Your priority Pokémon (★) that are on the verge come first, then other Pokémon. Only slabs that fit your budget are shown. Bots update this every morning, with prices from PokemonPriceTracker, pokemon-api.com, <a href="https://cardprice.com" target="_blank" rel="noopener">CardPrice.com</a> and your own cards’ graded values, cross-checked against each other and the raw price (✓ = confirmed by 2+ sources). ★ eras get looked at first. Change what the bots watch under “What to look for”.'+(D && D.generated ? ' Last update '+fmtDate(D.generated)+' · watching '+fmtN(D.watched||0)+' of '+fmtN(D.pool||0)+' cards so far.' : '')+'</p></div></div>';
   if(!D){
     h += '<div class="empty">'+(HEAT.err ? 'Couldn’t load the Graded Slabs list ('+esc(HEAT.err)+'). <button class="btn" id="ht-retry">Try again</button>' : 'Loading…')+'</div>';
     root.innerHTML = h; bindHeader();
     var rt = document.getElementById("ht-retry"); if(rt) rt.addEventListener("click", function(){ HEAT.err = ""; render(); });
     return;
   }
+  gsInit();
+  h += gsPanel();
   function seg(id, opts, cur){ return '<div class="seg" role="group">'+opts.map(function(o){ return '<button type="button" data-'+id+'="'+o[0]+'" aria-pressed="'+(cur===o[0])+'">'+o[1]+'</button>'; }).join("")+'</div>'; }
   h += '<div class="bg-form"><div class="bg-cash"><label class="bg-amt"><span aria-hidden="true">$</span><input id="ht-budget" type="number" inputmode="decimal" min="0" step="50" aria-label="Most you’d spend on one slab" placeholder="Most you’d spend on one slab" value="'+esc(htBudget()||"")+'"></label>'+
-    '<div class="bg-quick">'+[250,500,1000].filter(function(v){ return !htCap() || v<htCap(); }).concat(htCap()?[htCap()]:[2000]).map(function(v){ return '<button type="button" class="btn" data-hb="'+v+'">$'+v.toLocaleString("en-US")+'</button>'; }).join("")+'<button type="button" class="btn" data-hb="0">Any</button></div></div>'+
+    '<div class="bg-quick">'+[250,500,1000].filter(function(v){ return v<(Number(GS.max_slab_price)||htCap()||2000); }).concat([Number(GS.max_slab_price)||htCap()||2000]).map(function(v){ return '<button type="button" class="btn" data-hb="'+v+'">$'+v.toLocaleString("en-US")+'</button>'; }).join("")+'<button type="button" class="btn" data-hb="0">Any</button></div></div>'+
     '<div class="bg-opts-wrap"><div class="bg-opts" style="margin-top:0">'+
-      '<div class="bg-opt"><span class="lbl">Grades</span>'+seg("hg", [["10","PSA 10 only"],["both","PSA 10 or 9"]], HT.grades)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
-      '<div class="bg-opt"><span class="lbl">Era</span>'+seg("he", [["","All"],["vintage","Vintage"],["mid","Mid-era"],["modern","Modern"]], HT.era)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option><option value="pop">Lowest PSA 10 pop</option></select>'+
         '<label class="search" style="flex:1 1 160px;min-width:0;margin:0"><input id="ht-q" type="search" placeholder="Pokémon or set" aria-label="Filter by Pokémon or set" value="'+esc(HT.q)+'"></label></div>'+
     '</div></div></div>';
@@ -2566,10 +2583,65 @@ function renderHeat(){
   var bi = document.getElementById("ht-budget"), bt = null;
   bi.addEventListener("input", function(){ clearTimeout(bt); bt = setTimeout(function(){ var v = parseFloat(bi.value); HT.budget = isNaN(v)||v<0 ? 0 : v; refresh(); }, 250); });
   root.querySelectorAll("[data-hb]").forEach(function(b){ b.addEventListener("click", function(){ HT.budget = Number(b.getAttribute("data-hb")); bi.value = HT.budget || ""; refresh(); }); });
-  [["hg","grades"],["hs","show"],["he","era"]].forEach(function(p){ root.querySelectorAll("[data-"+p[0]+"]").forEach(function(b){ b.addEventListener("click", function(){ HT[p[1]] = b.getAttribute("data-"+p[0]); redraw(); }); }); });
+  gsBind(redraw);
+  [["hs","show"]].forEach(function(p){ root.querySelectorAll("[data-"+p[0]+"]").forEach(function(b){ b.addEventListener("click", function(){ HT[p[1]] = b.getAttribute("data-"+p[0]); redraw(); }); }); });
   so.addEventListener("change", function(){ HT.sort = so.value; refresh(); });
   var qi = document.getElementById("ht-q"), qt = null;
   qi.addEventListener("input", function(){ clearTimeout(qt); qt = setTimeout(function(){ HT.q = qi.value; refresh(); }, 200); });
+}
+function gsPanel(){
+  var saved = gsSaved(), dirty = !gsSame(GS, saved);
+  function sl(id, label, min, max, step, val, show){
+    return '<label for="gss-'+id+'"><span>'+label+'<output id="gss-'+id+'-v">'+show(val)+'</output></span>'+
+      '<input type="range" id="gss-'+id+'" data-gs="'+id+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+esc(val)+'"></label>';
+  }
+  var cap = Number(GS.max_slab_price)||1500;
+  return '<details class="bg-opts-wrap ffs" id="gss"'+(state.gssOpen?' open':'')+'><summary><span>What to look for'+(dirty?' <span class="pill warnp">Not saved</span>':'')+'</span><span class="sub">'+esc(gsSummary(GS))+'</span></summary><div class="bg-opts">'+
+    '<div class="bg-opt"><span class="lbl">Eras</span><div><div class="ffs-eras">'+ERAS.map(function(e){
+      var on = GS.eras.indexOf(e.id)>=0, st = on && GS.focus_eras.indexOf(e.id)>=0;
+      return '<button type="button" class="chipbtn'+(st?' star':on?' on':'')+'" data-gsera="'+esc(e.id)+'" aria-label="'+esc(e.name)+': '+(st?'checked first':on?'watched':'off')+'">'+(st?'★ ':'')+esc(e.name)+(e.years?'<small>'+esc(e.years)+'</small>':'')+'</button>'; }).join("")+'</div>'+
+      '<p class="ffs-legend">Tap to cycle: watched → ★ checked first → off. The bots spend no requests on eras that are off.</p></div></div>'+
+    '<div class="bg-opt"><span class="lbl">Grades</span><div class="ffs-eras">'+[["psa10","PSA 10"],["psa9","PSA 9"]].map(function(g){ var on = GS.grades.indexOf(g[0])>=0;
+      return '<button type="button" class="chipbtn'+(on?' on':'')+'" data-gsgrade="'+g[0]+'" aria-pressed="'+on+'">'+g[1]+'</button>'; }).join("")+'</div></div>'+
+    '<div class="ffs-sl">'+
+      sl("max_slab_price","Most you’d pay per slab",100,Math.max(5000,cap),50,cap,function(v){ return "$"+Number(v).toLocaleString("en-US"); })+
+      sl("min_psa10_price","Skip PSA 10s under",0,500,10,GS.min_psa10_price,function(v){ return "$"+v; })+
+      sl("modern_max_share","Modern slabs, at most",0,100,5,Math.round(GS.modern_max_share*100),function(v){ return v+"% of the list"; })+
+    '</div>'+
+    '<div class="ffs-act"><button type="button" class="btn primary" id="gss-save"'+(dirty?'':' disabled')+'>Save for future searches</button>'+
+      (dirty?'<button type="button" class="btn" id="gss-reset">Back to saved</button>':'')+
+      '<span class="msg" role="status">'+(state.gssMsg ? esc(state.gssMsg) : dirty ? 'The list below already uses these. Save so all three slab bots watch them too (press Create on GitHub).' : 'These are what the slab bots watch. The list below follows them.')+'</span></div>'+
+  '</div></details>';
+}
+function gsBind(redraw){
+  var d = document.getElementById("gss"); if(!d) return;
+  d.addEventListener("toggle", function(){ state.gssOpen = d.open; });
+  function changed(){ state.gssMsg = ""; save(GS_KEY, GS); redraw(); }
+  root.querySelectorAll("[data-gsera]").forEach(function(b){ b.addEventListener("click", function(){
+    var id = b.getAttribute("data-gsera"), on = GS.eras.indexOf(id), st = GS.focus_eras.indexOf(id);
+    if(on<0){ GS.eras.push(id); }
+    else if(st<0){ GS.focus_eras.push(id); }
+    else { if(GS.eras.length===1){ state.gssMsg = "Keep at least one era watched."; redraw(); return; } GS.eras.splice(on,1); GS.focus_eras.splice(st,1); }
+    changed(); }); });
+  root.querySelectorAll("[data-gsgrade]").forEach(function(b){ b.addEventListener("click", function(){
+    var g = b.getAttribute("data-gsgrade"), k = GS.grades.indexOf(g);
+    if(k>=0){ if(GS.grades.length===1){ state.gssMsg = "Keep PSA 10 or PSA 9 on."; redraw(); return; } GS.grades.splice(k,1); } else GS.grades.push(g);
+    changed(); }); });
+  root.querySelectorAll("[data-gs]").forEach(function(r){
+    var k = r.getAttribute("data-gs"), o = document.getElementById("gss-"+k+"-v");
+    function val(){ return k==="modern_max_share" ? Number(r.value)/100 : Number(r.value); }
+    r.addEventListener("input", function(){ o.textContent = k==="modern_max_share" ? r.value+"% of the list" : "$"+Number(r.value).toLocaleString("en-US"); });
+    r.addEventListener("change", function(){ GS[k] = val(); if(k==="max_slab_price") HT.budget = null; changed(); });
+  });
+  var sv = document.getElementById("gss-save"); if(sv) sv.addEventListener("click", function(){
+    var s = {}; GS_KEYS.forEach(function(k){ s[k] = Array.isArray(GS[k]) ? GS[k].slice() : Number(GS[k]); });
+    s.focus_eras = s.focus_eras.filter(function(x){ return s.eras.indexOf(x)>=0; });
+    var title = "Graded settings: "+gsSummary(s);
+    var body = "Sent from the Graded Slabs tab's \"What to look for\" panel. Press **Create**: the bot saves these for the slab bots' next runs and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, graded:s})+"\n```";
+    window.open("https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body), "_blank", "noopener");
+    state.gssMsg = "Sent to GitHub. Press Create there; the slab bots use these from their next morning run.";
+    redraw(); });
+  var rs = document.getElementById("gss-reset"); if(rs) rs.addEventListener("click", function(){ GS = gsSaved(); try{ localStorage.removeItem(GS_KEY); }catch(e){} state.gssMsg = ""; HT.budget = null; redraw(); });
 }
 function htResults(){
   var D = HEAT.data || {}, all = D.cards || [];
@@ -2580,7 +2652,7 @@ function htResults(){
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
   var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
     '. Prices are recent eBay sold prices; a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
-  if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, “PSA 10 or 9”, or “All”.</div>';
+  if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, turning on PSA 9 or more eras under “What to look for”, or “All”.</div>';
   var out = '', lastG = null;
   shown.forEach(function(x){
     if(HT.sort==="prio"){ var g = htGroup(x.c); if(g!==lastG){ out += '<h3 class="bg-h">'+(g===0?'★ Your Pokémon on the verge':g===1?'Other Pokémon on the verge':'Everything else')+'</h3>'; lastG = g; } }
