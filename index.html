@@ -526,6 +526,17 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .fflags{display:flex;gap:4px;flex-wrap:wrap}
 .fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
 .fbar select{max-width:100%}
+.ffs{margin:0 0 12px}
+.ffs summary .sub{font-weight:500}
+.ffs-eras{display:flex;flex-wrap:wrap;gap:6px}
+.ffs-eras .chipbtn small{font-weight:500;opacity:.75;margin-left:4px}
+.ffs-sl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px 18px}
+.ffs-sl label{display:flex;flex-direction:column;gap:4px;font-size:13.5px;font-weight:600}
+.ffs-sl label span{display:flex;justify-content:space-between;gap:8px}
+.ffs-sl output{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:800}
+.ffs-sl input[type=range]{width:100%;accent-color:var(--navy);margin:0}
+.ffs-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ffs-act .msg{font-size:13px;color:var(--muted);flex:1 1 220px}
 .flock{max-width:340px;margin:28px auto;padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);text-align:center}
 .flock h2{margin:0 0 6px}
 .flock p{margin:0 0 14px;color:var(--muted);font-size:14px}
@@ -2111,14 +2122,33 @@ function finderAvail(){
   var sent = finderSentIds();
   return CANDS.filter(function(c){ return !have[String(c.tcgId||"")+"|"+String(c.tcgVariant||"").toLowerCase()] && sent.indexOf(c.id)<0; });
 }
+/* "What to look for": what the bot searches for (saved in scripts/discovery_config.json via a GitHub issue).
+   The sliders filter this list right away; "Save for future searches" sends them to the bot. */
+var FS_KEY = "cfz.finderSet", FS_DEF = {eras:["dp-hgss","bw","xy","sm"], min_net:3, min_roi_pct:20, min_buy:5, max_buy:300, stale_days:3, snooze_days:30};
+var FS_KEYS = ["eras","min_net","min_roi_pct","min_buy","max_buy","stale_days","snooze_days"];
+function fsSaved(){ var s = CMETA.settings || {}, o = {}; FS_KEYS.forEach(function(k){ o[k] = (s[k]!=null && !(k==="eras" && !s[k].length)) ? s[k] : FS_DEF[k]; }); return o; }
+var FS = (function(){ var d = load(FS_KEY, null), s = fsSaved(), o = {}; FS_KEYS.forEach(function(k){ o[k] = d && d[k]!=null ? d[k] : s[k]; }); return o; })();
+function fsSame(a, b){ return FS_KEYS.every(function(k){ return k==="eras" ? a.eras.slice().sort().join()===b.eras.slice().sort().join() : Number(a[k])===Number(b[k]); }); }
+if(fsSame(FS, fsSaved())){ try{ localStorage.removeItem(FS_KEY); }catch(e){} }   /* draft already saved by the bot */
+function fsEraName(id){ var e = ERAS.filter(function(x){ return x.id===id; })[0]; return e ? e.name : id; }
+function fsSummary(f){
+  var short = {"dp-hgss":"DP/HGSS", bw:"B&W", xy:"XY", sm:"Sun & Moon", swsh:"Sword & Shield", sv:"Scarlet & Violet", me:"Mega Evo", wotc:"WotC", ex:"EX"};
+  return f.eras.map(function(id){ return short[id]||fsEraName(id); }).join(", ")+' · profit ≥ $'+f.min_net+' · return ≥ '+f.min_roi_pct+'% · buy $'+f.min_buy+'–$'+f.max_buy+' · clears after '+f.stale_days+' day'+(f.stale_days!=1?'s':'');
+}
+function fsOk(r){ return r.net>0 && r.buy>=FS.min_buy && r.buy<=FS.max_buy && r.net>=FS.min_net && r.roi>=FS.min_roi_pct; }
+function fClears(c){ /* the day the bot takes this card off if you leave it alone */
+  var n = Number(fsSaved().stale_days)||0; if(!n || !c.found) return "";
+  var d = new Date(c.found+"T12:00:00"); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10);
+}
 /* Best flip for a candidate at YOUR vendor %, ranked by percentage return (then dollars). */
 function fRoute(c){
   var g = condGap(c, "vendor"); if(!g) return null;
-  var ok = g.routes.filter(function(r){ return r.net>0; }); if(!ok.length) return null;
+  var ok = g.routes.filter(fsOk); if(!ok.length) return null;
   return ok.reduce(function(a,b){ return (b.roi>a.roi || (b.roi===a.roi && b.net>a.net)) ? b : a; });
 }
 function finderRows(){
-  var list = finderAvail().map(function(c){ return {c:c, r:fRoute(c)}; }).filter(function(x){ return x.r; });
+  var list = finderAvail().filter(function(c){ return !c.era || FS.eras.indexOf(c.era)>=0; })
+    .map(function(c){ return {c:c, r:fRoute(c)}; }).filter(function(x){ return x.r; });
   if(state.fera) list = list.filter(function(x){ return x.c.era===state.fera; });
   if(state.fclean) list = list.filter(function(x){ return !(x.c.flags||[]).length; });
   var s = state.fsort;
@@ -2146,7 +2176,42 @@ function finderTile(x, picked){
     '<div class="fgrid"><div><span>Vendor pays</span><b class="num">'+money(r.sell*S.vendor/100,2)+'</b></div>'+
     '<div><span>Price jump</span><b class="num">'+(r.sell/r.buy).toFixed(1)+'×</b></div>'+
     '<div><span>eBay profit</span><b class="num '+(e&&e.net>=0?'pos-t':'neg-t')+'">'+(e?signed(e.net):'—')+'</b></div></div></div>'+
-    '<div class="sub">'+tcgLink(c, r.fk, "Find a "+r.from+" copy")+' · found '+fmtDate(c.found)+'</div></div>';
+    '<div class="sub">'+tcgLink(c, r.fk, "Find a "+r.from+" copy")+' · found '+fmtDate(c.found)+fClearsText(c)+'</div></div>';
+}
+function fClearsText(c){
+  var d = fClears(c); if(!d) return "";
+  var today = new Date().toISOString().slice(0,10);
+  return d <= today ? ' · <b title="You haven’t touched it, so the next scan marks it not interested for now">clears next scan</b>' : ' · clears '+fmtDate(d);
+}
+function fsPanel(){
+  var saved = fsSaved(), dirty = !fsSame(FS, saved);
+  function sl(id, label, min, max, step, pre, post){
+    return '<label for="ffs-'+id+'"><span>'+label+'<output id="ffs-'+id+'-v">'+pre+FS[id]+post+'</output></span>'+
+      '<input type="range" id="ffs-'+id+'" data-fs="'+id+'" data-pre="'+pre+'" data-post="'+post+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+esc(FS[id])+'"></label>';
+  }
+  return '<details class="bg-opts-wrap ffs" id="ffs"'+(state.ffsOpen?' open':'')+'><summary><span>What to look for'+(dirty?' <span class="pill warnp">Not saved</span>':'')+'</span><span class="sub">'+esc(fsSummary(FS))+'</span></summary><div class="bg-opts">'+
+    '<div class="bg-opt"><span class="lbl">Eras</span><div class="ffs-eras">'+ERAS.filter(function(e){ return e.id!=="other"; }).map(function(e){
+      return '<button type="button" class="chipbtn'+(FS.eras.indexOf(e.id)>=0?' on':'')+'" data-fsera="'+esc(e.id)+'" aria-pressed="'+(FS.eras.indexOf(e.id)>=0)+'">'+esc(e.name)+(e.years?'<small>'+esc(e.years)+'</small>':'')+'</button>'; }).join("")+'</div></div>'+
+    '<div class="ffs-sl">'+
+      sl("min_net","Min profit per card",0,100,1,"$","")+
+      sl("min_roi_pct","Min return",0,200,5,"","%")+
+      sl("min_buy","Min buy price",0,100,1,"$","")+
+      sl("max_buy","Max buy price",10,600,10,"$","")+
+      sl("stale_days","Clear untouched cards after",1,14,1,""," days")+
+      sl("snooze_days","Keep cleared cards away for",7,90,1,""," days")+
+    '</div>'+
+    '<div class="ffs-act"><button type="button" class="btn primary" id="ffs-save"'+(dirty?'':' disabled')+'>Save for future searches</button>'+
+      (dirty?'<button type="button" class="btn" id="ffs-reset">Back to saved</button>':'')+
+      '<span class="msg" role="status">'+(state.ffsMsg ? esc(state.ffsMsg) : dirty ? 'The list below already uses these. Save so the bot searches for them too (press Create on GitHub).' : 'These are what the bot searches for. Profit and return use your vendor rate here ('+S.vendor+'%); the bot checks at '+(CMETA.vendor||70)+'%.')+'</span></div>'+
+  '</div></details>';
+}
+function sendFinderSettings(){
+  var s = {}; FS_KEYS.forEach(function(k){ s[k] = k==="eras" ? FS.eras.slice() : Number(FS[k]); });
+  if(s.min_buy > s.max_buy){ var x = s.min_buy; s.min_buy = s.max_buy; s.max_buy = x; }
+  var title = "Flip Finder settings: "+fsSummary(s);
+  var body = "Sent from the Flip Finder's \"What to look for\" panel. Press **Create**: the bot saves these for the next searches and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, settings:s})+"\n```";
+  window.open("https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body), "_blank", "noopener");
+  state.ffsMsg = "Sent to GitHub. Press Create there; the next search (Mon–Thu morning) uses these. Refresh in a minute to see them saved.";
 }
 function finderBar(){
   if(!finderOpen()) return '';
@@ -2188,7 +2253,9 @@ function renderFinder(){
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
   h += '<div class="pair-intro"><div><h2>Flip Finder</h2><p class="sub">New cards the bot found with a good condition flip, best match first. '+
     'Pick the ones you want and add them to the site; nothing is added until you do. Return and vendor pay use your vendor rate at the top ('+S.vendor+'%); the bot looks for cards that still work at '+(CMETA.vendor||70)+'%.'+
-    (CMETA.generated ? ' Last scan '+fmtDate(CMETA.generated)+' · '+(CMETA.scanned||0)+' sets checked that night of '+(CMETA.watched||0)+' watched. It scans Monday to Thursday.' : '')+'</p></div></div>';
+    (CMETA.generated ? ' Last scan '+fmtDate(CMETA.generated)+' · '+(CMETA.scanned||0)+' sets checked that night of '+(CMETA.watched||0)+' watched. It scans Monday to Thursday.' : '')+
+    ' Cards you leave alone for '+fsSaved().stale_days+' days are cleared and marked not interested for '+fsSaved().snooze_days+' days.</p></div></div>';
+  h += fsPanel();
   if(!rows.length){
     h += '<div class="empty">'+(CANDS.length ? 'No candidates match those filters.' : 'No candidates yet. The Flip Finder searches early Monday to Thursday (Pacific); check back after the next scan.')+'</div>';
     if(sent.length) h += '<p class="note">'+sent.length+' card'+(sent.length!==1?'s':'')+' you just sent are hidden here until the list refreshes. <button class="btn" id="fd-unhide">Show them again</button></p>';
@@ -2200,7 +2267,7 @@ function renderFinder(){
       '<button class="btn'+(state.fclean?' dark':'')+'" id="fd-clean" aria-pressed="'+state.fclean+'">No warnings only</button>'+
       '<button class="btn primary" id="fd-all">'+(allOn?'Unselect all':'Select all '+rows.length)+'</button>'+
       (sent.length ? '<button class="btn" id="fd-unhide">Show '+sent.length+' sent</button>' : '')+'</div>';
-    h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Not for me” takes a card off the list for 90 days and teaches the finder to suggest fewer like it. “Never show” removes it for good.</p>';
+    h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Not for me” takes a card off the list for 90 days and teaches the finder to suggest fewer like it. “Never show” removes it for good. Cards you don’t touch clear on their own (date on each card).</p>';
     h += '<div class="grid selecting">'+rows.map(function(x){ return finderTile(x, finderSel.indexOf(x.c.id)>=0); }).join("")+'</div>';
   }
   root.innerHTML = h;
@@ -2211,6 +2278,19 @@ function renderFinder(){
   var er = document.getElementById("fd-era"); if(er) er.addEventListener("change", function(e){ state.fera = e.target.value; redraw(); });
   var cl = document.getElementById("fd-clean"); if(cl) cl.addEventListener("click", function(){ state.fclean = !state.fclean; redraw(); });
   var un = document.getElementById("fd-unhide"); if(un) un.addEventListener("click", function(){ try{ localStorage.removeItem(FSENT_KEY); }catch(e){} redraw(); });
+  var fsd = document.getElementById("ffs"); if(fsd) fsd.addEventListener("toggle", function(){ state.ffsOpen = fsd.open; });
+  function fsChanged(){ state.ffsMsg = ""; save(FS_KEY, FS); redraw(); }
+  root.querySelectorAll("[data-fsera]").forEach(function(b){ b.addEventListener("click", function(){
+    var id = b.getAttribute("data-fsera"), k = FS.eras.indexOf(id);
+    if(k>=0){ if(FS.eras.length===1){ state.ffsMsg = "Keep at least one era on."; redraw(); return; } FS.eras.splice(k,1); } else FS.eras.push(id);
+    fsChanged(); }); });
+  root.querySelectorAll("[data-fs]").forEach(function(r){
+    var k = r.getAttribute("data-fs"), o = document.getElementById("ffs-"+k+"-v");
+    r.addEventListener("input", function(){ o.textContent = r.getAttribute("data-pre")+r.value+r.getAttribute("data-post"); });
+    r.addEventListener("change", function(){ FS[k] = Number(r.value); fsChanged(); });
+  });
+  var fss = document.getElementById("ffs-save"); if(fss) fss.addEventListener("click", function(){ sendFinderSettings(); redraw(); });
+  var fsr = document.getElementById("ffs-reset"); if(fsr) fsr.addEventListener("click", function(){ FS = fsSaved(); FS.eras = FS.eras.slice(); try{ localStorage.removeItem(FS_KEY); }catch(e){} state.ffsMsg = ""; redraw(); });
   var al = document.getElementById("fd-all"); if(al) al.addEventListener("click", function(){
     var ids = rows.map(function(x){ return x.c.id; });
     var on = ids.every(function(id){ return finderSel.indexOf(id)>=0; });
@@ -3252,7 +3332,7 @@ getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).the
   MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
   var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
   var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
-  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:LOGX.shows, logLock:LOGX.lock, pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched}});
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:LOGX.shows, logLock:LOGX.lock, pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched, settings:cf&&cf.settings}});
   notice(dropped);
   if(FROM_PHONE){ var off=document.createElement("div"); off.className="localnote"; off.textContent="No connection right now, so this is the card data saved on your phone. It updates on its own next time you have signal."; document.body.insertBefore(off,document.body.firstChild); }
   window.CFZ_VERS=VERS;
