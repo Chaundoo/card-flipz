@@ -196,6 +196,8 @@ def scan_pool(gstate, cfg, names, manifest, problems):
     """Spend a few spare TCG Price Lookup requests (Mon-Thu) listing sets the site barely covers."""
     if NO_SCAN or not rp.API_KEY:
         return 0, []
+    if gstate.get("poolscan_day") == TODAY:
+        return 0, []                             # the scan runs once a day (this bot now runs after every CardPrice run)
     now = datetime.datetime.now(PT)
     if now.weekday() > 3 and (os.environ.get("FORCE_POOL_SCAN") or "").lower() != "true":
         return 0, []                             # Fri-Sun: show-day requests stay free
@@ -269,6 +271,8 @@ def scan_pool(gstate, cfg, names, manifest, problems):
             added += n
         else:
             break
+    if api.used:
+        gstate["poolscan_day"] = TODAY
     return api.used, scanned
 
 
@@ -952,16 +956,19 @@ def main():
     # 2. graded prices
     budget = slab_sources.cap_of(cfg)          # max_slab_price: nothing over this gets looked up or listed
     src = slab_sources.Sources(cfg)
+    off = set(cfg.get("sources_off") or [])     # sources switched off (graded_config.json "sources_off")
+    use_ppt = "ppt" not in off
     n = int(os.environ.get("HEAT_CARDS") or (cfg["ppt_max_credits"] // max(1, cfg["ppt_credits_per_card"])))
     cpd = jload(CPFILE, {})
     cpcards = cpd.get("cards") or {}
-    pacards = (jload(PAFILE, {}) or {}).get("cards") or {}
+    pacards = {} if "pa" in off else (jload(PAFILE, {}) or {}).get("cards") or {}
     skipped = {}
-    lists = due_list(pool, gstate, cfg, names, budget, cpcards, src, skipped)
-    todo = plan(lists, n, cfg["modern_max_share"])
+    todo = plan(due_list(pool, gstate, cfg, names, budget, cpcards, src, skipped), n, cfg["modern_max_share"]) if use_ppt else []
     ppt = PPT(cfg)
     checked, got, empty, stop = 0, 0, 0, None
-    if not PPT_KEY:
+    if not use_ppt:
+        pass                                     # PokemonPriceTracker is switched off: CardPrice prices only
+    elif not PPT_KEY:
         stop = "the PPT_API_KEY secret isn't set yet, so no graded prices were checked (see the README)"
     else:
         errors_row = 0
@@ -1022,6 +1029,8 @@ def main():
     rows = []
     for key in pool:
         st, cpc, pac = gstate["cards"].get(key) or {}, cpcards.get(key) or {}, pacards.get(key) or {}
+        if not use_ppt:
+            st = {}                              # ignore PokemonPriceTracker's old checks while it's off
         if not st.get("last") and not (cpc.get("graded") or {}) and not (pac.get("psa10") or pac.get("psa9")):
             continue
         view = dict(st, _cp=cpc, _pa=pac, _mover=movers.get(str(cpc.get("cpid") or "")), _srckey="ppt")
@@ -1063,6 +1072,15 @@ def main():
         if not ((sc["p10"] and sc["p10"] <= budget and "psa10" in grades) or (sc["p9"] and sc["p9"] <= budget and "psa9" in grades)):
             skipped["listed_over_cap"] = skipped.get("listed_over_cap", 0) + 1
             continue                             # over your cap in both grades: not shown
+        cpc = cpcards.get(key) or {}
+        cg = cpc.get("graded") or {}
+        for gk, ck in (("p95", "g95"), ("p8", "psa8"), ("p7", "g7"), ("raw", "raw")):
+            if cg.get(ck):
+                sc[gk] = round(cg[ck], 2)        # CardPrice's other grades (Grade 9.5 / 8 / 7, ungraded)
+        hs = (cpc.get("hist") or {}).get("psa10") or (cpc.get("hist") or {}).get("psa9") or []
+        if len(hs) >= 4:
+            sc["spark"] = [round(p) for _, p in hs[-26:]]   # ~6 months of weekly prices for the little chart
+            sc["sparkG"] = "PSA 10" if (cpc.get("hist") or {}).get("psa10") else "Grade 9"
         out.append(dict(id=key, name=e["name"], variant=e["variant"], set=e["set"], number=e["number"], era=e["era"],
                         image=e.get("image") or st.get("img") or "", tcgId=e["tcgId"], siteId=e.get("siteId"),
                         checked=st.get("checked"), cpid=(st.get("_cp") or {}).get("cpid") or None,
@@ -1107,8 +1125,10 @@ def main():
     L += [f"- Slabs checked today: **{checked}** ({got} with PSA sales, {empty} with none) · API calls {ppt.used}" +
           (f" · credits left {ppt.credits_left}" if ppt.credits_left is not None else ""),
           f"- Pool: {len(pool)} popular-Pokémon cards ({watched} checked at least once)",
-          f"- Price cap ${budget:,.0f} (max_slab_price): {skipped.get('over_cap', 0)} slabs over it skipped (no credits spent), "
-          f"{skipped.get('listed_over_cap', 0)} left off the list · {skipped.get('other', 0)} skipped because pokemon-api.com just checked them",
+          (f"- Price cap ${budget:,.0f} (max_slab_price): {skipped.get('over_cap', 0)} slabs over it skipped, "
+           f"{skipped.get('listed_over_cap', 0)} left off the list" if budget != float("inf") else
+           "- No price cap (set your budget with the slider on the Graded Slabs tab)") +
+          (f" · switched off: {', '.join(slab_sources.NAMES.get(s, s) for s in sorted(off))}" if off else ""),
           f"- Price check: {quality['high']} slabs confirmed by 2+ sources, {quality['med']} by one source with real sales, "
           f"{quality['est']} CardPrice estimate only, {quality['low']} unconfirmed · {quality['dropped']} bad prices thrown out (wrong card / junk sale / far from the others) · "
           f"{quality['inverted']} PSA 10-under-PSA 9 fixed or flagged",
@@ -1145,8 +1165,8 @@ def main():
 
     saved = not DRY and status != "FAILED" and bool(checked or scanned or cpcards or not os.path.exists(HEAT))
     if saved:
-        jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": budget,
-                     "pool": len(pool), "watched": watched, "needs_key": not PPT_KEY, "settings": settings_of(cfg),
+        jdump(HEAT, {"version": str(int(time.time())), "generated": TODAY, "budget": None if budget == float("inf") else budget,
+                     "pool": len(pool), "watched": watched, "needs_key": use_ppt and not PPT_KEY, "settings": settings_of(cfg),
                      "cards": final}, separators=(",", ":"))
         base = (datetime.date.fromisoformat(TODAY) - datetime.timedelta(days=365)).isoformat()
         charts = {c["id"]: chart_data(views[c["id"]], base) for c in final}

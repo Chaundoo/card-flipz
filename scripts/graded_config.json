@@ -1,9 +1,23 @@
 {
   "about": "Settings for the Graded Heat bot (scripts/graded_heat.py). Edit and commit to change what it watches. Nothing here touches the cards on the site.",
-  "max_slab_price": 1500,
-  "max_slab_price_about": "The most you'd pay for one slab (PSA 10 or PSA 9). All three slab bots skip slabs over this in both grades (no requests spent on them) and the Graded Slabs tab only lists slabs with a PSA 10 or PSA 9 at or under it. Change the number and commit; the next morning's runs use it. CardPrice still re-checks over-cap slabs every cp_over_cap_recheck_days days so ones that drop back under come back.",
-  "eras": ["wotc", "ex", "dp-hgss", "bw", "xy", "sm", "swsh", "sv", "me", "other"],
-  "grades": ["psa10", "psa9"],
+  "max_slab_price": 0,
+  "max_slab_price_about": "0 = no cap: the bots look at every slab in the pool, whatever it costs. Set your budget with the 'Your budget per slab' slider on the Graded Slabs tab (saved on your device). Put a number here only if you want the bots to skip pricier slabs again.",
+  "eras": [
+    "wotc",
+    "ex",
+    "dp-hgss",
+    "bw",
+    "xy",
+    "sm",
+    "swsh",
+    "sv",
+    "me",
+    "other"
+  ],
+  "grades": [
+    "psa10",
+    "psa9"
+  ],
   "eras_about": "eras: which eras' slabs the slab bots look at at all (no requests spent on the others; empty = every era). grades: which grades count when deciding whether a slab fits your cap and gets listed. Both are set from the Graded Slabs tab's 'What to look for' panel, along with focus_eras, max_slab_price, min_psa10_price and modern_max_share.",
   "focus_eras": [
     "dp-hgss",
@@ -49,13 +63,12 @@
   "ppt_max_credits": 95,
   "ppt_credits_per_card": 3,
   "ppt_pause_seconds": 1.3,
-  "cp_max_cards": 400,
-  "cp_pause_seconds": 1.0,
-  "cp_recheck_days": 3,
+  "cp_max_cards": 0,
+  "cp_recheck_days": 1,
   "cp_retry_unmatched_days": 30,
   "cp_history_days": 400,
   "cp_over_cap_recheck_days": 30,
-  "cp_about": "CardPrice.com (scripts/cardprice_bot.py): free open API, 600 requests/min. ~2 requests per slab, so 400 slabs is ~800 a day (the whole pool about every 4 days).",
+  "cp_about": "CardPrice.com (scripts/cardprice_bot.py): free open API (600 requests/min allowed). It now checks EVERY slab in the pool once a day, spread over 4 runs (cp_slots_pacific, Pacific standard time; must match the crons in .github/workflows/cardprice.yml). Each run takes its share of the slabs not checked yet today, with a random cp_pause_min-cp_pause_max seconds between calls and a 20-60 s break every cp_break_every calls. ~2 calls per slab. cp_max_cards = hard cap per run (0 = none).",
   "pa_base": "https://pokemon-tcg-api.p.rapidapi.com",
   "pa_paths": [
     "/cards",
@@ -78,7 +91,7 @@
   "out_of_budget_multiple": 3,
   "min_psa10_price": 40,
   "min_raw_nm": 4,
-  "list_size": 500,
+  "list_size": 1500,
   "modern_max_share": 0.25,
   "pool_scan_max_requests": 8,
   "pool_scan_eras": [
@@ -262,5 +275,23 @@
     }
   ],
   "catalyst_notes": "Add a line when a new set or product puts a Pokémon in the spotlight (check the Japanese release ~3 months before the English one). kind 'reprint' lowers the score instead of raising it.",
-  "stamp_and_skip_from": "stamp_patterns and skip_name_patterns in scripts/discovery_config.json"
+  "stamp_and_skip_from": "stamp_patterns and skip_name_patterns in scripts/discovery_config.json",
+  "sources_off": [
+    "ppt",
+    "pa"
+  ],
+  "sources_off_about": "Slab price sources switched off (their old prices are ignored too): 'ppt' = PokemonPriceTracker (lags a few weeks), 'pa' = pokemon-api.com (PSA 10s ~30% low in an Oct 2026 check vs eBay sold). CardPrice is the main source. Remove one from this list to switch it back on (pokemon-api.com also needs its workflow trigger back).",
+  "cp_pause_min": 2.0,
+  "cp_pause_max": 5.0,
+  "cp_break_every": 60,
+  "cp_break_seconds": [
+    20,
+    60
+  ],
+  "cp_slots_pacific": [
+    "05:47",
+    "10:23",
+    "15:11",
+    "20:37"
+  ]
 }

@@ -21,7 +21,7 @@ redistribution. Only the slabs on the Graded Slabs list are shown on the site.
 
 Environment (optional): DRY_RUN "true" = report only; CP_CARDS = max cards this run; CP_BASE = API base (tests).
 """
-import json, os, re, sys, time, datetime, statistics
+import json, os, re, sys, time, datetime, statistics, random, math
 import urllib.request, urllib.error, urllib.parse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -36,8 +36,52 @@ BASE = (os.environ.get("CP_BASE") or "https://api.cardprice.com").rstrip("/")
 DRY = (os.environ.get("DRY_RUN") or "").lower() == "true"
 TODAY = rp.TODAY
 UA = "card-flipz-graded-heat/1.0 (+https://github.com/Chaundoo/card-flipz; cached daily)"
-DEFAULTS = {"cp_max_cards": 150, "cp_pause_seconds": 1.0, "cp_recheck_days": 3, "cp_retry_unmatched_days": 30, "cp_history_days": 365,
-            "cp_over_cap_recheck_days": 30}
+DEFAULTS = {"cp_max_cards": 0, "cp_pause_seconds": 1.0, "cp_pause_min": 2.0, "cp_pause_max": 5.0, "cp_break_every": 60,
+            "cp_break_seconds": [20, 60], "cp_recheck_days": 1, "cp_retry_unmatched_days": 30, "cp_history_days": 400,
+            "cp_over_cap_recheck_days": 30, "cp_slots_pacific": ["05:47", "10:23", "15:11", "20:37"]}
+PT = datetime.timezone(datetime.timedelta(hours=-8))      # same "today" as the other bots
+
+
+def thin(snaps, daily_days=60, keep_days=400):
+    """Daily snapshots for the last ~2 months, then one a week (so a daily check doesn't bloat the file)."""
+    out, weeks = [], set()
+    for s in sorted(snaps, key=lambda s: s[0], reverse=True):
+        age = gh.days_between(s[0])
+        if age > keep_days:
+            continue
+        if age > daily_days:
+            wk = datetime.date.fromisoformat(s[0]).isocalendar()[:2]
+            if wk in weeks:
+                continue
+            weeks.add(wk)
+        out.append(s)
+    return sorted(out, key=lambda s: s[0])
+
+
+def save_lines(path, data):
+    """Same JSON as before, but one slab per line, so each day's commit only changes the lines that moved."""
+    head = {k: v for k, v in data.items() if k != "cards"}
+    parts = [json.dumps(k) + ":" + json.dumps(v, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+             for k, v in sorted((data.get("cards") or {}).items())]
+    body = json.dumps(head, ensure_ascii=False, separators=(",", ":"), sort_keys=True)[:-1]
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(body + (',' if head else '') + '"cards":{\n' + ",\n".join(parts) + "\n}}\n")
+
+
+def runs_left_today(slots):
+    """How many of today's scheduled CardPrice runs (Pacific times, including this one) are still to come.
+    Each run takes its share of the slabs not checked yet today, so the last run of the day finishes the pool."""
+    now = datetime.datetime.now(PT)
+    mins = now.hour * 60 + now.minute
+    left = 0
+    for s in slots:
+        try:
+            h, m = (int(x) for x in s.split(":"))
+        except ValueError:
+            continue
+        if h * 60 + m >= mins - 45:              # this run counts itself (GitHub often starts a few minutes late)
+            left += 1
+    return max(1, left)
 
 
 class Stop(Exception):
@@ -45,13 +89,17 @@ class Stop(Exception):
 
 
 class CP:
-    def __init__(self, pause):
+    def __init__(self, pause, pmin=None, pmax=None, every=0, brk=(20, 60)):
         self.pause, self.last, self.used, self.keys = pause, 0.0, 0, {}
+        self.pmin, self.pmax, self.every, self.brk = pmin, pmax, every, brk
 
     def get(self, path, params=None):
         url = BASE + path + ("?" + urllib.parse.urlencode(params) if params else "")
         for attempt in range(3):
-            wait = self.pause - (time.time() - self.last)
+            gap = random.uniform(self.pmin, self.pmax) if self.pmin and self.pmax else self.pause
+            if self.every and self.used and self.used % self.every == 0:
+                gap += random.uniform(*self.brk)          # a longer pause now and then, like a person browsing
+            wait = gap - (time.time() - self.last)
             if wait > 0:
                 time.sleep(wait)
             self.last = time.time()
@@ -142,7 +190,8 @@ def match(e, results):
 
 # ---------------------------------------------------------------- reading a card
 GRADE_KEYS = {"psa10": ("psa10", "psa_10", "PSA 10", "psa-10"), "psa9": ("psa9", "psa_9", "grade9", "grade_9", "PSA 9"),
-              "psa8": ("psa8", "psa_8", "grade8", "PSA 8")}
+              "g95": ("grade95", "grade_95", "grade9.5"), "psa8": ("psa8", "psa_8", "grade8", "PSA 8"),
+              "g7": ("grade7", "grade_7", "psa7"), "raw": ("ungraded",)}
 
 
 def money_of(v):
@@ -311,7 +360,8 @@ def main():
     data = gh.jload(OUT, {})
     cards = data.setdefault("cards", {})
     on_list = {c["id"] for c in gh.jload(gh.HEAT, {}).get("cards", [])}
-    cp = CP(float(cfg["cp_pause_seconds"]))
+    cp = CP(float(cfg["cp_pause_seconds"]), float(cfg["cp_pause_min"]), float(cfg["cp_pause_max"]),
+            int(cfg["cp_break_every"]), tuple(cfg["cp_break_seconds"]))
     src = slab_sources.Sources(cfg)      # shared record: who checked each slab, and your price cap
     t0, problems, stop = time.time(), [], None
     over_cap = 0
@@ -327,15 +377,19 @@ def main():
             continue
         if not c and (not e.get("nm") or e["nm"] < cfg["min_raw_nm"]):
             continue
-        # over your cap in both PSA 10 and PSA 9: only re-check now and then, in case the price drops
+        # over your cap in both PSA 10 and PSA 9: only re-check now and then (only when a cap is set)
         own = [(x[0], x[1], x[2]) for x in c.get("gsnaps", [])]
-        if src.over_cap(key, own, raw=e.get("nm")) and age < cfg["cp_over_cap_recheck_days"]:
+        if src.cap != float("inf") and src.over_cap(key, own, raw=e.get("nm")) and age < cfg["cp_over_cap_recheck_days"]:
             over_cap += 1
             continue
         rank = (0 if key in on_list else 1 if c else 2, 0 if gh.focus(e, cfg) else 1, -gh.prior(e, cfg, names))   # mid-era first
         todo.append((rank, key))
     todo.sort()
-    limit = int(os.environ.get("CP_CARDS") or cfg["cp_max_cards"])
+    # the whole pool every day, spread over the day's runs: this run takes its share of what's still due
+    left = runs_left_today(cfg["cp_slots_pacific"])
+    limit = int(os.environ.get("CP_CARDS") or 0) or math.ceil(len(todo) / left)
+    if cfg.get("cp_max_cards"):
+        limit = min(limit, int(cfg["cp_max_cards"]))
     checked = matched = with_graded = with_pop = with_hist = 0
     sample = {}
 
@@ -386,13 +440,12 @@ def main():
                 with_graded += 1
                 c["graded"] = gp
                 c.setdefault("gsnaps", [])
-                c["gsnaps"] = [s for s in c["gsnaps"] if s[0] != TODAY and gh.days_between(s[0]) <= 400] + [[TODAY, gp.get("psa10"), gp.get("psa9")]]
+                c["gsnaps"] = thin([s for s in c["gsnaps"] if s[0] != TODAY] + [[TODAY, gp.get("psa10"), gp.get("psa9")]])
             pop = pop_list(card) or find_pop(card)
             if pop:
                 with_pop += 1
                 c["pop"] = pop
-                c["popsnaps"] = [s for s in c.get("popsnaps", []) if s[0] != TODAY and gh.days_between(s[0]) <= 400] + \
-                                [[TODAY, pop.get("psa10"), pop.get("psaTotal")]]
+                c["popsnaps"] = thin([s for s in c.get("popsnaps", []) if s[0] != TODAY] + [[TODAY, pop.get("psa10"), pop.get("psaTotal")]])
             raw = [v for v in (card.get("variants") or []) if isinstance(v, dict)]
             if raw:
                 c["ch7"], c["ch30"] = raw[0].get("change7d"), raw[0].get("change30d")
@@ -421,9 +474,10 @@ def main():
     L = [f"## {icon} CardPrice {status} — {TODAY}" + (" (test run, nothing saved)" if DRY else ""), ""]
     if stop:
         L += [f"Stopped early: {stop}.", ""]
-    L += [f"- Cards looked up: **{checked}** · found on CardPrice {matched} · with graded prices {with_graded} · with pop counts {with_pop} · with price history {with_hist}",
-          f"- API calls: {cp.used} · took {secs // 60}m {secs % 60}s",
-          f"- Skipped {over_cap} slabs over your ${src.cap:,.0f} cap (max_slab_price; re-checked every {cfg['cp_over_cap_recheck_days']} days in case they drop)",
+    L += [f"- Cards looked up: **{checked}** of {len(todo)} still due today (this run's share: {limit}; {left} run{'s' if left != 1 else ''} left today incl. this one)"
+          f" · found on CardPrice {matched} · with graded prices {with_graded} · with pop counts {with_pop} · with price history {with_hist}",
+          f"- API calls: {cp.used} · took {secs // 60}m {secs % 60}s (random {cfg['cp_pause_min']}-{cfg['cp_pause_max']} s between calls)",
+          (f"- Skipped {over_cap} slabs over your ${src.cap:,.0f} cap" if src.cap != float("inf") else "- No price cap: every slab in the pool is checked"),
           f"- CardPrice movers (7 days): {len((data.get('movers') or {}).get('gainers', []))} gainers saved"]
     if cp.keys:
         L += ["", "<details><summary>Fields CardPrice returned (for tuning)</summary>", ""] + \
@@ -445,7 +499,7 @@ def main():
     if saved:
         data.update({"about": "Written by scripts/cardprice_bot.py from CardPrice.com's free API (cardprice.com). Read by scripts/graded_heat.py.",
                      "generated": TODAY})
-        gh.jdump(OUT, data, separators=(",", ":"), sort_keys=True)
+        save_lines(OUT, data)
         src.save()
     open(rp.REPORT, "w", encoding="utf-8").write(report)
     print(report)

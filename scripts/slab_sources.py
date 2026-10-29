@@ -72,7 +72,10 @@ def load_cfg():
 
 
 def cap_of(cfg):
-    """The most you'd pay for one slab. Change max_slab_price in scripts/graded_config.json."""
+    """The most the bots will consider for one slab (max_slab_price in scripts/graded_config.json).
+    0 or null = no cap (the default now: your budget is set with the slider on the Graded Slabs tab)."""
+    if "max_slab_price" in cfg and not cfg.get("max_slab_price"):
+        return float("inf")
     for k in ("max_slab_price", "budget_default"):
         try:
             v = float(cfg.get(k))
@@ -88,6 +91,7 @@ class Sources:
         self.cfg = cfg if cfg is not None else load_cfg()
         s = self.cfg.get("sources") or {}
         self.cap = cap_of(self.cfg)
+        self.off = set(self.cfg.get("sources_off") or [])   # sources switched off: their old prices are ignored
         self.skip_days = int(s.get("skip_if_other_checked_days", 2))
         self.disagree = float(s.get("disagree_pct", 25))
         self.fresh_days = int(s.get("price_fresh_days", 45))
@@ -120,7 +124,7 @@ class Sources:
         self.data["about"] = ("Shared by scripts/cardprice_bot.py, scripts/pokemon_api_bot.py and scripts/graded_heat.py: "
                               "which source last checked each slab, when, and the PSA 10 / 9 prices it saw; 'trust' = how often "
                               "each source agreed with the others [agreed, checked]. Not loaded by the site.")
-        self.data["cap"] = self.cap
+        self.data["cap"] = None if self.cap == float("inf") else self.cap
         self.data["updated"] = today()
         # forget slabs nobody has touched in over a year
         for k in [k for k, e in self.slabs.items() if min((days_since(r.get("d")) for r in e.values()), default=9999) > 400]:
@@ -248,7 +252,7 @@ class Sources:
             'flags': ['inverted' | 'gap' | 'split', ...]}"""
         cands = {"p10": [], "p9": []}
         for s, r in (self.slabs.get(str(key)) or {}).items():
-            if s not in ALL_SOURCES or days_since(r.get("d")) > self.fresh_days:
+            if s not in ALL_SOURCES or s in self.off or days_since(r.get("d")) > self.fresh_days:
                 continue
             for g, n in (("p10", "n10"), ("p9", "n9")):
                 if isinstance(r.get(g), (int, float)) and r[g] > 0:
