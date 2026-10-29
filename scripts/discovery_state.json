@@ -1174,6 +1174,42 @@
 ]
 },
 "sets": {
+"pokemon--aquapolis": {
+"found": 18,
+"name": "Aquapolis",
+"records": 339,
+"scanned": "2026-10-29"
+},
+"pokemon--arceus": {
+"found": 3,
+"name": "Arceus",
+"records": 216,
+"scanned": "2026-10-29"
+},
+"pokemon--base-set": {
+"found": 0,
+"name": "Base Set",
+"records": 110,
+"scanned": "2026-10-29"
+},
+"pokemon--base-set-2": {
+"found": 0,
+"name": "Base Set 2",
+"records": 138,
+"scanned": "2026-10-29"
+},
+"pokemon--base-set-shadowless": {
+"found": 5,
+"name": "Base Set (Shadowless)",
+"records": 213,
+"scanned": "2026-10-29"
+},
+"pokemon--best-of-promos": {
+"found": 0,
+"name": "Best of Promos",
+"records": 15,
+"scanned": "2026-10-29"
+},
 "pokemon--black-and-white": {
 "found": 1,
 "name": "Black and White",
@@ -1191,6 +1227,12 @@
 "name": "Boundaries Crossed",
 "records": 292,
 "scanned": "2026-10-26"
+},
+"pokemon--burger-king-promos": {
+"found": 0,
+"name": "Burger King Promos",
+"records": 24,
+"scanned": "2026-10-29"
 },
 "pokemon--call-of-legends": {
 "found": 13,
@@ -1215,6 +1257,18 @@
 "name": "Detective Pikachu",
 "records": 40,
 "scanned": "2026-10-26"
+},
+"pokemon--diamond-and-pearl": {
+"found": 2,
+"name": "Diamond and Pearl",
+"records": 261,
+"scanned": "2026-10-29"
+},
+"pokemon--diamond-and-pearl-promos": {
+"found": 0,
+"name": "Diamond and Pearl Promos",
+"records": 66,
+"scanned": "2026-10-29"
 },
 "pokemon--double-crisis": {
 "found": 0,
@@ -1245,6 +1299,18 @@
 "name": "Emerging Powers",
 "records": 217,
 "scanned": "2026-10-26"
+},
+"pokemon--ex-battle-stadium": {
+"found": 0,
+"name": "EX Battle Stadium",
+"records": 52,
+"scanned": "2026-10-29"
+},
+"pokemon--ex-crystal-guardians": {
+"found": 8,
+"name": "EX Crystal Guardians",
+"records": 191,
+"scanned": "2026-10-29"
 },
 "pokemon--generations": {
 "found": 2,
