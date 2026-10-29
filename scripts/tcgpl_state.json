@@ -171,6 +171,11 @@
 "synced": "2026-10-28",
 "variant": "Holofoil"
 },
+"altaria-152-149-83521": {
+"id": "019c9759-272b-7c6f-ade9-2ea0690c60b8",
+"synced": "2026-10-28",
+"variant": "Holofoil"
+},
 "altaria-2-108-83515-holo": {
 "id": "019c9759-2718-7d4d-abbd-e4e1564c78da",
 "synced": "2026-10-28",
@@ -1013,6 +1018,11 @@
 },
 "celebi-xy93-108622-holofo": {
 "id": "019c96a7-e932-7c9c-b7de-389d36786d56",
+"synced": "2026-10-28",
+"variant": "Holofoil"
+},
+"chandelure-secret-101-99-84166": {
+"id": "019c975d-5f33-71a9-a382-fe7e0a9d41f1",
 "synced": "2026-10-28",
 "variant": "Holofoil"
 },
@@ -3459,6 +3469,11 @@
 "synced": "2026-10-28",
 "variant": "Holofoil"
 },
+"glaceon-team-plasma-23-116-85749": {
+"id": "019c9765-db54-7513-b4bc-e8bf477b038c",
+"synced": "2026-10-28",
+"variant": "Reverse Holofoil"
+},
 "glalie-ex-155-162-107274-holofo": {
 "id": "019c97a6-6e23-7e9a-9d6e-b7e12a92d565",
 "synced": "2026-10-28",
@@ -3488,6 +3503,11 @@
 "id": "019c9768-6cd5-7b3c-8313-790dfba3c2fe",
 "synced": "2026-10-28",
 "variant": "Reverse Holofoil"
+},
+"golurk-150-149-85837": {
+"id": "019c9768-6d01-7ba2-9055-e88fed92b906",
+"synced": "2026-10-28",
+"variant": "Holofoil"
 },
 "greninja-040-122-123469-holofo": {
 "id": "019c9619-823b-7906-b905-ff396fe202c0",
@@ -4221,6 +4241,11 @@
 },
 "jigglypuff-63-125127-non-ho": {
 "id": "019c97ae-8b10-7a89-84cd-1e3c1dbbec0d",
+"synced": "2026-10-28",
+"variant": "Normal"
+},
+"jigglypuff-bw65-bw65-86321": {
+"id": "019c976a-8a7e-7897-b13d-305a7f713bca",
 "synced": "2026-10-28",
 "variant": "Normal"
 },
@@ -6404,6 +6429,11 @@
 "synced": "2026-10-28",
 "variant": "Holofoil"
 },
+"ninetales-17-95-87777-reverse-": {
+"id": "019c9772-d82f-7ec1-8317-1d108df0ed48",
+"synced": "2026-10-28",
+"variant": "Reverse Holofoil"
+},
 "ninetales-20-95-87776-normal": {
 "id": "019c9793-6c55-78ef-9e70-89f8426e7e97",
 "synced": "2026-10-28",
@@ -6586,6 +6616,11 @@
 },
 "pichu-045-100-188126-revers": {
 "id": "019c97c5-2cc2-7f1f-b328-39e7ec60c283",
+"synced": "2026-10-28",
+"variant": "Reverse Holofoil"
+},
+"pichu-28-123-88022": {
+"id": "019c9774-e232-7c49-88eb-ba418d5edf89",
 "synced": "2026-10-28",
 "variant": "Reverse Holofoil"
 },
@@ -8445,6 +8480,11 @@
 "synced": "2026-10-28",
 "variant": "Normal"
 },
+"squirtle-63-95-89496": {
+"id": "019c9795-b69e-7eb4-b967-3c365db529a6",
+"synced": "2026-10-28",
+"variant": "Reverse Holofoil"
+},
 "squirtle-64-100-89492": {
 "id": "019c977d-606f-75df-a975-47959dcb24b7",
 "synced": "2026-10-28",
@@ -9717,6 +9757,11 @@
 },
 "zigzagoon-011-012-110423-holofo": {
 "id": "019c97a6-6e84-7217-b184-894ff769474c",
+"synced": "2026-10-28",
+"variant": "Holofoil"
+},
+"zoroark-102-99-90753": {
+"id": "019c9785-bdbf-757c-aa7e-7bedbacacb89",
 "synced": "2026-10-28",
 "variant": "Holofoil"
 },

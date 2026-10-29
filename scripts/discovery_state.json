@@ -2133,6 +2133,96 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:zoroark",
+"set:Next Destinies",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:chandelure",
+"set:Next Destinies",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:altaria",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:golurk",
+"set:Boundaries Crossed",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:ninetales",
+"set:Call of Legends",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:squirtle",
+"set:Unleashed",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:glaceon",
+"set:Plasma Freeze",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:pichu",
+"set:HeartGold SoulSilver",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-28",
+"f": [
+"pokemon:jigglypuff",
+"set:Black and White Promos",
+"kind:promo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
