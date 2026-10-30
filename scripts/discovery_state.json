@@ -2199,6 +2199,216 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:gengar",
+"set:Arceus",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:flareon",
+"set:EX Delta Species",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:kyogre",
+"set:EX Crystal Guardians",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:blastoise",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:gengar",
+"set:Diamond and Pearl",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:suicune",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:squirtle",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:pikachu",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:charizard",
+"set:EX Crystal Guardians",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:raichu",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:gardevoir",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:blastoise",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:charizard",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:houndoom",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:zapdos",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:dragonite",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:ditto",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:ditto",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:entei",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:charmander",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:haunter",
+"set:Diamond and Pearl",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
 }
 ]
 }
