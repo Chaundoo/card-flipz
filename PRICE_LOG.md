@@ -2,6 +2,37 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-10-30
+
+- Cards refreshed: **1966** of 1993 in 1m 11s · all matched cards are up to date
+- API requests used: **21** (prices 21, matching new cards 0, set list 0; max 60) · API says **80** left today
+- Kept free for adding cards: 70 requests (show day: matching new cards waits until Monday)
+- 🔗 Newly matched cards: **0** · still unmatched: 6
+- ✅ Prices changed: **240**
+- ➖ Checked, prices unchanged: 1726
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **5**
+
+**Outlier prices fixed (189):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $191.74 → $94.45
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $70.67
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $32.72
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $32.63
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.16 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $149.99 → $140.57
+- Ninetales (Reverse Holo) — Aquapolis 025/147: DMG $39.99 → $22.84
+- Primeape (Non-Holo) — Aquapolis 029/147: DMG $34.99 → $19.52
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $37.06 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: LP $54.99 → $52.50, DMG $17.65 → $17.32
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $87.09 → $40.91
+- Cubone (1st Edition) — Jungle 50/64: DMG $2.24 → $2.01
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.77 → $16.42
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $6.89 → $3.76
+- …and 174 more
+
 ## ✅ OK — price update 2026-10-29
 
 - Cards refreshed: **1970** of 1972 in 3m 29s · all matched cards are up to date
