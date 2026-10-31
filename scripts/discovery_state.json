@@ -2409,6 +2409,136 @@
 "price:under $20"
 ],
 "v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:kangaskhan",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:charmander",
+"set:Arceus",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:eevee",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:kingdra",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:gengar",
+"set:Arceus",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:ampharos",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:ampharos",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:houndoom",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:arcanine",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:ninetales",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:mudkip",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:bulbasaur",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-10-30",
+"f": [
+"pokemon:zapdos",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }

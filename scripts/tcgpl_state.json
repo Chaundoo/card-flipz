@@ -201,6 +201,11 @@
 "synced": "2026-10-30",
 "variant": "Unlimited Holofoil"
 },
+"ampharos-001-147-83536": {
+"id": "019c9759-2759-7e15-b5b7-5c8fdc7c6e82",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "ampharos-001-147-83536-normal": {
 "id": "019c9759-2758-79f1-8e50-42b83120ec6d",
 "synced": "2026-10-30",
@@ -233,6 +238,11 @@
 },
 "ampharos-ex-87-98-101509-holo-8": {
 "id": "019c97a0-01fb-77c3-801b-7bb2a54b62cf",
+"synced": "2026-10-30",
+"variant": "Holofoil"
+},
+"ampharos-h1-h01-h32-83537": {
+"id": "019c9759-275a-71eb-9f1d-be458e12d6d6",
 "synced": "2026-10-30",
 "variant": "Holofoil"
 },
@@ -285,6 +295,11 @@
 "id": "019c9759-281b-7e73-a412-8e716abc5aa9",
 "synced": "2026-10-30",
 "variant": "Normal"
+},
+"arcanine-h2-h02-h32-83576": {
+"id": "019c9759-2805-7b02-98f2-0388bfdaf4a4",
+"synced": "2026-10-30",
+"variant": "Holofoil"
 },
 "arceus-ar1-83592": {
 "id": "019c9759-281d-7a1b-b2cb-cecc1d6056e3",
@@ -881,6 +896,11 @@
 "synced": "2026-10-30",
 "variant": "Unlimited"
 },
+"bulbasaur-045-100-45-100-84032": {
+"id": "019c975b-4a13-7de0-9d5d-dad7aac5cbfb",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "bulbasaur-068-110-84025-revers": {
 "id": "019c975b-4a07-7b73-bb39-075d7e88f51a",
 "synced": "2026-10-30",
@@ -1278,6 +1298,11 @@
 "id": "019c978e-889f-748f-9134-5eb89251abd7",
 "synced": "2026-10-30",
 "variant": "1st Edition"
+},
+"charmander-59-99-84217": {
+"id": "019c975d-5f9e-74df-8b27-6b510c557288",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
 },
 "charmander-98-97-84208": {
 "id": "019c978e-88a9-780d-851a-80f4268aca1f",
@@ -2524,6 +2549,11 @@
 "synced": "2026-10-30",
 "variant": "Normal"
 },
+"eevee-075-147-85080": {
+"id": "019c9761-9a32-73fe-abd4-7100cd508dce",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "eevee-101-149-186321-holofo": {
 "id": "019c9619-8235-702b-87e3-1c4b7b680385",
 "synced": "2026-10-30",
@@ -3298,6 +3328,11 @@
 "id": "019c9936-4b0e-72d1-bfa5-77485154e1a9",
 "synced": "2026-10-30",
 "variant": "Holofoil"
+},
+"gengar-16-16-99-85677": {
+"id": "019c9765-daaf-734e-950a-3a0a30fd9a0c",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
 },
 "gengar-16-99-85677-non-ho": {
 "id": "019c9765-daae-721b-86c5-bfc0247ade8b",
@@ -4202,6 +4237,11 @@
 "synced": "2026-10-30",
 "variant": "Holofoil"
 },
+"houndoom-14-014-147-86202": {
+"id": "019c976a-8944-7d7a-95b0-8f43216eb8df",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "houndoom-5-90-86209-holofo": {
 "id": "019c9791-354d-7dcc-b871-5397f8a872b0",
 "synced": "2026-10-30",
@@ -4542,6 +4582,11 @@
 "synced": "2026-10-30",
 "variant": "Unlimited Holofoil"
 },
+"kangaskhan-088-147-86420": {
+"id": "019c976a-8b3d-78a3-8ad4-4e4882505266",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "kangaskhan-ex-103-106-91241-holo-1": {
 "id": "019c9785-bf03-7e18-899f-4860c290fa23",
 "synced": "2026-10-30",
@@ -4566,6 +4611,11 @@
 "id": "019c976a-8ba5-7706-bde4-7bef83a6c92e",
 "synced": "2026-10-30",
 "variant": "Holofoil"
+},
+"kingdra-19-019-147-86443": {
+"id": "019c976a-8b93-701c-a8b9-c34a02389da1",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
 },
 "kingdra-85-95-86448-holo-p": {
 "id": "019c9791-8480-72b5-b626-54fd372766b2",
@@ -6412,6 +6462,11 @@
 "synced": "2026-10-30",
 "variant": "Holofoil"
 },
+"mudkip-057-100-57-100-87611": {
+"id": "019c9772-d69f-732f-bc2c-c9d7b7ecb964",
+"synced": "2026-10-30",
+"variant": "Reverse Holofoil"
+},
 "mudkip-58-100-87612-revers": {
 "id": "019c9772-d6a1-7a3a-ac72-0251a7836c0b",
 "synced": "2026-10-30",
@@ -6594,6 +6649,11 @@
 },
 "ninetales-ex-96-101-87782-holofo": {
 "id": "019c9772-d839-7fa0-b932-02248bb7442c",
+"synced": "2026-10-30",
+"variant": "Holofoil"
+},
+"ninetales-h19-h19-h32-87767": {
+"id": "019c9772-d819-7693-93bd-9d43eb278039",
 "synced": "2026-10-30",
 "variant": "Holofoil"
 },
@@ -9807,6 +9867,11 @@
 "id": "019c9797-9fae-7e9b-b3f8-977df6d3568b",
 "synced": "2026-10-30",
 "variant": "Holofoil"
+},
+"zapdos-016-102-107011": {
+"id": "019c97a1-f24f-7780-96bb-6630236cc65a",
+"synced": "2026-10-30",
+"variant": "1st Edition Holofoil"
 },
 "zapdos-016-102-42356-holofo": {
 "id": "019c9751-afa4-7c68-9e97-0435afc94d28",
