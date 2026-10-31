@@ -62,6 +62,24 @@ button{cursor:pointer}
 .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 0}
 .search{flex:1 1 220px;display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:0 12px}
 .search input{border:none;background:transparent;padding:10px 4px;width:100%;outline:none}
+/* Recent searches pop-up (like YouTube's search history) */
+.search.rs-host{position:relative}
+.rs-pop{position:absolute;left:-1px;right:-1px;top:calc(100% + 6px);z-index:60;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.22);padding:6px 0;max-height:min(420px,60vh);overflow-y:auto}
+.rs-pop[hidden]{display:none}
+.rs-head{display:flex;justify-content:space-between;align-items:center;padding:4px 14px 6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.rs-clear{background:none;border:none;color:var(--muted);font-size:12px;font-weight:600;padding:2px 4px;cursor:pointer;text-transform:none;letter-spacing:0}
+.rs-clear:hover{color:var(--ink)}
+.rs-item{display:flex;align-items:center;gap:12px;padding:0 6px 0 14px;cursor:pointer}
+.rs-item.on,.rs-item:hover{background:var(--surface-2)}
+.rs-ico{flex:none;width:18px;height:18px;color:var(--muted)}
+.rs-txt{flex:1;min-width:0;padding:9px 0;font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rs-card .rs-txt{display:flex;flex-direction:column;padding:6px 0;line-height:1.25}
+.rs-card .rs-txt b,.rs-card .rs-txt small{overflow:hidden;text-overflow:ellipsis}
+.rs-card .rs-txt small{font-size:12px;font-weight:500;color:var(--muted)}
+.rs-thumb{flex:none;width:26px;aspect-ratio:63/88;border-radius:3px;overflow:hidden;background:var(--surface-2)}
+.rs-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.rs-x{flex:none;background:none;border:none;color:var(--muted);font-size:18px;line-height:1;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.rs-x:hover{background:var(--line);color:var(--ink)}
 .toolbar select{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
 .btn{border:none;border-radius:10px;padding:10px 16px;font-weight:600;background:var(--surface);border:1px solid var(--line)}
 .btn.primary{background:var(--gold);color:#1b1400;border-color:transparent}
@@ -800,6 +818,80 @@ var PAGE = 40, imgObserver = null;
 
 function load(k, d){ try{ var v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } }
 function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+/* ---------- Recent searches ----------
+   A YouTube-style history pop-up under a search box. Focus the box to see what you searched last; typing filters it.
+   Two kinds of entries share one list, newest first:
+   - text you searched (saved when you press Enter or leave the box with text in it); picking one re-runs the search
+   - cards you opened from the results (saved with picture, set and number); picking one opens that card directly
+   Kept on this device only, separately for each tab (max 15). */
+var RS_MAX = 15;
+var RS_ICON = '<svg class="rs-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></svg>';
+function rsList(key){ var l = load(key, []); return Array.isArray(l) ? l.filter(function(t){ return typeof t==="string" || (t && t.id); }) : []; }
+function rsSame(a, b){ return typeof a==="string" ? typeof b==="string" && a.toLowerCase()===b.toLowerCase() : typeof b!=="string" && a.id===b.id; }
+function rsPush(key, entry){ var l = rsList(key).filter(function(t){ return !rsSame(t, entry); }); l.unshift(entry); save(key, l.slice(0, RS_MAX)); }
+function rsAdd(key, term){ term = String(term||"").trim(); if(term.length >= 2) rsPush(key, term); }
+function rsAddCard(key, c){ if(c && c.id) rsPush(key, {id:String(c.id), name:title(c), set:c.set||"", number:c.number||"", img:thumb(c)}); }
+function rsRemove(key, entry){ save(key, rsList(key).filter(function(t){ return !rsSame(t, entry); })); }
+function rsText(t){ return typeof t==="string" ? t : t.name+" "+t.set+" "+t.number; }
+/* opts (optional): {scope: results element, attr: "data-go", find: id -> card or null, open: id -> void, skip: () -> bool} */
+function recentSearch(qi, key, opts){
+  if(!qi) return;
+  opts = opts || {};
+  var host = qi.closest(".search") || qi.parentNode; host.classList.add("rs-host");
+  var pop = document.createElement("div"); pop.className = "rs-pop"; pop.hidden = true; pop.setAttribute("role","listbox");
+  host.appendChild(pop);
+  var items = [], on = -1, quiet = false;
+  /* remember a card when it's opened from the results (capture phase, so it runs before the page redraws) */
+  if(opts.scope && opts.attr && opts.find) opts.scope.addEventListener("click", function(e){
+    var el = e.target.closest("["+opts.attr+"]"); if(!el || !opts.scope.contains(el) || (opts.skip && opts.skip())) return;
+    rsAddCard(key, opts.find(el.getAttribute(opts.attr)));
+  }, true);
+  function matches(){
+    var v = qi.value.trim().toLowerCase(), l = rsList(key);
+    return v ? l.filter(function(t){ var x = rsText(t).toLowerCase(); return x!==v && x.indexOf(v)>=0; }) : l;
+  }
+  function row(t, i){
+    var x = '<button type="button" class="rs-x" data-rsx="'+i+'" aria-label="Remove '+esc(typeof t==="string"?t:t.name)+' from recent searches">×</button>';
+    if(typeof t==="string") return '<div class="rs-item" role="option" data-rs="'+i+'">'+RS_ICON+'<span class="rs-txt">'+esc(t)+'</span>'+x+'</div>';
+    return '<div class="rs-item rs-card" role="option" data-rs="'+i+'"><span class="rs-thumb">'+(t.img?'<img src="'+esc(t.img)+'" alt="" loading="lazy" onerror="this.remove()">':'')+'</span>'+
+      '<span class="rs-txt"><b>'+esc(t.name)+'</b><small>'+esc([t.set, t.number?'#'+t.number:''].filter(Boolean).join(' · '))+'</small></span>'+x+'</div>';
+  }
+  function draw(){
+    items = matches(); on = -1;
+    if(!items.length || document.activeElement!==qi){ pop.hidden = true; return; }
+    pop.innerHTML = '<div class="rs-head"><span>Recent searches</span><button type="button" class="rs-clear">Clear all</button></div>'+items.map(row).join("");
+    pop.hidden = false;
+  }
+  function hi(i){ on = i; pop.querySelectorAll(".rs-item").forEach(function(el, j){ el.classList.toggle("on", j===on); if(j===on) el.scrollIntoView({block:"nearest"}); }); }
+  function pick(t){
+    pop.hidden = true;
+    if(typeof t!=="string"){
+      if(opts.open && (!opts.find || opts.find(t.id))){ rsPush(key, t); quiet = true; qi.blur(); quiet = false; opts.open(t.id); return; }
+      t = t.name;   /* card no longer listed here: search for it by name instead */
+    }
+    qi.value = t; rsAdd(key, t);
+    qi.dispatchEvent(new Event("input", {bubbles:true}));
+    qi.blur();
+  }
+  /* mousedown + preventDefault keeps focus in the box, so the pop-up doesn't close before the click lands */
+  pop.addEventListener("mousedown", function(e){ e.preventDefault(); });
+  pop.addEventListener("click", function(e){
+    var x = e.target.closest("[data-rsx]");
+    if(x){ e.stopPropagation(); rsRemove(key, items[+x.getAttribute("data-rsx")]); draw(); return; }
+    if(e.target.closest(".rs-clear")){ save(key, []); pop.hidden = true; return; }
+    var it = e.target.closest("[data-rs]"); if(it) pick(items[+it.getAttribute("data-rs")]);
+  });
+  qi.addEventListener("focus", draw);
+  qi.addEventListener("input", draw);
+  qi.addEventListener("blur", function(){ pop.hidden = true; if(!quiet) rsAdd(key, qi.value); });
+  qi.addEventListener("keydown", function(e){
+    if(pop.hidden){ if(e.key==="Enter") rsAdd(key, qi.value); if(e.key==="ArrowDown"){ draw(); } return; }
+    if(e.key==="ArrowDown"){ e.preventDefault(); hi((on+1) % items.length); }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); hi(on<=0 ? items.length-1 : on-1); }
+    else if(e.key==="Escape"){ pop.hidden = true; }
+    else if(e.key==="Enter"){ if(on>=0){ e.preventDefault(); e.stopImmediatePropagation(); pick(items[on]); } else { rsAdd(key, qi.value); pop.hidden = true; } }
+  });
+}
 var S = load("flipdesk.settings", {vendor:75, psa:75, cgc:35, ebay:13.25});
 var VIEW = load("flipdesk.view", null);
 if(load("flipdesk.exit", "vendor")==="ebay") state.exit = "ebay"; /* ranks by vendor profit unless you picked eBay */
@@ -1122,6 +1214,7 @@ function renderList(){
     searchTimer = setTimeout(function(){ if(state.q === qi.value) return; state.q = qi.value; state.shown = PAGE; updateResults(); }, 250);
   });
   qi.addEventListener("compositionend", function(){ qi.dispatchEvent(new Event("input")); });
+  recentSearch(qi, "cfz.recent.cards", {scope:document.getElementById("results"), attr:"data-open", find:cardById, open:go, skip:function(){ return state.selecting; }});
   document.getElementById("setf").addEventListener("change", function(e){ state.set = e.target.value; state.shown = PAGE; renderList(); });
   var eraSel = document.getElementById("eraf"); if(eraSel) eraSel.addEventListener("change", function(e){ state.era = e.target.value; state.set = ""; state.shown = PAGE; renderList(); });
   sortSel.addEventListener("change", function(e){ state.sort = e.target.value; state.shown = PAGE; renderList(); });
@@ -2640,6 +2733,7 @@ function renderHeat(){
   so.addEventListener("change", function(){ HT.sort = so.value; refresh(); });
   var qi = document.getElementById("ht-q"), qt = null;
   qi.addEventListener("input", function(){ clearTimeout(qt); qt = setTimeout(function(){ HT.q = qi.value; refresh(); }, 200); });
+  recentSearch(qi, "cfz.recent.slabs", {scope:box, attr:"data-slab", find:function(id){ return ((HEAT.data&&HEAT.data.cards)||[]).filter(function(c){ return String(c.id)===String(id); })[0] || null; }, open:goSlab});
 }
 function gsPanel(){
   var saved = gsSaved(), dirty = !gsSame(GS, saved);
@@ -3018,6 +3112,7 @@ function renderCheck(){
     qcTimer = setTimeout(function(){ if(state.qc===qi.value) return; state.qc = qi.value; refresh(); }, 150);
   });
   qi.addEventListener("compositionend", function(){ qi.dispatchEvent(new Event("input")); });
+  recentSearch(qi, "cfz.recent.check", {scope:box, attr:"data-go", find:cardById, open:go});
   qi.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); qi.blur(); } });
 }
 /* ---------- Budget picks ----------
