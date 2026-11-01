@@ -9,6 +9,7 @@ on:
       - "eras/**"
       - "pairings.json"
       - "profitlog.json"
+      - "sleepers.json"
   workflow_dispatch:
 
 permissions:

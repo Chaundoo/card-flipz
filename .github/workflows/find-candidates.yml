@@ -3,7 +3,8 @@ name: Flip Finder (look for new flip cards)
 # Searches TCG Price Lookup for NEW cards with a good condition flip and lists them on the site's
 # "Flip Finder" tab for you to approve. Runs Monday-Thursday only (your no-show days), after the daily
 # price update (13:23 UTC), so it uses requests that update and your show-day card adds don't need.
-# It never adds cards to the site by itself.
+# It never adds cards to the site by itself. It also lists Sleepers (older cards whose expensive printing
+# hides behind a cheap one on TCGplayer): scripts/sleepers.py, settings in scripts/sleeper_config.json.
 on:
   schedule:
     # 14:47 UTC = 6:47 am Pacific (7:47 am in summer), Monday-Thursday
@@ -52,11 +53,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p /tmp/keep && cp candidates.json scripts/discovery_state.json /tmp/keep/
+          mkdir -p /tmp/keep && cp candidates.json scripts/discovery_state.json scripts/sleeper_state.json /tmp/keep/
           # Retry if the price update or an add job saved at the same moment.
           for try in 1 2 3; do
             python3 scripts/build_versions.py
-            git add candidates.json scripts/discovery_state.json versions.json
+            git add candidates.json scripts/discovery_state.json scripts/sleeper_state.json sleepers.json versions.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
             git commit -q -m "Flip Finder $(date -u +%Y-%m-%d): ${{ steps.run.outputs.total }} candidates (${{ steps.run.outputs.new }} new)"
             if git push -q; then break; fi
@@ -64,6 +65,8 @@ jobs:
             git fetch -q origin main && git reset -q --hard origin/main
             cp /tmp/keep/candidates.json candidates.json
             cp /tmp/keep/discovery_state.json scripts/discovery_state.json
+            cp /tmp/keep/sleeper_state.json scripts/sleeper_state.json
+            python3 scripts/sleepers.py     # rebuild the site's sleeper file on top of the other job's save
             sleep $((try * 10))
           done
 

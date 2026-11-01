@@ -1,7 +1,8 @@
 name: TCGplayer sales check (weekly, random time)
 
 # Checks REAL TCGplayer sales, but only for cards with skewed/estimated prices and the top flips
-# (settings: scripts/tcgplayer_config.json). Once a week at a random time Monday-Thursday Pacific:
+# (settings: scripts/tcgplayer_config.json), plus sales counts for Sleepers and older site cards
+# (scripts/sleeper_config.json), which feed the site's Low sales flags (sleepers.json). Once a week at a random time Monday-Thursday Pacific:
 # this wakes up every two hours on those days, and scripts/tcgplayer_check.py only goes ahead at
 # this week's slot (it changes every week), then waits a random number of minutes before starting.
 # The other wake-ups stop after a few seconds and save nothing.
@@ -57,7 +58,7 @@ jobs:
           # Retry if the price update or another job saved at the same moment.
           for try in 1 2 3; do
             python3 scripts/build_versions.py
-            git add eras candidates.json PRICE_LOG.md versions.json scripts/tcgplayer_verified.json
+            git add eras candidates.json sleepers.json PRICE_LOG.md versions.json scripts/tcgplayer_verified.json
             git diff --cached --quiet && { echo "Nothing to save."; break; }
             git commit -q -m "TCGplayer sales check $(date -u +%Y-%m-%d) (${{ steps.run.outputs.status }})"
             if git push -q; then break; fi
