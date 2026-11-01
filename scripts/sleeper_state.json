@@ -1,0 +1,5 @@
+{
+"about": "Written by scripts/discover_candidates.py (sleeper list + hidden printings it saw while scanning sets) and scripts/approve_candidates.py (picked sleepers come off). sleepers.json is built from this.",
+"cands": [],
+"hidden": {}
+}

@@ -7,9 +7,14 @@ but ONLY for the cards that need it:
   * cards with an estimated ("est.") price, e.g. an NM spike the daily update caught
   * the top flips on the site (by dollar profit and by % return)
   * the top Flip Finder candidates
+  * Sleepers (scripts/sleepers.py): the top sleeper candidates and older, pricier site cards, so their
+    sales can be counted (check_candidates / check_site_cards in scripts/sleeper_config.json)
 For each one it takes the real sales of the last 90 days per condition, throws out sales that
 are far off from the other conditions (manipulated / odd sales) and saves the median sale.
-Results go in scripts/tcgplayer_verified.json and onto the cards. The daily TCG Price Lookup
+Results go in scripts/tcgplayer_verified.json and onto the cards. Every card checked also gets its
+sales counted for that printing (how many in 90 days, the newest sale, low/high per condition), saved as
+"sales" in scripts/tcgplayer_verified.json; sleepers.json (the site's Low sales flags and Sleepers list)
+is rebuilt from that. The daily TCG Price Lookup
 update keeps using these prices while they're fresh (trust_days in scripts/tcgplayer_config.json).
 
 When it runs: once a week at a random time Monday-Thursday (Pacific). The workflow wakes up
@@ -31,6 +36,7 @@ import urllib.request, urllib.error
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp
+import sleepers as sl
 
 ROOT = rp.ROOT
 CFG_PATH = rp.TP_CONFIG
@@ -162,7 +168,22 @@ def pick_cards(cfg, site_cards, cands, done_recently):
         add(c, "estimate")
     out = list(picks.values())
     cap = LIMIT or cfg["max_cards"]
-    return out[:cap], max(0, len(out) - cap)
+    left_out = max(0, len(out) - cap)
+    out = out[:cap]
+    # sleepers: count sales for the top sleeper candidates and older, pricier site cards (on top of the cap)
+    if not LIMIT:
+        have = {rp.printing_key(c) for c, _ in out}
+        try:
+            extra = sl.check_picks(jload(VERIFIED, {}).get("cards", {}), sl.load_cfg())
+        except Exception as e:
+            print(f"(sleeper picks skipped: {e})")
+            extra = []
+        for c, why in extra:
+            k = rp.printing_key(c)
+            if k and k not in have and k not in done_recently:
+                have.add(k)
+                out.append([c, [why]])
+    return out, left_out
 
 
 # ---------------------------------------------------------------- TCGplayer
@@ -362,6 +383,7 @@ def main():
         files, cands = load_all()
         n, dirty, cd = apply_all(files, cands, rp.load_verified())
         save_all(files, dirty, cands, cd)
+        sl.build_output()
         if "--log" in sys.argv:
             prepend_log(open(sys.argv[sys.argv.index("--log") + 1], encoding="utf-8").read())
         print(f"Applied saved TCGplayer checks: {n} cards changed.")
@@ -386,7 +408,7 @@ def main():
     todo, left_out = pick_cards(cfg, site_cards, cands.get("cards", []), recent)
     print(f"Checking {len(todo)} cards on TCGplayer.")
 
-    stats = {"checked": 0, "nosales": 0, "noprinting": 0, "nodata": 0, "error": 0, "blocked": 0}
+    stats = {"checked": 0, "nosales": 0, "noprinting": 0, "nodata": 0, "error": 0, "blocked": 0, "counted": 0}
     changes, problems = [], []
     blocked_in_a_row, stop = 0, None
     t0 = time.time()
@@ -409,6 +431,11 @@ def main():
         except NoData as e:
             stats["nodata"] += 1
             problems.append(("no data", name, str(e)))
+            k = rp.printing_key(card)
+            if k and k not in verified["cards"]:      # no history at all = no sales to count
+                verified["cards"][k] = {"checked": TODAY, "card": name, "why": why, "prices": {},
+                                        "sales": {"n": 0, "last": None, "c": {}, "nh": 1, "at": TODAY}}
+                stats["counted"] += 1
             continue
         except Exception as e:
             stats["error"] += 1
@@ -419,9 +446,19 @@ def main():
             stats["noprinting"] += 1
             problems.append(("printing", name, "couldn't tell which TCGplayer printing this card is"))
             continue
+        counts = sl.sales_stats(rows, cfg["sales_days"])
+        stats["counted"] += 1
         res = judge(rows, cfg)
         if not res:
             stats["nosales"] += 1
+            # keep the sales count (often zero: exactly what the Low sales flag needs); no new prices to save,
+            # so an earlier check's prices stay as they were (they still expire on their own date)
+            k = rp.printing_key(card)
+            old = verified["cards"].get(k)
+            if old and old.get("prices"):
+                old["sales"] = counts
+            else:
+                verified["cards"][k] = {"checked": TODAY, "card": name, "why": why, "prices": {}, "sales": counts}
             continue
         stats["checked"] += 1
         old_raw = card.get("raw") or {}
@@ -433,7 +470,7 @@ def main():
                     diff.append(f"{c.upper()} {money(o)} → {money(res[c]['price'])}" + (" est." if res[c]["est"] else ""))
         if diff:
             changes.append((name, why, diff))
-        verified["cards"][rp.printing_key(card)] = {"checked": TODAY, "card": name, "why": why, "prices": res}
+        verified["cards"][rp.printing_key(card)] = {"checked": TODAY, "card": name, "why": why, "prices": res, "sales": counts}
     secs = int(time.time() - t0)
 
     # forget old checks
@@ -464,6 +501,8 @@ def main():
         f"- ➖ No sales in {cfg['sales_days']} days (kept old prices): {stats['nosales']}",
         f"- ❌ Blocked by TCGplayer: **{stats['blocked']}**",
         f"- ⚠️ Errors: {stats['error']} · no history: {stats['nodata']} · printing unclear: {stats['noprinting']}",
+        f"- 🐢 Sales counted for sleepers / Low sales flags: **{stats['counted']}** cards"
+        f" ({sum(1 for _, w in todo if 'sleeper' in w or 'older card sales' in w)} were picked just for that)",
     ]
     if changes:
         L += ["", f"**Prices that moved 15%+ after checking real sales ({len(changes)}):**"]
@@ -501,6 +540,10 @@ def main():
         files, cands = load_all()
         n, dirty, cd = apply_all(files, cands, rp.load_verified())
         save_all(files, dirty, cands, cd)
+        try:
+            sl.build_output()
+        except Exception as e:
+            print(f"(sleepers.json not rebuilt: {e})")
         prepend_log(section)
         open(SECTION, "w", encoding="utf-8").write(section)
     output(status=status, ran="true", saved="true" if saved else "false")

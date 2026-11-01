@@ -16,6 +16,11 @@ And "Graded settings: ..." issues from the Graded Slabs tab's "What to look for"
     {"v":1, "graded":{"eras":[...], "focus_eras":[...], "grades":["psa10","psa9"], "max_slab_price":1500,
                       "min_psa10_price":40, "modern_max_share":0.25}}
   -> saved into scripts/graded_config.json; the three slab bots use them from their next run.
+And "Sleeper settings: ..." issues from the Flip Finder's Sleepers panel:
+    {"v":1, "sleepers":{"eras":["wotc","ex","dp-hgss"], "min_price":20, "max_price":0, "alt_ratio":3}}
+  -> saved into scripts/sleeper_config.json (max_price 0 = no maximum); sleepers that no longer match come off.
+Sleepers (ids starting "slp-", from scripts/sleeper_state.json) are added / declined / hidden the same way
+as condition-flip candidates.
 Every pick is also remembered (Pokémon, set, card type, price range) so the Flip Finder ranks
 similar cards lower (declined/hidden) or higher (added) on its next search.
 
@@ -30,6 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp
 import add_card as ac
 import discover_candidates as dc
+import sleepers as sl
 
 ROOT = rp.ROOT
 CANDS = os.path.join(ROOT, "candidates.json")
@@ -37,7 +43,7 @@ DSTATE = os.path.join(ROOT, "scripts", "discovery_state.json")
 SITE = ac.SITE
 ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,90}$")
 MAX_IDS = 200
-EXTRA = ("era", "found", "pkey", "setSlug", "score", "flags", "pop")   # candidate-only fields, not saved on the site
+EXTRA = tuple(dict.fromkeys(("era", "found", "pkey", "setSlug", "score", "flags", "pop") + sl.EXTRA))   # list-only fields, not saved on the site
 
 
 def out(status, text):
@@ -68,7 +74,12 @@ def parse(text):
         return None, "The card list in this issue isn't valid JSON, so nothing was changed."
     if not isinstance(p, dict) or p.get("v") != 1:
         return None, "This issue isn't in a format I know (expected version 1)."
-    ids = {"settings": None, "graded": None}
+    ids = {"settings": None, "graded": None, "sleepers": None}
+    if "sleepers" in p:
+        sv, err = check_sleepers(p["sleepers"])
+        if err:
+            return None, err
+        ids["sleepers"] = sv
     if "graded" in p:
         g, err = check_graded(p["graded"])
         if err:
@@ -216,10 +227,66 @@ def apply_graded(s):
     return "\n".join(L)
 
 
+SLIMITS = {"min_price": (0, 100000), "max_price": (0, 100000), "alt_ratio": (1.5, 100)}
+
+
+def check_sleepers(s):
+    """Validate the Sleepers settings sent from the site. Returns (clean dict, error)."""
+    if not isinstance(s, dict):
+        return None, "The Sleepers settings in this issue aren't readable, so nothing was changed."
+    known = {e["id"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    o = {}
+    if "eras" in s:
+        e = s["eras"]
+        if not isinstance(e, list) or not e or not all(isinstance(x, str) and x in known for x in e):
+            return None, "Pick at least one era for Sleepers (and only eras the site knows), so nothing was changed."
+        o["eras"] = list(dict.fromkeys(e))
+    for k, (lo, hi) in SLIMITS.items():
+        if k in s:
+            v = s[k]
+            if isinstance(v, bool) or not isinstance(v, (int, float)) or not lo <= v <= hi:
+                return None, f"The Sleepers setting '{k}' should be a number from {lo} to {hi}, so nothing was changed."
+            o[k] = int(v) if float(v).is_integer() else round(float(v), 2)
+    if not o:
+        return None, "No Sleepers settings were sent, so nothing was changed."
+    return o, None
+
+
+def apply_sleepers(s):
+    cfg = json.load(open(sl.CFG_PATH, encoding="utf-8"))
+    before = {k: cfg.get(k) for k in s}
+    cfg.update(s)
+    if cfg.get("max_price") and cfg.get("min_price", 0) > cfg["max_price"]:
+        cfg["min_price"], cfg["max_price"] = cfg["max_price"], cfg["min_price"]
+    with open(sl.CFG_PATH, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    full = sl.load_cfg()
+    st = sl.load_state()
+    keep = [c for c in st["cands"] if sl.fits(c, full)]
+    gone = len(st["cands"]) - len(keep)
+    st["cands"] = keep
+    sl.save_state(st)
+    sl.build_output()
+    names = {e["id"]: e["name"] for e in json.load(open(rp.MANIFEST, encoding="utf-8"))["eras"]}
+    L = ["⚙️ Sleepers settings saved. The next Flip Finder search (Monday-Thursday morning) uses them, and the site's "
+         "Low sales flags follow them right away:", "",
+         f"- Older eras: {', '.join(names.get(e, e) for e in full['eras'])} (+ older promo sets: {', '.join(p.strip('^$') for p in full['extra_sets'])})",
+         f"- Price: ${full['min_price']:,} to " + (f"${full['max_price']:,}" if full.get("max_price") else "no maximum"),
+         f"- Hidden printing: at least {full['alt_ratio']:g}x the cheap printing TCGplayer opens on"]
+    if all(before.get(k) == cfg.get(k) for k in s):
+        L += ["", "(These were already the settings, so nothing changed.)"]
+    if gone:
+        L += ["", f"🧹 Took {gone} sleeper{'s' if gone != 1 else ''} that no longer match off the list now."]
+    return "\n".join(L)
+
+
 def main():
     ids, err = parse(issue_text())
     if err:
         return out("failed", "❌ " + err)
+    if ids["sleepers"]:
+        return out("added", apply_sleepers(ids["sleepers"]))
     if ids["graded"]:
         return out("added", apply_graded(ids["graded"]))
     if ids["settings"]:
@@ -229,6 +296,10 @@ def main():
 
     cands = json.load(open(CANDS, encoding="utf-8")) if os.path.exists(CANDS) else {"cards": []}
     by_id = {c["id"]: c for c in cands.get("cards", []) if isinstance(c, dict) and c.get("id")}
+    sst = sl.load_state()
+    for c in sst["cands"]:
+        if isinstance(c, dict) and c.get("id"):
+            by_id.setdefault(c["id"], c)
     manifest = json.load(open(rp.MANIFEST, encoding="utf-8"))
     files, cards_by_era, all_cards = {}, {}, []
     for e in manifest["eras"]:
@@ -267,6 +338,8 @@ def main():
         if era not in files:
             era = "other"
         card = {k: v for k, v in c.items() if k not in EXTRA}
+        if card["id"].startswith(sl.PREFIX):
+            card["id"] = card["id"][len(sl.PREFIX):] or card["id"]
         new_id = card["id"]
         n = 2
         while new_id in taken:
@@ -320,6 +393,13 @@ def main():
     cands["version"] = stamp
     with open(CANDS, "w", encoding="utf-8") as f:
         json.dump(cands, f, ensure_ascii=False, separators=(",", ":"))
+    if any(c.get("id") in gone for c in sst["cands"]):
+        sst["cands"] = [c for c in sst["cands"] if c.get("id") not in gone]
+        sl.save_state(sst)
+    try:
+        sl.build_output()      # Low sales flags follow newly added cards; picked sleepers leave the list
+    except Exception as e:
+        print(f"(sleepers.json not rebuilt: {e})")
     with open(rp.STATE, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False, indent=0, sort_keys=True)
     with open(DSTATE, "w", encoding="utf-8") as f:

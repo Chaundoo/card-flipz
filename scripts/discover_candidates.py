@@ -21,6 +21,10 @@ What it does
      "not interested for now" for snooze_days (default 30), so the list stays fresh.
   4. Writes candidates.json (ranked, with the condition prices). The site's "Flip Finder" tab shows it and
      you choose which cards move into the site. Nothing is added to the site by this script.
+  5. Sleepers (scripts/sleepers.py): while it has each set's cards, it also looks for older cards whose
+     expensive printing hides behind a cheap one on TCGplayer (e.g. Torchic EX Emerald reverse holo $160.99
+     vs $0.93 normal). Older sets (scripts/sleeper_config.json: eras + extra_sets) are scanned even if the
+     condition-flip eras don't include them. Writes scripts/sleeper_state.json and sleepers.json.
 
 Needs the same TCGPL_API_KEY secret as the daily price update.
 
@@ -35,6 +39,7 @@ import json, os, re, sys, time, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import refresh_prices as rp   # API client + price helpers
 import add_card as ac         # era guess + printing labels
+import sleepers as sl         # older cards hiding behind a cheap printing
 
 ROOT = rp.ROOT
 CFG_PATH = os.path.join(ROOT, "scripts", "discovery_config.json")
@@ -190,6 +195,21 @@ def fallback_sets(dstate, cfg):
             continue
         slug = known.get(n) or "pokemon--" + re.sub(r"[^a-z0-9]+", "-", n.lower().replace("&", "and")).strip("-")
         out.append({"name": n, "slug": slug, "year": None})
+    return out
+
+
+def sleeper_sets(raw_sets, cfg, scfg, manifest):
+    """Older sets to search for sleepers (their eras + extra_sets), from the remembered set list."""
+    skip = [s.lower() for s in cfg["skip_sets"]]
+    out = []
+    for s in raw_sets:
+        name, slug = s.get("name") or "", s.get("slug") or ""
+        if not name or not slug or any(x in name.lower() for x in skip):
+            continue
+        if "pokemon" not in slug.lower() and (s.get("game") or "pokemon").lower() != "pokemon":
+            continue
+        if sl.in_older(name, set_era(name, set_year(s), manifest), scfg):
+            out.append({"name": name, "slug": slug, "year": set_year(s)})
     return out
 
 
@@ -420,6 +440,9 @@ def main():
     api = DApi(cfg["daily_requests"], reserve)
     ctx = Ctx(cfg, have, taken, dismissed, manifest, cards_by_era)
     ctx.declined, ctx.taste, ctx.verified = declined, taste_counts(dstate, cfg), rp.load_verified()
+    scfg, sstate = sl.load_cfg(), sl.load_state()
+    sl_fresh, sl_slugs, rescanned_slugs, sl_seen = [], set(), set(), 0
+    ff_slugs = set()
     problems, stop_reason = [], None
     scanned, partial = [], None
     fresh = []          # candidates found this run
@@ -429,6 +452,11 @@ def main():
     t0 = time.time()
     try:
         set_pool, set_src = get_sets(api, dstate, cfg, problems)
+        ff_slugs = {s["slug"] for s in set_pool}
+        for s in sleeper_sets((dstate.get("setlist") or {}).get("sets") or [], cfg, scfg, manifest):
+            sl_slugs.add(s["slug"])
+            if s["slug"] not in ff_slugs:
+                set_pool.append(s)            # an older set only searched for sleepers
         due = [s for s in set_pool if days_ago((dstate["sets"].get(s["slug"]) or {}).get("scanned", "")) >= cfg["min_rescan_days"]]
         due.sort(key=lambda s: (dstate["sets"].get(s["slug"]) or {}).get("scanned") or "")
         for s in due:
@@ -459,14 +487,25 @@ def main():
                 errors_in_row = 0
             hp_ok = any(r.get("hp") for r in recs)
             found = 0
-            for r in recs:
-                c = build(r, (r.get("set") or {}).get("name") or r.get("set_name") or s["name"], s["slug"], hp_ok, ctx)
-                if c:
-                    fresh.append(c)
-                    found += 1
+            if s["slug"] in ff_slugs:
+                for r in recs:
+                    c = build(r, (r.get("set") or {}).get("name") or r.get("set_name") or s["name"], s["slug"], hp_ok, ctx)
+                    if c:
+                        fresh.append(c)
+                        found += 1
+            sleepers_here = 0
+            if s["slug"] in sl_slugs and recs and total_ok:
+                set_name = (recs[0].get("set") or {}).get("name") or recs[0].get("set_name") or s["name"]
+                got = sl.scan_set(recs, set_name, s["slug"], ac.era_for(set_name, ctx.manifest, ctx.cards_by_era),
+                                  ctx, scfg, sstate["hidden"], sys.modules[__name__])
+                sl_fresh += got
+                sl_seen += len(recs)
+                sleepers_here = len(got)
             if recs and total_ok:
-                dstate["sets"][s["slug"]] = {"name": s["name"], "scanned": TODAY, "records": len(recs), "found": found}
+                dstate["sets"][s["slug"]] = {"name": s["name"], "scanned": TODAY, "records": len(recs), "found": found,
+                                             "sleepers": sleepers_here}
                 scanned.append((s["name"], len(recs), found))
+                rescanned_slugs.add(s["slug"])
             elif recs and not total_ok:
                 partial = partial or s["name"]
             if not total_ok and stop_reason:
@@ -525,6 +564,9 @@ def main():
         c["score"] = round(c["base"] * taste_factor(c, ctx.taste), 1)
     merged = sorted(keep + list(fresh_by_key.values()), key=lambda c: -c.get("score", 0))[:cfg["max_candidates"]]
     new_count = sum(1 for c in merged if c.get("found") == TODAY)
+    # ---- sleepers: this run's finds + the list from before
+    sl_list, sl_snoozed = sl.merge(sstate["cands"], sl_fresh, rescanned_slugs, have, dismissed, declined, dstate, scfg)
+    sl_new = sum(1 for c in sl_list if c.get("found") == TODAY)
 
     never = sum(1 for s in set_pool if not (dstate["sets"].get(s["slug"]) or {}).get("scanned"))
     if stop_reason and not scanned and not partial and "reached" not in stop_reason:
@@ -549,6 +591,10 @@ def main():
         f"- Settings: eras {', '.join(cfg.get('eras') or []) or 'years ' + str(cfg['years'])}; buy ${cfg['min_buy']}-${cfg['max_buy']},"
         f" profit ≥ ${cfg['min_net']}, return ≥ {cfg['min_roi_pct']}%",
     ]
+    L += [f"- Sleepers (older cards hiding behind a cheap printing): **{len(sl_list)}** on the list ({sl_new} new today) · "
+          f"{len(sl_fresh)} found in {sl_seen:,} older-set cards this run · eras {', '.join(scfg['eras'])}"
+          f" + {len(scfg['extra_sets'])} promo sets, ${scfg['min_price']}+, hidden gap {scfg['alt_ratio']}x+"
+          + (f" · {len(sl_snoozed)} untouched for {scfg['stale_days']}+ days taken off" if sl_snoozed else "")]
     if snoozed:
         L += [f"- Untouched for {stale_days}+ days, so taken off and marked not interested for {snooze} days: **{len(snoozed)}**"
               + " (" + ", ".join(f"{c['name']} ({c['variant']})" for c in snoozed[:12]) + (" …" if len(snoozed) > 12 else "") + ")"]
@@ -558,6 +604,11 @@ def main():
               "Price fields: `" + ", ".join(sorted(ctx.tp_keys)) + "`", "</details>"]
     if scanned:
         L += ["", "**Sets scanned:** " + ", ".join(f"{n} ({r} cards, {f} candidates)" for n, r, f in scanned[:30])]
+    if sl_list:
+        L += ["", "**Top sleepers:**"] + [
+            "- {n} ({v}) {s} {no}: ${p:,.2f} vs ${cp:,.2f} {cv} ({r:g}x)".format(
+                n=c["name"], v=c["variant"], s=c["set"], no=c["number"], p=sl.ref_of_card(c), cp=c["hid"]["cp"],
+                cv=c["hid"]["cv"], r=c["hid"]["r"]) for c in sl_list[:5]]
     top = merged[:8] if DRY else merged[:5]
     if top:
         L += ["", "**Top of the list:**"] + [
@@ -577,7 +628,8 @@ def main():
             head = (f"{test}Flip Finder {'ran fine' if status == 'OK' else 'only partly finished'}: scanned {len(scanned)} sets, "
                     f"looked at {ctx.count['seen']:,} cards and found {ctx.count['kept']} flips. "
                     f"{len(merged)} cards on the list now ({new_count} new).")
-        facts = [f"Used {api.used} of {cfg['daily_requests']} API requests"]
+        facts = [f"Used {api.used} of {cfg['daily_requests']} API requests",
+                 f"{len(sl_list)} sleepers on the list ({sl_new} new)"]
         if snoozed:
             facts.append(f"{len(snoozed)} untouched cards taken off for {snooze} days")
         if stop_reason and status != "FAILED":
@@ -597,6 +649,9 @@ def main():
         dstate["about"] = ("Written by scripts/discover_candidates.py and scripts/approve_candidates.py. Remembers which sets "
                            "the Flip Finder scanned and when, the set list, and the cards you hid. Safe to delete.")
         jdump(DSTATE, dstate, indent=0, sort_keys=True)
+        sstate["cands"] = sl_list
+        sl.save_state(sstate)
+        sl.build_output()
     return finish(status, report, new_count, saved=saved, total=len(merged))
 
 

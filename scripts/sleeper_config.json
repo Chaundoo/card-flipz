@@ -1,0 +1,37 @@
+{
+  "about": "Settings for Sleepers (scripts/sleepers.py): older, pricier cards whose expensive printing hides behind a cheap one on TCGplayer and barely sells. The Flip Finder finds them while it scans sets (Mon-Thu); the weekly TCGplayer sales check counts their sales. The site's Flip Finder > Sleepers panel can change eras / price range / hidden gap ('Save for future searches'). Edit and commit to change the rest.",
+  "eras": [
+    "wotc",
+    "ex",
+    "dp-hgss"
+  ],
+  "eras_note": "Which eras count as 'older' (ids from eras/eras.json). Their sets are scanned for sleepers, and cards already on the site from these eras get a Low sales flag when they barely sell.",
+  "extra_sets": [
+    "^Nintendo Promos$",
+    "^Kids WB Promos$"
+  ],
+  "extra_sets_note": "Older promo sets that sit in the 'other' era but should be searched too (set-name patterns, ignoring case).",
+  "min_price": 20,
+  "max_price": 0,
+  "price_note": "Price of the expensive printing (Near Mint, or estimated from the other conditions). max_price 0 = no maximum. The site's slider filters the list on top of this.",
+  "alt_ratio": 3.0,
+  "alt_ratio_note": "Hidden printing: the expensive printing must be at least this many times the cheap printing TCGplayer opens on (e.g. Torchic EX Emerald reverse holo $160.99 vs $0.93 normal = 173x).",
+  "require_popular": true,
+  "skip_stamped": true,
+  "max_candidates": 60,
+  "max_age_days": 30,
+  "stale_days": 14,
+  "snooze_days": 30,
+  "stale_note": "Sleepers left untouched on the list for stale_days come off and stay away for snooze_days (longer than condition flips, because their sales are only counted once a week).",
+  "thin": {
+    "very_low_max_sales": 2,
+    "low_max_sales": 6,
+    "quiet_days": 30,
+    "wide_spread": 1.8
+  },
+  "thin_note": "Sales are TCGplayer sales of that exact printing (all conditions) in the last 90 days. Very low sales: very_low_max_sales or fewer. Low sales: low_max_sales or fewer, or no sale for quiet_days. Prices all over: the highest sale in one condition is wide_spread times the lowest.",
+  "check_candidates": 25,
+  "check_site_cards": 60,
+  "recheck_days": 28,
+  "check_note": "How many sleeper candidates and older site cards the weekly TCGplayer sales check counts sales for (on top of its usual cards), and how often each is re-counted."
+}
