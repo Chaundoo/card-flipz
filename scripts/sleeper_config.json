@@ -3,7 +3,9 @@
   "eras": [
     "wotc",
     "ex",
-    "dp-hgss"
+    "dp-hgss",
+    "xy",
+    "bw"
   ],
   "eras_note": "Which eras count as 'older' (ids from eras/eras.json). Their sets are scanned for sleepers, and cards already on the site from these eras get a Low sales flag when they barely sell.",
   "extra_sets": [
@@ -11,10 +13,10 @@
     "^Kids WB Promos$"
   ],
   "extra_sets_note": "Older promo sets that sit in the 'other' era but should be searched too (set-name patterns, ignoring case).",
-  "min_price": 20,
+  "min_price": 100,
   "max_price": 0,
   "price_note": "Price of the expensive printing (Near Mint, or estimated from the other conditions). max_price 0 = no maximum. The site's slider filters the list on top of this.",
-  "alt_ratio": 3.0,
+  "alt_ratio": 3,
   "alt_ratio_note": "Hidden printing: the expensive printing must be at least this many times the cheap printing TCGplayer opens on (e.g. Torchic EX Emerald reverse holo $160.99 vs $0.93 normal = 173x).",
   "require_popular": true,
   "skip_stamped": true,
