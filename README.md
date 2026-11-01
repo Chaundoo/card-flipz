@@ -161,4 +161,37 @@ The **Flip Finder** tab lists new cards the bot found with a good condition flip
 * **Learning:** every add / decline is remembered in `scripts/discovery_state.json` (the Pokémon, set, card type and price range). Pokémon, sets and card types you keep declining rank lower on the next search; ones you add rank higher. Cards you just leave alone stay on the list until their set is re-checked and they no longer qualify, their prices are 3 weeks old, or better cards push them out.
 * **Adding:** `approve-candidates.yml` copies the picked cards into the era files using the prices saved when they were found. It uses **no** API requests.
 * **Settings:** `scripts/discovery_config.json` (vendor %, min/max buy price, minimum return, request budget, which years/sets, popular Pokémon, words to skip).
+* **Sleepers:** the same scans also fill the tab's **Sleepers** list (see below).
 * **Test it without saving anything:** Actions → *Flip Finder* → Run workflow (dry run is on by default). The report lists the fields the API returned, so the trainer and price checks can be tuned.
+
+## Sleepers (Flip Finder → Sleepers, same passcode)
+
+Older, pricier cards whose expensive printing hides behind a cheap one on TCGplayer, so it barely sells.
+TCGplayer puts every printing on one product page and opens it on the cheapest one: Torchic 69/106 EX Emerald
+opens on the normal ($0.93); the Emerald-stamped reverse holo ($160.99) only shows after you pick it under
+**Printing**. Same for Groudon ex 002 Nintendo Promo (normal $33.84 vs the holo).
+
+* **Finding** (`scripts/sleepers.py`, called by the Flip Finder Mon–Thu): TCG Price Lookup returns one record per
+  printing, so while the Flip Finder has a set's cards it also looks for a product whose expensive printing is at
+  least `alt_ratio` (3×) its cheap printing and at least `min_price` ($20; `max_price` 0 = no max). Older sets
+  (`eras`: WotC, EX, DP/HGSS, plus `extra_sets` like Nintendo Promos) are scanned even when the condition-flip eras
+  don't include them. Popular Pokémon only, no trainers or event-stamped cards. List: `scripts/sleeper_state.json`.
+* **Counting sales**: the weekly TCGplayer sales check counts each printing's real sales in the last 90 days (how
+  many, the newest, low/high per condition) for every card it looks at, plus the top `check_candidates` (25)
+  sleepers and `check_site_cards` (60) older site cards a week (hidden printings and the priciest first), each
+  re-counted every `recheck_days` (28). Saved as `sales` in `scripts/tcgplayer_verified.json`. Cards checked before
+  this feature use the sales counts in their old price notes until they're re-counted.
+* **The tab**: each sleeper shows the cheap printing TCGplayer opens on, sales in 90 days, the last sale, what it
+  sold for, the cheapest listing, a **Thin** score (few sales, long since the last one, prices far apart, big hidden
+  gap) and links: TCGplayer (opens on that printing), **PriceCharting** (its eBay sold list, searched for that
+  printing) and **eBay sold** (raw copies only). Pick cards and **Add to site** / **Not for me** / **Never show** like
+  condition flips. **What to look for**: older eras, a min/max price slider (all the way right = no max) and the
+  hidden gap; **Save for future searches** opens a "Sleeper settings" issue (press Create). Untouched sleepers clear
+  after `stale_days` (14).
+* **Low sales flags on the site**: older cards already on the site (those eras, priced at or over the minimum) get a
+  purple **Low sales · N in 90d** pill on Cards and Quick check (**Very low sales** at 2 or fewer), a **Hidden
+  printing** pill when TCGplayer opens on a cheaper printing, and a **Sales activity** box on the card's page with
+  the same links. Sort Cards by **Low sales first** to see them together. Thresholds: `thin` in
+  `scripts/sleeper_config.json`. The site reads all of this from `sleepers.json` (rebuilt by the Flip Finder, the
+  sales check and the add-cards job; run `python3 scripts/sleepers.py` to rebuild by hand).
+* Card links to TCGplayer now open on the card's own printing when it's known.

@@ -14,6 +14,7 @@
   --shadow:0 8px 24px rgba(20,27,45,.12);
   --pop10:#d99c00; --pop9:#3b6fd8; --poprest:#d5dbe6;
   --gain:#2a78d6; --loss:#e34948;
+  --slp:#6a3fc4; --slp-soft:#efe8fc;
   --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
   --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
@@ -25,7 +26,7 @@
     --pos:#4fcf7d; --pos-soft:#15301f; --neg:#ff7a7a; --neg-soft:#3a1a1d; --est:#262f49;
     --shadow:0 8px 24px rgba(0,0,0,.4);
     --pop10:#b8870c; --pop9:#5b8cf0; --poprest:#2f3a5a;
-    --gain:#3987e5; --loss:#e66767;
+    --gain:#3987e5; --loss:#e66767; --slp:#b9a2ff; --slp-soft:#2c2447;
   }
 }
 :root[data-theme="dark"]{
@@ -35,7 +36,7 @@
   --pos:#4fcf7d; --pos-soft:#15301f; --neg:#ff7a7a; --neg-soft:#3a1a1d; --est:#262f49;
   --shadow:0 8px 24px rgba(0,0,0,.4);
   --pop10:#b8870c; --pop9:#5b8cf0; --poprest:#2f3a5a;
-    --gain:#3987e5; --loss:#e66767;
+    --gain:#3987e5; --loss:#e66767; --slp:#b9a2ff; --slp-soft:#2c2447;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
@@ -557,6 +558,34 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .ffs-act .msg{font-size:13px;color:var(--muted);flex:1 1 220px}
 .ffs-eras .chipbtn.star{background:var(--gold);color:#1b1400;border-color:transparent}
 .ffs-legend{font-size:12.5px;color:var(--muted);margin:4px 0 0}
+/* Sleepers + Low sales flags */
+.pill.lowp{background:var(--slp-soft);color:var(--slp)}
+.pill.vlowp{background:var(--slp);color:#fff}
+.pill.hidp{background:var(--surface);color:var(--ink);border:1px dashed var(--muted);padding:2px 7px}
+.pill.movp{background:var(--est);color:var(--muted)}
+.slflags{display:flex;gap:4px;flex-wrap:wrap}
+.qc-name .slflags{margin-top:3px}
+.fmode{margin:0 0 14px;display:inline-flex}
+.fmode button{font-size:14px;padding:8px 14px}
+.fmode button small{font-weight:700;margin-left:6px;opacity:.75}
+.slrows{display:flex;flex-direction:column;font-size:13px}
+.slrows div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;border-top:1px solid var(--line)}
+.slrows span{color:var(--muted);flex:none;white-space:nowrap}
+.slrows b{text-align:right;font-weight:700;min-width:0}
+.sllinks{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px}
+.slmain{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.slmain b{font-size:21px}
+.slmain small{color:var(--muted);font-size:12.5px}
+.slwarn{margin:0 0 10px;padding:10px 12px;border-radius:10px;background:var(--slp-soft);color:var(--ink);font-size:14px}
+.slwarn.very{border-left:4px solid var(--slp)}
+.slkv{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:0 0 10px}
+.slkv div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.slkv span{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.slkv b{font-size:15px}
+.slkv small{font-size:12px;color:var(--muted)}
+.slprice{display:flex;flex-direction:column;gap:4px;font-size:13.5px;font-weight:600}
+.slprice span{display:flex;justify-content:space-between;gap:8px}
+.slprice output{font-weight:800;font-variant-numeric:tabular-nums}
 .flock{max-width:340px;margin:28px auto;padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);text-align:center}
 .flock h2{margin:0 0 6px}
 .flock p{margin:0 0 14px;color:var(--muted);font-size:14px}
@@ -797,6 +826,8 @@ var SKEL = "<!doctype html><html><head><meta charset=utf8><meta name=viewport co
 var DATA = JSON.parse(document.getElementById("app-data").textContent);
 var cards = DATA.cards || [];
 var CANDS = DATA.candidates || [], CMETA = DATA.candMeta || {};
+var SL = DATA.sleepers || {};   /* sleepers.json: Sleepers list + TCGplayer sales counts (Low sales flags) */
+SL.cards = SL.cards || []; SL.sales = SL.sales || {}; SL.hidden = SL.hidden || {}; SL.settings = SL.settings || {};
 /* Eras: each era's cards are saved in their own file (eras/<id>/<id>.json). */
 var ERAS = DATA.eras || [];
 var ERA_RULES = ERAS.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ try{ return new RegExp(p,"i"); }catch(err){ return /(?!)/; } })}; });
@@ -1001,7 +1032,9 @@ function popTile(c){
 }
 /* ---------- condition gap + break-even ---------- */
 var COND_Q = {nm:"Near+Mint", lp:"Lightly+Played", mp:"Moderately+Played", dmg:"Damaged"};
-function tcgUrl(c, k){ var id = String(c.tcgId||"").replace(/\D/g,""); if(!id) return ""; return "https://www.tcgplayer.com/product/"+id+"?Language=English"+(k&&COND_Q[k]?"&Condition="+COND_Q[k]:""); }
+function tcgUrl(c, k){ var id = String(c.tcgId||"").replace(/\D/g,""); if(!id) return "";
+  var pr = typeof slPrinting==="function" ? slPrinting(c) : "";   /* open TCGplayer on this card's printing, not the cheapest one */
+  return "https://www.tcgplayer.com/product/"+id+"?Language=English"+(k&&COND_Q[k]?"&Condition="+COND_Q[k]:"")+(pr?"&Printing="+encodeURIComponent(pr).replace(/%20/g,"+"):""); }
 function tcgLink(c, k, label){ var u = tcgUrl(c,k); return u ? '<a class="tcglink" href="'+u+'" target="_blank" rel="noopener">'+(label||"TCGplayer listings")+' <span aria-hidden="true">↗</span></a>' : ''; }
 /* Condition flip: buy a lower condition, resell one condition up (after the eBay fee). */
 /* Routes: buy one condition at market, resell one step up. Exit = eBay (minus fee) or a vendor (vendor % of market). */
@@ -1068,7 +1101,7 @@ var searchTimer = null;
 function thumb(c){ var u = c && c.image || ""; return /^https:\/\/tcgplayer-cdn\.tcgplayer\.com\/product\/\d+_400w\.jpg$/.test(u) ? u.replace("_400w.jpg","_200w.jpg") : u; }
 function watchImages(){
   var imgs = root.querySelectorAll("img[data-img]");
-  var byId = {}; cards.concat(CANDS).forEach(function(c){ byId[c.id] = c; });
+  var byId = {}; cards.concat(CANDS, SL.cards).forEach(function(c){ byId[c.id] = c; });
   function show(img){ var c = byId[img.getAttribute("data-img")]; if(c && c.image){ img.setAttribute("data-full", c.image); img.src = thumb(c); } img.removeAttribute("data-img"); }
   if(imgObserver) imgObserver.disconnect();
   if(!("IntersectionObserver" in window)){ imgs.forEach(show); return; }
@@ -1170,6 +1203,10 @@ function filteredList(){
       return state.sort==="profit" ? pb.net-pa.net : pb.roi-pa.roi;
     }
     if(state.sort==="updated") return String(b.updated).localeCompare(String(a.updated));
+    if(state.sort==="sales"){ var fa = slFlag(a), fb = slFlag(b);
+      if(!fa && !fb) return title(a).localeCompare(title(b));
+      if(!fa) return 1; if(!fb) return -1;
+      return (slScore(fb.s, fb.h)-slScore(fa.s, fa.h)) || (slRef(b).p-slRef(a).p); }
     if(state.sort==="gap"||state.sort==="fliproi"){
       var ga = gaps[a.id], gb = gaps[b.id];
       if(!ga && !gb) return title(a).localeCompare(title(b));
@@ -1195,7 +1232,7 @@ function renderList(){
     '<label class="search"><span class="sub">Search</span><input id="q" type="search" placeholder="Card, set or number" value="'+esc(state.q)+'"></label>'+
     (ERAS.length ? '<select id="eraf" aria-label="Filter by era"><option value="">All eras</option>'+ERAS.map(function(e){ var n = cards.filter(function(c){return c.era===e.id;}).length; return n ? '<option value="'+esc(e.id)+'"'+(e.id===state.era?' selected':'')+'>'+esc(e.name)+' ('+n+')</option>' : ''; }).join("")+'</select>' : '')+
     '<select id="setf" aria-label="Filter by set"><option value="">All sets</option>'+sets.map(function(s){return '<option'+(s===state.set?' selected':'')+'>'+esc(s)+'</option>';}).join("")+'</select>'+
-    '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
+    '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="sales">Low sales first</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
       (ADV ? '<optgroup label="Advanced: grading"><option value="profit">Grading profit ($)</option><option value="roi">Grading return (%)</option><option value="psa10">PSA 10 price</option><option value="breakeven">Lowest break-even grade</option></optgroup>' : '')+'</select>'+
     '<select id="exitf" aria-label="Sell to"><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option></select>'+
     (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
@@ -1234,6 +1271,7 @@ function resultsHTML(){
   var h = '';
   if(state.sort==="profit"||state.sort==="roi"){ h += '<p class="note" style="margin:-6px 0 12px">'+(state.sort==="profit"?'Ranked by dollar profit':'Ranked by profit ÷ total cost (raw NM buy + grading fee)')+' if the card grades '+esc((BASIS.find(function(b){return b[0]===state.basis;})||BASIS[0])[1])+' and you sell '+(state.exit==="vendor"?'to a vendor at '+S.vendor+'%':'on eBay after the '+S.ebay+'% fee')+'. This assumes that grade; most copies grade lower.</p>'; }
   if(state.sort==="gap"||state.sort==="fliproi"){ h += '<p class="note" style="margin:-6px 0 12px">Each card shows its best flip: buy one condition and resell it one step up (DMG → MP, MP → LP or LP → NM), '+exitText()+'. Ranked by '+(state.sort==="gap"?'dollar profit':'return on what you paid')+'. Look for copies listed below their true condition, and check them in hand before relisting.</p>'; }
+  if(state.sort==="sales"){ var nfl = cards.filter(function(c){ return slFlag(c); }).length; h += '<p class="note" style="margin:-6px 0 12px">Older cards ('+esc(SLS.eras.map(fsEraName).join(", "))+' and older promos) priced '+slMoneyStop(SLS.min_price)+'+ that barely sell on TCGplayer come first ('+nfl+' flagged), quietest first. Sales are counted by the weekly TCGplayer sales check, a few dozen older cards at a time.</p>'; }
   if(state.sort==="breakeven"){ h += '<p class="note" style="margin:-6px 0 12px">Ranked by the lowest PSA grade that still makes money after the eBay fee ('+S.ebay+'%), the PSA fee ($'+S.psa+') and the raw NM buy. Ties go to the bigger profit at that grade. Cards that lose money at every grade are last.</p>'; }
   if(lastFuzzy && list.length) h += '<p class="note" style="margin:-6px 0 12px">No exact match for “'+esc(state.q.trim())+'”. Showing close matches.</p>';
   if(!list.length){ h += '<div class="empty">'+(cards.length?'No cards match that search.':'No cards yet. Add your first card to start tracking.')+'</div>'; }
@@ -1244,7 +1282,7 @@ function resultsHTML(){
       var tile = '<button class="tile'+(picked?' picked':'')+'" data-open="'+esc(c.id)+'"'+(state.selecting?' aria-pressed="'+picked+'"':'')+'><span class="check" aria-hidden="true">✓</span>'+
         '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
         '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
-        condLine(c)+bestFlipTile(c);
+        slFlagsHtml(c)+condLine(c)+bestFlipTile(c);
       if(ADV){
         var be = breakEven(c); var p10 = c.graded && c.graded.psa10 && c.graded.psa10.price;
         tile += '<div class="prices"><div class="kv"><span>Raw NM</span><b class="num">'+money(buyOf(c))+'</b></div><div class="kv"><span>PSA 10</span><b class="num">'+money(p10,0)+'</b></div></div>'+popTile(c)+
@@ -1358,6 +1396,7 @@ function renderDetail(){
   '</table></div><p class="note">Profit = sale − eBay fee ('+S.ebay+'%) − raw buy ('+money(buy)+') − grading fee. Vendor profit = '+S.vendor+'% of sale − raw buy − grading fee. Change the fees at the top; your settings only affect your view.</p></section>';
   }
 
+  h += slSection(c);
   if(ADV) h += '<div class="verdict"><span class="tag">'+esc((c.verdict||"No verdict").toUpperCase())+'</span>'+(c.notes?'<p>'+esc(c.notes)+'</p>':'')+'</div>';
   root.innerHTML = h;
   bindHeader();
@@ -1667,7 +1706,7 @@ function addCards(target, ids){
 }
 function tabs(){
   var v = state.view, cur = v==="finder" ? "finder" : (v==="heat"||v==="slab") ? "heat" : (v==="check"||v==="budget") ? "check" : v==="admin" ? "admin" : (v==="pairings"||v==="pairing") ? "pairs" : (v==="log"||v==="show") ? "log" : "cards";
-  var fn = finderOpen() ? finderAvail().length : 0;
+  var fn = finderOpen() ? finderAvail().length + slAvail().length : 0;
   function t(id, label, extra){ return '<button class="tab'+(cur===id?' on':'')+'" id="tab-'+id+'"'+(cur===id?' aria-current="page"':'')+'>'+label+(extra||'')+'</button>'; }
   return '<nav class="tabs" aria-label="Sections">'+t("cards","Cards")+t("check","Quick check")+t("finder","Flip Finder", fn?'<span class="count">'+fn+'</span>':'')+t("heat","Graded Slabs")+t("pairs","Card Pairings", pairs.length?'<span class="count">'+pairs.length+'</span>':'')+t("log", logLocked() ? "Profit Log 🔒" : "Profit Log")+t("admin",adminTabLabel())+'</nav>';
 }
@@ -2239,6 +2278,8 @@ function renderFinderLock(){
   inp.addEventListener("input", function(){ inp.value = inp.value.replace(/\D/g,"").slice(0,4); msg.textContent = ""; if(inp.value.length===4) tryCode(); });
 }
 state.fsort = "match"; state.fera = ""; state.fclean = false; state.fmsg = "";
+state.fmode = load("cfz.fmode", "flips") === "sleepers" ? "sleepers" : "flips";   /* Flip Finder: condition flips or Sleepers */
+function curFinderRows(){ return state.fmode==="sleepers" ? sleeperRows() : finderRows(); }
 var FFLAG = {
   est:["Estimated price","The buy or resell price is TCGplayer's mid price (no recent market price), so it is a softer number."],
   bigjump:["Big price jump","The resell price is about double (or more) what you would pay. Vendors get picky on big jumps like this."],
@@ -2343,7 +2384,7 @@ function sendFinderSettings(){
 }
 function finderBar(){
   if(!finderOpen()) return '';
-  var ids = finderRows().map(function(x){ return x.c.id; });
+  var ids = curFinderRows().map(function(x){ return x.c.id; });
   finderSel = finderSel.filter(function(id){ return ids.indexOf(id)>=0; });
   if(!finderSel.length) return state.fmsg ? '<div class="actionbar" role="region" aria-label="Flip Finder"><span class="msg" role="status">'+esc(state.fmsg)+'</span></div>' : '';
   var n = finderSel.length;
@@ -2375,10 +2416,15 @@ function sendFinder(add, hide, decline){
 function goFinder(){ state.view = "finder"; state.selecting = false; selected = []; try{ history.replaceState(null,"","#finder"); }catch(e){} window.scrollTo(0,0); render(); }
 function renderFinder(){
   if(!finderOpen()) return renderFinderLock();
-  var rows = finderRows(), sent = finderSentIds();
+  var slm = state.fmode==="sleepers";
+  var rows = slm ? sleeperRows() : finderRows(), sent = finderSentIds();
   var eras = Array.from(new Set(finderAvail().map(function(c){ return c.era; }))).filter(Boolean);
   var h = header();
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
+  h += '<div class="seg fmode" role="group" aria-label="Which list"><button type="button" data-fmode="flips" aria-pressed="'+!slm+'">Condition flips<small>'+finderAvail().length+'</small></button>'+
+    '<button type="button" data-fmode="sleepers" aria-pressed="'+slm+'">Sleepers<small>'+slAvail().length+'</small></button></div>';
+  if(slm) h = renderSleepersInto(h);
+  else {
   h += '<div class="pair-intro"><div><h2>Flip Finder</h2><p class="sub">New cards the bot found with a good condition flip, best match first. '+
     'Pick the ones you want and add them to the site; nothing is added until you do. Return and vendor pay use your vendor rate at the top ('+S.vendor+'%); the bot looks for cards that still work at '+(CMETA.vendor||70)+'%.'+
     (CMETA.generated ? ' Last scan '+fmtDate(CMETA.generated)+' · '+(CMETA.scanned||0)+' sets checked that night of '+(CMETA.watched||0)+' watched. It scans Monday to Thursday.' : '')+
@@ -2398,10 +2444,15 @@ function renderFinder(){
     h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, or use <b>Select all</b>. “Add to site” saves the card with the prices it was found with; the daily update refreshes them. “Not for me” takes a card off the list for 90 days and teaches the finder to suggest fewer like it. “Never show” removes it for good. Cards you don’t touch clear on their own (date on each card).</p>';
     h += '<div class="grid selecting">'+rows.map(function(x){ return finderTile(x, finderSel.indexOf(x.c.id)>=0); }).join("")+'</div>';
   }
+  }
   root.innerHTML = h;
   var so = document.getElementById("fd-sort"); if(so) so.value = state.fsort;
   bindHeader(); watchImages();
   function redraw(){ var y = window.scrollY; render(); window.scrollTo(0,y); }
+  root.querySelectorAll("[data-fmode]").forEach(function(b){ b.addEventListener("click", function(){
+    var m = b.getAttribute("data-fmode"); if(m===state.fmode) return;
+    state.fmode = m; save("cfz.fmode", m); finderSel = []; state.fmsg = ""; state.fera = ""; render(); window.scrollTo(0,0); }); });
+  if(slm) bindSleepers(redraw);
   if(so) so.addEventListener("change", function(e){ state.fsort = e.target.value; redraw(); });
   var er = document.getElementById("fd-era"); if(er) er.addEventListener("change", function(e){ state.fera = e.target.value; redraw(); });
   var cl = document.getElementById("fd-clean"); if(cl) cl.addEventListener("click", function(){ state.fclean = !state.fclean; redraw(); });
@@ -2439,6 +2490,246 @@ function renderFinder(){
     }
     t.addEventListener("click", toggle); t.addEventListener("keydown", toggle);
   });
+}
+
+/* ---------- Sleepers + Low sales flags ----------
+   sleepers.json (scripts/sleepers.py) has two things:
+   * cards: Sleepers the Flip Finder found: older cards whose expensive printing hides behind a cheap one on
+     TCGplayer (its page opens on the cheap printing, e.g. Torchic EX Emerald normal $0.93 vs the stamped
+     reverse holo $160.99), so the expensive one gets few sales.
+   * sales: TCGplayer sales of each printing in the last 90 days, counted by the weekly sales check, keyed
+     "<tcgId>|<printing>". Older, pricier cards already on the site that barely sell get a Low sales flag.
+   The eBay side is checked by hand: PriceCharting (its eBay sold list) and eBay sold-listing links. */
+var SL_DEF = {eras:["wotc","ex","dp-hgss"], extra_sets:["^Nintendo Promos$","^Kids WB Promos$"], min_price:20, max_price:0, alt_ratio:3,
+  thin:{very_low_max_sales:2, low_max_sales:6, quiet_days:30, wide_spread:1.8}, stale_days:14};
+var SL_RATIOS = {nm:1, lp:0.57, mp:0.38, dmg:0.20};
+var SL_STOPS = [0,5,10,15,20,25,30,40,50,60,75,100,125,150,200,250,300,400,500,750,1000,1500,2000,3000,5000];
+var SLS_KEY = "cfz.sleeperSet", SLS_KEYS = ["eras","min_price","max_price","alt_ratio"];
+function slSaved(){
+  var s = SL.settings || {}, o = {};
+  o.eras = (s.eras && s.eras.length) ? s.eras.slice() : SL_DEF.eras.slice();
+  o.min_price = s.min_price!=null ? Number(s.min_price) : SL_DEF.min_price;
+  o.max_price = s.max_price ? Number(s.max_price) : 0;
+  o.alt_ratio = s.alt_ratio ? Number(s.alt_ratio) : SL_DEF.alt_ratio;
+  return o;
+}
+var SLS = (function(){ var d = load(SLS_KEY, null), s = slSaved(), o = {}; SLS_KEYS.forEach(function(k){ o[k] = d && d[k]!=null ? d[k] : s[k]; }); return o; })();
+function slsSame(a, b){ return SLS_KEYS.every(function(k){ return k==="eras" ? a.eras.slice().sort().join()===b.eras.slice().sort().join() : Number(a[k])===Number(b[k]); }); }
+if(slsSame(SLS, slSaved())){ try{ localStorage.removeItem(SLS_KEY); }catch(e){} }
+function slThin(){ return Object.assign({}, SL_DEF.thin, (SL.settings||{}).thin||{}); }
+function slExtra(){ return ((SL.settings||{}).extra_sets || SL_DEF.extra_sets).map(function(p){ try{ return new RegExp(p,"i"); }catch(e){ return /(?!)/; } }); }
+var SL_EXTRA = slExtra();
+function wantedPrinting(label){
+  var l = String(label||"").toLowerCase(), holo = l.indexOf("holo")>=0 && l.indexOf("non-holo")<0;
+  if(l.indexOf("reverse")>=0) return "reverse holofoil";
+  if(l.indexOf("1st edition")>=0) return holo ? "1st edition holofoil" : "1st edition";
+  if(l.indexOf("unlimited")>=0) return holo ? "unlimited holofoil" : "unlimited";
+  if(l.indexOf("non-holo")>=0 || l.indexOf("normal")>=0) return "normal";
+  return "holofoil";
+}
+function pkeyOf(c){ if(!c || !c.tcgId) return ""; return String(c.tcgId)+"|"+String(c.tcgVariant||wantedPrinting(c.variant)).toLowerCase(); }
+function slSales(c){ return SL.sales[pkeyOf(c)] || null; }
+function slHid(c){ return (c && c.hid) || SL.hidden[pkeyOf(c)] || null; }
+/* Near Mint price, or an estimate from the best condition there is */
+function slRef(c){ var ks = ["nm","lp","mp","dmg"]; for(var i=0;i<ks.length;i++){ var p = priceAt(c, ks[i]); if(p>0) return {p:ks[i]==="nm"?p:p/SL_RATIOS[ks[i]], k:ks[i]}; } return {p:0, k:""}; }
+function slOlder(c, eras){ return (eras||SLS.eras).indexOf(c.era)>=0 || SL_EXTRA.some(function(r){ return r.test(c.set||""); }); }
+function slQuiet(s){ if(!s || !s.last) return null; var ref = s.at ? new Date(s.at+"T12:00:00") : new Date(); return Math.max(0, Math.round((ref - new Date(s.last+"T12:00:00"))/864e5)); }
+function slSpread(s){ var best = null; Object.keys((s&&s.c)||{}).forEach(function(k){ var e = s.c[k]; if(e[0]>=2 && e[1]>0 && e[2]>0) best = Math.max(best||0, e[2]/e[1]); }); return best; }
+function slLevel(s){
+  if(!s) return null; var t = slThin(), n = s.n||0, q = slQuiet(s);
+  if(n <= t.very_low_max_sales) return "very";
+  if(n <= t.low_max_sales || q==null || q >= t.quiet_days) return "low";
+  return null;
+}
+/* 0-100: few sales, long since the last one, prices all over the place, hidden printing */
+function slScore(s, h, pop){
+  if(!s) return null;
+  var n = s.n||0, d = slQuiet(s), sp = slSpread(s), r = (h&&h.r)||0;
+  var a = n===0?40 : n===1?35 : n===2?30 : n<=4?22 : n<=8?12 : n<=15?5 : 0;
+  var b = (d==null||d>=60)?25 : d>=30?18 : d>=14?10 : 3;
+  var c = sp==null?0 : sp>=2.5?15 : sp>=slThin().wide_spread?10 : sp>=1.3?5 : 0;
+  var e = r>=10?15 : r>=5?12 : r>=3?8 : 0;
+  return Math.min(100, a+b+c+e+(pop?5:0));
+}
+/* A card already on the site: older era, priced at or over the Sleepers minimum, and barely selling */
+function slFlag(c){
+  var s = slSales(c); if(!s) return null;
+  if(!slOlder(c) || slRef(c).p < Number(SLS.min_price||0)) return null;
+  var lv = slLevel(s); return lv ? {lv:lv, s:s, h:slHid(c)} : null;
+}
+function slSalesText(s){ var n = s.n||0; return n===0 ? "no sales in 90 days" : n+" sale"+(n!==1?"s":"")+" in 90 days"; }
+function slWhy(f){
+  var q = slQuiet(f.s), sp = slSpread(f.s), bits = [slSalesText(f.s)+" on TCGplayer"];
+  if(q!=null && q>=slThin().quiet_days && (f.s.n||0) > slThin().low_max_sales) bits.push("none for "+q+" days before the last check");
+  if(sp && sp>=slThin().wide_spread) bits.push("sale prices "+sp.toFixed(1)+"× apart in one condition");
+  if(f.h) bits.push("its page opens on the "+f.h.cv+" printing ("+money(f.h.cp,2)+")");
+  var t = bits.join("; ")+(f.s.ap?" (counted from an older price check)":"")+".";
+  return t.charAt(0).toUpperCase()+t.slice(1);
+}
+function slPill(f){ var n = f.s.n||0;
+  return '<span class="pill '+(f.lv==="very"?'vlowp':'lowp')+'" title="'+esc(slWhy(f))+'">'+(f.lv==="very"?'Very low sales':'Low sales')+' · '+n+' in 90d</span>'; }
+function slRatio(r){ return r>=100 ? Math.round(r) : r>=10 ? Math.round(r) : (Math.round(r*10)/10); }
+function slHidPill(h){ return '<span class="pill hidp" title="TCGplayer opens this card on the '+esc(h.cv)+' printing ('+money(h.cp,2)+'). This printing only shows after you pick it under Printing.">Hidden printing · '+slRatio(h.r)+'×</span>'; }
+function slFlagsHtml(c){ var f = slFlag(c); if(!f) return ''; return '<div class="slflags">'+slPill(f)+(f.h?slHidPill(f.h):'')+'</div>'; }
+/* ---- links: TCGplayer (that printing), PriceCharting (its eBay sold list), eBay sold (raw copies) */
+function slPrinting(c){ var p = c.tcgVariant || (slHid(c) ? pkeyOf(c).split("|")[1] : ""); return String(p||"").replace(/\b[a-z]/g, function(x){ return x.toUpperCase(); }); }
+function slBase(c){ return String(c.name||"").split(/\s+-\s+|\s*[\(\[]/)[0].trim(); }
+function slPrintWords(c){ var v = String(c.tcgVariant||c.variant||"").toLowerCase();
+  if(v.indexOf("reverse")>=0) return "reverse holo";
+  if(v.indexOf("1st edition")>=0) return v.indexOf("holo")>=0 ? "1st edition holo" : "1st edition";
+  if(v.indexOf("holo")>=0 && v.indexOf("non-holo")<0) return "holo";
+  return ""; }
+function slSetWords(c){ var s = String(c.set||""); if(/promo/i.test(s)) return "promo";
+  return s.replace(/^EX\s+/i,"").replace(/^(SWSH|SV|SM|XY|BW|DP|HGSS|ME)\d*\s*[-:]\s*/i,"").replace(/[^A-Za-z0-9 &'é]/g," ").replace(/\s+/g," ").trim(); }
+function slNum(c){ return String(c.number||"").split("/")[0].replace(/^0+(?=\d)/,""); }
+function pcUrl(c){ var q = [slBase(c), slPrintWords(c), slNum(c), slSetWords(c)].filter(Boolean).join(" ");
+  return "https://www.pricecharting.com/search-products?type=prices&q="+encodeURIComponent(q).replace(/%20/g,"+"); }
+function ebayUrl(c){ var q = [slBase(c), String(c.number||""), slSetWords(c), slPrintWords(c), "-psa -cgc -bgs -beckett -graded -lot -japanese"].filter(Boolean).join(" ");
+  return "https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(q).replace(/%20/g,"+")+"&LH_Sold=1&LH_Complete=1&_sop=13"; }
+function slLinks(c){
+  return '<div class="sllinks">'+tcgLink(c, null, "TCGplayer")+
+    '<a class="tcglink" href="'+pcUrl(c)+'" target="_blank" rel="noopener">PriceCharting <span aria-hidden="true">↗</span></a>'+
+    '<a class="tcglink" href="'+ebayUrl(c)+'" target="_blank" rel="noopener">eBay sold <span aria-hidden="true">↗</span></a></div>';
+}
+function slCondRange(s){
+  var order = ["nm","lp","mp","hp","dmg","other"], out = [];
+  order.forEach(function(k){ var e = s && s.c && s.c[k]; if(!e) return;
+    out.push(k.toUpperCase()+' '+(e[1]===e[2] ? money(e[1],0) : money(e[1],0)+'–'+money(e[2],0))+(e[0]>1?' ('+e[0]+')':'')); });
+  return out.join(" · ");
+}
+function slLastText(s){ if(!s) return "—"; if(!s.last) return "None in 90d"; var q = slQuiet(s); return fmtDate(s.last)+(q!=null?' <small>('+q+'d before check)</small>':''); }
+/* ---- card page */
+function slSection(c){
+  var s = slSales(c), h = slHid(c), f = slFlag(c), older = slOlder(c) && slRef(c).p >= Number(SLS.min_price||0);
+  if(!s && !h && !older) return '';
+  var t = '<section class="block"><h3>Sales activity · TCGplayer, this printing, last 90 days</h3>';
+  if(f) t += '<p class="slwarn '+f.lv+'"><b>'+(f.lv==="very"?'Very low sales':'Low sales')+'.</b> '+esc(slWhy(f))+' Few sales means the market price is a soft number in both directions: good for buying under it, slower to sell.</p>';
+  if(s){
+    t += '<div class="slkv"><div><span>Sales (90 days)</span><b class="num">'+(s.n||0)+'</b><small>'+(s.nh?'TCGplayer has no sales history':'all conditions')+'</small></div>'+
+      '<div><span>Last sale</span><b>'+slLastText(s)+'</b></div>'+
+      '<div><span>Sale prices</span><b>'+(slCondRange(s)||'—')+'</b>'+(slSpread(s)?'<small>'+slSpread(s).toFixed(1)+'× apart in one condition</small>':'')+'</div>'+
+      '<div><span>Counted</span><b>'+fmtDate(s.at)+'</b><small>'+(s.ap?'from an older price check':'weekly TCGplayer sales check')+'</small></div></div>';
+  } else t += '<p class="note" style="margin:0 0 10px">Sales for this card haven’t been counted yet. The weekly TCGplayer sales check counts older cards a few dozen at a time (the priciest and hidden printings first).</p>';
+  if(h) t += '<p class="note" style="margin:0 0 10px"><b>Hidden printing:</b> TCGplayer opens this card on the '+esc(h.cv)+' printing ('+money(h.cp,2)+'). This one is '+slRatio(h.r)+'× that and only shows after you pick it under Printing.</p>';
+  return t+slLinks(c)+'<p class="note">PriceCharting’s “Ungraded” list is eBay sold copies; conditions are often missing or generous, so look at the photos.</p></section>';
+}
+/* ---- Flip Finder: Sleepers list */
+function slAvail(){
+  var have = {}; cards.forEach(function(x){ have[pkeyOf(x)] = 1; });
+  var sent = finderSentIds();
+  return SL.cards.filter(function(c){ return !have[pkeyOf(c)] && sent.indexOf(c.id)<0; });
+}
+function slFits(c){
+  var p = slRef(c).p, h = c.hid || {};
+  if(!slOlder(c, SLS.eras)) return false;
+  if(p < Number(SLS.min_price||0)) return false;
+  if(Number(SLS.max_price) && p > Number(SLS.max_price)) return false;
+  return (h.r||0) >= Number(SLS.alt_ratio||0);
+}
+state.ssort = "thin"; state.sonly = false;
+function sleeperRows(){
+  var list = slAvail().filter(slFits).map(function(c){ var s = slSales(c); return {c:c, s:s, h:c.hid||{}, p:slRef(c), t:slScore(s, c.hid, c.pop)}; });
+  if(state.fera) list = list.filter(function(x){ return x.c.era===state.fera; });
+  if(state.sonly) list = list.filter(function(x){ return x.s && slLevel(x.s); });
+  var k = state.ssort;
+  list.sort(function(a,b){
+    if(k==="price") return b.p.p-a.p.p;
+    if(k==="cheap") return a.p.p-b.p.p;
+    if(k==="gap") return (b.h.r||0)-(a.h.r||0);
+    if(k==="new") return String(b.c.found||"").localeCompare(String(a.c.found||"")) || (b.c.score||0)-(a.c.score||0);
+    if((a.t!=null) !== (b.t!=null)) return a.t!=null ? -1 : 1;
+    return ((b.t||0)-(a.t||0)) || ((b.c.score||0)-(a.c.score||0));
+  });
+  return list;
+}
+function slClears(c){ var n = Number((SL.settings||{}).stale_days||SL_DEF.stale_days); if(!n || !c.found) return ""; var d = new Date(c.found+"T12:00:00"); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+function sleeperTile(x, picked){
+  var c = x.c, s = x.s, h = x.h, nw = c.found && c.found >= newSince(), lv = slLevel(s);
+  var pills = (nw?'<span class="pill newp">New</span>':'')+(h.r?slHidPill(h):'')+
+    (s ? (lv ? slPill({lv:lv, s:s, h:h}) : '<span class="pill movp">Selling · '+(s.n||0)+' in 90d</span>') : '<span class="pill est" title="The weekly TCGplayer sales check counts sleepers’ sales (top '+'25 a week).">Sales not counted yet</span>');
+  var cl = slClears(c), today = new Date().toISOString().slice(0,10);
+  return '<div class="tile'+(picked?' picked':'')+'" data-pick="'+esc(c.id)+'" role="checkbox" aria-checked="'+picked+'" tabindex="0"><span class="check" aria-hidden="true">✓</span>'+
+    '<div class="art">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="noimg"><b>#'+esc(c.number)+'</b><small>'+esc(c.name)+'</small><small>'+esc(c.set)+'</small></span>')+'</div>'+
+    '<div><h3>'+esc(title(c))+'</h3><div class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</div></div>'+
+    '<div class="fflags">'+pills+'</div>'+condLine(c)+
+    '<div class="fstats"><div class="slmain"><b class="num">'+money(x.p.p,0)+'</b><small>'+(x.p.k==="nm"?'TCGplayer NM':'est. NM (from '+x.p.k.toUpperCase()+')')+'</small>'+(x.t!=null?'<span class="pill '+(x.t>=60?'vlowp':'lowp')+'" title="Thin score: few sales, long since the last one, prices all over and a hidden printing all push it up.">Thin '+x.t+'</span>':'')+'</div>'+
+    '<div class="slrows"><div><span>Opens on</span><b class="num">'+esc(h.cv||"—")+' '+(h.cp!=null?money(h.cp,2):'')+'</b></div>'+
+      '<div><span>Sales 90d</span><b class="num">'+(s?(s.n||0)+(s.last?' · last '+fmtDate(s.last):''):'not counted yet')+'</b></div>'+
+      (s && slCondRange(s) ? '<div><span>Sold for</span><b class="num">'+slCondRange(s)+'</b></div>' : '')+
+      '<div><span>Cheapest listing</span><b class="num">'+(c.low?money(c.low.p,0)+' '+esc(String(c.low.c).toUpperCase()):'—')+'</b></div></div></div>'+
+    slLinks(c)+
+    '<div class="sub">Found '+fmtDate(c.found)+(cl?(cl<=today?' · <b>clears next scan</b>':' · clears '+fmtDate(cl)):'')+'</div></div>';
+}
+function slStopIdx(v){ v = Number(v)||0; var i = 0; for(var k=0;k<SL_STOPS.length;k++){ if(SL_STOPS[k]<=v) i = k; } return i; }
+function slMoneyStop(v){ return v ? "$"+Number(v).toLocaleString("en-US") : "$0"; }
+function slsSummary(f){
+  var short = {"dp-hgss":"DP/HGSS", bw:"B&W", xy:"XY", sm:"Sun & Moon", swsh:"Sword & Shield", sv:"Scarlet & Violet", me:"Mega Evo", wotc:"WotC", ex:"EX"};
+  return f.eras.map(function(id){ return short[id]||fsEraName(id); }).join(", ")+' · '+slMoneyStop(f.min_price)+' to '+(Number(f.max_price)?slMoneyStop(f.max_price):'no max')+' · hidden '+f.alt_ratio+'×+';
+}
+function slsPanel(){
+  var saved = slSaved(), dirty = !slsSame(SLS, saved), maxI = Number(SLS.max_price) ? slStopIdx(SLS.max_price) : SL_STOPS.length;
+  return '<details class="bg-opts-wrap ffs" id="slsp"'+(state.slsOpen?' open':'')+'><summary><span>What to look for'+(dirty?' <span class="pill warnp">Not saved</span>':'')+'</span><span class="sub">'+esc(slsSummary(SLS))+'</span></summary><div class="bg-opts">'+
+    '<div class="bg-opt"><span class="lbl">Older eras</span><div class="ffs-eras">'+ERAS.filter(function(e){ return e.id!=="other"; }).map(function(e){
+      return '<button type="button" class="chipbtn'+(SLS.eras.indexOf(e.id)>=0?' on':'')+'" data-slera="'+esc(e.id)+'" aria-pressed="'+(SLS.eras.indexOf(e.id)>=0)+'">'+esc(e.name)+(e.years?'<small>'+esc(e.years)+'</small>':'')+'</button>'; }).join("")+'</div></div>'+
+    '<div class="ffs-sl">'+
+      '<label class="slprice" for="sls-min"><span>Min price<output id="sls-min-v">'+slMoneyStop(SLS.min_price)+'</output></span><input type="range" id="sls-min" min="0" max="'+(SL_STOPS.length-1)+'" step="1" value="'+slStopIdx(SLS.min_price)+'"></label>'+
+      '<label class="slprice" for="sls-max"><span>Max price<output id="sls-max-v">'+(Number(SLS.max_price)?slMoneyStop(SLS.max_price):'No max')+'</output></span><input type="range" id="sls-max" min="1" max="'+SL_STOPS.length+'" step="1" value="'+maxI+'"></label>'+
+      '<label class="slprice" for="sls-r"><span>Hidden printing at least<output id="sls-r-v">'+SLS.alt_ratio+'×</output></span><input type="range" id="sls-r" min="2" max="20" step="0.5" value="'+esc(SLS.alt_ratio)+'"></label>'+
+    '</div>'+
+    '<div class="ffs-act"><button type="button" class="btn primary" id="sls-save"'+(dirty?'':' disabled')+'>Save for future searches</button>'+
+      (dirty?'<button type="button" class="btn" id="sls-reset">Back to saved</button>':'')+
+      '<span class="msg" role="status">'+(state.slsMsg ? esc(state.slsMsg) : dirty ? 'The list and the Low sales flags on this phone already use these. Save so the bot searches for them too (press Create on GitHub).' : 'Price is the expensive printing’s TCGplayer Near Mint (or an estimate from its other conditions). Slide Max all the way right for no limit.')+'</span></div>'+
+  '</div></details>';
+}
+function sendSleeperSettings(){
+  var s = {eras:SLS.eras.slice(), min_price:Number(SLS.min_price)||0, max_price:Number(SLS.max_price)||0, alt_ratio:Number(SLS.alt_ratio)||3};
+  if(s.max_price && s.min_price > s.max_price){ var x = s.min_price; s.min_price = s.max_price; s.max_price = x; }
+  var title = "Sleeper settings: "+slsSummary(s);
+  var body = "Sent from the Flip Finder's Sleepers \"What to look for\" panel. Press **Create**: the bot saves these for the next searches and closes this issue in about a minute.\n\n```json\n"+JSON.stringify({v:1, sleepers:s})+"\n```";
+  window.open("https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body), "_blank", "noopener");
+  state.slsMsg = "Sent to GitHub. Press Create there; the next search (Mon–Thu morning) uses these. Refresh in a minute to see them saved.";
+}
+function renderSleepersInto(h){
+  var rows = sleeperRows(), sent = finderSentIds();
+  var eras = Array.from(new Set(slAvail().map(function(c){ return c.era; }))).filter(Boolean);
+  h += '<div class="pair-intro"><div><h2>Sleepers</h2><p class="sub">Older cards whose expensive printing hides behind a cheap one: TCGplayer opens the card on the cheap printing (like Torchic EX Emerald at $0.93), so the pricey one (the Emerald-stamped reverse holo, $160.99) barely sells. '+
+    'Thin sales mean soft prices: check the eBay side with the PriceCharting and eBay sold links on each card. The Flip Finder finds these Monday to Thursday; the weekly TCGplayer sales check counts their sales. '+
+    'Cards you leave alone for '+((SL.settings||{}).stale_days||SL_DEF.stale_days)+' days are cleared.'+(SL.generated?' List from '+fmtDate(SL.generated)+'.':'')+'</p></div></div>';
+  h += slsPanel();
+  if(!rows.length){
+    h += '<div class="empty">'+(SL.cards.length ? 'No sleepers match those settings. Try a lower minimum price or hidden gap.' : 'No sleepers yet. The Flip Finder looks for them while it scans older sets (Monday to Thursday mornings); check back after the next scan.')+'</div>';
+    if(sent.length) h += '<p class="note">'+sent.length+' card'+(sent.length!==1?'s':'')+' you just sent are hidden here until the list refreshes. <button class="btn" id="fd-unhide">Show them again</button></p>';
+    return h;
+  }
+  var allOn = rows.every(function(x){ return finderSel.indexOf(x.c.id)>=0; });
+  h += '<div class="fbar">'+
+    '<select id="sl-sort" aria-label="Sort sleepers"><option value="thin">Thinnest market</option><option value="gap">Biggest hidden gap</option><option value="price">Price (high)</option><option value="cheap">Price (low)</option><option value="new">Newest</option></select>'+
+    (eras.length>1 ? '<select id="fd-era" aria-label="Filter by era"><option value="">All eras</option>'+eras.map(function(id){ var e = ERAS.filter(function(x){ return x.id===id; })[0]; return '<option value="'+esc(id)+'"'+(id===state.fera?' selected':'')+'>'+esc(e?e.name:id)+'</option>'; }).join("")+'</select>' : '')+
+    '<button class="btn'+(state.sonly?' dark':'')+'" id="sl-only" aria-pressed="'+state.sonly+'">Low sales only</button>'+
+    '<button class="btn primary" id="fd-all">'+(allOn?'Unselect all':'Select all '+rows.length)+'</button>'+
+    (sent.length ? '<button class="btn" id="fd-unhide">Show '+sent.length+' sent</button>' : '')+'</div>';
+  h += '<p class="note" style="margin:-4px 0 12px">Tap cards to pick them, then <b>Add to site</b>, <b>Not for me</b> or <b>Never show</b> at the bottom. Added cards keep their Low sales flag on the site.</p>';
+  h += '<div class="grid selecting">'+rows.map(function(x){ return sleeperTile(x, finderSel.indexOf(x.c.id)>=0); }).join("")+'</div>';
+  return h;
+}
+function bindSleepers(redraw){
+  var so = document.getElementById("sl-sort"); if(so){ so.value = state.ssort; so.addEventListener("change", function(e){ state.ssort = e.target.value; redraw(); }); }
+  var on = document.getElementById("sl-only"); if(on) on.addEventListener("click", function(){ state.sonly = !state.sonly; redraw(); });
+  var d = document.getElementById("slsp"); if(d) d.addEventListener("toggle", function(){ state.slsOpen = d.open; });
+  function changed(){ state.slsMsg = ""; save(SLS_KEY, SLS); redraw(); }
+  root.querySelectorAll("[data-slera]").forEach(function(b){ b.addEventListener("click", function(){
+    var id = b.getAttribute("data-slera"), k = SLS.eras.indexOf(id);
+    if(k>=0){ if(SLS.eras.length===1){ state.slsMsg = "Keep at least one era on."; redraw(); return; } SLS.eras.splice(k,1); } else SLS.eras.push(id);
+    changed(); }); });
+  var mn = document.getElementById("sls-min"), mx = document.getElementById("sls-max"), rr = document.getElementById("sls-r");
+  if(mn){ mn.addEventListener("input", function(){ document.getElementById("sls-min-v").textContent = slMoneyStop(SL_STOPS[mn.value]); });
+    mn.addEventListener("change", function(){ SLS.min_price = SL_STOPS[mn.value]; if(Number(SLS.max_price) && SLS.max_price < SLS.min_price) SLS.max_price = SLS.min_price; changed(); }); }
+  if(mx){ mx.addEventListener("input", function(){ var i = Number(mx.value); document.getElementById("sls-max-v").textContent = i>=SL_STOPS.length ? "No max" : slMoneyStop(SL_STOPS[i]); });
+    mx.addEventListener("change", function(){ var i = Number(mx.value); SLS.max_price = i>=SL_STOPS.length ? 0 : SL_STOPS[i]; if(SLS.max_price && SLS.max_price < SLS.min_price) SLS.min_price = SLS.max_price; changed(); }); }
+  if(rr){ rr.addEventListener("input", function(){ document.getElementById("sls-r-v").textContent = rr.value+"×"; });
+    rr.addEventListener("change", function(){ SLS.alt_ratio = Number(rr.value); changed(); }); }
+  var sv = document.getElementById("sls-save"); if(sv) sv.addEventListener("click", function(){ sendSleeperSettings(); redraw(); });
+  var rs = document.getElementById("sls-reset"); if(rs) rs.addEventListener("click", function(){ SLS = slSaved(); try{ localStorage.removeItem(SLS_KEY); }catch(e){} state.slsMsg = ""; redraw(); });
 }
 
 /* ---------- Graded Heat: PSA 10 / 9 slabs of popular Pokémon that look ready to move ----------
@@ -3046,7 +3337,7 @@ function checkRow(c, pick, inPlan){
   else if(budget) tag = '<span class="qc-best">No flip in your budget</span>';
   else tag = best ? '<span class="qc-best'+(best.net>0?' pos':'')+'">Best: '+best.label+' → '+best.upLabel+' '+signed(best.net)+'</span>' : '<span class="qc-best">Not enough prices to flip</span>';
   return '<div class="qc-row'+(budget&&!pick?' qc-dim':'')+'"><button type="button" class="qc-art" data-go="'+esc(c.id)+'" aria-label="Open '+esc(title(c))+'">'+(c.image?'<img data-img="'+esc(c.id)+'" alt="">':'<span class="sub">#'+esc(c.number)+'</span>')+'</button>'+
-    '<div class="qc-main"><div class="qc-head"><button type="button" class="qc-name" data-go="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span>'+(inPlan?'<span class="pill pos qc-mix">In best mix</span>':'')+'</button>'+tag+'</div>'+
+    '<div class="qc-main"><div class="qc-head"><button type="button" class="qc-name" data-go="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span>'+(inPlan?'<span class="pill pos qc-mix">In best mix</span>':'')+slFlagsHtml(c)+'</button>'+tag+'</div>'+
     '<table class="qc-tbl"><thead><tr><th>Cond.</th><th>Market</th><th>Vendor '+S.vendor+'%</th><th>Flip up'+(BG.exit==="ebay"?' (eBay)':'')+'</th></tr></thead><tbody>'+body+'</tbody></table>'+
     (pick && tcgUrl(c,pick.fk)?'<div class="sub">'+tcgLink(c,pick.fk,"See "+pick.from+" listings on TCGplayer")+'</div>':'')+'</div></div>';
 }
@@ -3537,14 +3828,14 @@ function notice(dropped){
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(function(){});
 getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).then(function(man){
   MAN=man; rules=man.eras.map(function(e){ return {id:e.id, res:(e.match||[]).map(function(p){ return new RegExp(p,"i"); })}; });
-  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]}), getJSON("candidates.json", {version:"", cards:[]}).catch(function(){ return {version:"", cards:[]}; })]));
+  return Promise.all(man.eras.map(function(e){ return getJSON(fileOf(e.id), {era:e.id, version:"", cards:[]}); }).concat([getJSON("pairings.json", {version:"", pairings:[]}), getJSON("profitlog.json", {version:"", shows:[]}), getJSON("candidates.json", {version:"", cards:[]}).catch(function(){ return {version:"", cards:[]}; }), getJSON("sleepers.json", {version:"", cards:[]}).catch(function(){ return {version:"", cards:[]}; })]));
 }).then(function(files){
-  return openLog(files[files.length-2]).then(function(L){ return [files, L]; });
+  return openLog(files[files.length-3]).then(function(L){ return [files, L]; });
 }).then(function(arr){
   var files=arr[0], LOGX=arr[1];
   var data={}, local=readLocal(), dropped=[], changedLocal=false;
   MAN.eras.forEach(function(e,i){ data[e.id]=files[i]; });
-  var cf=files[files.length-1], log=files[files.length-2]; data.pairings=files[files.length-3];
+  var sf=files[files.length-1], cf=files[files.length-2], log=files[files.length-3]; data.pairings=files[files.length-4];
   Object.keys(data).forEach(function(k){ REMOTE[k]=String(data[k].version||""); });
   /* One-time: edits saved on this device under the old single cards.json */
   var old=null; try{ old=JSON.parse(localStorage.getItem(OLD_LKEY)||"null"); }catch(e){}
@@ -3569,7 +3860,7 @@ getVersions().then(function(v){ VERS=v; return getJSON("eras/eras.json"); }).the
   MAN.eras.forEach(function(e){ (data[e.id].cards||[]).forEach(function(c){ c.era=e.id; cards.push(c); }); });
   var parts=split(cards, data.pairings.pairings); for(var k in parts) CUR[k]=parts[k];
   var eras=MAN.eras.map(function(e){ return {id:e.id, name:e.name, years:e.years, match:e.match||[]}; });
-  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:LOGX.shows, logLock:LOGX.lock, pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched, settings:cf&&cf.settings}});
+  document.getElementById("app-data").textContent=JSON.stringify({cards:cards, pairings:data.pairings.pairings||[], shows:LOGX.shows, logLock:LOGX.lock, pairingsDraft:pairingsDraft, eras:eras, candidates:(cf&&cf.cards)||[], candMeta:{generated:cf&&cf.generated, vendor:cf&&cf.vendor_pct, scanned:cf&&cf.sets_scanned, watched:cf&&cf.sets_watched, settings:cf&&cf.settings}, sleepers:{cards:(sf&&sf.cards)||[], sales:(sf&&sf.sales)||{}, hidden:(sf&&sf.hidden)||{}, settings:(sf&&sf.settings)||{}, generated:sf&&sf.generated}});
   notice(dropped);
   if(FROM_PHONE){ var off=document.createElement("div"); off.className="localnote"; off.textContent="No connection right now, so this is the card data saved on your phone. It updates on its own next time you have signal."; document.body.insertBefore(off,document.body.firstChild); }
   window.CFZ_VERS=VERS;
