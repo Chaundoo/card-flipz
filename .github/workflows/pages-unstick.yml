@@ -1,0 +1,39 @@
+name: Unstick website deploy (run by hand)
+
+# GitHub Pages sometimes leaves one of its own deploys marked "in progress", and then refuses every new
+# deploy ("Deployment request failed ... due to in progress deployment. Please cancel <sha> first").
+# Run this by hand (Actions -> Unstick website deploy -> Run workflow) with the commit id from that error:
+# it cancels that stuck deploy, marks it inactive, then asks GitHub to build the site again.
+# It changes no files.
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: "Commit id from the error (the one after 'Please cancel')"
+        required: true
+        default: "af5d12e618980d67c9258b65b17f13bbe4a69622"
+
+permissions:
+  pages: write
+  deployments: write
+  contents: read
+
+jobs:
+  unstick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Cancel the stuck deploy and rebuild the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.event.inputs.sha }}
+        run: |
+          echo "Cancelling the Pages deploy for $SHA"
+          gh api -X POST "repos/$REPO/pages/deployments/$SHA/cancel" && echo "cancelled" || echo "(cancel call failed, continuing)"
+          for id in $(gh api "repos/$REPO/deployments?sha=$SHA&environment=github-pages" -q '.[].id'); do
+            echo "Marking deployment $id inactive"
+            gh api -X POST "repos/$REPO/deployments/$id/statuses" -f state=inactive >/dev/null && echo "ok" || echo "(could not mark $id inactive)"
+          done
+          sleep 20
+          gh api -X POST "repos/$REPO/pages/builds" && echo "Asked GitHub to build the site again." || echo "(build request failed; re-run the latest 'pages build and deployment' by hand)"
