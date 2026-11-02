@@ -17,13 +17,38 @@
 "card": "Clefairy (Reverse Holo) Call of Legends 54/95",
 "until": "2027-01-23"
 },
+"019c975f-77b2-797f-8612-11e06e999726": {
+"auto": true,
+"card": "Cubone (Reverse Holo) Aquapolis 072/147",
+"until": "2026-12-02"
+},
+"019c9763-c022-749a-b29e-753c0897dcfc": {
+"auto": true,
+"card": "Espeon (Reverse Holo) Aquapolis 011/147",
+"until": "2026-12-02"
+},
 "019c9763-c02b-7c20-a817-1104c041f241": {
 "card": "Espeon (Reverse Holo) Dark Explorers 48/108",
 "until": "2027-01-23"
 },
+"019c9763-c02f-79d3-984e-d433bb7b599d": {
+"auto": true,
+"card": "Espeon (Delta Species) (Reverse Holo) EX Delta Species 4/113",
+"until": "2026-12-02"
+},
 "019c9768-6e07-7500-bd2f-2816ff8a6a67": {
 "card": "Growlithe (11) (Reverse Holo) Next Destinies 11/99",
 "until": "2027-01-23"
+},
+"019c9768-6f5a-76fe-bfcb-6da94dc06e47": {
+"auto": true,
+"card": "Hitmonchan (Reverse Holo) Aquapolis 081/147",
+"until": "2026-12-02"
+},
+"019c976e-bc8a-7ed7-bfd0-c441008bb8e2": {
+"auto": true,
+"card": "Lugia (Holo) Aquapolis 149/147",
+"until": "2026-12-02"
 },
 "019c9774-e0f9-7fc5-af27-5bd5b038656a": {
 "card": "Oshawott (Reverse Holo) Boundaries Crossed 39/149",
@@ -37,9 +62,24 @@
 "card": "Reshiram EX (Holo) Next Destinies 22/99",
 "until": "2027-01-23"
 },
+"019c977f-817d-799a-83c6-726874f1b197": {
+"auto": true,
+"card": "Suicune (Reverse Holo) Aquapolis 037/147",
+"until": "2026-12-02"
+},
+"019c9785-bd62-749d-a548-e429622a12ec": {
+"auto": true,
+"card": "Zapdos (Reverse Holo) Aquapolis 044/147",
+"until": "2026-12-02"
+},
 "019c9791-e474-7799-978b-052dce264e4b": {
 "card": "Larvitar (51) (Reverse Holo) Unleashed 51/95",
 "until": "2027-01-23"
+},
+"019c97a1-f231-72ed-898c-77b45f53d069": {
+"auto": true,
+"card": "Gyarados (1st Edition Holo) Base Set (Shadowless) 006/102",
+"until": "2026-12-02"
 }
 },
 "dismissed": [],
@@ -1312,11 +1352,151 @@
 "records": 191,
 "scanned": "2026-10-29"
 },
+"pokemon--ex-delta-species": {
+"found": 9,
+"name": "EX Delta Species",
+"records": 225,
+"scanned": "2026-11-02",
+"sleepers": 6
+},
+"pokemon--ex-deoxys": {
+"found": 14,
+"name": "EX Deoxys",
+"records": 230,
+"scanned": "2026-11-02",
+"sleepers": 10
+},
+"pokemon--ex-dragon": {
+"found": 5,
+"name": "EX Dragon",
+"records": 191,
+"scanned": "2026-11-02",
+"sleepers": 2
+},
+"pokemon--ex-dragon-frontiers": {
+"found": 8,
+"name": "EX Dragon Frontiers",
+"records": 193,
+"scanned": "2026-11-02",
+"sleepers": 1
+},
+"pokemon--ex-emerald": {
+"found": 16,
+"name": "EX Emerald",
+"records": 226,
+"scanned": "2026-11-02",
+"sleepers": 15
+},
+"pokemon--ex-firered-and-leafgreen": {
+"found": 11,
+"name": "EX FireRed & LeafGreen",
+"records": 252,
+"scanned": "2026-11-02",
+"sleepers": 11
+},
+"pokemon--ex-hidden-legends": {
+"found": 4,
+"name": "EX Hidden Legends",
+"records": 199,
+"scanned": "2026-11-02",
+"sleepers": 2
+},
+"pokemon--ex-holon-phantoms": {
+"found": 15,
+"name": "EX Holon Phantoms",
+"records": 213,
+"scanned": "2026-11-02",
+"sleepers": 9
+},
+"pokemon--ex-legend-maker": {
+"found": 4,
+"name": "EX Legend Maker",
+"records": 177,
+"scanned": "2026-11-02",
+"sleepers": 2
+},
+"pokemon--ex-power-keepers": {
+"found": 4,
+"name": "EX Power Keepers",
+"records": 203,
+"scanned": "2026-11-02",
+"sleepers": 5
+},
+"pokemon--ex-ruby-and-sapphire": {
+"found": 1,
+"name": "EX Ruby and Sapphire",
+"records": 213,
+"scanned": "2026-11-02",
+"sleepers": 1
+},
+"pokemon--ex-sandstorm": {
+"found": 5,
+"name": "EX Sandstorm",
+"records": 196,
+"scanned": "2026-11-02",
+"sleepers": 6
+},
+"pokemon--ex-team-magma-vs-team-aqua": {
+"found": 9,
+"name": "EX Team Magma vs Team Aqua",
+"records": 190,
+"scanned": "2026-11-02",
+"sleepers": 5
+},
+"pokemon--ex-team-rocket-returns": {
+"found": 15,
+"name": "EX Team Rocket Returns",
+"records": 234,
+"scanned": "2026-11-02",
+"sleepers": 17
+},
+"pokemon--ex-unseen-forces": {
+"found": 10,
+"name": "EX Unseen Forces",
+"records": 249,
+"scanned": "2026-11-02",
+"sleepers": 4
+},
+"pokemon--expedition": {
+"found": 27,
+"name": "Expedition",
+"records": 327,
+"scanned": "2026-11-02",
+"sleepers": 14
+},
+"pokemon--fossil": {
+"found": 3,
+"name": "Fossil",
+"records": 131,
+"scanned": "2026-11-02",
+"sleepers": 4
+},
 "pokemon--generations": {
 "found": 2,
 "name": "Generations",
 "records": 188,
 "scanned": "2026-10-26"
+},
+"pokemon--great-encounters": {
+"found": 0,
+"name": "Great Encounters",
+"records": 210,
+"scanned": "2026-11-02",
+"sleepers": 0
+},
+"pokemon--gym-challenge": {
+"found": 8,
+"name": "Gym Challenge",
+"records": 274,
+"scanned": "2026-11-02",
+"sleepers": 5
+},
+"pokemon--gym-heroes": {
+"found": 1,
+"name": "Gym Heroes",
+"records": 273,
+"scanned": "2026-11-02",
+"sleepers": 2
 },
 "pokemon--heartgold-soulsilver": {
 "found": 8,
@@ -2539,6 +2719,86 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:gyarados",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:zapdos",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:lugia",
+"set:Aquapolis",
+"kind:holo",
+"price:$100+"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:hitmonchan",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:suicune",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:espeon",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:cubone",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:espeon",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": -0.5
 }
 ]
 }
