@@ -425,8 +425,17 @@ body.phone .psum-main b{font-size:34px}
 .cname:hover b{text-decoration-color:currentColor}
 .cname .sub{display:block;font-size:12px}
 .pi-profit{font-weight:800;font-size:17px;white-space:nowrap}
-.pi-f{display:grid;grid-template-columns:1fr 1fr 84px;gap:6px;max-width:520px}
-@media (max-width:480px){.pi .pmini{display:none}.pi-f{grid-template-columns:1fr 1fr 64px}.pi-f select,.pi-f input{padding:6px 3px;font-size:16px}.pi{gap:8px;padding:10px 8px}}
+.pi-f{display:grid;grid-template-columns:96px 1fr 1fr;gap:6px;max-width:520px}
+.cust-name{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:5px 7px;color:var(--ink);font-weight:700;font-size:15px}
+.cust-pr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:520px}
+.cust-pr label{display:flex;flex-direction:column;gap:2px;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700;min-width:0}
+.cust-pr input{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:6px 5px;min-width:0;color:var(--ink);font-size:14px}
+.lad-h{font-size:12px}.lad-h b{color:var(--ink)}
+.ladder{display:flex;flex-wrap:wrap;gap:6px}
+.lad{display:flex;flex-direction:column;align-items:flex-start;gap:1px;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:5px 9px;text-align:left;color:var(--ink);font-size:12px;cursor:pointer;min-width:92px}
+.lad b{font-size:15px}.lad small{color:var(--muted);font-size:11px}
+.lad.on{border-color:var(--pos);box-shadow:inset 0 0 0 1px var(--pos)}
+@media (max-width:480px){.pi .pmini{display:none}.pi-f{grid-template-columns:72px 1fr 1fr}.cust-pr input{font-size:16px;padding:6px 3px}.lad{min-width:0;flex:1 1 30%}.pi-f select,.pi-f input{padding:6px 3px;font-size:16px}.pi{gap:8px;padding:10px 8px}}
 .pi-f label{display:flex;flex-direction:column;gap:2px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;min-width:0}
 .pi-f select,.pi-f input{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:6px 7px;min-width:0;color:var(--ink);font-size:14px}
 .pi-f select,.pi-f input{width:100%}
@@ -1597,7 +1606,11 @@ var SYNC = (function(){ var s = load(SYNC_KEY, null);
   return s; })();
 function numOr(v){ return v!=="" && v!=null && !isNaN(Number(v)) && Number(v)>=0 ? Number(v) : ""; }
 function normPair(p){ p = p||{}; return {id:String(p.id||uid("p")), name:String(p.name||"Untitled pairing").slice(0,60), created:String(p.created||"").slice(0,10),
-  items:(Array.isArray(p.items)?p.items:[]).map(function(it){ it = it||{}; return {cardId:String(it.cardId||""), bought:String(it.bought||"nm"), sellAs:String(it.sellAs||"nm"), paid:numOr(it.paid)}; })}; }
+  items:(Array.isArray(p.items)?p.items:[]).map(normItem)}; }
+/* Cards not on the site ("custom") have cardId "" plus a name and the condition prices you type in. */
+function normItem(it){ it = it||{}; var o = {cardId:String(it.cardId||""), bought:String(it.bought||"nm"), sellAs:String(it.sellAs||"nm"), paid:numOr(it.paid)};
+  if(!o.cardId){ var pr = it.prices||{}; o.label = String(it.label||"Card").slice(0,80); o.prices = {}; CONDS.forEach(function(k){ o.prices[k[0]] = numOr(pr[k[0]]); }); }
+  return o; }
 function normShow(s){ s = s||{}; return {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours), notes:String(s.notes||"").slice(0,NOTES_MAX),
   sales:(Array.isArray(s.sales)?s.sales:[]).map(function(r){ r = r||{}; return {id:String(r.id||uid("r")), cardId:r.cardId?String(r.cardId):null, label:String(r.label||"").slice(0,80), bought:numOr(r.bought), sold:numOr(r.sold)}; })}; }
 function canon(o){
@@ -1684,13 +1697,17 @@ function newPairing(){
 }
 /* New cards start on their best vendor flip: bought one condition down, sold one step up. */
 function defaultItem(c){ var g = condGap(c,"vendor"); return {cardId:c.id, bought:g?g.best.fk:"nm", sellAs:g?g.best.tk:"nm", paid:""}; }
+function isCustom(it){ return !it.cardId; }
+function customItem(name){ return {cardId:"", bought:"lp", sellAs:"nm", paid:"", label:String(name||"Card").slice(0,80), prices:{nm:"",lp:"",mp:"",dmg:""}}; }
+function itemPrice(it, c, k){ if(isCustom(it)){ var v = it.prices && Number(it.prices[k]); return v>0 ? v : 0; } return priceAt(c, k); }
+function itemName(it){ var c = it.cardId ? cardById(it.cardId) : null; return c ? title(c) : (it.label || "Card"); }
 function itemCalc(it){
-  var c = cardById(it.cardId); if(!c) return {missing:true};
-  var mv = priceAt(c, it.sellAs), mkt = priceAt(c, it.bought);
+  var c = isCustom(it) ? null : cardById(it.cardId); if(!c && !isCustom(it)) return {missing:true};
+  var mv = itemPrice(it, c, it.sellAs), mkt = itemPrice(it, c, it.bought);
   var hasPaid = it.paid!=="" && it.paid!=null && !isNaN(Number(it.paid));
   var cost = hasPaid ? Number(it.paid) : mkt;
   var payout = mv*S.vendor/100;
-  return {c:c, mv:mv, mkt:mkt, cost:cost, payout:payout, profit:payout-cost, ebayProfit:mv*(1-S.ebay/100)-cost, noPrice:!(mv>0) || !(cost>0 || hasPaid)};
+  return {c:c, custom:isCustom(it), mv:mv, mkt:mkt, cost:cost, hasPaid:hasPaid, payout:payout, profit:payout-cost, ebayProfit:mv*(1-S.ebay/100)-cost, noPrice:!(mv>0) || !(cost>0 || hasPaid)};
 }
 function pairTotals(p){
   var t = {n:0, mv:0, cost:0, payout:0, profit:0, ebayProfit:0, gaps:0};
@@ -1827,8 +1844,21 @@ function showCardStats(c, pid){
   document.getElementById("cs-open").addEventListener("click", function(){ close(); state.fromPair = pid||null; go(c.id); });
   document.getElementById("cs-done").focus();
 }
-function condSel(i, field, val, c, label){
-  return '<select class="csel" data-i="'+i+'" data-f="'+field+'" aria-label="'+label+'">'+CONDS.map(function(k){ var pr = priceAt(c,k[0]); return '<option value="'+k[0]+'"'+(k[0]===val?' selected':'')+'>'+k[1]+' '+(pr?money(pr,0):'(no price)')+'</option>'; }).join("")+'</select>';
+function condSel(i, field, val, it, c, label){
+  return '<select class="csel" data-i="'+i+'" data-f="'+field+'" aria-label="'+label+'">'+CONDS.map(function(k){ var pr = itemPrice(it,c,k[0]); return '<option value="'+k[0]+'"'+(k[0]===val?' selected':'')+'>'+k[1]+' '+(pr?money(pr,0):'(no price)')+'</option>'; }).join("")+'</select>';
+}
+var CORDER = ["dmg","mp","lp","nm"];
+function flipLadder(it, r, i){
+  var from = CORDER.indexOf(it.bought); if(from<0) return "";
+  var rate = S.vendor/100, chips = [];
+  for(var j=from;j<CORDER.length;j++){ var k = CORDER[j], mv = itemPrice(it, r.c, k); if(!(mv>0)) continue;
+    var pay = mv*rate, pr = pay-r.cost, on = k===it.sellAs;
+    chips.push('<button class="lad'+(on?' on':'')+'" data-sa="'+i+'" data-k="'+k+'" aria-pressed="'+on+'"><span>Sell '+k.toUpperCase()+' <span class="sub">'+money(mv,0)+'</span></span><b class="num '+(pr>=0?'pos-t':'neg-t')+'">'+signed(pr)+'</b><small>vendor '+money(pay,2)+'</small></button>'); }
+  var even = r.cost>0 && rate>0 ? r.cost/rate : 0;
+  var head = '<div class="lad-h sub">'+(r.hasPaid?'Paid <b>'+money(r.cost,2)+'</b> as '+it.bought.toUpperCase():'Paid '+it.bought.toUpperCase()+' market <b>'+money(r.cost,2)+'</b>')+
+    (even?' · break-even: sells for <b>'+money(even,2)+'</b>+ market':'')+'</div>';
+  if(!chips.length) return head+'<div class="sub">'+(r.custom?'Type in at least one market price above to see flip profits.':'No prices for '+it.bought.toUpperCase()+' or higher.')+'</div>';
+  return head+'<div class="ladder">'+chips.join("")+'</div>';
 }
 function renderPairing(){
   var p = pairById(state.pid); if(!p){ state.view = "pairings"; return renderPairings(); }
@@ -1845,7 +1875,7 @@ function renderPairing(){
     '<span>You paid <b class="num">'+money(t.cost,0)+'</b></span><span>Market <b class="num">'+money(t.mv,0)+'</b></span></div>'+
     '<p class="sub">eBay one by one instead: <b class="num '+(t.ebayProfit>=0?'pos-t':'neg-t')+'">'+signed(t.ebayProfit)+'</b> after the '+S.ebay+'% fee.'+(t.gaps?' <b>'+t.gaps+' card'+(t.gaps===1?' is':'s are')+' left out</b> (no price for the chosen condition).':'')+'</p></div>';
   h += '<section class="block"><div class="c-head"><h3>Cards ('+p.items.length+')</h3>'+(p.items.length?'<button class="btn ghost sm" id="pall">'+(idx.length===p.items.length?'Clear picks':'Pick all')+'</button>':'')+'</div>';
-  h += '<div class="padd"><input id="padd-q" type="search" placeholder="+ Add a card: search name, set or number" autocomplete="off" aria-label="Add a card"><div class="padd-res" id="padd-res"></div></div>';
+  h += '<div class="padd"><input id="padd-q" type="search" placeholder="+ Add a card: search your site, or type any card name" autocomplete="off" aria-label="Add a card"><div class="padd-res" id="padd-res"></div></div>';
   if(idx.length){
     var s = subTotals(p, idx), others = pairs.filter(function(x){ return x!==p; });
     h += '<div class="psplit" role="region" aria-label="Picked cards"><div class="ps-top"><b>'+idx.length+' picked</b><span>If the vendor only takes these: pays <b class="num">'+money(s.payout,2)+'</b> · profit <b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b></span></div>'+
@@ -1857,15 +1887,21 @@ function renderPairing(){
   else h += '<div class="pitems2">'+p.items.map(function(it,i){ var r = itemCalc(it), on = !!psel[i];
     var pick = '<label class="pick"><input type="checkbox" data-pk="'+i+'"'+(on?' checked':'')+' aria-label="Pick this card"></label>';
     if(r.missing) return '<div class="pi'+(on?' on':'')+'">'+pick+'<span class="sub">This card was removed from the tracker.</span><button class="xbtn" data-x="'+i+'" aria-label="Remove">×</button></div>';
+    var name = r.custom
+      ? '<div class="cname"><input class="cust-name" data-i="'+i+'" value="'+esc(it.label||"")+'" maxlength="80" aria-label="Card name"><span class="sub">Not on the site · type its market prices</span></div>'
+      : '<button class="cname" data-cs="'+esc(r.c.id)+'"><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></button>';
+    var custPrices = r.custom ? '<div class="cust-pr">'+CONDS.map(function(k){ var v = it.prices && it.prices[k[0]];
+      return '<label>'+k[1]+' $<input class="cpr" data-i="'+i+'" data-k="'+k[0]+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="—" value="'+esc(v==null?"":v)+'"></label>'; }).join("")+'</div>' : '';
     return '<div class="pi'+(on?' on':'')+'">'+pick+
-      '<span class="pmini">'+(r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span>'+
-      '<div class="pi-main"><div class="pi-top"><button class="cname" data-cs="'+esc(r.c.id)+'"><b>'+esc(title(r.c))+'</b><span class="sub">'+esc(r.c.set)+' · #'+esc(r.c.number)+'</span></button>'+
+      '<span class="pmini">'+(r.c&&r.c.image?'<img src="'+thumb(r.c)+'" alt="" loading="lazy">':'')+'</span>'+
+      '<div class="pi-main"><div class="pi-top">'+name+
         '<span class="pi-profit num '+(r.noPrice?'':(r.profit>=0?'pos-t':'neg-t'))+'">'+(r.noPrice?'—':signed(r.profit))+'</span></div>'+
-      '<div class="pi-f"><label>Bought'+condSel(i,"bought",it.bought,r.c,"Bought as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,r.c,"Sells as")+'</label>'+
-        '<label>Paid<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?money(r.mkt,0):'')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Price paid (blank = market)"></label></div>'+
-      '<div class="sub">'+(r.noPrice?'No price for that condition':'Vendor pays <b class="num" style="color:var(--gold-ink)">'+money(r.payout,2)+'</b>')+'</div></div>'+
-      '<button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(title(r.c))+'">×</button></div>'; }).join("")+'</div>';
-  if(p.items.length) h += '<p class="note">Bought → sells as. Leave Paid blank to use the market price for the bought condition. Tick cards to see what just those pay, or to split, move or remove them. Tap a name for its stats.</p>';
+      custPrices+
+      '<div class="pi-f"><label>You paid $<input class="paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(r.mkt?money(r.mkt,0):'exact $')+'" value="'+esc(it.paid==null?"":it.paid)+'" aria-label="Exact price you paid (blank = market)"></label>'+
+        '<label>Paid as'+condSel(i,"bought",it.bought,it,r.c,"Condition you bought it as")+'</label><label>Sells as'+condSel(i,"sellAs",it.sellAs,it,r.c,"Sells as")+'</label></div>'+
+      flipLadder(it, r, i)+'</div>'+
+      '<button class="xbtn" data-x="'+i+'" aria-label="Remove '+esc(itemName(it))+'">×</button></div>'; }).join("")+'</div>';
+  if(p.items.length) h += '<p class="note">Type the exact price you paid and mark the condition you bought it as; the row under it compares that to selling at the same or a higher condition (tap one to pick it). Leave “You paid” blank to use the market price. Tick cards to see what just those pay, or to split, move or remove them. Tap a name for its stats.</p>';
   h += '</section>';
   if(p.items.length && logLocked()) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Unlock the <b>Profit Log</b> tab to log it.</span></div>';
   else if(p.items.length) h += '<div class="plog"><span class="sub"><b style="color:var(--ink)">Sold this batch?</b> Add it to your Profit Log:</span><select id="plog-to" aria-label="Card show to log to"><option value="__new">New card show today</option>'+sortedShows(false).map(function(x){ return '<option value="'+esc(x.id)+'">'+esc(x.name||"Card show")+' · '+fmtDate(x.date)+'</option>'; }).join("")+'</select><button class="btn dark" id="plog-go">Log as sold</button></div>';
@@ -1886,13 +1922,21 @@ function renderPairing(){
   var rm = document.getElementById("ps-rm"); if(rm) rm.addEventListener("click", function(){ moveItems(p, idx, "__remove"); rerender(); });
   root.querySelectorAll(".csel").forEach(function(s){ s.addEventListener("change", function(){ p.items[+s.getAttribute("data-i")][s.getAttribute("data-f")] = s.value; changed(p); rerender(); }); });
   root.querySelectorAll("input.paid").forEach(function(inp){ inp.addEventListener("change", function(){ var v = parseFloat(inp.value); p.items[+inp.getAttribute("data-i")].paid = isNaN(v)||v<0 ? "" : v; changed(p); rerender(); }); });
+  root.querySelectorAll("input.cpr").forEach(function(inp){ inp.addEventListener("change", function(){ var it = p.items[+inp.getAttribute("data-i")], v = parseFloat(inp.value); if(!it.prices) it.prices = {}; it.prices[inp.getAttribute("data-k")] = isNaN(v)||v<0 ? "" : v; changed(p);
+    /* keep the cursor in the next price box you tapped */
+    setTimeout(function(){ var a = document.activeElement, sel = a && a.classList && a.classList.contains("cpr") ? 'input.cpr[data-i="'+a.getAttribute("data-i")+'"][data-k="'+a.getAttribute("data-k")+'"]' : null;
+      rerender(); if(sel){ var n = root.querySelector(sel); if(n) n.focus(); } }, 0); }); });
+  root.querySelectorAll("input.cust-name").forEach(function(inp){ inp.addEventListener("change", function(){ p.items[+inp.getAttribute("data-i")].label = inp.value.trim().slice(0,80) || "Card"; changed(p); }); });
+  root.querySelectorAll("[data-sa]").forEach(function(b){ b.addEventListener("click", function(){ p.items[+b.getAttribute("data-sa")].sellAs = b.getAttribute("data-k"); changed(p); rerender(); }); });
   root.querySelectorAll("[data-x]").forEach(function(b){ b.addEventListener("click", function(){ var i = +b.getAttribute("data-x"); p.items.splice(i,1);
     var ns = {}; Object.keys(psel).forEach(function(k){ k = +k; if(k<i) ns[k] = true; else if(k>i) ns[k-1] = true; }); psel = ns; changed(p); rerender(); }); });
   var q = document.getElementById("padd-q"), res = document.getElementById("padd-res");
   q.addEventListener("input", function(){
     var s = q.value.trim(); if(!s){ res.innerHTML = ""; return; }
     var hits = smartSearch(cards, s).list.slice(0,8);
-    res.innerHTML = hits.length ? hits.map(function(c){ return '<button data-add="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("") : '<p class="sub">No cards match.</p>';
+    res.innerHTML = hits.map(function(c){ return '<button data-add="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("")+
+      '<button data-pnew="1"><span>Add “<b>'+esc(s)+'</b>” (not on the site)</span><span class="sub">+ Add</span></button>';
+    res.querySelector("[data-pnew]").addEventListener("click", function(){ p.items.push(customItem(s)); changed(p); q.value = ""; rerender(); });
     res.querySelectorAll("[data-add]").forEach(function(b){ b.addEventListener("click", function(){ var c = cardById(b.getAttribute("data-add")); if(!c) return; p.items.push(defaultItem(c)); changed(p); rerender(); var n = document.getElementById("padd-q"); if(n) n.focus(); }); });
   });
 }
@@ -2193,7 +2237,7 @@ function renderShow(){
 /* A pairing sold to a vendor: each card's cost is what you paid (or market), its sale is the vendor payout. */
 function addPairingToShow(p, sh){
   p.items.forEach(function(it){ var r = itemCalc(it); if(r.missing) return;
-    sh.sales.push({id:uid("r"), cardId:it.cardId, label:"", bought:Math.round(r.cost*100)/100, sold:r.noPrice ? "" : Math.round(r.payout*100)/100}); });
+    sh.sales.push({id:uid("r"), cardId:it.cardId||null, label:it.cardId?"":String(it.label||"Card").slice(0,80), bought:Math.round(r.cost*100)/100, sold:r.noPrice ? "" : Math.round(r.payout*100)/100}); });
   saveLog();
 }
 
