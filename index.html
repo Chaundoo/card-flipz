@@ -605,6 +605,53 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .notes-meta span:last-child{white-space:nowrap}
 .show-note{display:block;font-size:12.5px;color:var(--muted);font-style:italic;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .log-lockrow{display:flex;justify-content:flex-end;margin-top:8px}
+/* profit log analytics */
+.log-tabs{margin-top:14px;display:flex;width:max-content;max-width:100%;overflow-x:auto}
+.log-tabs button{padding:8px 14px;font-size:14px;white-space:nowrap}
+.log-tiles.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+body.phone .log-tiles.four{grid-template-columns:1fr 1fr}
+.log-tiles small .pos-t,.log-tiles small .neg-t{font-weight:700}
+.bench{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.bench p{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--ink);max-width:68ch}
+.bbar{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:10px;margin:6px 0;font-size:13px;color:var(--muted);font-weight:600}
+.bbar i{display:block;height:14px;border-radius:7px;background:var(--poprest)}
+.bbar i.up{background:var(--gain)} .bbar i.down{background:var(--loss)} .bbar i.job{background:var(--muted);opacity:.45}
+.bbar b{color:var(--ink);font-size:15px;min-width:64px;text-align:right}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.calc-in{display:grid;grid-template-columns:repeat(2,minmax(0,200px));gap:10px}
+.calc-in input{width:100%;min-width:0;font-size:16px}
+.calc-out{margin:12px 0 0;font-size:15px;line-height:1.5}
+.calc-out b{font-size:16px}
+.c-bench{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4;opacity:.7}
+.c-blabel{fill:var(--ink);font-size:11.5px;font-weight:700}
+.c-avg{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.an-tbl{min-width:520px}
+.an-tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.an-tbl tr:last-child td{border-bottom:none}
+.an-tbl td.r,.an-tbl th.r{text-align:right;white-space:nowrap}
+.lset{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.lset summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--muted)}
+.lset-in{display:grid;grid-template-columns:repeat(2,minmax(0,200px));gap:10px;margin-top:10px}
+.lset-in input{width:100%;min-width:0}
+.be-row{margin-top:4px}
+.be-row p{margin:8px 0 0;font-size:13.5px;line-height:1.5}
+.meter{height:10px;border-radius:5px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:5px}
+.meter i.up{background:var(--pos)} .meter i.down{background:var(--gold)}
+.show-fields{grid-template-columns:repeat(3,minmax(0,200px))}
+body.phone .show-fields{grid-template-columns:1fr 1fr}
+body.phone .show-fields label:first-child{grid-column:1/-1}
+.srow .pfields.three{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)}
+.srow .pfields input,.srow .pfields select{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:7px 8px;color:var(--ink);font-size:15px}
+.srow .ccell{display:flex;align-items:center;gap:8px;min-width:0}
+.srow .meta{margin-top:8px}
+.sx{margin-top:8px}
+.sx summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);padding:4px 0;width:max-content}
+.sx[open] summary{color:var(--ink)}
+.sx-grid{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:6px}
+body.phone .srow .pfields.three{grid-template-columns:1fr 1fr}
+body.phone .srow .pfields.three label:first-child{grid-column:1/-1}
+@media (min-width:900px){ .sx-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
 .flock .msg{min-height:20px;margin-top:10px;font-size:14px;color:var(--neg)}
 
 
@@ -1611,8 +1658,24 @@ function normPair(p){ p = p||{}; return {id:String(p.id||uid("p")), name:String(
 function normItem(it){ it = it||{}; var o = {cardId:String(it.cardId||""), bought:String(it.bought||"nm"), sellAs:String(it.sellAs||"nm"), paid:numOr(it.paid)};
   if(!o.cardId){ var pr = it.prices||{}; o.label = String(it.label||"Card").slice(0,80); o.prices = {}; CONDS.forEach(function(k){ o.prices[k[0]] = numOr(pr[k[0]]); }); }
   return o; }
-function normShow(s){ s = s||{}; return {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours), notes:String(s.notes||"").slice(0,NOTES_MAX),
-  sales:(Array.isArray(s.sales)?s.sales:[]).map(function(r){ r = r||{}; return {id:String(r.id||uid("r")), cardId:r.cardId?String(r.cardId):null, label:String(r.label||"").slice(0,80), bought:numOr(r.bought), sold:numOr(r.sold)}; })}; }
+function normShow(s){ s = s||{};
+  var o = {id:String(s.id||uid("s")), name:String(s.name||"Card show").slice(0,60), date:String(s.date||"").slice(0,10), hours:numOr(s.hours), notes:String(s.notes||"").slice(0,NOTES_MAX),
+    sales:(Array.isArray(s.sales)?s.sales:[]).map(normSale)};
+  var c = numOr(s.costs); if(c!=="" && c>0) o.costs = c;
+  return o; }
+/* Optional sale extras are only stored when set, so older entries keep exactly the same shape. */
+function normSale(r){ r = r||{};
+  var o = {id:String(r.id||uid("r")), cardId:r.cardId?String(r.cardId):null, label:String(r.label||"").slice(0,80), bought:numOr(r.bought), sold:numOr(r.sold)};
+  var cond = ["nm","lp","mp","dmg"], day = /^\d{4}-\d{2}-\d{2}$/;
+  if(["sold","holding","traded"].indexOf(r.status)>=0) o.status = r.status;
+  if(r.vendor && String(r.vendor).trim()) o.vendor = String(r.vendor).trim().slice(0,40);
+  if(r.batch) o.batch = String(r.batch).slice(0,40);
+  if(cond.indexOf(r.from)>=0) o.from = r.from;
+  if(cond.indexOf(r.to)>=0) o.to = r.to;
+  var e = numOr(r.expected); if(e!=="" && e>0) o.expected = e;
+  if(day.test(r.boughtOn||"")) o.boughtOn = r.boughtOn;
+  if(day.test(r.soldOn||"")) o.soldOn = r.soldOn;
+  return o; }
 function canon(o){
   if(Array.isArray(o)) return "["+o.map(canon).join(",")+"]";
   if(o && typeof o==="object") return "{"+Object.keys(o).sort().map(function(k){ return JSON.stringify(k)+":"+canon(o[k]); }).join(",")+"}";
@@ -1963,19 +2026,85 @@ function uid(p){ return p+Date.now().toString(36)+Math.floor(Math.random()*1e4).
 function showById(id){ for(var i=0;i<LOG.shows.length;i++) if(LOG.shows[i].id===id) return LOG.shows[i]; return null; }
 function isNum(v){ return v!=="" && v!=null && !isNaN(Number(v)); }
 function saleName(r){ var c = r.cardId ? cardById(r.cardId) : null; return c ? title(c) : (r.label || "Card"); }
-function showStats(sh){
-  var t = {spent:0, got:0, profit:0, sold:0, unsold:0, unsoldCost:0, hours:Number(sh.hours)||0};
-  sh.sales.forEach(function(r){ var b = Number(r.bought)||0; t.spent += b;
-    if(isNum(r.sold)){ t.sold++; t.got += Number(r.sold); t.profit += Number(r.sold) - b; } else { t.unsold++; t.unsoldCost += b; } });
-  t.perHour = t.hours > 0 ? t.profit/t.hours : null; return t;
-}
-function logStats(){
-  var t = {profit:0, hours:0, hProfit:0, shows:LOG.shows.length, sold:0};
-  LOG.shows.forEach(function(sh){ var s = showStats(sh); t.profit += s.profit; t.sold += s.sold; if(s.hours > 0){ t.hours += s.hours; t.hProfit += s.profit; } });
-  t.perHour = t.hours > 0 ? t.hProfit/t.hours : null; t.avg = t.shows ? t.profit/t.shows : null; return t;
-}
 function sortedShows(asc){ return LOG.shows.slice().sort(function(a,b){ var c = String(a.date).localeCompare(String(b.date)); return asc ? c : -c; }); }
 function perHr(n){ return n==null ? "—" : (n<0?"−":"")+"$"+Math.abs(n).toFixed(Math.abs(n)<100?2:0).replace(/\.00$/,"")+"/hr"; }
+/* --- profit log analytics ---
+   Every sale can carry optional extras: status (sold / holding / traded), vendor, batch (cards bought
+   together and sold together), from / to (condition bought as / sold as), expected (what the site
+   expected it to sell for), boughtOn / soldOn. A show can carry costs (fees, gas). Old entries without
+   these still work: a sale with a "sold" number counts as sold, a blank one as still holding. */
+var LOGSET = (function(){ var s = load("cfz.logset", null) || {}; return {bench:isNum(s.bench)&&Number(s.bench)>0 ? Number(s.bench) : 17, buffer:isNum(s.buffer)&&Number(s.buffer)>=0 ? Number(s.buffer) : 30}; })();
+function saveLogSet(){ save("cfz.logset", LOGSET); }
+var LCONDS = {nm:"NM", lp:"LP", mp:"MP", dmg:"DMG"};
+function saleStatus(r){ if(r.status==="holding"||r.status==="traded") return r.status; return isNum(r.sold) ? "sold" : "holding"; }
+function saleDone(r){ return saleStatus(r)!=="holding" && isNum(r.sold); }
+function saleProfit(r){ return saleDone(r) ? Number(r.sold)-(Number(r.bought)||0) : null; }
+function dayDiff(a, b){ var x = Date.parse(a), y = Date.parse(b); return isNaN(x)||isNaN(y) ? null : Math.round((y-x)/864e5); }
+function bufferHrs(){ return LOGSET.buffer/60; }
+function showStats(sh){
+  var t = {spent:0, got:0, gross:0, sold:0, unsold:0, unsoldCost:0, doneCost:0, traded:0, hours:Number(sh.hours)||0, costs:Number(sh.costs)||0};
+  sh.sales.forEach(function(r){ var b = Number(r.bought)||0; t.spent += b;
+    if(saleDone(r)){ t.sold++; t.got += Number(r.sold); t.gross += Number(r.sold) - b; t.doneCost += b; if(saleStatus(r)==="traded") t.traded++; }
+    else { t.unsold++; t.unsoldCost += b; } });
+  t.profit = t.gross - t.costs;
+  t.allInHours = t.hours > 0 ? t.hours + bufferHrs() : 0;
+  t.perHour = t.hours > 0 ? t.profit/t.hours : null;
+  t.allIn = t.allInHours > 0 ? t.profit/t.allInHours : null;
+  var base = t.doneCost + t.costs; t.roi = base > 0 ? t.profit/base*100 : null;
+  t.beats = t.allIn==null ? null : t.allIn >= LOGSET.bench;
+  t.target = t.hours > 0 ? LOGSET.bench*t.allInHours : null;
+  return t;
+}
+function logStats(){
+  var t = {profit:0, hours:0, allInHours:0, hProfit:0, shows:LOG.shows.length, sold:0, base:0, holding:0, holdingCost:0, rated:0, beat:0, best:null, costs:0};
+  LOG.shows.forEach(function(sh){ var s = showStats(sh); t.profit += s.profit; t.sold += s.sold; t.base += s.doneCost + s.costs; t.costs += s.costs;
+    t.holding += s.unsold; t.holdingCost += s.unsoldCost;
+    if(s.hours > 0){ t.hours += s.hours; t.allInHours += s.allInHours; t.hProfit += s.profit; t.rated++; if(s.beats) t.beat++; }
+    if(!t.best || s.profit > t.best.s.profit) t.best = {sh:sh, s:s}; });
+  t.perHour = t.hours > 0 ? t.hProfit/t.hours : null;
+  t.allIn = t.allInHours > 0 ? t.hProfit/t.allInHours : null;
+  t.avg = t.shows ? t.profit/t.shows : null;
+  t.roi = t.base > 0 ? t.profit/t.base*100 : null;
+  t.benchPay = LOGSET.bench*t.allInHours; t.extra = t.hProfit - t.benchPay;
+  if(t.best && t.rated > 1 && t.best.s.hours > 0){ var h = t.allInHours - t.best.s.allInHours; t.noBest = h > 0 ? (t.hProfit - t.best.s.profit)/h : null; }
+  var days = []; LOG.shows.forEach(function(sh){ sh.sales.forEach(function(r){ if(!saleDone(r)) return; var d = dayDiff(r.boughtOn||sh.date, r.soldOn||sh.date); if(d!=null && d>=0) days.push(d); }); });
+  t.avgDays = days.length ? days.reduce(function(a,b){ return a+b; },0)/days.length : null;
+  return t;
+}
+/* Units: a batch (cards bought together, sold together) is judged as one flip; anything else is a single. */
+function batchName(id, sh){ var p = pairById(id); if(p) return p.name;
+  var ids = []; sh.sales.forEach(function(r){ if(r.batch && !pairById(r.batch) && ids.indexOf(r.batch)<0) ids.push(r.batch); });
+  var i = Math.max(0, ids.indexOf(id)), m = /^\d{4}-(\d{2})-(\d{2})$/.exec(sh.date||"");
+  return "Batch "+(m ? (+m[1])+"/"+(+m[2]) : "")+(i ? " "+String.fromCharCode(65+i) : ""); }
+function saleExpected(r){
+  if(isNum(r.expected) && Number(r.expected)>0) return {v:Number(r.expected), today:false};
+  var c = r.cardId ? cardById(r.cardId) : null; if(!c || !r.to) return null;
+  var p = priceAt(c, r.to); return p > 0 ? {v:p*S.vendor/100, today:true} : null;
+}
+function showUnits(sh){
+  var out = [], byB = {};
+  sh.sales.forEach(function(r){ if(!saleDone(r)) return;
+    if(r.batch){ if(!byB[r.batch]){ byB[r.batch] = {kind:"batch", id:r.batch, name:batchName(r.batch, sh), sh:sh, items:[]}; out.push(byB[r.batch]); } byB[r.batch].items.push(r); }
+    else out.push({kind:"single", id:r.id, name:saleName(r), sh:sh, items:[r]}); });
+  out.forEach(function(u){ u.cost = 0; u.got = 0; var ex = 0, exOk = true, today = false;
+    u.items.forEach(function(r){ u.cost += Number(r.bought)||0; u.got += Number(r.sold)||0; var e = saleExpected(r); if(e){ ex += e.v; today = today || e.today; } else exOk = false; });
+    u.profit = u.got - u.cost; u.roi = u.cost > 0 ? u.profit/u.cost*100 : null;
+    u.expected = exOk && ex > 0 ? ex : null; u.expToday = today; });
+  return out;
+}
+function allUnits(){ var a = []; sortedShows(true).forEach(function(sh){ a = a.concat(showUnits(sh)); }); return a; }
+function common(vals, none){ var v = vals.filter(function(x){ return x; }); if(v.length < vals.length) return none; return v.every(function(x){ return x===v[0]; }) ? v[0] : "Mixed"; }
+function flipLabel(u){ return common(u.items.map(function(r){ return r.from && r.to ? LCONDS[r.from]+" → "+LCONDS[r.to] : ""; }), "Not set"); }
+function eraLabel(u){ return common(u.items.map(function(r){ var c = r.cardId ? cardById(r.cardId) : null; return c ? eraName(c.era) || "Unknown era" : "Not on the site"; }), "Not on the site"); }
+function vendorLabel(u){ return common(u.items.map(function(r){ return (r.vendor||"").trim(); }), "Not set"); }
+function groupUnits(units, fn){
+  var by = {}, order = [];
+  units.forEach(function(u){ var k = fn(u); if(!by[k]){ by[k] = {label:k, n:0, cost:0, profit:0, wins:0}; order.push(k); } var g = by[k]; g.n++; g.cost += u.cost; g.profit += u.profit; if(u.profit > 0) g.wins++; });
+  return order.map(function(k){ var g = by[k]; g.roi = g.cost > 0 ? g.profit/g.cost*100 : null; return g; })
+    .sort(function(a,b){ var na = /^(Not set|Not on the site|Mixed)$/.test(a.label), nb = /^(Not set|Not on the site|Mixed)$/.test(b.label); if(na!==nb) return na ? 1 : -1; return (b.roi==null?-1e9:b.roi) - (a.roi==null?-1e9:a.roi); });
+}
+function showBreakEven(hours, spent){ var target = LOGSET.bench*(hours + bufferHrs()); return {target:target, roi:spent > 0 ? target/spent*100 : null}; }
+
 function backupDue(){
   return false; /* the log lives on GitHub now; backups are optional (Save backup at the bottom) */
   if(!LOG.shows.length) return false;
@@ -2003,35 +2132,46 @@ function niceTicks(lo, hi){
 function tickLabel(v){ var a = Math.abs(v); return (v<0?"−":"")+"$"+(a>=1000 ? (a/1000).toFixed(a%1000?1:0)+"k" : a); }
 function drawChart(){
   var box = document.getElementById("pchart"); if(!box) return;
-  var shows = sortedShows(true); if(!shows.length) return;
+  var all = sortedShows(true); if(!all.length) return;
+  var rate = chartMode==="rate", B = LOGSET.bench;
+  var shows = rate ? all.filter(function(sh){ return showStats(sh).hours > 0; }) : all;
+  if(!shows.length){ box.innerHTML = '<p class="sub" style="padding:18px 10px">Add hours to a show to see money per hour.</p>'; return; }
   var W = Math.max(280, box.clientWidth), H = 230, padL = 48, padR = 14, padT = 16, padB = 30, pw = W-padL-padR, ph = H-padT-padB;
-  var run = 0, pts = shows.map(function(sh){ var s = showStats(sh); run += s.profit; return {sh:sh, s:s, v:chartMode==="run" ? run : s.profit}; });
-  var lo = Math.min(0, Math.min.apply(null, pts.map(function(p){ return p.v; }))), hi = Math.max(0, Math.max.apply(null, pts.map(function(p){ return p.v; })));
+  var run = 0, pts = shows.map(function(sh){ var s = showStats(sh); run += s.profit; return {sh:sh, s:s, v:rate ? s.allIn : chartMode==="run" ? run : s.profit}; });
+  if(rate) pts.forEach(function(p,i){ var w = pts.slice(Math.max(0,i-2), i+1); p.avg = w.reduce(function(a,q){ return a+q.v; },0)/w.length; });
+  var vals = pts.map(function(p){ return p.v; }); if(rate) vals.push(B);
+  var lo = Math.min(0, Math.min.apply(null, vals)), hi = Math.max(0, Math.max.apply(null, vals));
   var ticks = niceTicks(lo, hi); lo = ticks[0]; hi = ticks[ticks.length-1];
   function y(v){ return padT + (hi - v)/(hi - lo)*ph; }
-  var n = pts.length, band = pw/n, h = '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+(chartMode==="run"?"Running total of profit":"Profit for each card show")+'">';
+  var label = rate ? "All-in money per hour for each card show, with the "+B+" dollar benchmark" : chartMode==="run" ? "Running total of profit" : "Profit for each card show";
+  var n = pts.length, band = pw/n, h = '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+label+'">';
   ticks.forEach(function(t){ var yy = Math.round(y(t))+0.5; h += '<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+yy+'" y2="'+yy+'" class="'+(t===0?'c-zero':'c-grid')+'"/><text x="'+(padL-8)+'" y="'+(yy+4)+'" class="c-tick" text-anchor="end">'+tickLabel(t)+'</text>'; });
   var every = Math.max(1, Math.ceil(n/7));
   pts.forEach(function(p,i){ var cx = padL + band*i + band/2;
     if(i % every === 0 || i === n-1){ var m = /^\d{4}-(\d{2})-(\d{2})$/.exec(p.sh.date||""); h += '<text x="'+cx+'" y="'+(H-10)+'" class="c-tick" text-anchor="middle">'+(m ? (+m[1])+"/"+(+m[2]) : "")+'</text>'; } });
+  function bar(p, i, cls){ var bw = Math.min(24, band*0.6), r = Math.min(4, bw/2), y0 = y(0), x = padL + band*i + (band-bw)/2, yv = y(p.v), up = p.v >= 0, hgt = Math.abs(y0 - yv);
+    if(hgt < 1) return '<rect x="'+x+'" y="'+(y0-1)+'" width="'+bw+'" height="2" class="c-flat"/>';
+    var rr = Math.min(r, hgt);
+    return up ? '<path class="'+cls+'" d="M'+x+','+y0+'V'+(yv+rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv+rr)+'V'+y0+'Z"/>'
+              : '<path class="'+cls+'" d="M'+x+','+y0+'V'+(yv-rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv-rr)+'V'+y0+'Z"/>'; }
   if(chartMode==="show"){
-    var bw = Math.min(24, band*0.6), r = Math.min(4, bw/2), y0 = y(0);
-    pts.forEach(function(p,i){ var x = padL + band*i + (band-bw)/2, yv = y(p.v), up = p.v >= 0, hgt = Math.abs(y0 - yv);
-      if(hgt < 1) h += '<rect x="'+x+'" y="'+(y0-1)+'" width="'+bw+'" height="2" class="c-flat"/>';
-      else { var rr = Math.min(r, hgt);
-        h += up ? '<path class="c-gain" d="M'+x+','+y0+'V'+(yv+rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv+rr)+'V'+y0+'Z"/>'
-                : '<path class="c-loss" d="M'+x+','+y0+'V'+(yv-rr)+'Q'+x+','+yv+' '+(x+rr)+','+yv+'H'+(x+bw-rr)+'Q'+(x+bw)+','+yv+' '+(x+bw)+','+(yv-rr)+'V'+y0+'Z"/>'; }
-    });
+    pts.forEach(function(p,i){ h += bar(p, i, p.v >= 0 ? "c-gain" : "c-loss"); });
     var last = pts[n-1], lx = padL + band*(n-1) + band/2, ly = y(last.v);
     h += '<text x="'+lx+'" y="'+(last.v>=0 ? ly-7 : ly+15)+'" class="c-label" text-anchor="middle">'+signed(last.v)+'</text>';
+  } else if(rate){
+    pts.forEach(function(p,i){ h += bar(p, i, p.v >= B ? "c-gain" : "c-loss"); });
+    var by = Math.round(y(B))+0.5;
+    h += '<line x1="'+padL+'" x2="'+(W-padR)+'" y1="'+by+'" y2="'+by+'" class="c-bench"/><text x="'+(W-padR-2)+'" y="'+(by-5)+'" class="c-blabel" text-anchor="end">$'+B+'/hr</text>';
+    if(n > 1){ var line = pts.map(function(p,i){ return (i?'L':'M')+(padL + band*i + band/2)+','+y(p.avg); }).join('');
+      h += '<path class="c-avg" d="'+line+'"/>'; }
   } else {
     var xs = pts.map(function(p,i){ return padL + band*i + band/2; });
-    var line = pts.map(function(p,i){ return (i?'L':'M')+xs[i]+','+y(p.v); }).join('');
-    h += '<path class="c-area" d="'+line+'L'+xs[n-1]+','+y(0)+'L'+xs[0]+','+y(0)+'Z"/><path class="c-line" d="'+line+'"/>';
+    var line2 = pts.map(function(p,i){ return (i?'L':'M')+xs[i]+','+y(p.v); }).join('');
+    h += '<path class="c-area" d="'+line2+'L'+xs[n-1]+','+y(0)+'L'+xs[0]+','+y(0)+'Z"/><path class="c-line" d="'+line2+'"/>';
     var ex = xs[n-1], ey = y(pts[n-1].v);
     h += '<circle cx="'+ex+'" cy="'+ey+'" r="5" class="c-dot"/><text x="'+Math.min(ex, W-padR-4)+'" y="'+(ey-10)+'" class="c-label" text-anchor="end">'+signed(pts[n-1].v)+'</text>';
-    h += '<line id="c-cross" x1="0" x2="0" y1="'+padT+'" y2="'+(padT+ph)+'" class="c-cross" style="display:none"/>';
   }
+  if(chartMode!=="show") h += '<line id="c-cross" x1="0" x2="0" y1="'+padT+'" y2="'+(padT+ph)+'" class="c-cross" style="display:none"/>';
   pts.forEach(function(p,i){ h += '<rect class="c-hit" data-i="'+i+'" x="'+(padL+band*i)+'" y="'+padT+'" width="'+band+'" height="'+ph+'"/>'; });
   h += '</svg><div class="c-tip" id="c-tip" role="status" hidden></div>';
   box.innerHTML = h;
@@ -2039,7 +2179,7 @@ function drawChart(){
   function show(i){ var p = pts[i], cx = padL + band*i + band/2;
     tip.innerHTML = '<b>'+esc(p.sh.name||"Card show")+'</b><span>'+fmtDate(p.sh.date)+'</span><span>Profit <b class="num">'+signed(p.s.profit)+'</b></span>'+
       (chartMode==="run" ? '<span>Running total <b class="num">'+signed(p.v)+'</b></span>' : '')+
-      '<span>'+(p.s.perHour!=null ? perHr(p.s.perHour) : 'No hours logged')+' · '+p.s.sold+' sold</span>';
+      (rate ? '<span>All-in <b class="num">'+perHr(p.v)+'</b> · 3-show avg '+perHr(p.avg)+'</span>' : '<span>'+(p.s.allIn!=null ? perHr(p.s.allIn)+' all-in' : 'No hours logged')+' · '+p.s.sold+' sold</span>');
     tip.hidden = false; var tw = tip.offsetWidth; tip.style.left = Math.max(4, Math.min(W - tw - 4, cx - tw/2))+"px"; tip.style.top = "4px";
     if(cross){ cross.setAttribute("x1",cx); cross.setAttribute("x2",cx); cross.style.display = ""; }
     box.querySelectorAll(".c-hit").forEach(function(r){ r.classList.toggle("on", +r.getAttribute("data-i")===i); }); }
@@ -2055,11 +2195,12 @@ var BK_MARK = "----- RESTORE DATA (keep this line and everything below it) -----
 function backupText(){
   var t = logStats(), L = [];
   L.push("CHAUNDOO CARD FLIPZ — PROFIT LOG BACKUP", "Saved: "+todayStr(), "");
-  L.push("Total profit: "+signed(t.profit)+"   Card shows: "+t.shows+"   Hours: "+t.hours+"   Per hour: "+perHr(t.perHour)+"   Average per show: "+(t.avg==null?"—":signed(t.avg)), "");
+  L.push("Total profit: "+signed(t.profit)+"   Card shows: "+t.shows+"   Hours: "+t.hours+"   Per hour: "+perHr(t.perHour)+"   All-in per hour: "+perHr(t.allIn)+"   Return: "+(t.roi==null?"—":pct(t.roi))+"   Average per show: "+(t.avg==null?"—":signed(t.avg)), "");
   sortedShows(false).forEach(function(sh){ var s = showStats(sh);
     L.push(sh.date+" · "+(sh.name||"Card show")+" · "+(s.hours||"?")+" h · profit "+signed(s.profit)+(s.perHour!=null?" · "+perHr(s.perHour):""));
     if(sh.notes) L.push("   Notes: "+sh.notes.replace(/\n/g,"\n   "));
-    sh.sales.forEach(function(r){ L.push("   "+saleName(r)+" | bought $"+(Number(r.bought)||0)+" | "+(isNum(r.sold) ? "sold $"+Number(r.sold)+" | "+signed(Number(r.sold)-(Number(r.bought)||0)) : "not sold yet")); });
+    if(s.costs) L.push("   Fees and gas: $"+s.costs);
+    sh.sales.forEach(function(r){ L.push("   "+saleName(r)+" | bought $"+(Number(r.bought)||0)+" | "+(saleDone(r) ? (saleStatus(r)==="traded"?"traded for $":"sold $")+Number(r.sold)+" | "+signed(Number(r.sold)-(Number(r.bought)||0)) : "holding")+(r.batch?" | "+batchName(r.batch, sh):"")); });
     L.push("");
   });
   L.push(BK_MARK, JSON.stringify({v:1, shows:LOG.shows}));
@@ -2077,7 +2218,7 @@ function downloadBackup(){
 }
 function parseBackup(text){
   var i = String(text||"").indexOf(BK_MARK), json = i>=0 ? text.slice(i+BK_MARK.length) : text;
-  try{ var d = JSON.parse(json.trim()); if(d && Array.isArray(d.shows)) return d.shows.filter(function(s){ return s && typeof s==="object"; }).map(function(s){ return {id:String(s.id||uid("s")), name:String(s.name||"Card show"), date:String(s.date||""), hours:isNum(s.hours)?Number(s.hours):"", notes:String(s.notes||"").slice(0,NOTES_MAX), sales:Array.isArray(s.sales)?s.sales.map(function(r){ return {id:String(r.id||uid("r")), cardId:r.cardId||null, label:String(r.label||""), bought:isNum(r.bought)?Number(r.bought):"", sold:isNum(r.sold)?Number(r.sold):""}; }):[]}; }); }catch(e){}
+  try{ var d = JSON.parse(json.trim()); if(d && Array.isArray(d.shows)) return d.shows.filter(function(s){ return s && typeof s==="object"; }).map(normShow); }catch(e){}
   return null;
 }
 function restoreFrom(text){
@@ -2117,23 +2258,94 @@ function renderLogLock(){
 }
 
 /* --- views --- */
+function anTable(head, rows){
+  return '<div class="tbl-wrap"><table class="an-tbl"><tr>'+head.map(function(x){ return '<th'+(x.r?' class="r"':'')+'>'+x.t+'</th>'; }).join("")+'</tr>'+
+    rows.map(function(r){ return '<tr>'+r.map(function(c,i){ return '<td'+(head[i].r?' class="r num"':'')+'>'+c+'</td>'; }).join("")+'</tr>'; }).join("")+'</table></div>';
+}
+function pnCls(n){ return n>=0 ? 'pos-t' : 'neg-t'; }
+function groupTable(title, groups, note){
+  if(!groups.length) return '';
+  return '<section class="block"><h3>'+title+'</h3>'+anTable([{t:"Group"},{t:"Flips",r:1},{t:"Spent",r:1},{t:"Profit",r:1},{t:"Return",r:1},{t:"Made money",r:1}],
+    groups.map(function(g){ return ['<b>'+esc(g.label)+'</b>', g.n, money(g.cost,0), '<span class="'+pnCls(g.profit)+'">'+signed(g.profit)+'</span>', g.roi==null?'—':'<span class="'+pnCls(g.roi)+'">'+pct(g.roi)+'</span>', g.wins+' of '+g.n]; }))+
+    (note?'<p class="note">'+note+'</p>':'')+'</section>';
+}
+function logOverview(t){
+  var B = LOGSET.bench, h = '', gap = t.allIn==null ? null : t.allIn - B;
+  h += '<div class="log-hero"><span class="lbl">Total profit</span><b class="'+(t.profit>=0?'':'neg-t')+'">'+signed(t.profit)+'</b><span class="sub">from '+t.sold+' card'+(t.sold===1?'':'s')+' sold'+(t.costs?' · after '+money(t.costs,0)+' in fees and gas':'')+'</span></div>';
+  h += '<div class="log-tiles four">'+
+    '<div><span>All-in per hour</span><b>'+perHr(t.allIn)+'</b><small>'+(gap==null ? 'Add hours to a show to see this' : '<span class="'+pnCls(gap)+'">'+(gap>=0?'+':'−')+'$'+Math.abs(gap).toFixed(2)+'/hr</span> vs. $'+B+'/hr')+'</small></div>'+
+    '<div><span>Return on spend</span><b>'+(t.roi==null?'—':pct(t.roi))+'</b><small>on '+money(t.base,0)+' spent</small></div>'+
+    '<div><span>Average per show</span><b>'+(t.avg==null?'—':signed(t.avg))+'</b><small>'+t.shows+' card show'+(t.shows===1?'':'s')+'</small></div>'+
+    '<div><span>In unsold cards</span><b>'+money(t.holdingCost,0)+'</b><small>'+(t.holding ? t.holding+' card'+(t.holding===1?'':'s')+' still holding' : 'Everything sold')+'</small></div></div>';
+  if(t.allInHours > 0){
+    var mx = Math.max(t.hProfit, t.benchPay, 1);
+    h += '<section class="block"><h3>Compared with $'+B+'/hr</h3><div class="bench">'+
+      '<div class="bbar"><span>Flipping</span><i style="width:'+Math.max(2, Math.max(0,t.hProfit)/mx*100)+'%" class="'+(t.hProfit>=t.benchPay?'up':'down')+'"></i><b class="num">'+signed(t.hProfit)+'</b></div>'+
+      '<div class="bbar"><span>At $'+B+'/hr</span><i style="width:'+Math.max(2, t.benchPay/mx*100)+'%" class="job"></i><b class="num">'+money(t.benchPay,0)+'</b></div>'+
+      '<p>Over <b>'+(Math.round(t.allInHours*10)/10)+' hours</b> ('+t.hours+' at shows plus '+LOGSET.buffer+' min extra per show), $'+B+'/hr would have paid <b>'+money(t.benchPay,0)+'</b>. Flipping made <b class="'+pnCls(t.extra)+'">'+(t.extra>=0?money(t.extra,0)+' more':money(-t.extra,0)+' less')+'</b>.</p>'+
+      '<p><b>'+t.beat+' of '+t.rated+'</b> show'+(t.rated===1?'':'s')+' beat $'+B+'/hr.'+
+      (t.noBest!=null ? ' Without your best show ('+esc(t.best.sh.name||'Card show')+', '+fmtDate(t.best.sh.date)+'): <b class="'+pnCls(t.noBest-B)+'">'+perHr(t.noBest)+'</b>'+(t.noBest>=B?', still above.':', below the benchmark.') : '')+'</p>'+
+      (t.avgDays!=null ? '<p>Average time from buying to selling: <b>'+(t.avgDays<0.5?'same day':Math.round(t.avgDays)+' day'+(Math.round(t.avgDays)===1?'':'s'))+'</b>.</p>' : '')+
+      '</div></section>';
+  }
+  h += '<section class="block"><h3>Before you leave a show</h3><div class="calc"><div class="calc-in"><label class="f">Hours there so far<input id="be-h" type="number" min="0" step="0.25" inputmode="decimal" placeholder="e.g. 2"></label><label class="f">Spent so far<input id="be-s" type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 150"></label></div><p class="calc-out" id="be-out" aria-live="polite">Enter your hours to see the profit you need to beat $'+B+'/hr.</p></div></section>';
+  h += '<section class="block"><div class="c-head"><h3>'+(chartMode==="run"?'Running total':chartMode==="rate"?'All-in per hour':'Profit by show')+'</h3><div class="seg" role="group" aria-label="Chart view"><button id="cm-show" aria-pressed="'+(chartMode==="show")+'">Each show</button><button id="cm-run" aria-pressed="'+(chartMode==="run")+'">Running total</button><button id="cm-rate" aria-pressed="'+(chartMode==="rate")+'">Per hour</button></div></div><div class="chart-box" id="pchart"></div>'+
+    (chartMode==="rate"?'<p class="note">Bars are all-in money per hour (show time plus '+LOGSET.buffer+' min). Blue beats $'+B+'/hr, red falls short. The line is the average of the last 3 shows.</p>':'')+'</section>';
+  var hold = []; LOG.shows.forEach(function(sh){ sh.sales.forEach(function(r){ if(!saleDone(r)) hold.push({sh:sh, r:r, d:dayDiff(r.boughtOn||sh.date, todayStr())}); }); });
+  if(hold.length){ hold.sort(function(a,b){ return (b.d||0)-(a.d||0); });
+    h += '<section class="block"><h3>Still holding ('+hold.length+')</h3><div class="plist">'+hold.map(function(x){ return '<button class="show-row" data-show="'+esc(x.sh.id)+'"><span class="show-date">'+(x.d==null?'—':x.d+' day'+(x.d===1?'':'s'))+'</span><span class="show-main"><b>'+esc(saleName(x.r))+'</b><span class="sub">Bought at '+esc(x.sh.name||'Card show')+', '+fmtDate(x.sh.date)+'</span></span><span class="show-num"><b class="num">'+money(Number(x.r.bought)||0,0)+'</b><span class="sub">paid</span></span></button>'; }).join("")+'</div></section>'; }
+  h += '<section class="block"><h3>Card shows</h3><div class="plist">'+sortedShows(false).map(function(sh){ var s = showStats(sh);
+    return '<button class="show-row" data-show="'+esc(sh.id)+'"><span class="show-date">'+fmtDate(sh.date)+'</span><span class="show-main"><b>'+esc(sh.name||"Card show")+'</b><span class="sub">'+(s.hours? s.hours+' h · ' : '')+s.sold+' sold'+(s.unsold? ' · '+s.unsold+' holding':'')+(s.roi!=null?' · '+pct(s.roi)+' return':'')+'</span>'+(sh.notes ? '<span class="show-note">📝 '+esc(sh.notes.replace(/\s+/g," ").slice(0,90))+'</span>' : '')+'</span>'+
+      '<span class="show-num"><b class="num '+(s.profit>=0?'':'neg-t')+'\">'+signed(s.profit)+'</b><span class="sub'+(s.beats==null?'':s.beats?' pos-t':' neg-t')+'">'+(s.allIn!=null?perHr(s.allIn)+' all-in':'')+'</span></span></button>'; }).join("")+'</div></section>';
+  h += '<details class="lset"><summary>Benchmark: $'+B+'/hr · '+LOGSET.buffer+' min extra per show</summary><div class="lset-in"><label class="f">Pay to beat ($/hr)<input id="ls-bench" type="number" min="1" step="0.5" inputmode="decimal" value="'+B+'"></label><label class="f">Extra time per show (min)<input id="ls-buf" type="number" min="0" step="5" inputmode="numeric" value="'+LOGSET.buffer+'"></label></div><p class="note">Extra time covers rounding, breaks and traffic. It’s added to every show with hours. Saved on this device only.</p></details>';
+  return h;
+}
+function logBreakdowns(){
+  var units = allUnits(), h = '';
+  if(!units.length) return '<div class="empty">Sell a card to see breakdowns.</div>';
+  var kinds = groupUnits(units, function(u){ return u.kind==="batch" ? "Batches" : "Single cards"; });
+  h += groupTable("Batches vs. single cards", kinds, 'A batch is judged on its total: everything you paid for the cards together against everything they sold for.');
+  var batches = units.filter(function(u){ return u.kind==="batch"; });
+  if(batches.length){
+    h += '<section class="block"><h3>Each batch</h3>'+anTable([{t:"Batch"},{t:"Cards",r:1},{t:"Spent",r:1},{t:"Profit",r:1},{t:"Return",r:1},{t:"Lowest-earning card"}],
+      batches.map(function(u){ var w = null; u.items.forEach(function(r){ var p = saleProfit(r); if(w==null || p < w.p) w = {r:r, p:p}; });
+        return ['<b>'+esc(u.name)+'</b><br><span class="sub">'+fmtDate(u.sh.date)+'</span>', u.items.length, money(u.cost,0), '<span class="'+pnCls(u.profit)+'">'+signed(u.profit)+'</span>', u.roi==null?'—':'<span class="'+pnCls(u.roi)+'">'+pct(u.roi)+'</span>',
+          u.items.length > 1 && w ? esc(saleName(w.r))+' <span class="'+pnCls(w.p)+'">'+signed(w.p)+'</span>' : '—']; }))+
+      '<p class="note">The lowest-earning card uses how you split the batch price between cards. Before you agree to a bundle, check that every card would be a flip on its own.</p></section>';
+  }
+  h += groupTable("By flip type", groupUnits(units, flipLabel), '“Not set” means the condition you bought and sold it as isn’t filled in. Open a show and tap <b>More details</b> on a card to add it.');
+  h += groupTable("By era", groupUnits(units, eraLabel), null);
+  h += groupTable("By vendor", groupUnits(units, vendorLabel), 'Add the vendor under <b>More details</b> on each card to see who pays best.');
+  return h;
+}
+function logAccuracy(){
+  var units = allUnits().filter(function(u){ return u.expected!=null && u.got > 0; }), h = '';
+  if(!units.length) return '<div class="empty">No flips to compare yet.<br><span class="sub">A flip needs an expected sale price: set the condition you sold it as under <b>More details</b>, or log a pairing as sold.</span></div>';
+  var ex = 0, got = 0, abs = 0, today = false;
+  units.forEach(function(u){ ex += u.expected; got += u.got; abs += Math.abs(u.got-u.expected)/u.expected; today = today || u.expToday; });
+  var bias = (got-ex)/ex*100, mape = abs/units.length*100;
+  h += '<div class="psum"><div class="psum-main"><span class="lbl">Sold vs. what the site expected</span><b class="num '+pnCls(bias)+'">'+pct(bias)+'</b></div>'+
+    '<p class="sub">Across '+units.length+' flip'+(units.length===1?'':'s')+' you sold for <b>'+money(got,0)+'</b> against <b>'+money(ex,0)+'</b> expected. A typical flip landed <b>'+Math.round(mape)+'%</b> away from the estimate'+(Math.abs(bias)<3?', so the estimates are close to what you actually get.':bias>0?', and the site tends to run low for you.':', and the site tends to run high for you.')+'</p></div>';
+  h += '<section class="block"><h3>Each flip</h3>'+anTable([{t:"Flip"},{t:"Type"},{t:"Expected",r:1},{t:"Sold for",r:1},{t:"Difference",r:1}],
+    units.slice().reverse().map(function(u){ var d = u.got - u.expected;
+      return ['<b>'+esc(u.name)+'</b><br><span class="sub">'+fmtDate(u.sh.date)+'</span>', esc(flipLabel(u)), money(u.expected,0)+(u.expToday?'*':''), money(u.got,0), '<span class="'+pnCls(d)+'">'+signed(d)+' ('+pct(d/u.expected*100)+')</span>']; }))+
+    '<p class="note">Expected = the site’s price for the condition you sold it as × your vendor rate ('+S.vendor+'%).'+(today?' * Uses today’s price, because no estimate was saved when you logged it.':'')+'</p></section>';
+  var g = {}; units.forEach(function(u){ var k = flipLabel(u); (g[k] = g[k] || {ex:0, got:0, n:0}); g[k].ex += u.expected; g[k].got += u.got; g[k].n++; });
+  var keys = Object.keys(g); if(keys.length > 1) h += '<section class="block"><h3>By flip type</h3>'+anTable([{t:"Type"},{t:"Flips",r:1},{t:"Expected",r:1},{t:"Sold for",r:1},{t:"Difference",r:1}],
+    keys.map(function(k){ var x = g[k], d = (x.got-x.ex)/x.ex*100; return ['<b>'+esc(k)+'</b>', x.n, money(x.ex,0), money(x.got,0), '<span class="'+pnCls(d)+'">'+pct(d)+'</span>']; }))+'</section>';
+  return h;
+}
 function renderLog(){
-  var t = logStats(), h = header();
+  var t = logStats(), h = header(), tab = state.logTab || load("cfz.logtab", "overview");
   h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Changes save on your phone right away; tap <b>Save to GitHub</b> to keep them on the site. The log is locked with your passcode: on GitHub it’s saved scrambled, so only someone with the passcode can read it.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
   if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so unsaved changes are lost if you close it. Tap Save to GitHub before leaving.</p>';
-  if(backupDue() && !state.backupPanel) h += '<div class="notice bk-due"><span><b>'+(new Date().getDay()===5?'It’s Friday: save':'Time to save')+' a backup of your profit log.</b> If you lose your phone or clear your browser, this file brings it back.</span><span class="bk-acts"><button class="btn primary" id="bk-now">Save backup</button><button class="btn ghost" id="bk-snooze">Not now</button></span></div>';
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
   h += backupPanelHtml();
   if(!LOG.shows.length){
     h += '<div class="empty log-empty"><b>No card shows logged yet.</b><br>Tap <b>Log a card show</b>, add the cards you bought and what they sold for, and your profit, money per hour and chart show up here.<br><span class="sub">Tip: in <b>Card Pairings</b>, “Log as sold” adds a whole batch at once.</span></div>';
   } else {
-    h += '<div class="log-hero"><span class="lbl">Total profit</span><b class="'+(t.profit>=0?'':'neg-t')+'">'+signed(t.profit)+'</b><span class="sub">from '+t.sold+' card'+(t.sold===1?'':'s')+' sold</span></div>';
-    h += '<div class="log-tiles"><div><span>Money per hour</span><b>'+perHr(t.perHour)+'</b><small>'+(t.hours? t.hours+' hours logged' : 'Add hours to a show to see this')+'</small></div>'+
-      '<div><span>Average per show</span><b>'+(t.avg==null?'—':signed(t.avg))+'</b><small>'+t.shows+' card show'+(t.shows===1?'':'s')+'</small></div></div>';
-    h += '<section class="block"><div class="c-head"><h3>'+(chartMode==="run"?'Running total':'Profit by show')+'</h3><div class="seg" role="group" aria-label="Chart view"><button id="cm-show" aria-pressed="'+(chartMode==="show")+'">Each show</button><button id="cm-run" aria-pressed="'+(chartMode==="run")+'">Running total</button></div></div><div class="chart-box" id="pchart"></div></section>';
-    h += '<section class="block"><h3>Card shows</h3><div class="plist">'+sortedShows(false).map(function(sh){ var s = showStats(sh);
-      return '<button class="show-row" data-show="'+esc(sh.id)+'"><span class="show-date">'+fmtDate(sh.date)+'</span><span class="show-main"><b>'+esc(sh.name||"Card show")+'</b><span class="sub">'+(s.hours? s.hours+' h · ' : '')+s.sold+' sold'+(s.unsold? ' · '+s.unsold+' not sold yet':'')+'</span>'+(sh.notes ? '<span class="show-note">📝 '+esc(sh.notes.replace(/\s+/g," ").slice(0,90))+'</span>' : '')+'</span>'+
-        '<span class="show-num"><b class="num '+(s.profit>=0?'':'neg-t')+'">'+signed(s.profit)+'</b><span class="sub">'+(s.perHour!=null?perHr(s.perHour):'')+'</span></span></button>'; }).join("")+'</div></section>';
+    h += '<div class="seg log-tabs" role="tablist" aria-label="Profit log views">'+[["overview","Overview"],["breakdowns","Breakdowns"],["accuracy","Price accuracy"]].map(function(x){ return '<button role="tab" data-ltab="'+x[0]+'" aria-pressed="'+(tab===x[0])+'" aria-selected="'+(tab===x[0])+'">'+x[1]+'</button>'; }).join("")+'</div>';
+    h += tab==="breakdowns" ? logBreakdowns() : tab==="accuracy" ? logAccuracy() : logOverview(t);
   }
   if(LOGLOCK) h += '<div class="log-lockrow"><button class="btn ghost" id="loglock">🔒 Lock on this device</button></div>';
   h += '<div class="bk-foot"><span class="sub">Backup: '+(LOG.lastBackup ? 'last saved '+fmtDate(LOG.lastBackup) : 'never saved')+'</span><button class="btn ghost" id="bk-save">Save backup</button><button class="btn ghost" id="bk-restore">Restore</button></div>';
@@ -2142,9 +2354,18 @@ function renderLog(){
   bindBackup();
   var ll = document.getElementById("loglock"); if(ll) ll.addEventListener("click", function(){
     if(pendingCount() && !confirm("You have changes not on GitHub yet. They stay on this phone and come back when you unlock. Lock now?")) return; lockLog(); });
+  root.querySelectorAll("[data-ltab]").forEach(function(b){ b.addEventListener("click", function(){ state.logTab = b.getAttribute("data-ltab"); save("cfz.logtab", state.logTab); render(); }); });
   root.querySelectorAll("[data-show]").forEach(function(b){ b.addEventListener("click", function(){ goLog(b.getAttribute("data-show")); }); });
-  var a = document.getElementById("cm-show"), b = document.getElementById("cm-run");
-  if(a){ a.addEventListener("click", function(){ chartMode = "show"; render(); }); b.addEventListener("click", function(){ chartMode = "run"; render(); }); }
+  [["cm-show","show"],["cm-run","run"],["cm-rate","rate"]].forEach(function(x){ var el = document.getElementById(x[0]); if(el) el.addEventListener("click", function(){ chartMode = x[1]; render(); }); });
+  var bh = document.getElementById("be-h"), bs = document.getElementById("be-s"), bo = document.getElementById("be-out");
+  if(bh){ var upd = function(){ var hv = parseFloat(bh.value), sv = parseFloat(bs.value);
+      if(!(hv>=0)){ bo.innerHTML = 'Enter your hours to see the profit you need to beat $'+LOGSET.bench+'/hr.'; return; }
+      var r = showBreakEven(hv, sv>0 ? sv : 0);
+      bo.innerHTML = 'To beat <b>$'+LOGSET.bench+'/hr</b>, leave with at least <b class="pos-t">'+signed(r.target)+'</b> profit'+(r.roi!=null ? ', a <b>'+pct(r.roi)+'</b> return on what you spent.' : '.'); };
+    bh.addEventListener("input", upd); bs.addEventListener("input", upd); }
+  var lb = document.getElementById("ls-bench"), lf = document.getElementById("ls-buf");
+  if(lb){ lb.addEventListener("change", function(){ var v = parseFloat(lb.value); if(v>0){ LOGSET.bench = v; saveLogSet(); render(); } });
+    lf.addEventListener("change", function(){ var v = parseFloat(lf.value); if(v>=0){ LOGSET.buffer = v; saveLogSet(); render(); } }); }
   drawChart();
 }
 function backupPanelHtml(){
@@ -2177,33 +2398,44 @@ function bindBackup(){
 }
 function renderShow(){
   var sh = showById(state.showId); if(!sh){ state.view = "log"; return renderLog(); }
-  var s = showStats(sh), phone = VIEW==="phone", h = header();
+  var s = showStats(sh), B = LOGSET.bench, h = header(); state.sxOpen = state.sxOpen || {};
   h += '<div class="back"><button class="btn ghost" id="sback">← All card shows</button></div>';
   h += '<div class="pair-head"><label class="pname"><span class="sub">Show name</span><input id="sname" value="'+esc(sh.name||"")+'" maxlength="60" placeholder="e.g. Ontario Card Show"></label><div class="confirm">'+
     (state.logConfirm==="del" ? '<span>Delete this show and its log?</span><button class="btn danger" id="sdel-yes">Delete</button><button class="btn" id="sdel-no">Keep</button>' : '<button class="btn ghost" id="sdel">Delete show</button>')+'</div></div>';
-  h += '<div class="show-fields"><label class="f">Date<input type="date" id="sdate" value="'+esc(sh.date||"")+'"></label><label class="f">Hours at the show<input type="number" id="shours" min="0" step="0.25" inputmode="decimal" placeholder="e.g. 5.5" value="'+esc(isNum(sh.hours)?sh.hours:"")+'"></label></div>';
-  h += '<div class="psum"><div class="psum-main"><span class="lbl">Profit from this show</span><b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b>'+(s.perHour!=null?'<span class="pill pos">'+perHr(s.perHour)+'</span>':'')+'</div>'+
-    '<div class="psum-stats"><div><span>You paid</span><b class="num">'+money(s.spent,0)+'</b><small>'+sh.sales.length+' card'+(sh.sales.length===1?'':'s')+'</small></div><div class="v"><span>You sold for</span><b class="num">'+money(s.got,0)+'</b><small>'+s.sold+' sold</small></div><div><span>Not sold yet</span><b class="num">'+s.unsold+'</b><small>'+(s.unsold? money(s.unsoldCost,0)+' paid, not counted yet' : 'Everything sold')+'</small></div></div>'+
-    (s.hours ? '' : '<p class="sub">Add your hours above to see money per hour.</p>')+'</div>';
+  h += '<div class="show-fields"><label class="f">Date<input type="date" id="sdate" value="'+esc(sh.date||"")+'"></label><label class="f">Hours at the show<input type="number" id="shours" min="0" step="0.25" inputmode="decimal" placeholder="e.g. 5.5" value="'+esc(isNum(sh.hours)?sh.hours:"")+'"></label><label class="f">Fees and gas<input type="number" id="scosts" min="0" step="0.01" inputmode="decimal" placeholder="$0" value="'+esc(isNum(sh.costs)?sh.costs:"")+'"></label></div>';
+  h += '<div class="psum"><div class="psum-main"><span class="lbl">Profit from this show</span><b class="num '+(s.profit>=0?'pos-t':'neg-t')+'">'+signed(s.profit)+'</b>'+(s.allIn!=null?'<span class="pill '+(s.beats?'pos':'neg')+'">'+perHr(s.allIn)+' all-in</span>':'')+(s.roi!=null?'<span class="pill est">'+pct(s.roi)+' return</span>':'')+'</div>'+
+    '<div class="psum-stats"><div><span>You paid</span><b class="num">'+money(s.spent,0)+'</b><small>'+sh.sales.length+' card'+(sh.sales.length===1?'':'s')+(s.costs?' · '+money(s.costs,0)+' fees and gas':'')+'</small></div><div class="v"><span>You sold for</span><b class="num">'+money(s.got,0)+'</b><small>'+s.sold+' sold'+(s.traded?' ('+s.traded+' traded)':'')+'</small></div><div><span>Still holding</span><b class="num">'+s.unsold+'</b><small>'+(s.unsold? money(s.unsoldCost,0)+' paid, not counted yet' : 'Everything sold')+'</small></div></div>';
+  if(s.hours > 0){ var need = s.target, prog = need > 0 ? Math.max(0, Math.min(1, s.profit/need)) : 1;
+    h += '<div class="be-row"><div class="meter" role="img" aria-label="'+Math.round(prog*100)+' percent of the profit needed to beat '+B+' dollars an hour"><i class="'+(s.profit>=need?'up':'down')+'" style="width:'+(prog*100)+'%"></i></div>'+
+      '<p class="sub">To beat <b>$'+B+'/hr</b> over '+(Math.round(s.allInHours*100)/100)+' hours ('+s.hours+' here plus '+LOGSET.buffer+' min), this show needs <b>'+signed(need)+'</b>'+(s.spent>0?', a '+pct(need/s.spent*100)+' return on what you paid':'')+'. '+(s.profit>=need?'<b class="pos-t">Beat it by '+money(s.profit-need,0)+'.</b>':'<b class="neg-t">'+money(need-s.profit,0)+' short.</b>')+'</p></div>'; }
+  else h += '<p class="sub">Add your hours above to see money per hour and the profit you need to beat $'+B+'/hr.</p>';
+  h += '</div>';
   var nlen = (sh.notes||"").length;
   h += '<section class="block"><h3>Notes</h3><textarea id="snotes" class="snotes" maxlength="'+NOTES_MAX+'" rows="6" placeholder="Your thoughts on this show: how it went, vendors who paid well, cards people were asking for, what to bring next time…">'+esc(sh.notes||"")+'</textarea>'+
     '<div class="notes-meta sub"><span id="snotes-st">'+(nlen?'Saved on this phone. Tap Save to GitHub to keep it on the site.':'Notes save as you type.')+'</span><span id="snotes-n">'+nlen+' / '+NOTES_MAX+'</span></div></section>';
+  var vendors = {}; LOG.shows.forEach(function(x){ x.sales.forEach(function(r){ if(r.vendor) vendors[r.vendor.trim()] = 1; }); });
+  var bids = []; sh.sales.forEach(function(r){ if(r.batch && bids.indexOf(r.batch)<0) bids.push(r.batch); });
+  var condOpts = function(v){ return '<option value="">Not set</option>'+Object.keys(LCONDS).map(function(k){ return '<option value="'+k+'"'+(v===k?' selected':'')+'>'+LCONDS[k]+'</option>'; }).join(""); };
   h += '<section class="block"><h3>Cards ('+sh.sales.length+')</h3>';
   if(!sh.sales.length) h += '<div class="empty">No cards yet. Add the cards you bought or sold at this show below.</div>';
-  else if(phone){
-    h += '<div class="plist pitems">'+sh.sales.map(function(r,i){ var p = isNum(r.sold) ? Number(r.sold)-(Number(r.bought)||0) : null;
-      return '<div class="prow2"><div class="top2"><b>'+esc(saleName(r))+'</b><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></div>'+
-        '<div class="pfields"><label>Bought for<input class="sb" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'"></label><label>Sold for<input class="ss" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Not sold yet" value="'+esc(isNum(r.sold)?r.sold:"")+'"></label></div>'+
-        '<div class="meta">'+(p==null?'Not sold yet':'Profit <b class="num '+(p>=0?'pos-t':'neg-t')+'">'+signed(p)+'</b>')+'</div></div>'; }).join("")+'</div>';
-  } else {
-    h += '<div class="tbl-wrap"><table class="pitems"><tr><th>Card</th><th class="r">Bought for</th><th class="r">Sold for</th><th class="r">Profit</th><th></th></tr>'+
-      sh.sales.map(function(r,i){ var p = isNum(r.sold) ? Number(r.sold)-(Number(r.bought)||0) : null; var c = r.cardId ? cardById(r.cardId) : null;
-        return '<tr><td><span class="ccell">'+(c&&c.image?'<span class="pmini"><img src="'+thumb(c)+'" alt="" loading="lazy"></span>':'')+'<b>'+esc(saleName(r))+'</b></span></td>'+
-          '<td class="r"><input class="sb paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'" aria-label="Bought for"></td>'+
-          '<td class="r"><input class="ss paid" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Not sold" value="'+esc(isNum(r.sold)?r.sold:"")+'" aria-label="Sold for"></td>'+
-          '<td class="r num '+(p==null?'':(p>=0?'pos-t':'neg-t'))+'">'+(p==null?'<span class="sub">not sold</span>':signed(p))+'</td><td><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></td></tr>'; }).join("")+'</table></div>';
-  }
-  h += '<p class="note">Leave “Sold for” blank until it sells. Unsold cards don’t count toward profit yet.</p></section>';
+  else h += '<datalist id="vendor-list">'+Object.keys(vendors).sort().map(function(v){ return '<option value="'+esc(v)+'">'; }).join("")+'</datalist><div class="plist pitems">'+sh.sales.map(function(r,i){
+      var st = saleStatus(r), p = saleProfit(r), c = r.cardId ? cardById(r.cardId) : null, ex = saleExpected(r);
+      var tags = []; if(r.batch) tags.push(batchName(r.batch, sh)); if(r.from && r.to) tags.push(LCONDS[r.from]+' → '+LCONDS[r.to]); if(r.vendor) tags.push(r.vendor);
+      return '<div class="prow2 srow"><div class="top2"><span class="ccell">'+(c&&c.image?'<span class="pmini"><img src="'+thumb(c)+'" alt="" loading="lazy"></span>':'')+'<b>'+esc(saleName(r))+'</b></span><button class="xbtn" data-sx="'+i+'" aria-label="Remove '+esc(saleName(r))+'">×</button></div>'+
+        '<div class="pfields three"><label>Status<select class="sst" data-i="'+i+'"><option value="sold"'+(st==="sold"?' selected':'')+'>Sold</option><option value="holding"'+(st==="holding"?' selected':'')+'>Holding</option><option value="traded"'+(st==="traded"?' selected':'')+'>Traded</option></select></label>'+
+        '<label>Bought for<input class="sb" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" value="'+esc(isNum(r.bought)?r.bought:"")+'"></label>'+
+        '<label>'+(st==="traded"?'Trade value':'Sold for')+'<input class="ss" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(st==="holding"?'Not sold yet':'')+'" value="'+esc(st!=="holding"&&isNum(r.sold)?r.sold:"")+'"></label></div>'+
+        '<div class="meta">'+(p==null?(st==="holding"?'Holding · not counted yet':'Add the '+(st==="traded"?'trade value':'sale price')+' to count it'):'Profit <b class="num '+(p>=0?'pos-t':'neg-t')+'">'+signed(p)+'</b>')+(tags.length?' · '+esc(tags.join(' · ')):'')+'</div>'+
+        '<details class="sx" data-sid="'+esc(r.id)+'"'+(state.sxOpen[r.id]?' open':'')+'><summary>More details</summary><div class="pfields sx-grid">'+
+          '<label>Vendor<input class="sv" data-i="'+i+'" list="vendor-list" maxlength="40" placeholder="Who you sold to" value="'+esc(r.vendor||"")+'"></label>'+
+          '<label>Batch<select class="sbt" data-i="'+i+'"><option value="">Not in a batch</option>'+bids.map(function(b){ return '<option value="'+esc(b)+'"'+(r.batch===b?' selected':'')+'>'+esc(batchName(b, sh))+'</option>'; }).join("")+'<option value="__new">New batch</option></select></label>'+
+          '<label>Bought as<select class="sfr" data-i="'+i+'">'+condOpts(r.from)+'</select></label>'+
+          '<label>Sold as<select class="sto" data-i="'+i+'">'+condOpts(r.to)+'</select></label>'+
+          '<label>Bought on<input class="sbo" data-i="'+i+'" type="date" value="'+esc(r.boughtOn||sh.date||"")+'"></label>'+
+          '<label>Sold on<input class="sso" data-i="'+i+'" type="date" value="'+esc(r.soldOn||(st==="holding"?"":sh.date)||"")+'"></label>'+
+          '<label class="pf-paid">Expected sale<input class="sex" data-i="'+i+'" type="number" step="0.01" min="0" inputmode="decimal" placeholder="'+(ex?'Site estimate '+money(ex.v,0):'What you expected to get')+'" value="'+esc(isNum(r.expected)?r.expected:"")+'"></label>'+
+        '</div></details></div>'; }).join("")+'</div>';
+  h += '<p class="note">Set a card to <b>Holding</b> until it sells; holding cards don’t count toward profit yet. Cards in the same batch are judged together in Breakdowns.</p></section>';
   h += '<div class="padd"><label class="search"><span class="sub">Add a card</span><input id="sadd-q" type="search" placeholder="Search your site, or type any card name" autocomplete="off"></label><div class="padd-res" id="sadd-res"></div></div>';
   if(pairs.length) h += '<div class="padd pair-import"><span class="sub">Or add a whole pairing:</span><select id="spair" aria-label="Pairing to add">'+pairs.map(function(p){ return '<option value="'+esc(p.id)+'">'+esc(p.name)+' ('+p.items.length+')</option>'; }).join("")+'</select><button class="btn" id="spair-go">Add pairing</button></div>';
   root.innerHTML = h; bindHeader();
@@ -2214,13 +2446,25 @@ function renderShow(){
   nt.addEventListener("blur", flushNotes);
   document.getElementById("sback").addEventListener("click", function(){ flushNotes(); goLog(null); });
   var nm = document.getElementById("sname"); nm.addEventListener("change", function(){ sh.name = nm.value.trim() || "Card show"; saveLog(); });
-  var dt = document.getElementById("sdate"); dt.addEventListener("change", function(){ sh.date = dt.value; saveLog(); });
+  var dt = document.getElementById("sdate"); dt.addEventListener("change", function(){ sh.date = dt.value; redraw(); });
   var hr = document.getElementById("shours"); hr.addEventListener("change", function(){ var v = parseFloat(hr.value); sh.hours = isNaN(v)||v<0 ? "" : v; redraw(); });
+  var co = document.getElementById("scosts"); co.addEventListener("change", function(){ var v = parseFloat(co.value); sh.costs = isNaN(v)||v<=0 ? "" : v; redraw(); });
   var d1 = document.getElementById("sdel"); if(d1) d1.addEventListener("click", function(){ state.logConfirm = "del"; render(); });
   var d2 = document.getElementById("sdel-no"); if(d2) d2.addEventListener("click", function(){ state.logConfirm = null; render(); });
   var d3 = document.getElementById("sdel-yes"); if(d3) d3.addEventListener("click", function(){ LOG.shows = LOG.shows.filter(function(x){ return x!==sh; }); saveLog(); goLog(null); });
-  root.querySelectorAll("input.sb, input.ss").forEach(function(inp){ inp.addEventListener("change", function(){ var r = sh.sales[+inp.getAttribute("data-i")], v = parseFloat(inp.value), val = isNaN(v)||v<0 ? "" : v;
-    if(inp.classList.contains("sb")) r.bought = val; else r.sold = val; redraw(); }); });
+  function row(el){ return sh.sales[+el.getAttribute("data-i")]; }
+  function num(el){ var v = parseFloat(el.value); return isNaN(v)||v<0 ? "" : v; }
+  root.querySelectorAll("input.sb").forEach(function(inp){ inp.addEventListener("change", function(){ row(inp).bought = num(inp); redraw(); }); });
+  root.querySelectorAll("input.ss").forEach(function(inp){ inp.addEventListener("change", function(){ var r = row(inp); r.sold = num(inp); if(isNum(r.sold) && r.status==="holding") r.status = "sold"; if(!isNum(r.sold) && r.status!=="traded") r.status = "holding"; redraw(); }); });
+  root.querySelectorAll("select.sst").forEach(function(sel){ sel.addEventListener("change", function(){ var r = row(sel); r.status = sel.value; if(sel.value==="holding"){ r.sold = ""; r.soldOn = ""; } redraw(); }); });
+  root.querySelectorAll("input.sv").forEach(function(inp){ inp.addEventListener("change", function(){ row(inp).vendor = inp.value.trim().slice(0,40); redraw(); }); });
+  root.querySelectorAll("select.sbt").forEach(function(sel){ sel.addEventListener("change", function(){ var r = row(sel); r.batch = sel.value==="__new" ? uid("b") : sel.value; redraw(); }); });
+  root.querySelectorAll("select.sfr").forEach(function(sel){ sel.addEventListener("change", function(){ row(sel).from = sel.value; redraw(); }); });
+  root.querySelectorAll("select.sto").forEach(function(sel){ sel.addEventListener("change", function(){ row(sel).to = sel.value; redraw(); }); });
+  root.querySelectorAll("input.sbo").forEach(function(inp){ inp.addEventListener("change", function(){ var r = row(inp); r.boughtOn = inp.value===sh.date ? "" : inp.value; redraw(); }); });
+  root.querySelectorAll("input.sso").forEach(function(inp){ inp.addEventListener("change", function(){ var r = row(inp); r.soldOn = inp.value===sh.date ? "" : inp.value; redraw(); }); });
+  root.querySelectorAll("input.sex").forEach(function(inp){ inp.addEventListener("change", function(){ row(inp).expected = num(inp); redraw(); }); });
+  root.querySelectorAll("details.sx").forEach(function(d){ d.addEventListener("toggle", function(){ state.sxOpen[d.getAttribute("data-sid")] = d.open; }); });
   root.querySelectorAll("[data-sx]").forEach(function(b){ b.addEventListener("click", function(){ sh.sales.splice(+b.getAttribute("data-sx"),1); redraw(); }); });
   var q = document.getElementById("sadd-q"), res = document.getElementById("sadd-res");
   function addRow(row){ sh.sales.push(row); saveLog(); render(); var n = document.getElementById("sadd-q"); if(n) n.focus(); }
@@ -2229,15 +2473,19 @@ function renderShow(){
     var hits = smartSearch(cards, raw).list.slice(0,6);
     res.innerHTML = hits.map(function(c){ return '<button data-sadd="'+esc(c.id)+'"><span><b>'+esc(title(c))+'</b> <span class="sub">'+esc(c.set)+' · #'+esc(c.number)+'</span></span><span class="sub">+ Add</span></button>'; }).join("")+
       '<button data-snew="1"><span>Add “<b>'+esc(raw)+'</b>” (not on the site)</span><span class="sub">+ Add</span></button>';
-    res.querySelectorAll("[data-sadd]").forEach(function(b){ b.addEventListener("click", function(){ addRow({id:uid("r"), cardId:b.getAttribute("data-sadd"), label:"", bought:"", sold:""}); }); });
-    res.querySelector("[data-snew]").addEventListener("click", function(){ addRow({id:uid("r"), cardId:null, label:raw.slice(0,80), bought:"", sold:""}); });
+    res.querySelectorAll("[data-sadd]").forEach(function(b){ b.addEventListener("click", function(){ addRow({id:uid("r"), cardId:b.getAttribute("data-sadd"), label:"", bought:"", sold:"", status:"holding"}); }); });
+    res.querySelector("[data-snew]").addEventListener("click", function(){ addRow({id:uid("r"), cardId:null, label:raw.slice(0,80), bought:"", sold:"", status:"holding"}); });
   });
   var pg = document.getElementById("spair-go"); if(pg) pg.addEventListener("click", function(){ var p = pairById(document.getElementById("spair").value); if(!p) return; addPairingToShow(p, sh); render(); });
 }
-/* A pairing sold to a vendor: each card's cost is what you paid (or market), its sale is the vendor payout. */
+/* A pairing sold to a vendor: one batch. Each card's cost is what you paid (or market), its sale is the vendor payout,
+   and the payout is kept as the expected sale so Price accuracy can compare later. */
 function addPairingToShow(p, sh){
+  var bid = p.id;
+  if(sh.sales.some(function(r){ return r.batch===bid; })) bid = uid("b");
   p.items.forEach(function(it){ var r = itemCalc(it); if(r.missing) return;
-    sh.sales.push({id:uid("r"), cardId:it.cardId||null, label:it.cardId?"":String(it.label||"Card").slice(0,80), bought:Math.round(r.cost*100)/100, sold:r.noPrice ? "" : Math.round(r.payout*100)/100}); });
+    var pay = r.noPrice ? "" : Math.round(r.payout*100)/100;
+    sh.sales.push({id:uid("r"), cardId:it.cardId||null, label:it.cardId?"":String(it.label||"Card").slice(0,80), bought:Math.round(r.cost*100)/100, sold:pay, status:pay===""?"holding":"sold", batch:bid, from:it.bought, to:it.sellAs, expected:pay}); });
   saveLog();
 }
 
