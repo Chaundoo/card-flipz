@@ -60,7 +60,14 @@ def check_pairing(p):
     check_str(p["created"], 10, "A pairing date")
     need(isinstance(p["items"], list) and len(p["items"]) <= MAX_ITEMS, f"Pairing '{p['name']}' has too many cards")
     for it in p["items"]:
-        check_keys(it, ["cardId", "bought", "sellAs", "paid"], f"A card in '{p['name']}'")
+        if it.get("cardId") == "":
+            # a card that isn't on the site: its name + the condition prices typed in
+            check_keys(it, ["cardId", "bought", "sellAs", "paid", "label", "prices"], f"A card in '{p['name']}'")
+            check_str(it["label"], 80, "A card name")
+            check_keys(it["prices"], sorted(CONDS), f"Prices for '{it['label']}'")
+            need(all(is_money(v) for v in it["prices"].values()), f"'{it['label']}' has a bad market price")
+        else:
+            check_keys(it, ["cardId", "bought", "sellAs", "paid"], f"A card in '{p['name']}'")
         check_str(it["cardId"], 120, "A card id")
         need(it["bought"] in CONDS and it["sellAs"] in CONDS, f"A card in '{p['name']}' has an unknown condition")
         need(is_money(it["paid"]), f"A card in '{p['name']}' has a bad price paid")
