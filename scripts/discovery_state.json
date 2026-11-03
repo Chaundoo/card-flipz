@@ -2799,6 +2799,96 @@
 "price:$100+"
 ],
 "v": -0.5
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:kyogre",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:torchic",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:dark ampharos",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:treecko",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:charmander",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:arcanine",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:pikachu",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:mudkip",
+"set:EX Ruby and Sapphire",
+"kind:reverse holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-11-02",
+"f": [
+"pokemon:magikarp",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
