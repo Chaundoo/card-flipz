@@ -1293,7 +1293,7 @@ function renderList(){
     '<select id="exitf" aria-label="Sell to"><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option></select>'+
     (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
     '<button class="btn'+(state.selecting?' dark':'')+'" id="selbtn" aria-pressed="'+!!state.selecting+'">'+(state.selecting?'Done selecting':'Select cards')+'</button>'+
-    '<button class="btn primary" id="addlink">+ Add from TCGplayer link</button>'+
+    '<button class="btn primary" id="addlink">+ Add from link</button>'+
   '</div>';
   h += '<div id="results">'+resultsHTML()+'</div>';
   h += storageMeter();
@@ -1421,6 +1421,7 @@ function renderDetail(){
     (ADV ? popBlock(c) : '')+
   '</div></div>';
 
+  if(c.noApi) h += '<section class="block"><h3>No automatic prices</h3><p class="note" style="margin:0 0 10px">TCG Price Lookup doesn\u2019t list this card or printing (common for stamped and alternate printings), so its prices aren\u2019t updated by the bot. Check its recent sales here:</p>'+slLinks(c)+'</section>';
   if(VIEW==="phone"){
     h += '<section class="block"><h3>Raw condition prices</h3><div class="plist">'+RAW.map(function(r,i){ var x=c.raw[r[0]]||{}; var p=Number(x.price);
       return '<div class="prow2"><div class="top2"><b>'+r[1]+'</b><span class="price num">'+(p>0?money(p):"—")+'</span></div>'+
@@ -2495,8 +2496,12 @@ function addPairingToShow(p, sh){
    on TCG Price Lookup, checks for duplicates, adds it to the right era file and replies on the issue. */
 var ADD_REPO = "Chaundoo/card-flipz";
 var PRINTINGS = ["Auto (from the link)","Holofoil","Reverse Holofoil","Normal","1st Edition Holofoil","1st Edition","Unlimited Holofoil","Unlimited"];
+function parsePcLink(u){
+  var m = String(u||"").trim().match(/pricecharting\.com\/game\/([a-z0-9\-]+)\/([a-z0-9\-%]+)/i);
+  return m ? {url:"https://www.pricecharting.com/game/"+m[1].toLowerCase()+"/"+decodeURIComponent(m[2]).toLowerCase(), slug:m[2].toLowerCase()} : null;
+}
 function parseTcgLink(u){
-  var m = String(u||"").trim().match(/tcgplayer\.com\/product\/(\d+)(?:\/([^?#\s]*))?(?:\?([^#\s]*))?/i);
+  var m = String(u||"").trim().match(/tcgplayer\.com\/(?:[a-z]{2}(?:-[a-z]{2})?\/)?product\/(\d+)(?:\/([^?#\s]*))?(?:\?([^#\s]*))?/i);
   if(!m) return null;
   var pr = ""; (m[3]||"").split("&").forEach(function(kv){ var a = kv.split("="); if(a[0].toLowerCase()==="printing") pr = decodeURIComponent((a[1]||"").replace(/\+/g," ")); });
   return {id:m[1], slug:m[2]||"", printing:pr};
@@ -2513,28 +2518,33 @@ function printingOf(c){
 function showAddLink(){
   if(document.getElementById("addlink-bg")) return;
   var d = document.createElement("div"); d.className="chooser-bg"; d.id="addlink-bg";
-  d.innerHTML = '<div class="chooser addlink" role="dialog" aria-modal="true" aria-labelledby="al-t"><h2 id="al-t">Add a card from TCGplayer</h2>'+
-    '<p>Paste the card\'s TCGplayer link. GitHub opens with it filled in: press <b>Create</b> and the card shows up here in about 2 minutes with its condition prices.</p>'+
+  d.innerHTML = '<div class="chooser addlink" role="dialog" aria-modal="true" aria-labelledby="al-t"><h2 id="al-t">Add a card from a link</h2>'+
+    '<p>Paste the card\'s TCGplayer link, its PriceCharting link, or both. GitHub opens with them filled in: press <b>Create</b> and the card shows up here in about 2 minutes with its condition prices.</p>'+
     '<label for="al-url">TCGplayer link</label><input id="al-url" type="url" inputmode="url" placeholder="https://www.tcgplayer.com/product/85682/...">'+
+    '<label for="al-pc">PriceCharting link <small>(optional: pins down the exact card and printing, e.g. stamped or reverse holo)</small></label><input id="al-pc" type="url" inputmode="url" placeholder="https://www.pricecharting.com/game/pokemon-emerald/torchic-reverse-holo-69">'+
     '<label for="al-pr">Printing</label><select id="al-pr">'+PRINTINGS.map(function(p,i){ return '<option value="'+(i?esc(p):"")+'">'+esc(p)+'</option>'; }).join("")+'</select>'+
     '<div class="msg" id="al-msg" role="status"></div>'+
     '<div class="row"><button class="btn" id="al-cancel">Cancel</button><button class="btn primary" id="al-go">Add card</button></div></div>';
   document.body.appendChild(d);
-  var url = document.getElementById("al-url"), pr = document.getElementById("al-pr"), msg = document.getElementById("al-msg");
+  var url = document.getElementById("al-url"), pcIn = document.getElementById("al-pc"), pr = document.getElementById("al-pr"), msg = document.getElementById("al-msg");
   function close(){ d.remove(); }
   function say(t, err){ msg.className = "msg"+(err?" err":""); msg.innerHTML = t; }
   document.getElementById("al-cancel").addEventListener("click", close);
   d.addEventListener("click", function(e){ if(e.target===d) close(); });
   document.getElementById("al-go").addEventListener("click", function(){
-    var L = parseTcgLink(url.value);
-    if(!L){ say("That doesn't look like a TCGplayer card link. It should contain tcgplayer.com/product/ and a number.", true); return; }
+    var L = url.value.trim() ? parseTcgLink(url.value) : null, P = pcIn.value.trim() ? parsePcLink(pcIn.value) : null;
+    if(url.value.trim() && !L){ say("That doesn't look like a TCGplayer card link. It should contain tcgplayer.com/product/ and a number.", true); return; }
+    if(pcIn.value.trim() && !P){ say("That doesn't look like a PriceCharting card link. It should look like pricecharting.com/game/pokemon-emerald/torchic-reverse-holo-69.", true); return; }
+    if(!L && !P){ say("Paste a TCGplayer link, a PriceCharting link, or both.", true); return; }
+    L = L || {id:"", slug:"", printing:""};
     var want = (pr.value || L.printing || "").toLowerCase();
-    var same = cards.filter(function(c){ return String(c.tcgId||"")===L.id; });
-    var dup = same.filter(function(c){ return !want || printingOf(c)===want; })[0];
+    var same = L.id ? cards.filter(function(c){ return String(c.tcgId||"")===L.id; }) : [];
+    var dup = same.filter(function(c){ return !want || printingOf(c)===want; })[0] ||
+              (P ? cards.filter(function(c){ return (c.pcUrl||"").toLowerCase()===P.url; })[0] : null);
     if(dup){ say('Already on the site: <a href="#'+esc(dup.id)+'" id="al-open">'+esc(dup.name)+' ('+esc(dup.variant||"")+')</a>. Pick a different printing if you meant another version.', true);
       document.getElementById("al-open").addEventListener("click", function(e){ e.preventDefault(); close(); go(dup.id); }); return; }
-    var body = "TCGplayer link: "+url.value.trim()+"\nPrinting: "+(pr.value || L.printing || "auto")+"\n\nPress Create. The bot adds the card and replies here (about 2 minutes).";
-    var gh = "https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent("Add card: "+L.id)+"&body="+encodeURIComponent(body);
+    var body = (L.id ? "TCGplayer link: "+url.value.trim()+"\n" : "")+(P ? "PriceCharting link: "+P.url+"\n" : "")+"Printing: "+(pr.value || L.printing || "auto")+"\n\nPress Create. The bot adds the card and replies here (about 2 minutes).";
+    var gh = "https://github.com/"+ADD_REPO+"/issues/new?title="+encodeURIComponent("Add card: "+(L.id || P.slug))+"&body="+encodeURIComponent(body);
     window.open(gh, "_blank", "noopener");
     say("GitHub opened in a new tab. Press <b>Create</b> there, then refresh this page in about 2 minutes. If the card can't be added, the bot explains why on that GitHub page.");
   });
@@ -2874,7 +2884,7 @@ function slPrintWords(c){ var v = String(c.tcgVariant||c.variant||"").toLowerCas
 function slSetWords(c){ var s = String(c.set||""); if(/promo/i.test(s)) return "promo";
   return s.replace(/^EX\s+/i,"").replace(/^(SWSH|SV|SM|XY|BW|DP|HGSS|ME)\d*\s*[-:]\s*/i,"").replace(/[^A-Za-z0-9 &'é]/g," ").replace(/\s+/g," ").trim(); }
 function slNum(c){ return String(c.number||"").split("/")[0].replace(/^0+(?=\d)/,""); }
-function pcUrl(c){ var q = [slBase(c), slPrintWords(c), slNum(c), slSetWords(c)].filter(Boolean).join(" ");
+function pcUrl(c){ if(c.pcUrl && /^https:\/\/www\.pricecharting\.com\//.test(c.pcUrl)) return c.pcUrl; var q = [slBase(c), slPrintWords(c), slNum(c), slSetWords(c)].filter(Boolean).join(" ");
   return "https://www.pricecharting.com/search-products?type=prices&q="+encodeURIComponent(q).replace(/%20/g,"+"); }
 function ebayUrl(c){ var q = [slBase(c), String(c.number||""), slSetWords(c), slPrintWords(c), "-psa -cgc -bgs -beckett -graded -lot -japanese"].filter(Boolean).join(" ");
   return "https://www.ebay.com/sch/i.html?_nkw="+encodeURIComponent(q).replace(/%20/g,"+")+"&LH_Sold=1&LH_Complete=1&_sop=13"; }
