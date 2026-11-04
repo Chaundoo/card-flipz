@@ -1864,6 +1864,11 @@
 "synced": "2026-11-04",
 "variant": "Unlimited Holofoil"
 },
+"dark-scizor-009-105-84652-1st-edit": {
+"id": "019c975f-78a2-71da-8d4e-5794695d5d7d",
+"synced": "2026-11-04",
+"variant": "1st Edition Holofoil"
+},
 "dark-slowbro-008-110-84653-revers": {
 "id": "019c975f-78a6-7d28-a3a0-932eec3073f6",
 "synced": "2026-11-04",
@@ -1893,6 +1898,11 @@
 "id": "019c975f-78b3-770a-b0da-8e80ff46acd4",
 "synced": "2026-11-04",
 "variant": "Unlimited Holofoil"
+},
+"dark-typhlosion-010-105-84659-1st-edit": {
+"id": "019c975f-78b2-725b-9e1a-a1176d99ed13",
+"synced": "2026-11-04",
+"variant": "1st Edition Holofoil"
 },
 "dark-tyranitar-011-105-84660-unlimi": {
 "id": "019c975f-78b6-7235-894f-64bb2414208a",
@@ -4014,6 +4024,11 @@
 "synced": "2026-11-04",
 "variant": "Holofoil"
 },
+"gyarados-11-011-144-85988-reverse-": {
+"id": "019c9768-6e5d-7d83-9f8e-3901ec587d1c",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
 "gyarados-123-123-85995": {
 "id": "019c9768-6e73-777e-8d46-c4249d2f103e",
 "synced": "2026-11-04",
@@ -4437,6 +4452,11 @@
 "synced": "2026-11-04",
 "variant": "Unlimited Holofoil"
 },
+"houndoom-08-64-86198-1st-edit": {
+"id": "019c9791-3530-73a1-bf3d-a3b3c846b40b",
+"synced": "2026-11-04",
+"variant": "1st Edition Holofoil"
+},
 "houndoom-10-95-86211-holofo": {
 "id": "019c976a-8959-769c-b845-a32eea0b47c4",
 "synced": "2026-11-04",
@@ -4446,6 +4466,11 @@
 "id": "019c976a-8944-7d7a-95b0-8f43216eb8df",
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
+},
+"houndoom-4-04-75-86197": {
+"id": "019c9791-352d-7402-bfc9-480da9526321",
+"synced": "2026-11-04",
+"variant": "1st Edition Holofoil"
 },
 "houndoom-5-90-86209-holofo": {
 "id": "019c9791-354d-7dcc-b871-5397f8a872b0",
@@ -5512,6 +5537,11 @@
 "synced": "2026-11-04",
 "variant": "Holofoil"
 },
+"lugia-009-111-86903": {
+"id": "019c976e-bc88-7123-8341-a9b86df06282",
+"synced": "2026-11-04",
+"variant": "1st Edition Holofoil"
+},
 "lugia-029-115-97708-holofo": {
 "id": "019c96a7-d1f9-7805-bb99-31deb693993a",
 "synced": "2026-11-04",
@@ -5942,6 +5972,11 @@
 "synced": "2026-11-04",
 "variant": "Holofoil"
 },
+"machamp-h15-h15-h32-86958": {
+"id": "019c976e-bcf8-723b-bf7b-70924035d1b5",
+"synced": "2026-11-04",
+"variant": "Holofoil"
+},
 "machamp-lv-x-98-100-86973-holofo": {
 "id": "019c976e-bd16-76f5-a680-7406671024d9",
 "synced": "2026-11-04",
@@ -6351,6 +6386,11 @@
 "id": "019c9770-ca03-74f7-a9b8-780d3342220e",
 "synced": "2026-11-04",
 "variant": "Holofoil"
+},
+"mew-delta-species-003-017-87407": {
+"id": "019c9792-c110-760c-ab27-7224115d1b49",
+"synced": "2026-11-04",
+"variant": "Normal"
 },
 "mew-ex-100-110-87410-holofo": {
 "id": "019c9770-ca06-7bbd-85a7-2754de14e18b",
@@ -7870,6 +7910,11 @@
 },
 "raichu-15-123-88510-revers": {
 "id": "019c9776-f81a-70b2-9f8b-168bbe42ef62",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
+"raichu-27-027-144-88503": {
+"id": "019c9776-f80d-78c1-9a2c-639e886e608f",
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
 },

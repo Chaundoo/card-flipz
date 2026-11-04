@@ -3937,6 +3937,96 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:machamp",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:dark scizor",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:raichu",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:lugia",
+"set:Neo Genesis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:gyarados",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:houndoom",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:dark typhlosion",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:houndoom",
+"set:Neo Discovery",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:mew",
+"set:POP Series 5",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }
