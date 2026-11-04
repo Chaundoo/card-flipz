@@ -1938,6 +1938,55 @@
 "variant": "Holo"
 },
 {
+"era": "other",
+"found": "2026-11-04",
+"hid": {
+"cp": 57.65,
+"cv": "Non-Holo",
+"r": 5.2
+},
+"id": "slp-kyogre-ex-001-nintendo-power-magazine-001-86555-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/736702cad77361b4.webp",
+"low": null,
+"name": "Kyogre ex - 001 (Nintendo Power Magazine)",
+"number": "001",
+"pkey": "019c9791-8595-7065-9aed-372b664b21fa",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 94.59,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 214.58,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 172.12,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 297.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.0,
+"set": "Nintendo Promos",
+"setSlug": "pokemon--nintendo-promos",
+"tcgId": 86555,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-04",
+"variant": "Holo"
+},
+{
 "era": "wotc",
 "found": "2026-11-03",
 "hid": {
@@ -2819,55 +2868,6 @@
 "tcgVariant": "1st Edition Holofoil",
 "updated": "2026-11-03",
 "variant": "1st Edition Holo"
-},
-{
-"era": "wotc",
-"found": "2026-11-03",
-"hid": {
-"cp": 85.47,
-"cv": "Unlimited",
-"r": 3.2
-},
-"id": "slp-light-jolteon-048-105-86741-1st-editio",
-"image": "https://cdn.tcgpricelookup.com/cards/468963e3d8c06511.webp",
-"low": null,
-"name": "Light Jolteon",
-"number": "048/105",
-"pkey": "019c976c-a074-7b69-ba76-945dd13afdf2",
-"pop": true,
-"raw": {
-"dmg": {
-"date": "2026-11-02",
-"est": false,
-"price": 67.49,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"lp": {
-"date": "2026-11-02",
-"est": false,
-"price": 126.22,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"mp": {
-"date": "2026-11-02",
-"est": false,
-"price": 102.51,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"nm": {
-"date": "2026-11-02",
-"est": false,
-"price": 274.98,
-"src": "TCGplayer market (via TCG Price Lookup)"
-}
-},
-"score": 39.1,
-"set": "Neo Destiny",
-"setSlug": "pokemon--neo-destiny",
-"tcgId": 86741,
-"tcgVariant": "1st Edition",
-"updated": "2026-11-03",
-"variant": "1st Edition"
 }
 ],
 "hidden": {
@@ -3648,6 +3648,13 @@
 "p": 279.99,
 "r": 16.1
 },
+"85928|holofoil": {
+"cp": 34.43,
+"cv": "Non-Holo",
+"d": "2026-11-04",
+"p": 179.99,
+"r": 5.2
+},
 "85938|reverse holofoil": {
 "cp": 2.01,
 "cv": "Non-Holo",
@@ -3829,6 +3836,13 @@
 "d": "2026-11-02",
 "p": 100.0,
 "r": 3.8
+},
+"86555|holofoil": {
+"cp": 57.65,
+"cv": "Non-Holo",
+"d": "2026-11-04",
+"p": 297.5,
+"r": 5.2
 },
 "86616|reverse holofoil": {
 "cp": 33.43,
@@ -4299,6 +4313,13 @@
 "p": 149.99,
 "r": 6.0
 },
+"88441|reverse holofoil": {
+"cp": 16.74,
+"cv": "Non-Holo",
+"d": "2026-11-04",
+"p": 115.84,
+"r": 6.9
+},
 "88443|reverse holofoil": {
 "cp": 27.09,
 "cv": "Non-Holo",
@@ -4537,6 +4558,13 @@
 "p": 115.0,
 "r": 5.7
 },
+"89392|reverse holofoil": {
+"cp": 37.01,
+"cv": "Non-Holo",
+"d": "2026-11-04",
+"p": 226.66,
+"r": 6.1
+},
 "89487|reverse holofoil": {
 "cp": 47.88,
 "cv": "Non-Holo",
@@ -4648,6 +4676,13 @@
 "d": "2026-11-03",
 "p": 399.99,
 "r": 3.4
+},
+"90149|reverse holofoil": {
+"cp": 18.92,
+"cv": "Non-Holo",
+"d": "2026-11-04",
+"p": 116.96,
+"r": 6.2
 },
 "90196|1st edition holofoil": {
 "cp": 20.04,
