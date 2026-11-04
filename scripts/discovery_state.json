@@ -4027,6 +4027,116 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:lugia",
+"set:Secret Wonders",
+"kind:secret rare",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:shining gyarados",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:charizard",
+"set:Secret Wonders",
+"kind:secret rare",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:suicune",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:shining charizard",
+"set:Neo Destiny",
+"kind:holo",
+"price:under $20"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:haunter",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:deoxys",
+"set:POP Series 4",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:light dragonite",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:feraligatr",
+"set:Neo Genesis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:shining celebi",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-04",
+"f": [
+"pokemon:ninetales",
+"set:Rumble",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
