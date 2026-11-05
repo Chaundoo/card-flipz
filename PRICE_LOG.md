@@ -2,6 +2,50 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ⚠️ PARTIAL — price update 2026-11-05
+
+- Cards refreshed: **1928** of 2128 in 2m 2s · 200 matched cards still waiting
+- API requests used: **35** (prices 22, matching new cards 13, set list 0; max 60) · API says **58** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **389**
+- ➖ Checked, prices unchanged: 1535
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 4
+- ⚠️ Errors: 2
+- Era files saved: **8**
+
+**Biggest NM moves (15%+):**
+- Garchomp LV.X (Holo) — Majestic Dawn 97/100: $343.50 → $102.66
+- Ninetales (H19) (Holo) — Aquapolis H19/H32: $399.99 → $630.00
+- Dewott (Illustration Rare) — White Flare 106/086: $18.79 → $14.24
+
+**Outlier prices fixed (215):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $202.36 → $93.66
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $72.18
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $32.94
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.40
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $149.99 → $140.57
+- Primeape (Non-Holo) — Aquapolis 029/147: DMG $34.99 → $19.10
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $37.06 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Clefable (1st Edition Holofoil · 1) — Jungle 01/64: LP $144.38 → $144.30
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Cubone (1st Edition) — Jungle 50/64: DMG $2.37 → $2.09
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.77 → $17.06
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.60
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.69 → $62.50
+- …and 200 more
+
+**Problem cards (6):**
+- error: batch of 100 cards — [Errno 104] Connection reset by peer
+- error: batch of 100 cards — [Errno 104] Connection reset by peer
+- nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup
+- nomatch: Gyarados (Cosmos Holo) — Ancient Origins 21/98 — couldn't find this card on TCG Price Lookup
+
 ## ✅ OK — price update 2026-11-04
 
 - Cards refreshed: **2088** of 2092 in 1m 18s · all matched cards are up to date
