@@ -931,6 +931,11 @@
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
 },
+"bulbasaur-055-112-55-112-84030-reverse-ho": {
+"id": "019c975b-4a10-7354-9fae-4c60a5f49551",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
 "bulbasaur-068-110-84025-revers": {
 "id": "019c975b-4a07-7b73-bb39-075d7e88f51a",
 "synced": "2026-11-04",
@@ -963,6 +968,11 @@
 },
 "bulbasaur-54-112-84029-revers": {
 "id": "019c975b-4a0e-7de1-a603-8f3c779849e5",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
+"bulbasaur-93-84035-reverse-ho": {
+"id": "019c975b-4a1d-7900-8193-e7252a9f9602",
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
 },
@@ -1143,6 +1153,11 @@
 },
 "charizard-14-181-183785": {
 "id": "019c97c3-52e4-7b27-8936-6054cfb5d274",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
+"charizard-146-144-84186-reverse-ho": {
+"id": "019c975d-5f68-7376-856e-e68ceb073132",
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
 },
@@ -1328,6 +1343,11 @@
 "id": "019c97a1-f29e-7e4d-bdfa-11453fc467cd",
 "synced": "2026-11-04",
 "variant": "1st Edition"
+},
+"charmander-057-112-57-112-84209-reverse-ho": {
+"id": "019c975d-5f8e-7fcb-b81a-13e5d732949d",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
 },
 "charmander-058-112-58-112-84210-reverse-ho": {
 "id": "019c975d-5f90-7ffd-8d4f-1b468d205165",
@@ -1584,6 +1604,11 @@
 "synced": "2026-11-04",
 "variant": "1st Edition"
 },
+"cubone-51-109-84532-reverse-ho": {
+"id": "019c975f-77ba-7780-a243-5de99e3ee535",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
 "cubone-60-102-84535-revers": {
 "id": "019c975f-77c2-7571-906e-ca8f42d42ef2",
 "synced": "2026-11-04",
@@ -1828,6 +1853,11 @@
 "id": "019c9619-8243-74de-8bf3-1fa996c86a3c",
 "synced": "2026-11-04",
 "variant": "Normal"
+},
+"dark-marowak-7-109-84627-reverse-ho": {
+"id": "019c975f-7870-7797-a77e-1f9464b53c74",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
 },
 "dark-omastar-019-105-84635-unlimi": {
 "id": "019c975f-7885-7cc9-8d8c-78c986c8e5be",
@@ -2178,6 +2208,11 @@
 "id": "019c97bf-7818-7776-87a9-7763161b54a6",
 "synced": "2026-11-04",
 "variant": "Holofoil"
+},
+"deoxys-attack-forme-17-107-84759-reverse-ho": {
+"id": "019c975f-7970-75ec-8332-6746d68e4ecb",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
 },
 "deoxys-attack-forme-24-146-84768-revers": {
 "id": "019c9761-9767-7b7d-887f-00420eb7604e",
@@ -6057,6 +6092,11 @@
 "synced": "2026-11-04",
 "variant": "Normal"
 },
+"magikarp-65-109-87027-reverse-ho": {
+"id": "019c976e-bd78-7fb0-bc8d-aea3b199256f",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
 "magikarp-67-112-87026-reverse-ho": {
 "id": "019c976e-bd75-7bf7-8a94-047e50f2f8a5",
 "synced": "2026-11-04",
@@ -7202,6 +7242,11 @@
 "synced": "2026-11-04",
 "variant": "Reverse Holofoil"
 },
+"pichu-59-106-88016-reverse-ho": {
+"id": "019c9774-e226-76cf-9a93-4e8d03a5fe0b",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
+},
 "pichu-93-123-88018": {
 "id": "019c9774-e22b-7e07-ae18-849a3f0f9e7a",
 "synced": "2026-11-04",
@@ -7211,6 +7256,11 @@
 "id": "019c9793-ed2e-7960-af72-b5da6d7087fa",
 "synced": "2026-11-04",
 "variant": "Normal"
+},
+"pichu-delta-species-76-110-88023-reverse-ho": {
+"id": "019c9774-e234-76cb-af1e-b48f864a2ee0",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
 },
 "pidgeot-002-017-88032-normal": {
 "id": "019c9793-ed47-7607-9115-b30619f8d7eb",
@@ -7436,6 +7486,11 @@
 "id": "019c9774-e29e-7a61-9cc4-02b843c307a7",
 "synced": "2026-11-04",
 "variant": "Normal"
+},
+"pikachu-78-110-88082-reverse-ho": {
+"id": "019c9774-e29f-72bd-9c8c-a5195e88bba5",
+"synced": "2026-11-04",
+"variant": "Reverse Holofoil"
 },
 "pikachu-78-123-88095": {
 "id": "019c9774-e2b0-7a23-b1d1-f422c4ab1751",
@@ -8852,6 +8907,11 @@
 "id": "019c977b-20a1-7d0e-a2d8-5661e668ee4c",
 "synced": "2026-11-04",
 "variant": "1st Edition Holofoil"
+},
+"shining-charizard-107-105-89163-unlimited-": {
+"id": "019c977b-20a3-786e-989f-4461b0f07ad0",
+"synced": "2026-11-04",
+"variant": "Unlimited Holofoil"
 },
 "shining-gyarados-65-64-89164": {
 "id": "019c9795-52ae-73c6-8807-cacc7cec505f",
