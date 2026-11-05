@@ -3,49 +3,6 @@
 "cands": [
 {
 "era": "ex",
-"found": "2026-11-03",
-"hid": {
-"cp": 0.26,
-"cv": "Holo",
-"r": 1150.0
-},
-"id": "slp-deoxys-ex-017-017-84774-normal",
-"image": "https://cdn.tcgpricelookup.com/cards/9ec0765c42bd081f.webp",
-"low": null,
-"name": "Deoxys ex",
-"number": "017/017",
-"pkey": "019c978f-64d1-7a47-805c-18756364dc75",
-"pop": true,
-"raw": {
-"dmg": {
-"date": "2026-11-02",
-"est": false,
-"price": 80.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"mp": {
-"date": "2026-11-02",
-"est": false,
-"price": 200.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"nm": {
-"date": "2026-11-02",
-"est": false,
-"price": 299.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-}
-},
-"score": 92.4,
-"set": "POP Series 4",
-"setSlug": "pokemon--pop-series-4",
-"tcgId": 84774,
-"tcgVariant": "Normal",
-"updated": "2026-11-03",
-"variant": "Non-Holo"
-},
-{
-"era": "ex",
 "found": "2026-11-02",
 "hid": {
 "cp": 10.99,
@@ -394,6 +351,58 @@
 "variant": "Reverse Holo"
 },
 {
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 24.14,
+"cv": "Unlimited",
+"r": 11.7
+},
+"id": "slp-bulbasaur-044-102-107041-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/212d8940c971fd60.webp",
+"low": {
+"c": "dmg",
+"p": 100.0
+},
+"name": "Bulbasaur",
+"number": "044/102",
+"pkey": "019c97a1-f298-76e1-90e8-b916b17520b7",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 90.4,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 185.77,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 156.74,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 282.2,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 57.7,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107041,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
+},
+{
 "era": "ex",
 "found": "2026-11-02",
 "hid": {
@@ -483,6 +492,55 @@
 "tcgId": 88077,
 "tcgVariant": "Reverse Holofoil",
 "updated": "2026-11-02",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 17.79,
+"cv": "Non-Holo",
+"r": 11.2
+},
+"id": "slp-scyther-106-106-147-88997-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/b006609284fca1cf.webp",
+"low": null,
+"name": "Scyther (106)",
+"number": "106/147",
+"pkey": "019c977b-1f1e-70a6-858a-3bd2f9f90ef8",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-05",
+"est": false,
+"price": 44.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-05",
+"est": false,
+"price": 148.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-05",
+"est": false,
+"price": 86.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-05",
+"est": false,
+"price": 199.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 56.4,
+"set": "Aquapolis",
+"setSlug": "pokemon--aquapolis",
+"tcgId": 88997,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-05",
 "variant": "Reverse Holo"
 },
 {
@@ -930,6 +988,49 @@
 "variant": "Reverse Holo"
 },
 {
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 2146.38,
+"cv": "Unlimited Holo",
+"r": 4.7
+},
+"id": "slp-charizard-004-102-106999-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/7acd403512b255a6.webp",
+"low": null,
+"name": "Charizard",
+"number": "004/102",
+"pkey": "019c97a1-f22f-748a-b635-32778d11941f",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 4200.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 10000.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": true,
+"price": 10000.0,
+"src": "Estimated: TCGplayer showed $359.95, which looked like an outlier sale (out of line with the other conditions)"
+}
+},
+"score": 52.2,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 106999,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-05",
+"variant": "1st Edition Holo"
+},
+{
 "era": "ex",
 "found": "2026-11-02",
 "hid": {
@@ -980,55 +1081,150 @@
 },
 {
 "era": "wotc",
-"found": "2026-11-03",
+"found": "2026-11-05",
 "hid": {
-"cp": 197.08,
+"cp": 12.83,
 "cv": "Non-Holo",
-"r": 5.1
+"r": 8.8
 },
-"id": "slp-gyarados-11-011-144-85988-reverse-ho",
-"image": "https://cdn.tcgpricelookup.com/cards/3b3cce65e3d5a3c4.webp",
-"low": {
-"c": "mp",
-"p": 100.0
-},
-"name": "Gyarados (11)",
-"number": "011/144",
-"pkey": "019c9768-6e5d-7d83-9f8e-3901ec587d1c",
+"id": "slp-vulpix-116-147-90435-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/9c1b33350af694c7.webp",
+"low": null,
+"name": "Vulpix",
+"number": "116/147",
+"pkey": "019c9783-ae9f-7880-9137-c16d798adcd8",
 "pop": true,
 "raw": {
 "dmg": {
-"date": "2026-11-03",
+"date": "2026-11-05",
 "est": false,
-"price": 49.99,
+"price": 20.49,
 "src": "TCGplayer market (via TCG Price Lookup)"
 },
 "lp": {
-"date": "2026-11-03",
+"date": "2026-11-05",
 "est": false,
-"price": 500.0,
+"price": 77.92,
 "src": "TCGplayer market (via TCG Price Lookup)"
 },
 "mp": {
-"date": "2026-11-03",
+"date": "2026-11-05",
 "est": false,
-"price": 100.0,
+"price": 49.56,
 "src": "TCGplayer market (via TCG Price Lookup)"
 },
 "nm": {
-"date": "2026-11-03",
+"date": "2026-11-05",
 "est": false,
-"price": 999.75,
+"price": 112.99,
 "src": "TCGplayer market (via TCG Price Lookup)"
 }
 },
-"score": 48.4,
-"set": "Skyridge",
-"setSlug": "pokemon--skyridge",
-"tcgId": 85988,
+"score": 51.7,
+"set": "Aquapolis",
+"setSlug": "pokemon--aquapolis",
+"tcgId": 90435,
 "tcgVariant": "Reverse Holofoil",
-"updated": "2026-11-03",
+"updated": "2026-11-05",
 "variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 26.93,
+"cv": "Unlimited",
+"r": 6.5
+},
+"id": "slp-magikarp-035-102-107032-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/eea910c0e00c87fc.webp",
+"low": null,
+"name": "Magikarp",
+"number": "035/102",
+"pkey": "019c97a1-f281-7013-8a14-c4e316a4d2f9",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 67.86,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 128.13,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 113.88,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 176.36,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 48.3,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107032,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 21.42,
+"cv": "Unlimited",
+"r": 6.2
+},
+"id": "slp-charmeleon-024-102-107021-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/20c4de08fd4761ca.webp",
+"low": null,
+"name": "Charmeleon",
+"number": "024/102",
+"pkey": "019c97a1-f265-7f14-996d-67d8ddf441ee",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 47.29,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 91.8,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 83.59,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 133.24,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 47.0,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107021,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
 },
 {
 "era": "dp-hgss",
@@ -1078,6 +1274,55 @@
 "tcgVariant": "Reverse Holofoil",
 "updated": "2026-11-03",
 "variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 172.83,
+"cv": "Unlimited Holo",
+"r": 4.6
+},
+"id": "slp-ninetales-012-102-107008-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/9b701e0158966308.webp",
+"low": null,
+"name": "Ninetales",
+"number": "012/102",
+"pkey": "019c97a1-f246-7946-ac6b-1b7c989b293b",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 249.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 400.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 350.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 800.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.6,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107008,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-05",
+"variant": "1st Edition Holo"
 },
 {
 "era": "wotc",
@@ -1304,49 +1549,6 @@
 "era": "wotc",
 "found": "2026-11-03",
 "hid": {
-"cp": 602.77,
-"cv": "Unlimited Holo",
-"r": 3.5
-},
-"id": "slp-shining-gyarados-65-64-89164-1st-editio",
-"image": "https://cdn.tcgpricelookup.com/cards/c36b353de61baa45.webp",
-"low": null,
-"name": "Shining Gyarados",
-"number": "65/64",
-"pkey": "019c9795-52ae-73c6-8807-cacc7cec505f",
-"pop": true,
-"raw": {
-"dmg": {
-"date": "2026-11-02",
-"est": false,
-"price": 350.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"lp": {
-"date": "2026-11-02",
-"est": false,
-"price": 1200.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"mp": {
-"date": "2026-11-02",
-"est": false,
-"price": 1000.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-}
-},
-"score": 44.7,
-"set": "Neo Revelation",
-"setSlug": "pokemon--neo-revelation",
-"tcgId": 89164,
-"tcgVariant": "1st Edition Holofoil",
-"updated": "2026-11-03",
-"variant": "1st Edition Holo"
-},
-{
-"era": "wotc",
-"found": "2026-11-03",
-"hid": {
 "cp": 185.11,
 "cv": "Unlimited Holo",
 "r": 3.8
@@ -1488,55 +1690,6 @@
 "era": "wotc",
 "found": "2026-11-03",
 "hid": {
-"cp": 86.08,
-"cv": "Non-Holo",
-"r": 4.0
-},
-"id": "slp-haunter-063-144-86023-reverse-ho",
-"image": "https://cdn.tcgpricelookup.com/cards/84b597ba9a7bf08a.webp",
-"low": null,
-"name": "Haunter",
-"number": "063/144",
-"pkey": "019c9768-6eb2-7d1e-9cad-df8f66596349",
-"pop": true,
-"raw": {
-"dmg": {
-"date": "2026-11-03",
-"est": false,
-"price": 20.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"lp": {
-"date": "2026-11-03",
-"est": false,
-"price": 124.99,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"mp": {
-"date": "2026-11-03",
-"est": true,
-"price": 74.6,
-"src": "Estimated: TCGplayer showed $399.99, which looked like an outlier sale (higher than a better condition)"
-},
-"nm": {
-"date": "2026-11-03",
-"est": false,
-"price": 345.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-}
-},
-"score": 42.7,
-"set": "Skyridge",
-"setSlug": "pokemon--skyridge",
-"tcgId": 86023,
-"tcgVariant": "Reverse Holofoil",
-"updated": "2026-11-03",
-"variant": "Reverse Holo"
-},
-{
-"era": "wotc",
-"found": "2026-11-03",
-"hid": {
 "cp": 34.05,
 "cv": "Non-Holo",
 "r": 4.4
@@ -1627,6 +1780,55 @@
 },
 {
 "era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 22.52,
+"cv": "Non-Holo",
+"r": 4.6
+},
+"id": "slp-togepi-114-147-89931-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/3f5ab3bfca73e78f.webp",
+"low": null,
+"name": "Togepi",
+"number": "114/147",
+"pkey": "019c977f-83ac-7ce5-935a-9cbe8cf36ced",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-05",
+"est": false,
+"price": 19.62,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-05",
+"est": false,
+"price": 102.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-05",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-05",
+"est": true,
+"price": 102.5,
+"src": "Estimated: TCGplayer showed $34.99, which looked like an outlier sale (out of line with the other conditions)"
+}
+},
+"score": 41.9,
+"set": "Aquapolis",
+"setSlug": "pokemon--aquapolis",
+"tcgId": 89931,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-05",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
 "found": "2026-11-03",
 "hid": {
 "cp": 91.66,
@@ -1676,6 +1878,58 @@
 },
 {
 "era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 48.64,
+"cv": "Unlimited",
+"r": 4.0
+},
+"id": "slp-pikachu-058-102-107055-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/34ee5f48c59905e5.webp",
+"low": {
+"c": "dmg",
+"p": 80.0
+},
+"name": "Pikachu",
+"number": "058/102",
+"pkey": "019c97a1-f2be-73a9-b0c5-b96d1bc69286",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 108.29,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 163.74,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 117.84,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 194.24,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.4,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107055,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
+},
+{
+"era": "wotc",
 "found": "2026-11-03",
 "hid": {
 "cp": 54.18,
@@ -1722,6 +1976,55 @@
 "tcgVariant": "Reverse Holofoil",
 "updated": "2026-11-03",
 "variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 295.08,
+"cv": "Unlimited Holo",
+"r": 3.1
+},
+"id": "slp-mewtwo-010-102-107005-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/4cd8061e6c3b8f8a.webp",
+"low": null,
+"name": "Mewtwo",
+"number": "010/102",
+"pkey": "019c97a1-f23e-72c5-b12a-d9317159d093",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 300.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 900.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 449.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": true,
+"price": 900.0,
+"src": "Estimated: TCGplayer showed $358.01, which looked like an outlier sale (out of line with the other conditions)"
+}
+},
+"score": 40.9,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107005,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-05",
+"variant": "1st Edition Holo"
 },
 {
 "era": "wotc",
@@ -1868,55 +2171,6 @@
 "era": "wotc",
 "found": "2026-11-03",
 "hid": {
-"cp": 190.76,
-"cv": "Unlimited Holo",
-"r": 3.1
-},
-"id": "slp-dark-scizor-009-105-84652-1st-editio",
-"image": "https://cdn.tcgpricelookup.com/cards/93510fab545283a3.webp",
-"low": null,
-"name": "Dark Scizor",
-"number": "009/105",
-"pkey": "019c975f-78a2-71da-8d4e-5794695d5d7d",
-"pop": true,
-"raw": {
-"dmg": {
-"date": "2026-11-02",
-"est": false,
-"price": 46.09,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"lp": {
-"date": "2026-11-02",
-"est": false,
-"price": 593.99,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"mp": {
-"date": "2026-11-02",
-"est": false,
-"price": 105.0,
-"src": "TCGplayer market (via TCG Price Lookup)"
-},
-"nm": {
-"date": "2026-11-02",
-"est": true,
-"price": 593.99,
-"src": "Estimated: TCGplayer showed $48.00, which looked like an outlier sale (out of line with the other conditions)"
-}
-},
-"score": 40.3,
-"set": "Neo Destiny",
-"setSlug": "pokemon--neo-destiny",
-"tcgId": 84652,
-"tcgVariant": "1st Edition Holofoil",
-"updated": "2026-11-03",
-"variant": "1st Edition Holo"
-},
-{
-"era": "wotc",
-"found": "2026-11-03",
-"hid": {
 "cp": 46.81,
 "cv": "Non-Holo",
 "r": 3.7
@@ -2004,6 +2258,55 @@
 "tcgVariant": "1st Edition Holofoil",
 "updated": "2026-11-03",
 "variant": "1st Edition Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 35.78,
+"cv": "Unlimited",
+"r": 3.8
+},
+"id": "slp-squirtle-063-102-107060-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/7b1cfd1c92a57c21.webp",
+"low": null,
+"name": "Squirtle",
+"number": "063/102",
+"pkey": "019c97a1-f2cb-74b9-8c73-b915bd568e1e",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 52.11,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 94.81,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 73.17,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 135.29,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 39.8,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107060,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
 },
 {
 "era": "wotc",
@@ -2102,6 +2405,107 @@
 "tcgVariant": "1st Edition Holofoil",
 "updated": "2026-11-03",
 "variant": "1st Edition Holo"
+},
+{
+"era": "bw",
+"found": "2026-11-05",
+"hid": {
+"cp": 31.47,
+"cv": "Non-Holo",
+"r": 3.3
+},
+"id": "slp-snorlax-team-plasma-101-135-89396-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/d87ca1c13ca18b6c.webp",
+"low": null,
+"name": "Snorlax (Team Plasma)",
+"number": "101/135",
+"pkey": "019c977d-5f89-7eea-863f-cd62ff14cba7",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-03",
+"est": false,
+"price": 25.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-03",
+"est": false,
+"price": 72.8,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-03",
+"est": false,
+"price": 38.24,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-03",
+"est": false,
+"price": 102.71,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 37.1,
+"set": "Plasma Storm",
+"setSlug": "pokemon--plasma-storm",
+"tcgId": 89396,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-05",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-05",
+"hid": {
+"cp": 38.21,
+"cv": "Unlimited",
+"r": 3.1
+},
+"id": "slp-wartortle-042-102-107039-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/6d67dcf0d4c21068.webp",
+"low": {
+"c": "dmg",
+"p": 44.77
+},
+"name": "Wartortle",
+"number": "042/102",
+"pkey": "019c97a1-f292-7901-87e5-ca02b19a4613",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-04",
+"est": false,
+"price": 39.79,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-04",
+"est": false,
+"price": 108.13,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-04",
+"est": false,
+"price": 62.04,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-04",
+"est": false,
+"price": 119.74,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 36.9,
+"set": "Base Set (Shadowless)",
+"setSlug": "pokemon--base-set-shadowless",
+"tcgId": 107039,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-05",
+"variant": "1st Edition"
 }
 ],
 "hidden": {
@@ -2125,6 +2529,146 @@
 "d": "2026-11-02",
 "p": 170.99,
 "r": 3.4
+},
+"106997|unlimited holofoil": {
+"cp": 165.5,
+"cv": "1st Edition Holo",
+"d": "2026-11-05",
+"p": 896.06,
+"r": 5.4
+},
+"106999|1st edition holofoil": {
+"cp": 2146.38,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 10000.0,
+"r": 4.7
+},
+"107000|1st edition holofoil": {
+"cp": 117.27,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 600.0,
+"r": 5.1
+},
+"107005|1st edition holofoil": {
+"cp": 295.08,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 900.0,
+"r": 3.1
+},
+"107007|1st edition holofoil": {
+"cp": 158.2,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 499.0,
+"r": 3.2
+},
+"107008|1st edition holofoil": {
+"cp": 172.83,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 800.0,
+"r": 4.6
+},
+"107010|unlimited holofoil": {
+"cp": 72.87,
+"cv": "1st Edition Holo",
+"d": "2026-11-05",
+"p": 490.64,
+"r": 6.7
+},
+"107011|1st edition holofoil": {
+"cp": 185.0,
+"cv": "Unlimited Holo",
+"d": "2026-11-05",
+"p": 600.0,
+"r": 3.2
+},
+"107012|1st edition": {
+"cp": 21.5,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 158.23,
+"r": 7.4
+},
+"107014|1st edition": {
+"cp": 29.59,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 126.44,
+"r": 4.3
+},
+"107015|1st edition": {
+"cp": 46.54,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 160.4,
+"r": 3.4
+},
+"107021|1st edition": {
+"cp": 21.42,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 133.24,
+"r": 6.2
+},
+"107032|1st edition": {
+"cp": 26.93,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 176.36,
+"r": 6.5
+},
+"107039|1st edition": {
+"cp": 38.21,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 119.74,
+"r": 3.1
+},
+"107041|1st edition": {
+"cp": 24.14,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 282.2,
+"r": 11.7
+},
+"107043|1st edition": {
+"cp": 14.63,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 189.4,
+"r": 12.9
+},
+"107055|1st edition": {
+"cp": 48.64,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 194.24,
+"r": 4.0
+},
+"107060|1st edition": {
+"cp": 35.78,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 135.29,
+"r": 3.8
+},
+"107068|1st edition": {
+"cp": 9.51,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 150.79,
+"r": 15.9
+},
+"147229|1st edition": {
+"cp": 102.46,
+"cv": "Unlimited",
+"d": "2026-11-05",
+"p": 429.98,
+"r": 4.2
 },
 "44419|1st edition holofoil": {
 "cp": 36.45,
@@ -2419,6 +2963,13 @@
 "d": "2026-11-03",
 "p": 1228.07,
 "r": 4.2
+},
+"84528|reverse holofoil": {
+"cp": 33.07,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 170.0,
+"r": 5.1
 },
 "84530|reverse holofoil": {
 "cp": 21.08,
@@ -2728,6 +3279,13 @@
 "p": 112.33,
 "r": 4.6
 },
+"84844|reverse holofoil": {
+"cp": 26.21,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 130.2,
+"r": 5.0
+},
 "84933|reverse holofoil": {
 "cp": 3.89,
 "cv": "Non-Holo",
@@ -2769,6 +3327,13 @@
 "d": "2026-11-02",
 "p": 105.47,
 "r": 12.1
+},
+"85080|reverse holofoil": {
+"cp": 61.0,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 240.0,
+"r": 3.9
 },
 "85081|reverse holofoil": {
 "cp": 10.14,
@@ -2833,6 +3398,13 @@
 "p": 292.04,
 "r": 3.6
 },
+"85590|reverse holofoil": {
+"cp": 65.24,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 324.99,
+"r": 5.0
+},
 "85633|reverse holofoil": {
 "cp": 26.99,
 "cv": "Non-Holo",
@@ -2854,6 +3426,13 @@
 "p": 292.66,
 "r": 4.2
 },
+"85677|reverse holofoil": {
+"cp": 46.75,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 226.12,
+"r": 4.8
+},
 "85680|holofoil": {
 "cp": 450.0,
 "cv": "Non-Holo",
@@ -2867,6 +3446,13 @@
 "d": "2026-11-02",
 "p": 292.47,
 "r": 5.8
+},
+"85907|reverse holofoil": {
+"cp": 28.39,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 159.99,
+"r": 5.6
 },
 "85922|reverse holofoil": {
 "cp": 43.26,
@@ -3043,12 +3629,26 @@
 "p": 1000.0,
 "r": 4.4
 },
+"86420|reverse holofoil": {
+"cp": 14.18,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 210.0,
+"r": 14.8
+},
 "86440|1st edition holofoil": {
 "cp": 20.37,
 "cv": "Unlimited Holo",
 "d": "2026-11-03",
 "p": 124.0,
 "r": 6.1
+},
+"86443|reverse holofoil": {
+"cp": 18.57,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 109.99,
+"r": 5.9
 },
 "86505|1st edition holofoil": {
 "cp": 39.01,
@@ -3190,6 +3790,13 @@
 "p": 139.99,
 "r": 29.5
 },
+"87172|reverse holofoil": {
+"cp": 28.13,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 164.99,
+"r": 5.9
+},
 "87181|reverse holofoil": {
 "cp": 17.85,
 "cv": "Non-Holo",
@@ -3330,6 +3937,13 @@
 "p": 149.99,
 "r": 8.1
 },
+"87839|reverse holofoil": {
+"cp": 20.28,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 101.66,
+"r": 5.0
+},
 "87853|reverse holofoil": {
 "cp": 28.99,
 "cv": "Non-Holo",
@@ -3463,6 +4077,13 @@
 "p": 105.74,
 "r": 10.4
 },
+"88097|reverse holofoil": {
+"cp": 11.65,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 160.27,
+"r": 13.8
+},
 "88108|reverse holofoil": {
 "cp": 14.9,
 "cv": "Non-Holo",
@@ -3512,6 +4133,20 @@
 "p": 128.74,
 "r": 3.2
 },
+"88306|reverse holofoil": {
+"cp": 7.53,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 125.0,
+"r": 16.6
+},
+"88307|reverse holofoil": {
+"cp": 10.51,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 112.48,
+"r": 10.7
+},
 "88322|1st edition holofoil": {
 "cp": 49.52,
 "cv": "Unlimited Holo",
@@ -3546,6 +4181,13 @@
 "d": "2026-11-03",
 "p": 149.99,
 "r": 6.0
+},
+"88440|reverse holofoil": {
+"cp": 15.48,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 204.74,
+"r": 13.2
 },
 "88441|reverse holofoil": {
 "cp": 16.74,
@@ -3687,6 +4329,13 @@
 "p": 300.0,
 "r": 4.5
 },
+"88997|reverse holofoil": {
+"cp": 17.79,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 199.99,
+"r": 11.2
+},
 "88999|reverse holofoil": {
 "cp": 7.65,
 "cv": "Non-Holo",
@@ -3750,6 +4399,20 @@
 "p": 127.47,
 "r": 3.7
 },
+"89254|reverse holofoil": {
+"cp": 28.71,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 109.99,
+"r": 3.8
+},
+"89325|reverse holofoil": {
+"cp": 36.36,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 449.99,
+"r": 12.4
+},
 "89327|reverse holofoil": {
 "cp": 20.03,
 "cv": "Non-Holo",
@@ -3799,6 +4462,13 @@
 "p": 226.66,
 "r": 6.1
 },
+"89396|reverse holofoil": {
+"cp": 31.47,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 102.71,
+"r": 3.3
+},
 "89487|reverse holofoil": {
 "cp": 47.88,
 "cv": "Non-Holo",
@@ -3841,6 +4511,13 @@
 "p": 100.0,
 "r": 4.9
 },
+"89931|reverse holofoil": {
+"cp": 22.52,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 102.5,
+"r": 4.6
+},
 "89932|reverse holofoil": {
 "cp": 3.2,
 "cv": "Non-Holo",
@@ -3860,6 +4537,13 @@
 "cv": "Unlimited Holo",
 "d": "2026-11-03",
 "p": 147.35,
+"r": 3.2
+},
+"89941|reverse holofoil": {
+"cp": 41.26,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 132.24,
 "r": 3.2
 },
 "89942|reverse holofoil": {
@@ -3967,6 +4651,13 @@
 "p": 120.0,
 "r": 3.7
 },
+"90435|reverse holofoil": {
+"cp": 12.83,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 112.99,
+"r": 8.8
+},
 "90485|reverse holofoil": {
 "cp": 27.68,
 "cv": "Non-Holo",
@@ -3994,6 +4685,13 @@
 "d": "2026-11-03",
 "p": 149.99,
 "r": 7.3
+},
+"90633|reverse holofoil": {
+"cp": 60.5,
+"cv": "Non-Holo",
+"d": "2026-11-05",
+"p": 191.8,
+"r": 3.2
 },
 "90639|reverse holofoil": {
 "cp": 13.15,

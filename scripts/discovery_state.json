@@ -1215,40 +1215,46 @@
 },
 "sets": {
 "pokemon--aquapolis": {
-"found": 18,
+"found": 1,
 "name": "Aquapolis",
 "records": 339,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 3
 },
 "pokemon--arceus": {
-"found": 3,
+"found": 0,
 "name": "Arceus",
 "records": 216,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--base-set": {
 "found": 0,
 "name": "Base Set",
 "records": 110,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--base-set-2": {
 "found": 0,
 "name": "Base Set 2",
 "records": 138,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--base-set-shadowless": {
-"found": 5,
+"found": 0,
 "name": "Base Set (Shadowless)",
 "records": 213,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 9
 },
 "pokemon--best-of-promos": {
 "found": 0,
 "name": "Best of Promos",
 "records": 15,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--black-and-white": {
 "found": 0,
@@ -1275,7 +1281,8 @@
 "found": 0,
 "name": "Burger King Promos",
 "records": 24,
-"scanned": "2026-10-29"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--call-of-legends": {
 "found": 0,
@@ -1509,10 +1516,11 @@
 "sleepers": 2
 },
 "pokemon--heartgold-soulsilver": {
-"found": 8,
+"found": 0,
 "name": "HeartGold SoulSilver",
 "records": 237,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--hgss-promos": {
 "found": 0,
@@ -1542,10 +1550,11 @@
 "sleepers": 0
 },
 "pokemon--legendary-treasures": {
-"found": 7,
+"found": 0,
 "name": "Legendary Treasures",
 "records": 220,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--legends-awakened": {
 "found": 1,
@@ -1597,10 +1606,11 @@
 "sleepers": 2
 },
 "pokemon--next-destinies": {
-"found": 3,
+"found": 1,
 "name": "Next Destinies",
 "records": 207,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--nintendo-promos": {
 "found": 0,
@@ -1613,25 +1623,29 @@
 "found": 0,
 "name": "Noble Victories",
 "records": 215,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--plasma-blast": {
 "found": 0,
 "name": "Plasma Blast",
 "records": 201,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--plasma-freeze": {
-"found": 7,
+"found": 1,
 "name": "Plasma Freeze",
 "records": 228,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--plasma-storm": {
-"found": 3,
+"found": 1,
 "name": "Plasma Storm",
 "records": 265,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 1
 },
 "pokemon--platinum": {
 "found": 1,
@@ -1772,22 +1786,25 @@
 "sleepers": 0
 },
 "pokemon--triumphant": {
-"found": 4,
+"found": 1,
 "name": "Triumphant",
 "records": 196,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--undaunted": {
-"found": 7,
+"found": 0,
 "name": "Undaunted",
 "records": 173,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--unleashed": {
-"found": 6,
+"found": 0,
 "name": "Unleashed",
 "records": 181,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--wotc-promo": {
 "found": 0,
@@ -1867,10 +1884,11 @@
 "sleepers": 0
 },
 "pokemon--xy-promos": {
-"found": 5,
+"found": 0,
 "name": "XY Promos",
 "records": 272,
-"scanned": "2026-10-28"
+"scanned": "2026-11-05",
+"sleepers": 0
 },
 "pokemon--xy-roaring-skies": {
 "found": 0,

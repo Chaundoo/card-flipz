@@ -1,6 +1,6 @@
 {
  "files": {
-  "candidates.json": "2992f1a14fef",
+  "candidates.json": "8aa6d8151927",
   "eras/bw/bw.json": "27580d7a60de",
   "eras/dp-hgss/dp-hgss.json": "b7736d982324",
   "eras/eras.json": "69305f4aa2b7",
@@ -16,6 +16,6 @@
   "graded/heat.json": "a5d533eff4c6",
   "pairings.json": "07e5d8a7892e",
   "profitlog.json": "4afafc9444e5",
-  "sleepers.json": "10279f6a2517"
+  "sleepers.json": "3fd1e444629c"
  }
 }
