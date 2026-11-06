@@ -2,6 +2,46 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — TCGplayer sales check 2026-11-05
+
+- Cards looked up on TCGplayer: **216** in 23m 20s (another 125 waited for next week)
+- ✅ Prices checked against real sales: **200**
+- ➖ No sales in 90 days (kept old prices): 15
+- ❌ Blocked by TCGplayer: **0**
+- ⚠️ Errors: 0 · no history: 0 · printing unclear: 1
+- 🐢 Sales counted for sleepers / Low sales flags: **215** cards (66 were picked just for that)
+
+**Prices that moved 15%+ after checking real sales (118):**
+- Rayquaza (Holo) — Call of Legends 20/95 [estimate, top flip]: NM $1,249.90 → $896.43
+- Mew (Delta Species) (Non-Holo) — POP Series 5 003/017 [estimate, top flip]: DMG $59.72 → $152.76 est.
+- Houndoom (4) (1st Edition Holo) — Neo Discovery 04/75 [estimate, top flip]: LP $271.66 → $312.49
+- Psyduck (Reverse Holo) — EX Team Magma vs Team Aqua 44/95 [estimate, top flip]: DMG $27.63 → $126.00
+- Sceptile (Reverse Holo) — EX Emerald 10/106 [estimate, top flip]: DMG $37.81 → $48.00
+- Gengar (17) (Reverse Holo) — Arceus 17/99 [estimate, top flip]: NM $169.98 → $300.00, LP $169.98 → $249.95, MP $102.09 → $125.48
+- Psyduck (Reverse Holo) — EX Sandstorm 73/100 [estimate, top flip]: NM $162.38 → $428.00
+- Cubone (Reverse Holo) — EX Team Magma vs Team Aqua 40/95 [estimate, top flip]: NM $124.99 → $149.99, DMG $16.98 → $20.00
+- Meganium (Reverse Holo) — EX Unseen Forces 9/115 [estimate, top flip]: MP $19.93 → $31.99
+- Jolteon (Non-Holo) — POP Series 3 003/017 [estimate, top flip]: NM $65.00 → $50.00, LP $15.85 → $52.67
+- Dialga (Holo) — Call of Legends 3/95 [estimate, top flip]: MP $8.46 → $10.73 est., DMG $8.46 → $10.38
+- Gyarados (Reverse Holo) — Call of Legends 7/95 [estimate, top flip]: NM $35.00 → $250.00, LP $35.00 → $150.00, MP $35.00 → $49.21
+- Lugia EX (Full Art) — Plasma Storm 134/135 [top flip]: LP $1,849.99 → $944.49, MP $1,499.99 → $919.21
+- Black Kyurem EX (145 Full Art) (Holo) — Boundaries Crossed 145/149 [top flip]: LP $323.93 → $400.00
+- Mewtwo (20) (Reverse Holo) — Expedition 020/165 [top flip]: LP $749.99 → $599.99
+- Deoxys ex (Speed Forme) (Holo) — EX Emerald 93/106 [top flip]: LP $306.66 → $365.00, MP $255.75 → $365.00 est.
+- Rayquaza ex (Holo · 039 (EX Collector's Tin) — Nintendo Promos 039 [top flip]: LP $730.39 → $500.00, MP $272.54 → $339.98
+- Raikou (Shiny · Holo) — Call of Legends SL9 [top flip]: MP $150.00 → $199.99
+- Charizard (Delta Species) (Holo) — EX Crystal Guardians 4/100 [top flip]: MP $390.75 → $452.88 est.
+- Rayquaza C LV.X (Promo · Holo) — Diamond and Pearl Promos DP47 [top flip]: MP $111.47 → $152.93
+- Mewtwo (Holo · Delta Species) — EX Delta Species 12/113 [top flip]: NM $746.84 → $975.00
+- Lugia (Promo · Holo) — HGSS Promos HGSS02 [top flip]: NM $499.99 → $420.41
+- Gyarados (Holo) — HeartGold SoulSilver 4/123 [top flip]: NM $302.13 → $97.49
+- Machamp (H15) (Holo) — Skyridge H15/H32 [top flip]: DMG $27.34 → $150.00
+- Lt. Surge's Raichu (1st Edition Holo) — Gym Challenge 011/132 [top flip]: NM $210.66 → $171.00
+- …and 93 more
+
+**Problem cards (1):**
+- printing: Shining Gyarados (1st Edition Holo) — Neo Revelation 65/64 — couldn't tell which TCGplayer printing this card is
+
 ## ⚠️ PARTIAL — price update 2026-11-05
 
 - Cards refreshed: **1928** of 2128 in 2m 2s · 200 matched cards still waiting
