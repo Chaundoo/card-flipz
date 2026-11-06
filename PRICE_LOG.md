@@ -2,6 +2,49 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-06
+
+- Cards refreshed: **2124** of 2128 in 1m 25s · all matched cards are up to date
+- API requests used: **25** (prices 25, matching new cards 0, set list 0; max 60) · API says **78** left today
+- Kept free for adding cards: 70 requests (show day: matching new cards waits until Monday)
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **1215**
+- ➖ Checked, prices unchanged: 909
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **9**
+
+**Biggest NM moves (15%+):**
+- Garchomp LV.X (Holo) — Majestic Dawn 97/100: $102.66 → $343.50
+- Ivysaur (Reverse Holo) — EX Crystal Guardians 34/100: $54.00 → $150.00
+- Charizard (Holo) — EX Power Keepers 6/108: $200.09 → $450.00
+- Dark Tyranitar (Holo · EX Team Rocket Returns) — Deck Exclusives 020/109: $109.92 → $47.09
+- Haunter (Unlimited) — Base Set (Shadowless) 029/102: $23.21 → $11.67
+- Misty's Starmie (1st Edition) — Gym Heroes 056/132: $11.14 → $16.02
+- Charizard (Holo) — Secret Wonders 3/132: $168.01 → $208.66
+- Milotic C (Reverse Holo) — Supreme Victors 35: $38.64 → $46.03
+- Moltres (Holo) — Supreme Victors 149: $387.85 → $456.78
+- Torterra LV.X (Promo · Holo) — Diamond and Pearl Promos DP09: $77.24 → $90.00
+
+**Outlier prices fixed (227):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Zoroark (Promo · Holo) — Black and White Promos BW19: NM $60.90 → $22.41
+- Mewtwo (Reverse Holo) — Legendary Treasures 53/113: DMG $18.33 → $8.41
+- Mew (Promo · Holo) — Black and White Promos BW98: LP $497.49 → $300.00, MP $321.00 → $300.00
+- Metagross (Promo · Team Plasma · Prerelease · Holo) — Black and White Promos BW75: DMG $40.65 → $14.91
+- Psyduck (Reverse Holo) — Boundaries Crossed 32/149: DMG $21.99 → $15.05
+- Mewtwo EX (Holo) — Black and White Promos BW45: NM $47.90 → $22.66
+- Pignite (Reverse Holo) — Legendary Treasures 26/113: MP $19.79 → $17.98
+- Zapdos EX (Team Plasma) (Holo) — Plasma Storm 48/135: NM $31.58 → $13.29
+- Mew EX (120 Full Art) (Holo) — Dragons Exalted 120/124: LP $445.69 → $423.51
+- Psyduck (33) (Reverse Holo) — Boundaries Crossed 33/149: DMG $55.48 → $19.66
+- Latios EX (Promo · Holo) — XY Promos XY72: NM $27.19 → $10.19
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $202.36 → $93.66
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $72.18
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $32.94
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.40
+- …and 212 more
+
 ## ✅ OK — TCGplayer sales check 2026-11-05
 
 - Cards looked up on TCGplayer: **216** in 23m 20s (another 125 waited for next week)
