@@ -1,21 +1,21 @@
 {
  "files": {
-  "candidates.json": "7d0bb07d008a",
-  "eras/bw/bw.json": "81a547c3c729",
-  "eras/dp-hgss/dp-hgss.json": "e8c05e8609b6",
+  "candidates.json": "ac726353887e",
+  "eras/bw/bw.json": "b13a7b6a7db5",
+  "eras/dp-hgss/dp-hgss.json": "8761a18a7969",
   "eras/eras.json": "69305f4aa2b7",
-  "eras/ex/ex.json": "e709dcbaaf3e",
+  "eras/ex/ex.json": "9f5d39661623",
   "eras/me/me.json": "3b8cc140780c",
   "eras/other/other.json": "f1b4e552f776",
   "eras/sm/sm.json": "6b46732f39b9",
   "eras/sv/sv.json": "c8e97bd779c8",
   "eras/swsh/swsh.json": "8409ae8fc4f9",
-  "eras/wotc/wotc.json": "b0fd896c4f44",
+  "eras/wotc/wotc.json": "686b44bba3c8",
   "eras/xy/xy.json": "6d2f6cfb657c",
   "graded/charts.json": "053adf59c890",
   "graded/heat.json": "102943d10cdb",
   "pairings.json": "07e5d8a7892e",
   "profitlog.json": "b04833ee4e08",
-  "sleepers.json": "ada26efd1c10"
+  "sleepers.json": "a5d8964ebdf9"
  }
 }

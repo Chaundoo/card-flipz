@@ -4835,6 +4835,476 @@
 "price:$50-100"
 ],
 "v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:entei",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:houndoom",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:alakazam e4",
+"set:Rising Rivals",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark houndoom",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:raichu",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:crobat",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:hydreigon",
+"set:Next Destinies",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:flygon",
+"set:POP Series 4",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:surfing pikachu",
+"set:Rising Rivals",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:flareon",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ho-oh",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:vaporeon",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:giratina",
+"set:Platinum",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:venusaur",
+"set:Rumble",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark gengar",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:gyarados",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark dragonite",
+"set:Team Rocket",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:umbreon",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:celebi",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:light jolteon",
+"set:Neo Destiny",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:mewtwo",
+"set:Rumble",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:POP Series 6",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pichu",
+"set:Neo Genesis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:arcanine",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark blastoise",
+"set:Team Rocket",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:feraligatr",
+"set:Neo Genesis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:shining steelix",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark charizard",
+"set:Team Rocket",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:milotic",
+"set:Supreme Victors",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:light dragonite",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:infernape e4",
+"set:Rising Rivals",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:gyarados",
+"set:Rumble",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:scizor",
+"set:Neo Discovery",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:light arcanine",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:raikou",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:blastoise",
+"set:Plasma Storm",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:Rising Rivals",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:mew",
+"set:Rumble",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:gengar",
+"set:Triumphant",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark espeon",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:rayquaza",
+"set:Dragons Exalted",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:empoleon",
+"set:Plasma Freeze",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ampharos",
+"set:Neo Revelation",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:moltres",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:gengar",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }
