@@ -4315,6 +4315,526 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:heracross",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:scyther",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:tyranitar",
+"set:Neo Discovery",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:POP Series 5",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:crobat",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:arcanine",
+"set:EX Sandstorm",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:psyduck",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:charizard",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:squirtle",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:psyduck",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:squirtle",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:cubone",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:EX Team Magma vs Team Aqua",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:jigglypuff",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:EX Power Keepers",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ninetales",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:mudkip",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:vulpix",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:lugia",
+"set:Neo Revelation",
+"kind:other",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:eevee",
+"set:EX Sandstorm",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:Stormfront",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:togepi",
+"set:Aquapolis",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:bulbasaur",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ninetales",
+"set:EX Power Keepers",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark crobat",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:dark marowak",
+"set:EX Team Rocket Returns",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:togepi",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:bulbasaur",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:typhlosion",
+"set:Neo Genesis",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ditto",
+"set:Legends Awakened",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:magikarp",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:charmeleon",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:psyduck",
+"set:Platinum",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ninetales",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:kingdra",
+"set:Neo Genesis",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:crobat",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:espeon",
+"set:Neo Discovery",
+"kind:other",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:shining raichu",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:shining mewtwo",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:lapras",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:growlithe",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:flareon",
+"set:Jungle",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:pikachu",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:mewtwo",
+"set:Base Set (Shadowless)",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:umbreon",
+"set:Neo Discovery",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:steelix",
+"set:Neo Genesis",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:gastly",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:snorlax",
+"set:Jungle",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:squirtle",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:ditto",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:snorlax",
+"set:Plasma Storm",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-07",
+"f": [
+"pokemon:wartortle",
+"set:Base Set (Shadowless)",
+"kind:other",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
