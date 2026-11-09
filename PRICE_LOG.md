@@ -2,6 +2,49 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-09
+
+- Cards refreshed: **2223** of 2227 in 1m 18s · all matched cards are up to date
+- API requests used: **23** (prices 23, matching new cards 0, set list 0; max 60) · API says **69** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **2156**
+- ➖ Checked, prices unchanged: 67
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **10**
+
+**Biggest NM moves (15%+):**
+- Pikachu (Holo) — POP Series 4 013/017: $62.16 → $359.82
+- Primarina (Holo · What's Your Favorite Stamp) — Miscellaneous Cards & Products 020/084: $9.18 → $45.38
+- Treecko (Non-Holo · 016 (Target Promo) — Nintendo Promos 016: $10.42 → $51.46
+- Victini Prism Star (Holo) — Dragon Majesty 7/70: $9.84 → $24.59
+- Pikachu (Reverse Holo) — EX Power Keepers 57/108: $177.40 → $429.99
+- Psyduck (Reverse Holo) — Platinum 87/127: $149.99 → $350.00
+- Blastoise (Holo) — Plasma Storm 137/135: $500.00 → $1,099.98
+- Kyogre (Reverse Holo) — Call of Legends 12/95: $33.29 → $70.12
+- Leafeon (Reverse Holo) — Call of Legends 13/95: $39.95 → $76.62
+- Charizard (1st Edition Holo) — Base Set (Shadowless) 004/102: $10,000.00 → $1,000.00
+
+**Outlier prices fixed (265):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $202.36 → $93.17
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $71.69
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $33.33
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.33
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Primeape (Non-Holo) — Aquapolis 029/147: DMG $34.99 → $19.28
+- Haunter (Unlimited) — Base Set (Shadowless) 029/102: NM $23.76 → $11.69
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $37.06 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Cubone (1st Edition) — Jungle 50/64: DMG $2.30 → $2.13
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.63
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.69 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $74.18 → $41.95
+- …and 250 more
+
 ## ✅ OK — price update 2026-11-06
 
 - Cards refreshed: **2124** of 2128 in 1m 25s · all matched cards are up to date
