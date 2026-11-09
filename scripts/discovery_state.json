@@ -1311,16 +1311,18 @@
 "scanned": "2026-10-26"
 },
 "pokemon--diamond-and-pearl": {
-"found": 2,
+"found": 0,
 "name": "Diamond and Pearl",
 "records": 261,
-"scanned": "2026-10-29"
+"scanned": "2026-11-09",
+"sleepers": 0
 },
 "pokemon--diamond-and-pearl-promos": {
-"found": 0,
+"found": 1,
 "name": "Diamond and Pearl Promos",
 "records": 66,
-"scanned": "2026-10-29"
+"scanned": "2026-11-09",
+"sleepers": 0
 },
 "pokemon--double-crisis": {
 "found": 0,
@@ -1360,131 +1362,133 @@
 "found": 0,
 "name": "EX Battle Stadium",
 "records": 52,
-"scanned": "2026-10-29"
+"scanned": "2026-11-09",
+"sleepers": 0
 },
 "pokemon--ex-crystal-guardians": {
-"found": 8,
+"found": 1,
 "name": "EX Crystal Guardians",
 "records": 191,
-"scanned": "2026-10-29"
+"scanned": "2026-11-09",
+"sleepers": 2
 },
 "pokemon--ex-delta-species": {
-"found": 9,
+"found": 6,
 "name": "EX Delta Species",
 "records": 225,
-"scanned": "2026-11-02",
-"sleepers": 6
+"scanned": "2026-11-09",
+"sleepers": 5
 },
 "pokemon--ex-deoxys": {
-"found": 14,
+"found": 4,
 "name": "EX Deoxys",
 "records": 230,
-"scanned": "2026-11-02",
-"sleepers": 10
+"scanned": "2026-11-09",
+"sleepers": 4
 },
 "pokemon--ex-dragon": {
-"found": 5,
+"found": 1,
 "name": "EX Dragon",
 "records": 191,
-"scanned": "2026-11-02",
-"sleepers": 2
+"scanned": "2026-11-09",
+"sleepers": 1
 },
 "pokemon--ex-dragon-frontiers": {
 "found": 8,
 "name": "EX Dragon Frontiers",
 "records": 193,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 1
 },
 "pokemon--ex-emerald": {
-"found": 16,
+"found": 5,
 "name": "EX Emerald",
 "records": 226,
-"scanned": "2026-11-02",
-"sleepers": 15
+"scanned": "2026-11-09",
+"sleepers": 5
 },
 "pokemon--ex-firered-and-leafgreen": {
-"found": 11,
+"found": 5,
 "name": "EX FireRed & LeafGreen",
 "records": 252,
-"scanned": "2026-11-02",
-"sleepers": 11
+"scanned": "2026-11-09",
+"sleepers": 3
 },
 "pokemon--ex-hidden-legends": {
-"found": 4,
+"found": 0,
 "name": "EX Hidden Legends",
 "records": 199,
-"scanned": "2026-11-02",
-"sleepers": 2
+"scanned": "2026-11-09",
+"sleepers": 1
 },
 "pokemon--ex-holon-phantoms": {
-"found": 15,
+"found": 6,
 "name": "EX Holon Phantoms",
 "records": 213,
-"scanned": "2026-11-02",
-"sleepers": 9
-},
-"pokemon--ex-legend-maker": {
-"found": 4,
-"name": "EX Legend Maker",
-"records": 177,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 2
 },
+"pokemon--ex-legend-maker": {
+"found": 2,
+"name": "EX Legend Maker",
+"records": 177,
+"scanned": "2026-11-09",
+"sleepers": 1
+},
 "pokemon--ex-power-keepers": {
-"found": 4,
+"found": 0,
 "name": "EX Power Keepers",
 "records": 203,
-"scanned": "2026-11-02",
-"sleepers": 5
+"scanned": "2026-11-09",
+"sleepers": 1
 },
 "pokemon--ex-ruby-and-sapphire": {
 "found": 1,
 "name": "EX Ruby and Sapphire",
 "records": 213,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 1
 },
 "pokemon--ex-sandstorm": {
-"found": 5,
+"found": 3,
 "name": "EX Sandstorm",
 "records": 196,
-"scanned": "2026-11-02",
-"sleepers": 6
+"scanned": "2026-11-09",
+"sleepers": 2
 },
 "pokemon--ex-team-magma-vs-team-aqua": {
-"found": 9,
+"found": 4,
 "name": "EX Team Magma vs Team Aqua",
 "records": 190,
-"scanned": "2026-11-02",
-"sleepers": 5
+"scanned": "2026-11-09",
+"sleepers": 0
 },
 "pokemon--ex-team-rocket-returns": {
-"found": 15,
+"found": 6,
 "name": "EX Team Rocket Returns",
 "records": 234,
-"scanned": "2026-11-02",
-"sleepers": 17
+"scanned": "2026-11-09",
+"sleepers": 6
 },
 "pokemon--ex-unseen-forces": {
-"found": 10,
+"found": 3,
 "name": "EX Unseen Forces",
 "records": 249,
-"scanned": "2026-11-02",
-"sleepers": 4
+"scanned": "2026-11-09",
+"sleepers": 0
 },
 "pokemon--expedition": {
-"found": 27,
+"found": 18,
 "name": "Expedition",
 "records": 327,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 14
 },
 "pokemon--fossil": {
 "found": 3,
 "name": "Fossil",
 "records": 131,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 4
 },
 "pokemon--generations": {
@@ -1498,14 +1502,14 @@
 "found": 0,
 "name": "Great Encounters",
 "records": 210,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 0
 },
 "pokemon--gym-challenge": {
-"found": 8,
+"found": 6,
 "name": "Gym Challenge",
 "records": 274,
-"scanned": "2026-11-02",
+"scanned": "2026-11-09",
 "sleepers": 5
 },
 "pokemon--gym-heroes": {

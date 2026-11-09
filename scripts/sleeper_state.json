@@ -1,27 +1,2900 @@
 {
 "about": "Written by scripts/discover_candidates.py (sleeper list + hidden printings it saw while scanning sets) and scripts/approve_candidates.py (picked sleepers come off). sleepers.json is built from this.",
-"cands": [],
+"cands": [
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 3.51,
+"cv": "Non-Holo",
+"r": 32.4
+},
+"id": "slp-squirtle-063-100-63-100-89491-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/47da86a8f4951b85.webp",
+"low": {
+"c": "nm",
+"p": 113.78
+},
+"name": "Squirtle - 063/100",
+"number": "63/100",
+"pkey": "019c977d-606e-74b1-a7f5-3f255aea140e",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 16.61,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 53.37,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 41.41,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 113.78,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 70.5,
+"set": "EX Crystal Guardians",
+"setSlug": "pokemon--ex-crystal-guardians",
+"tcgId": 89491,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 4.66,
+"cv": "Non-Holo",
+"r": 27.0
+},
+"id": "slp-blaziken-15-109-15-109-83904-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/9fb5d79be7f7f17e.webp",
+"low": null,
+"name": "Blaziken - 15/109",
+"number": "15/109",
+"pkey": "019c975b-48f3-763b-bca5-0373178182da",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 6.03,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 40.91,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 23.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 125.81,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 68.0,
+"set": "EX Ruby and Sapphire",
+"setSlug": "pokemon--ex-ruby-and-sapphire",
+"tcgId": 83904,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 20.87,
+"cv": "Non-Holo",
+"r": 14.4
+},
+"id": "slp-blastoise-14-100-83892-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/38755865341bc2b0.webp",
+"low": {
+"c": "dmg",
+"p": 49.99
+},
+"name": "Blastoise",
+"number": "14/100",
+"pkey": "019c978e-2442-7740-80cd-f7bf3398890e",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 42.08,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 160.17,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 83.33,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 300.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 60.8,
+"set": "EX Crystal Guardians",
+"setSlug": "pokemon--ex-crystal-guardians",
+"tcgId": 83892,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 13.16,
+"cv": "Non-Holo",
+"r": 12.9
+},
+"id": "slp-kingdra-12-109-86445-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/92cb30c0a8d33163.webp",
+"low": {
+"c": "nm",
+"p": 170.0
+},
+"name": "Kingdra",
+"number": "12/109",
+"pkey": "019c976a-8b9c-7167-be3b-49ff28209821",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 29.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 82.47,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 33.58,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 170.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 58.1,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 86445,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 16.67,
+"cv": "Non-Holo",
+"r": 10.8
+},
+"id": "slp-altaria-1-107-83514-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/929287dcc9c6bf17.webp",
+"low": null,
+"name": "Altaria",
+"number": "1/107",
+"pkey": "019c9759-2717-789e-9104-37bdfcd0e455",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 11.19,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 65.62,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 49.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 179.95,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 55.6,
+"set": "EX Deoxys",
+"setSlug": "pokemon--ex-deoxys",
+"tcgId": 83514,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 11.53,
+"cv": "Non-Holo",
+"r": 9.2
+},
+"id": "slp-clefairy-101-165-84353-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/0251c7a53f046d43.webp",
+"low": null,
+"name": "Clefairy",
+"number": "101/165",
+"pkey": "019c975d-60a8-7777-aad4-2edc74833496",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 8.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 44.2,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 33.38,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 105.62,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 52.1,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 84353,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 27.57,
+"cv": "Non-Holo",
+"r": 8.0
+},
+"id": "slp-dark-dragonair-032-109-32-109-84583-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/1c102832c5decf43.webp",
+"low": {
+"c": "lp",
+"p": 138.86
+},
+"name": "Dark Dragonair - 032/109",
+"number": "32/109",
+"pkey": "019c975f-782d-7d2b-9436-2091db1aa904",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 45.28,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 142.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 70.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 220.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 51.7,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 84583,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 15.29,
+"cv": "Non-Holo",
+"r": 8.4
+},
+"id": "slp-pichu-21-108-88017-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/3322d9be85ce42d4.webp",
+"low": null,
+"name": "Pichu",
+"number": "21/108",
+"pkey": "019c9774-e229-7f72-9c79-0bdf82b38a33",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 14.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 65.76,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 49.94,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 128.82,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 51.3,
+"set": "EX Power Keepers",
+"setSlug": "pokemon--ex-power-keepers",
+"tcgId": 88017,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 18.33,
+"cv": "Non-Holo",
+"r": 8.2
+},
+"id": "slp-haunter-080-165-86024-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/68f569b8ceaa5405.webp",
+"low": null,
+"name": "Haunter",
+"number": "080/165",
+"pkey": "019c9768-6eb4-72cf-abd0-9706a03ddd34",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 54.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 90.3,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 70.61,
+"src": "Estimated: TCGplayer showed $102.78, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 149.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 51.2,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 86024,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 11.65,
+"cv": "Non-Holo",
+"r": 8.6
+},
+"id": "slp-ninetales-22-101-87769-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/9268dedd90bae85a.webp",
+"low": null,
+"name": "Ninetales",
+"number": "22/101",
+"pkey": "019c9772-d81e-74e9-887d-0c7768b4cebf",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 16.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 67.23,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 59.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 51.0,
+"set": "EX Hidden Legends",
+"setSlug": "pokemon--ex-hidden-legends",
+"tcgId": 87769,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 14.98,
+"cv": "Non-Holo",
+"r": 8.0
+},
+"id": "slp-absol-15-92-83451-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/a71c752d44935d07.webp",
+"low": {
+"c": "lp",
+"p": 85.99
+},
+"name": "Absol",
+"number": "15/92",
+"pkey": "019c978d-8d1d-7271-88e4-7916780c2d83",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 18.09,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 79.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 58.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 120.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 50.4,
+"set": "EX Legend Maker",
+"setSlug": "pokemon--ex-legend-maker",
+"tcgId": 83451,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 25.29,
+"cv": "Non-Holo",
+"r": 7.1
+},
+"id": "slp-ditto-geodude-62-113-84839-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/17b23ba4778cdffc.webp",
+"low": null,
+"name": "Ditto (Geodude)",
+"number": "62/113",
+"pkey": "019c9761-9825-7d53-8f92-e528141f28c8",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 73.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 117.33,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 102.96,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 179.75,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 49.6,
+"set": "EX Delta Species",
+"setSlug": "pokemon--ex-delta-species",
+"tcgId": 84839,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 51.99,
+"cv": "Non-Holo",
+"r": 6.3
+},
+"id": "slp-articuno-ex-114-112-83654-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/36aebab6b0b92015.webp",
+"low": null,
+"name": "Articuno ex",
+"number": "114/112",
+"pkey": "019c9759-2873-7f98-8081-8f29019d2ca2",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 84.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 206.47,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 156.8,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 325.45,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 49.0,
+"set": "EX FireRed & LeafGreen",
+"setSlug": "pokemon--ex-firered-and-leafgreen",
+"tcgId": 83654,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 49.7,
+"cv": "Non-Holo",
+"r": 6.0
+},
+"id": "slp-squirtle-083-112-83-112-89490-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/4ab119be7993e6a1.webp",
+"low": {
+"c": "lp",
+"p": 419.99
+},
+"name": "Squirtle - 083/112",
+"number": "83/112",
+"pkey": "019c977d-606b-7720-8942-dacec6c194fa",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 67.7,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": true,
+"price": 184.05,
+"src": "Estimated: TCGplayer showed $419.99, which looked like an outlier sale (higher than a better condition)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 125.98,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 300.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 48.3,
+"set": "EX FireRed & LeafGreen",
+"setSlug": "pokemon--ex-firered-and-leafgreen",
+"tcgId": 89490,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 20.86,
+"cv": "Non-Holo",
+"r": 6.7
+},
+"id": "slp-gyarados-32-97-85990-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/736b4002db474077.webp",
+"low": null,
+"name": "Gyarados",
+"number": "32/97",
+"pkey": "019c9790-c520-7752-895c-7d471055785d",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 24.46,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 99.89,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 58.78,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 140.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 48.2,
+"set": "EX Dragon",
+"setSlug": "pokemon--ex-dragon",
+"tcgId": 85990,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 219.0,
+"cv": "Non-Holo",
+"r": 4.9
+},
+"id": "slp-rocket-s-zapdos-ex-106-109-88801-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/ddba2abc3eff284f.webp",
+"low": {
+"c": "dmg",
+"p": 195.99
+},
+"name": "Rocket's Zapdos ex",
+"number": "106/109",
+"pkey": "019c9779-11ed-73c6-9026-6583c16862f2",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 177.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 375.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 239.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 1079.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 48.2,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 88801,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 249.95,
+"cv": "Holo",
+"r": 4.8
+},
+"id": "slp-rocket-s-suicune-ex-105-109-88797-normal",
+"image": "https://cdn.tcgpricelookup.com/cards/1233d146e2debbed.webp",
+"low": null,
+"name": "Rocket's Suicune ex",
+"number": "105/109",
+"pkey": "01a101ac-1de5-7dfc-a1a0-75d1d99c9978",
+"pop": true,
+"raw": {
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 500.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 1199.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 48.0,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 88797,
+"tcgVariant": "Normal",
+"updated": "2026-11-09",
+"variant": "Non-Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 98.46,
+"cv": "Non-Holo",
+"r": 5.3
+},
+"id": "slp-dark-dragonite-15-109-84587-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/4ff807e3b58ea3b0.webp",
+"low": null,
+"name": "Dark Dragonite",
+"number": "15/109",
+"pkey": "019c975f-7832-7c9c-a367-217a42619137",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 234.98,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": true,
+"price": 448.44,
+"src": "Estimated: TCGplayer showed $1,149.99, which looked like an outlier sale (higher than a better condition)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 299.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 525.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 47.7,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 84587,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 94.22,
+"cv": "Holo",
+"r": 5.3
+},
+"id": "slp-blastoise-4-004-165-83888-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/af0cc2bbac01040b.webp",
+"low": null,
+"name": "Blastoise (4)",
+"number": "004/165",
+"pkey": "019c975b-48d4-746a-8ad5-b8560f9ebe2a",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 79.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 280.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 197.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 499.95,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 47.6,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 83888,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 85.09,
+"cv": "Non-Holo",
+"r": 5.1
+},
+"id": "slp-rayquaza-ex-102-107-88643-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/80420f0f1f9f26d5.webp",
+"low": null,
+"name": "Rayquaza ex",
+"number": "102/107",
+"pkey": "019c9779-101f-766c-a0de-771741476937",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 161.3,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 249.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 249.0,
+"src": "Estimated: TCGplayer showed $416.63, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": true,
+"price": 436.84,
+"src": "Estimated: TCGplayer showed $999.00, which looked like an outlier sale (far above the lower conditions, likely one odd NM sale; waiting for the weekly TCGplayer sales check)"
+}
+},
+"score": 46.8,
+"set": "EX Deoxys",
+"setSlug": "pokemon--ex-deoxys",
+"tcgId": 88643,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 43.89,
+"cv": "Unlimited Holo",
+"r": 5.6
+},
+"id": "slp-lapras-10-10-62-44419-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/bd9aeb172c0ac482.webp",
+"low": null,
+"name": "Lapras (10)",
+"number": "10/62",
+"pkey": "019c978d-695b-7d68-a8ea-81f2f51ee10a",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 41.07,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 107.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 65.75,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 244.14,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.7,
+"set": "Fossil",
+"setSlug": "pokemon--fossil",
+"tcgId": 44419,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 16.67,
+"cv": "Non-Holo",
+"r": 6.2
+},
+"id": "slp-altaria-1-107-83514-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/2ea480df76bdf0dc.webp",
+"low": null,
+"name": "Altaria",
+"number": "1/107",
+"pkey": "019c9759-2711-7520-999a-0eaf757003b3",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 12.4,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 52.08,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 25.37,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 104.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.5,
+"set": "EX Deoxys",
+"setSlug": "pokemon--ex-deoxys",
+"tcgId": 83514,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 21.14,
+"cv": "Non-Holo",
+"r": 6.0
+},
+"id": "slp-vaporeon-25-100-90278-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/5ae977af496312b6.webp",
+"low": null,
+"name": "Vaporeon",
+"number": "25/100",
+"pkey": "019c9781-a312-76ec-be80-d352487985f7",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 16.67,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 99.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 67.48,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 126.64,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.3,
+"set": "EX Sandstorm",
+"setSlug": "pokemon--ex-sandstorm",
+"tcgId": 90278,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 55.39,
+"cv": "Non-Holo",
+"r": 5.2
+},
+"id": "slp-mewtwo-delta-species-24-110-87426-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/27510b05128f8e73.webp",
+"low": {
+"c": "mp",
+"p": 325.99
+},
+"name": "Mewtwo (Delta Species)",
+"number": "24/110",
+"pkey": "019c9770-ca31-7065-af28-f09dfb0e6c05",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 116.16,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 269.97,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 253.93,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 287.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 46.1,
+"set": "EX Holon Phantoms",
+"setSlug": "pokemon--ex-holon-phantoms",
+"tcgId": 87426,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 23.1,
+"cv": "Non-Holo",
+"r": 5.8
+},
+"id": "slp-charmander-97-097-165-84206-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/2bd7df4b24864eb3.webp",
+"low": null,
+"name": "Charmander (97)",
+"number": "097/165",
+"pkey": "019c975d-5f89-7494-aed7-8a42dc738dc2",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 36.75,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 91.49,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 78.4,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 132.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 45.9,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 84206,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 178.32,
+"cv": "Unlimited Holo",
+"r": 4.4
+},
+"id": "slp-erika-s-venusaur-004-132-85307-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/672eaf65274e9fd2.webp",
+"low": null,
+"name": "Erika's Venusaur",
+"number": "004/132",
+"pkey": "019c9763-c00a-7f58-b9a7-3bab9114dde4",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 133.55,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 343.46,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 298.76,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 779.45,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 45.7,
+"set": "Gym Challenge",
+"setSlug": "pokemon--gym-challenge",
+"tcgId": 85307,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 26.99,
+"cv": "Non-Holo",
+"r": 5.5
+},
+"id": "slp-gardevoir-4-106-85633-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/1686f9370fc2ad54.webp",
+"low": null,
+"name": "Gardevoir",
+"number": "4/106",
+"pkey": "019c9765-da3a-7049-969e-89a03981beb1",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 69.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 100.02,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": true,
+"price": 79.48,
+"src": "Estimated: TCGplayer showed $120.00, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 148.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 45.5,
+"set": "EX Emerald",
+"setSlug": "pokemon--ex-emerald",
+"tcgId": 85633,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 28.26,
+"cv": "Non-Holo",
+"r": 5.2
+},
+"id": "slp-cyndaquil-104-104-165-84547-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/46ab2701f2a6ba0d.webp",
+"low": null,
+"name": "Cyndaquil (104)",
+"number": "104/165",
+"pkey": "019c975f-77e1-7f4c-a2d9-4c159aa74556",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 37.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 48.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 148.06,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 44.7,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 84547,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 22.1,
+"cv": "Non-Holo",
+"r": 5.4
+},
+"id": "slp-latias-delta-species-21-110-86657-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/ace842e59d033466.webp",
+"low": {
+"c": "dmg",
+"p": 47.0
+},
+"name": "Latias (Delta Species)",
+"number": "21/110",
+"pkey": "019c976c-9fc2-7505-b036-3b84aca77a82",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 42.24,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 86.67,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 81.78,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 118.65,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 44.6,
+"set": "EX Holon Phantoms",
+"setSlug": "pokemon--ex-holon-phantoms",
+"tcgId": 86657,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 30.18,
+"cv": "Non-Holo",
+"r": 5.0
+},
+"id": "slp-wartortle-092-165-90485-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/71d49c09b7f65ad1.webp",
+"low": null,
+"name": "Wartortle",
+"number": "092/165",
+"pkey": "019c9783-aef8-771c-b4b5-f1518460dcde",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 28.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 71.31,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 49.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 149.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 44.0,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 90485,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 63.12,
+"cv": "Non-Holo",
+"r": 4.4
+},
+"id": "slp-ditto-64-113-squirtle-064-113-84841-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/64dbc11229ede774.webp",
+"low": {
+"c": "mp",
+"p": 140.5
+},
+"name": "Ditto - 64/113 (Squirtle)",
+"number": "064/113",
+"pkey": "019c9761-982b-7662-a7c3-33b9f5f0bb11",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 104.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 199.84,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 140.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 279.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 43.7,
+"set": "EX Delta Species",
+"setSlug": "pokemon--ex-delta-species",
+"tcgId": 84841,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 22.94,
+"cv": "Non-Holo",
+"r": 5.0
+},
+"id": "slp-dragonair-075-165-84898-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/6ea454d6e116ca91.webp",
+"low": null,
+"name": "Dragonair",
+"number": "075/165",
+"pkey": "019c9761-98a9-7e84-9b06-aca95200e760",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 19.24,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 86.25,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 61.75,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 115.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 43.6,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 84898,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 75.52,
+"cv": "Non-Holo",
+"r": 4.1
+},
+"id": "slp-ditto-35-113-84832-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/2c7dc149b20f1d88.webp",
+"low": {
+"c": "nm",
+"p": 309.98
+},
+"name": "Ditto",
+"number": "35/113",
+"pkey": "019c9761-980b-7818-94e5-0d3c556ca58d",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 44.34,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 149.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 82.52,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 309.98,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.8,
+"set": "EX Delta Species",
+"setSlug": "pokemon--ex-delta-species",
+"tcgId": 84832,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 81.3,
+"cv": "Unlimited Holo",
+"r": 4.0
+},
+"id": "slp-sabrina-s-alakazam-016-132-88866-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/c5bd82e055eadf92.webp",
+"low": null,
+"name": "Sabrina's Alakazam",
+"number": "016/132",
+"pkey": "019c9779-1290-7e6b-8392-99eb3a9beb9c",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 88.6,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 258.92,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 258.92,
+"src": "Estimated: TCGplayer showed $269.80, which looked like an outlier sale (capped at the better condition's price)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 327.28,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.7,
+"set": "Gym Challenge",
+"setSlug": "pokemon--gym-challenge",
+"tcgId": 88866,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 42.84,
+"cv": "Non-Holo",
+"r": 4.3
+},
+"id": "slp-blaziken-1-106-83906-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/0793a3f9f8ec87aa.webp",
+"low": null,
+"name": "Blaziken",
+"number": "1/106",
+"pkey": "019c975b-48f7-73d4-9a70-72d70f758a94",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 59.93,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 184.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 84.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 185.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.4,
+"set": "EX Emerald",
+"setSlug": "pokemon--ex-emerald",
+"tcgId": 83906,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 450.0,
+"cv": "Non-Holo",
+"r": 3.1
+},
+"id": "slp-gengar-ex-108-112-85680-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/eac34c532995c933.webp",
+"low": null,
+"name": "Gengar ex",
+"number": "108/112",
+"pkey": "019c9765-dab5-7706-9c8b-8ad4d5322b87",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 614.07,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 1176.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 1171.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 1399.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.1,
+"set": "EX FireRed & LeafGreen",
+"setSlug": "pokemon--ex-firered-and-leafgreen",
+"tcgId": 85680,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 43.52,
+"cv": "Non-Holo",
+"r": 4.2
+},
+"id": "slp-bulbasaur-94-094-165-84026-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/f03ee7b7097d00dc.webp",
+"low": null,
+"name": "Bulbasaur (94)",
+"number": "094/165",
+"pkey": "019c975b-4a09-70fc-887b-0df1c0d9f2c5",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 73.49,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 182.91,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 114.68,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": true,
+"price": 182.91,
+"src": "Estimated: TCGplayer showed $58.00, which looked like an outlier sale (out of line with the other conditions)"
+}
+},
+"score": 42.0,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 84026,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 36.42,
+"cv": "Non-Holo",
+"r": 4.3
+},
+"id": "slp-magikarp-118-165-87024-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/77be41c50df711db.webp",
+"low": null,
+"name": "Magikarp",
+"number": "118/165",
+"pkey": "019c976e-bd73-766f-8ae9-e0e0426fa2fb",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 39.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": true,
+"price": 156.59,
+"src": "Estimated: TCGplayer showed $165.29, which looked like an outlier sale (capped at the better condition's price)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 102.13,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 156.59,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.0,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 87024,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 48.81,
+"cv": "Non-Holo",
+"r": 4.1
+},
+"id": "slp-umbreon-24-100-90138-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/c5f738750dcb241d.webp",
+"low": null,
+"name": "Umbreon",
+"number": "24/100",
+"pkey": "019c9781-a1ce-7d04-9774-a1c9c16a109b",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 49.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 167.65,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 103.34,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 200.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.9,
+"set": "EX Sandstorm",
+"setSlug": "pokemon--ex-sandstorm",
+"tcgId": 90138,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 219.04,
+"cv": "Unlimited Holo",
+"r": 3.3
+},
+"id": "slp-gengar-5-05-62-106521-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/d935933a8f447087.webp",
+"low": null,
+"name": "Gengar (5)",
+"number": "05/62",
+"pkey": "019c97a1-f1dd-7840-9415-1bc3a16db1d3",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 198.26,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 454.94,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 321.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 725.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.6,
+"set": "Fossil",
+"setSlug": "pokemon--fossil",
+"tcgId": 106521,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 105.8,
+"cv": "Unlimited Holo",
+"r": 3.7
+},
+"id": "slp-blaine-s-arcanine-001-132-83860-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/d943da5c924fff1e.webp",
+"low": null,
+"name": "Blaine's Arcanine",
+"number": "001/132",
+"pkey": "019c975b-4871-7c6a-ac60-356bfaea017d",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 104.95,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": true,
+"price": 386.48,
+"src": "Estimated: TCGplayer showed $399.99, which looked like an outlier sale (capped at the better condition's price)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 222.08,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 386.48,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.6,
+"set": "Gym Challenge",
+"setSlug": "pokemon--gym-challenge",
+"tcgId": 83860,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 249.0,
+"cv": "Non-Holo",
+"r": 3.2
+},
+"id": "slp-milotic-ex-96-106-87460-holofoil",
+"image": "https://cdn.tcgpricelookup.com/cards/7e83b4483bdde770.webp",
+"low": null,
+"name": "Milotic ex",
+"number": "96/106",
+"pkey": "019c9770-ca80-748e-81d1-a3628e995cac",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 109.94,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 479.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 252.53,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 799.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.4,
+"set": "EX Emerald",
+"setSlug": "pokemon--ex-emerald",
+"tcgId": 87460,
+"tcgVariant": "Holofoil",
+"updated": "2026-11-09",
+"variant": "Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 83.38,
+"cv": "Non-Holo",
+"r": 3.7
+},
+"id": "slp-blastoise-36-036-165-83889-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/b5864f12110ec893.webp",
+"low": null,
+"name": "Blastoise (36)",
+"number": "036/165",
+"pkey": "019c975b-48d6-74a8-b1e9-25051744b862",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 53.48,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 175.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 111.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": true,
+"price": 307.02,
+"src": "Estimated: TCGplayer showed $1,649.68, which looked like an outlier sale (far above the lower conditions, likely one odd NM sale; waiting for the weekly TCGplayer sales check)"
+}
+},
+"score": 41.2,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 83889,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 82.32,
+"cv": "Non-Holo",
+"r": 3.6
+},
+"id": "slp-dark-tyranitar-019-109-19-109-84661-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/7ac4204e7d4984f9.webp",
+"low": null,
+"name": "Dark Tyranitar - 019/109",
+"number": "19/109",
+"pkey": "019c975f-78b8-7bb2-94ba-9bbb8a57cea4",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 81.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 153.53,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": true,
+"price": 122.04,
+"src": "Estimated: TCGplayer showed $199.99, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 299.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 41.0,
+"set": "EX Team Rocket Returns",
+"setSlug": "pokemon--ex-team-rocket-returns",
+"tcgId": 84661,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 52.13,
+"cv": "Non-Holo",
+"r": 3.8
+},
+"id": "slp-ditto-61-113-charmander-061-113-84838-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/4ebfc19694efbc10.webp",
+"low": null,
+"name": "Ditto - 61/113 (Charmander)",
+"number": "061/113",
+"pkey": "019c9761-9822-7230-bd53-5d698ec3d91a",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 94.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 172.34,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 113.26,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 199.98,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.9,
+"set": "EX Delta Species",
+"setSlug": "pokemon--ex-delta-species",
+"tcgId": 84838,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 81.08,
+"cv": "Holo",
+"r": 3.6
+},
+"id": "slp-feraligatr-delta-species-2-101-85423-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/22436e0c71c98a6e.webp",
+"low": {
+"c": "dmg",
+"p": 22.42
+},
+"name": "Feraligatr (Delta Species)",
+"number": "2/101",
+"pkey": "019c9763-c0eb-7ad1-a02d-cd8d1244bfa2",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 22.42,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 118.6,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 60.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 292.04,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.8,
+"set": "EX Dragon Frontiers",
+"setSlug": "pokemon--ex-dragon-frontiers",
+"tcgId": 85423,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 29.23,
+"cv": "Non-Holo",
+"r": 4.1
+},
+"id": "slp-vulpix-136-165-90436-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/b45a7940c9c5f22a.webp",
+"low": null,
+"name": "Vulpix",
+"number": "136/165",
+"pkey": "019c9783-aea1-7ca1-92b8-6a229c6d84e1",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 13.48,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 86.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 58.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 119.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.8,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 90436,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 212.52,
+"cv": "Unlimited",
+"r": 3.2
+},
+"id": "slp-sabrina-s-gengar-029-132-88875-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/cc119b3923431915.webp",
+"low": null,
+"name": "Sabrina's Gengar",
+"number": "029/132",
+"pkey": "019c9779-12a5-7804-9a0b-47d5ddb1d525",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 145.63,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 241.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 224.7,
+"src": "Estimated: TCGplayer showed $274.99, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 670.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.7,
+"set": "Gym Challenge",
+"setSlug": "pokemon--gym-challenge",
+"tcgId": 88875,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-09",
+"variant": "1st Edition"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 53.95,
+"cv": "Unlimited Holo",
+"r": 3.8
+},
+"id": "slp-raichu-14-14-62-44423-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/7cbed67917ae8d40.webp",
+"low": {
+"c": "nm",
+"p": 48.2
+},
+"name": "Raichu (14)",
+"number": "14/62",
+"pkey": "019c978d-6964-7fbb-8a8e-f25d4d02dc44",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 40.29,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 97.67,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 79.03,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 202.8,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.6,
+"set": "Fossil",
+"setSlug": "pokemon--fossil",
+"tcgId": 44423,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 185.03,
+"cv": "Unlimited Holo",
+"r": 3.1
+},
+"id": "slp-dragonite-4-04-62-106520-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/8de96219f4c012f2.webp",
+"low": null,
+"name": "Dragonite (4)",
+"number": "04/62",
+"pkey": "019c97a1-f1da-7b22-91a1-9aad7f6d7093",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 136.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 309.13,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 275.04,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 582.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 40.4,
+"set": "Fossil",
+"setSlug": "pokemon--fossil",
+"tcgId": 106520,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 27.58,
+"cv": "Non-Holo",
+"r": 3.9
+},
+"id": "slp-milotic-8-106-87453-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/0cbcf7f59e963486.webp",
+"low": null,
+"name": "Milotic",
+"number": "8/106",
+"pkey": "019c9770-ca6a-7830-a6c6-4fd1de7cdf69",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 14.49,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 44.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 32.36,
+"src": "Estimated: TCGplayer showed $165.00, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 108.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 39.9,
+"set": "EX Emerald",
+"setSlug": "pokemon--ex-emerald",
+"tcgId": 87453,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 75.97,
+"cv": "Non-Holo",
+"r": 3.3
+},
+"id": "slp-jirachi-9-107-86327-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/1d33eaa734d9c1a6.webp",
+"low": null,
+"name": "Jirachi",
+"number": "9/107",
+"pkey": "019c976a-8a8a-7d05-9895-0e26f2dc50bc",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 67.96,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": true,
+"price": 149.12,
+"src": "Estimated: TCGplayer showed $332.15, which looked like an outlier sale (higher than a better condition)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 79.15,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 253.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 39.4,
+"set": "EX Deoxys",
+"setSlug": "pokemon--ex-deoxys",
+"tcgId": 86327,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 33.85,
+"cv": "Non-Holo",
+"r": 3.5
+},
+"id": "slp-venusaur-68-068-165-90316-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/f3a32a56b7b1d146.webp",
+"low": null,
+"name": "Venusaur (68)",
+"number": "068/165",
+"pkey": "019c9783-adc0-7c47-b2cc-a15e9c91e62d",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 23.14,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 62.2,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 35.56,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 120.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 38.7,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 90316,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 78.42,
+"cv": "Non-Holo",
+"r": 3.2
+},
+"id": "slp-ditto-63-113-pikachu-063-113-84840-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/0c207b6d0d5f30e8.webp",
+"low": null,
+"name": "Ditto - 63/113 (Pikachu)",
+"number": "063/113",
+"pkey": "019c9761-9828-78e1-bdb8-b184202ebd52",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-08",
+"est": false,
+"price": 86.36,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-08",
+"est": false,
+"price": 210.44,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-08",
+"est": false,
+"price": 141.47,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-08",
+"est": false,
+"price": 249.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 38.6,
+"set": "EX Delta Species",
+"setSlug": "pokemon--ex-delta-species",
+"tcgId": 84840,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 81.38,
+"cv": "Unlimited Holo",
+"r": 3.1
+},
+"id": "slp-brock-s-ninetales-003-132-83973-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/e7c28e519e7987d9.webp",
+"low": {
+"c": "mp",
+"p": 118.5
+},
+"name": "Brock's Ninetales",
+"number": "003/132",
+"pkey": "019c975b-4991-784a-9e42-b42169491ab5",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 70.1,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 147.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 118.5,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 252.75,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 38.4,
+"set": "Gym Challenge",
+"setSlug": "pokemon--gym-challenge",
+"tcgId": 83973,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-09",
+"variant": "1st Edition Holo"
+},
+{
+"era": "ex",
+"found": "2026-11-09",
+"hid": {
+"cp": 29.31,
+"cv": "Non-Holo",
+"r": 3.4
+},
+"id": "slp-kyogre-015-106-15-106-86548-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/08cb6f8bb9aba07c.webp",
+"low": null,
+"name": "Kyogre - 015/106",
+"number": "15/106",
+"pkey": "019c976c-9f06-74f6-a335-546c3537e992",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 66.62,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 76.67,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": true,
+"price": 66.62,
+"src": "Estimated: TCGplayer showed $220.00, which looked like an outlier sale (higher than a better condition)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 100.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 37.7,
+"set": "EX Emerald",
+"setSlug": "pokemon--ex-emerald",
+"tcgId": 86548,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 31.14,
+"cv": "Non-Holo",
+"r": 3.3
+},
+"id": "slp-ampharos-34-034-165-83539-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/04f3f4fd2490dc9e.webp",
+"low": null,
+"name": "Ampharos (34)",
+"number": "034/165",
+"pkey": "019c9759-2762-78d0-9d10-3950d4bfd348",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 21.36,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 65.31,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 50.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 102.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 37.3,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 83539,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-09",
+"hid": {
+"cp": 37.53,
+"cv": "Non-Holo",
+"r": 3.1
+},
+"id": "slp-venusaur-67-067-165-90315-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/e407edbe2e169388.webp",
+"low": null,
+"name": "Venusaur (67)",
+"number": "067/165",
+"pkey": "019c9783-adbd-7139-9a63-7c399911dc1f",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 16.66,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 110.53,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 60.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 115.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 36.6,
+"set": "Expedition",
+"setSlug": "pokemon--expedition",
+"tcgId": 90315,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-09",
+"variant": "Reverse Holo"
+}
+],
 "hidden": {
 "106520|1st edition holofoil": {
 "cp": 185.03,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 582.66,
 "r": 3.1
 },
 "106521|1st edition holofoil": {
 "cp": 219.04,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 725.0,
 "r": 3.3
 },
 "106522|1st edition holofoil": {
-"cp": 49.91,
+"cp": 52.67,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 170.99,
-"r": 3.4
+"r": 3.2
 },
 "106997|unlimited holofoil": {
 "cp": 165.5,
@@ -164,25 +3037,25 @@
 "r": 4.2
 },
 "44419|1st edition holofoil": {
-"cp": 36.45,
+"cp": 43.89,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 231.13,
-"r": 6.3
+"d": "2026-11-09",
+"p": 244.14,
+"r": 5.6
 },
 "44423|1st edition holofoil": {
-"cp": 53.73,
+"cp": 53.95,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 221.31,
-"r": 4.1
+"d": "2026-11-09",
+"p": 202.8,
+"r": 3.8
 },
 "44424|1st edition holofoil": {
-"cp": 38.93,
+"cp": 41.22,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 208.37,
-"r": 5.4
+"d": "2026-11-09",
+"p": 229.25,
+"r": 5.6
 },
 "45120|1st edition holofoil": {
 "cp": 37.2,
@@ -241,44 +3114,51 @@
 "r": 4.9
 },
 "83451|reverse holofoil": {
-"cp": 14.94,
+"cp": 14.98,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 120.0,
 "r": 8.0
 },
 "83514|holofoil": {
 "cp": 16.67,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 129.99,
-"r": 7.8
+"d": "2026-11-09",
+"p": 104.0,
+"r": 6.2
+},
+"83514|reverse holofoil": {
+"cp": 16.67,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 179.95,
+"r": 10.8
 },
 "83539|reverse holofoil": {
 "cp": 31.14,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 102.99,
 "r": 3.3
 },
 "83579|reverse holofoil": {
-"cp": 13.91,
+"cp": 13.94,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 221.68,
-"r": 15.9
+"d": "2026-11-09",
+"p": 210.84,
+"r": 15.1
 },
 "83582|reverse holofoil": {
-"cp": 2.1,
+"cp": 2.11,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 118.72,
-"r": 56.5
+"r": 56.3
 },
 "83654|holofoil": {
 "cp": 51.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 325.45,
 "r": 6.3
 },
@@ -292,37 +3172,58 @@
 "83858|1st edition holofoil": {
 "cp": 35.9,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 116.98,
 "r": 3.3
 },
 "83860|1st edition holofoil": {
-"cp": 104.86,
+"cp": 105.8,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 386.48,
 "r": 3.7
 },
 "83888|reverse holofoil": {
 "cp": 94.22,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 499.95,
 "r": 5.3
+},
+"83889|reverse holofoil": {
+"cp": 83.38,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 307.02,
+"r": 3.7
+},
+"83892|reverse holofoil": {
+"cp": 20.87,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 300.0,
+"r": 14.4
+},
+"83904|reverse holofoil": {
+"cp": 4.66,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 125.81,
+"r": 27.0
 },
 "83906|reverse holofoil": {
 "cp": 42.84,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 185.0,
 "r": 4.3
 },
 "83907|reverse holofoil": {
-"cp": 9.36,
+"cp": 9.55,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 189.98,
-"r": 20.3
+"r": 19.9
 },
 "83908|reverse holofoil": {
 "cp": 41.21,
@@ -331,19 +3232,26 @@
 "p": 129.68,
 "r": 3.1
 },
+"83936|reverse holofoil": {
+"cp": 21.86,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 114.42,
+"r": 5.2
+},
 "83955|reverse holofoil": {
 "cp": 30.13,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 116.58,
 "r": 3.9
 },
 "83973|1st edition holofoil": {
-"cp": 81.53,
+"cp": 81.38,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 260.5,
-"r": 3.2
+"d": "2026-11-09",
+"p": 252.75,
+"r": 3.1
 },
 "83978|1st edition holofoil": {
 "cp": 41.21,
@@ -353,39 +3261,46 @@
 "r": 3.3
 },
 "84026|reverse holofoil": {
-"cp": 43.38,
+"cp": 43.52,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 182.91,
 "r": 4.2
 },
 "84027|reverse holofoil": {
-"cp": 69.43,
+"cp": 69.18,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 600.0,
-"r": 8.6
+"r": 8.7
 },
 "84028|reverse holofoil": {
-"cp": 23.59,
+"cp": 24.09,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 309.99,
-"r": 13.1
+"d": "2026-11-09",
+"p": 323.65,
+"r": 13.4
 },
 "84029|reverse holofoil": {
-"cp": 15.46,
+"cp": 15.45,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 138.32,
-"r": 8.9
+"r": 9.0
 },
 "84030|reverse holofoil": {
-"cp": 4.99,
+"cp": 4.96,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 139.99,
-"r": 28.1
+"r": 28.2
+},
+"84032|reverse holofoil": {
+"cp": 12.59,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 154.48,
+"r": 12.3
 },
 "84035|reverse holofoil": {
 "cp": 4.19,
@@ -402,46 +3317,60 @@
 "r": 10.0
 },
 "84206|reverse holofoil": {
-"cp": 23.28,
+"cp": 23.1,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 132.99,
-"r": 5.7
+"r": 5.8
 },
 "84207|reverse holofoil": {
-"cp": 60.92,
+"cp": 61.98,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 299.99,
-"r": 4.9
+"r": 4.8
 },
 "84209|reverse holofoil": {
-"cp": 5.52,
+"cp": 5.55,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 134.99,
-"r": 24.5
+"r": 24.3
 },
 "84210|reverse holofoil": {
-"cp": 2.2,
+"cp": 2.21,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 149.99,
-"r": 68.2
+"r": 67.9
 },
 "84214|reverse holofoil": {
-"cp": 6.57,
+"cp": 6.62,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 199.98,
-"r": 30.4
+"r": 30.2
+},
+"84220|reverse holofoil": {
+"cp": 6.54,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 202.18,
+"r": 30.9
+},
+"84353|reverse holofoil": {
+"cp": 11.53,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 105.62,
+"r": 9.2
 },
 "84365|reverse holofoil": {
-"cp": 29.25,
+"cp": 29.01,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 138.6,
-"r": 4.7
+"r": 4.8
 },
 "84484|reverse holofoil": {
 "cp": 54.18,
@@ -465,39 +3394,39 @@
 "r": 5.1
 },
 "84530|reverse holofoil": {
-"cp": 21.08,
+"cp": 21.03,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 124.99,
 "r": 5.9
 },
 "84531|reverse holofoil": {
-"cp": 16.6,
+"cp": 16.66,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 194.98,
 "r": 11.7
 },
 "84532|reverse holofoil": {
-"cp": 6.35,
+"cp": 5.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 275.74,
-"r": 43.4
+"d": "2026-11-09",
+"p": 267.16,
+"r": 44.6
 },
 "84533|reverse holofoil": {
-"cp": 7.44,
+"cp": 7.52,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 114.7,
-"r": 15.4
+"r": 15.3
 },
 "84547|reverse holofoil": {
-"cp": 27.74,
+"cp": 28.26,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 148.06,
-"r": 5.3
+"r": 5.2
 },
 "84561|unlimited holofoil": {
 "cp": 51.99,
@@ -509,28 +3438,28 @@
 "84562|holofoil": {
 "cp": 3.45,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 126.22,
 "r": 36.6
 },
 "84562|reverse holofoil": {
 "cp": 3.45,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 325.0,
 "r": 94.2
 },
 "84565|reverse holofoil": {
 "cp": 0.45,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 128.58,
 "r": 285.7
 },
 "84577|reverse holofoil": {
 "cp": 20.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 175.58,
 "r": 8.4
 },
@@ -542,30 +3471,30 @@
 "r": 3.9
 },
 "84582|reverse holofoil": {
-"cp": 9.11,
+"cp": 9.27,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 200.0,
-"r": 22.0
+"r": 21.6
 },
 "84583|reverse holofoil": {
-"cp": 27.4,
+"cp": 27.57,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 220.0,
 "r": 8.0
 },
 "84587|reverse holofoil": {
-"cp": 97.06,
+"cp": 98.46,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 525.0,
-"r": 5.4
+"r": 5.3
 },
 "84591|reverse holofoil": {
 "cp": 36.75,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 139.99,
 "r": 3.8
 },
@@ -576,45 +3505,59 @@
 "p": 649.99,
 "r": 3.2
 },
-"84608|reverse holofoil": {
-"cp": 49.36,
+"84596|reverse holofoil": {
+"cp": 11.15,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
+"p": 129.99,
+"r": 11.7
+},
+"84608|reverse holofoil": {
+"cp": 50.17,
+"cv": "Non-Holo",
+"d": "2026-11-09",
 "p": 199.99,
-"r": 4.1
+"r": 4.0
 },
 "84611|reverse holofoil": {
 "cp": 87.72,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 499.99,
 "r": 5.7
+},
+"84626|reverse holofoil": {
+"cp": 4.08,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 145.97,
+"r": 35.8
 },
 "84627|holofoil": {
 "cp": 10.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 200.16,
 "r": 18.2
 },
 "84627|reverse holofoil": {
 "cp": 10.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 250.0,
 "r": 22.7
 },
 "84650|reverse holofoil": {
-"cp": 5.1,
+"cp": 5.18,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 101.79,
-"r": 20.0
+"r": 19.7
 },
 "84651|reverse holofoil": {
-"cp": 15.31,
+"cp": 15.34,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 112.5,
 "r": 7.3
 },
@@ -633,18 +3576,18 @@
 "r": 3.1
 },
 "84661|reverse holofoil": {
-"cp": 80.46,
+"cp": 82.32,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 299.99,
-"r": 3.7
+"r": 3.6
 },
 "84662|reverse holofoil": {
-"cp": 22.98,
+"cp": 22.75,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 303.33,
-"r": 13.2
+"r": 13.3
 },
 "84746|reverse holofoil": {
 "cp": 24.38,
@@ -654,30 +3597,30 @@
 "r": 4.8
 },
 "84747|reverse holofoil": {
-"cp": 18.16,
+"cp": 17.85,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 149.0,
-"r": 8.2
+"r": 8.3
 },
 "84759|reverse holofoil": {
 "cp": 16.44,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 300.0,
 "r": 18.2
 },
 "84763|reverse holofoil": {
 "cp": 17.62,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 347.5,
 "r": 19.7
 },
 "84764|reverse holofoil": {
 "cp": 130.88,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 550.0,
 "r": 4.2
 },
@@ -691,14 +3634,14 @@
 "84770|holofoil": {
 "cp": 30.0,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 400.0,
 "r": 13.3
 },
 "84771|holofoil": {
 "cp": 49.37,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 550.0,
 "r": 11.1
 },
@@ -723,45 +3666,52 @@
 "p": 299.0,
 "r": 3.2
 },
-"84834|reverse holofoil": {
-"cp": 73.64,
+"84832|reverse holofoil": {
+"cp": 75.52,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
+"p": 309.98,
+"r": 4.1
+},
+"84834|reverse holofoil": {
+"cp": 73.62,
+"cv": "Non-Holo",
+"d": "2026-11-09",
 "p": 399.99,
 "r": 5.4
 },
 "84837|reverse holofoil": {
 "cp": 82.09,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 399.99,
 "r": 4.9
 },
 "84838|reverse holofoil": {
-"cp": 51.9,
+"cp": 52.13,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 199.98,
-"r": 3.9
+"r": 3.8
 },
 "84839|reverse holofoil": {
-"cp": 25.55,
+"cp": 25.29,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 179.75,
-"r": 7.0
+"r": 7.1
 },
 "84840|reverse holofoil": {
-"cp": 78.33,
+"cp": 78.42,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 249.0,
 "r": 3.2
 },
 "84841|reverse holofoil": {
 "cp": 63.12,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 279.99,
 "r": 4.4
 },
@@ -779,19 +3729,26 @@
 "p": 130.2,
 "r": 5.0
 },
-"84933|reverse holofoil": {
-"cp": 3.89,
+"84898|reverse holofoil": {
+"cp": 22.94,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
+"p": 115.0,
+"r": 5.0
+},
+"84933|reverse holofoil": {
+"cp": 3.94,
+"cv": "Non-Holo",
+"d": "2026-11-09",
 "p": 198.99,
-"r": 51.2
+"r": 50.5
 },
 "84934|reverse holofoil": {
-"cp": 8.11,
+"cp": 8.14,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 150.99,
-"r": 18.6
+"r": 18.5
 },
 "84999|reverse holofoil": {
 "cp": 37.4,
@@ -810,16 +3767,16 @@
 "85032|holofoil": {
 "cp": 0.86,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 125.95,
 "r": 146.5
 },
 "85073|reverse holofoil": {
-"cp": 8.73,
+"cp": 8.8,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 105.47,
-"r": 12.1
+"d": "2026-11-09",
+"p": 108.1,
+"r": 12.3
 },
 "85080|reverse holofoil": {
 "cp": 61.0,
@@ -831,14 +3788,14 @@
 "85081|reverse holofoil": {
 "cp": 10.14,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 174.9,
 "r": 17.2
 },
 "85097|reverse holofoil": {
 "cp": 11.89,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 181.65,
 "r": 15.3
 },
@@ -857,11 +3814,11 @@
 "r": 3.1
 },
 "85307|1st edition holofoil": {
-"cp": 180.8,
+"cp": 178.32,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 779.45,
-"r": 4.3
+"r": 4.4
 },
 "85320|1st edition": {
 "cp": 32.41,
@@ -880,14 +3837,14 @@
 "85417|reverse holofoil": {
 "cp": 125.99,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 379.99,
 "r": 3.0
 },
 "85423|reverse holofoil": {
-"cp": 81.37,
+"cp": 81.08,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 292.04,
 "r": 3.6
 },
@@ -901,7 +3858,7 @@
 "85633|reverse holofoil": {
 "cp": 26.99,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 148.99,
 "r": 5.5
 },
@@ -911,6 +3868,13 @@
 "d": "2026-11-03",
 "p": 175.0,
 "r": 3.7
+},
+"85675|reverse holofoil": {
+"cp": 86.28,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 364.49,
+"r": 4.2
 },
 "85676|reverse holofoil": {
 "cp": 69.71,
@@ -929,16 +3893,23 @@
 "85680|holofoil": {
 "cp": 450.0,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 1399.99,
 "r": 3.1
 },
 "85724|1st edition holofoil": {
-"cp": 50.29,
+"cp": 51.27,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 292.47,
-"r": 5.8
+"r": 5.7
+},
+"85821|holofoil": {
+"cp": 29.59,
+"cv": "Reverse Holo",
+"d": "2026-11-09",
+"p": 108.15,
+"r": 3.7
 },
 "85907|reverse holofoil": {
 "cp": 28.39,
@@ -950,14 +3921,14 @@
 "85922|reverse holofoil": {
 "cp": 43.26,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 299.99,
 "r": 6.9
 },
 "85923|reverse holofoil": {
 "cp": 17.34,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 279.99,
 "r": 16.1
 },
@@ -969,11 +3940,11 @@
 "r": 5.2
 },
 "85938|reverse holofoil": {
-"cp": 2.01,
+"cp": 2.05,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 137.5,
-"r": 68.4
+"r": 67.1
 },
 "85950|reverse holofoil": {
 "cp": 34.05,
@@ -985,7 +3956,7 @@
 "85955|reverse holofoil": {
 "cp": 6.26,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 156.73,
 "r": 25.0
 },
@@ -997,11 +3968,11 @@
 "r": 5.1
 },
 "85990|reverse holofoil": {
-"cp": 20.7,
+"cp": 20.86,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 140.0,
-"r": 6.8
+"r": 6.7
 },
 "86023|reverse holofoil": {
 "cp": 86.08,
@@ -1011,18 +3982,25 @@
 "r": 4.0
 },
 "86024|reverse holofoil": {
-"cp": 18.14,
+"cp": 18.33,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 149.99,
-"r": 8.3
+"r": 8.2
 },
 "86026|reverse holofoil": {
-"cp": 16.0,
+"cp": 16.22,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 121.54,
-"r": 7.6
+"r": 7.5
+},
+"86027|reverse holofoil": {
+"cp": 5.77,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 100.0,
+"r": 17.3
 },
 "86059|1st edition holofoil": {
 "cp": 63.24,
@@ -1055,7 +4033,7 @@
 "86122|reverse holofoil": {
 "cp": 8.95,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 285.0,
 "r": 31.8
 },
@@ -1080,6 +4058,13 @@
 "p": 250.0,
 "r": 4.1
 },
+"86300|reverse holofoil": {
+"cp": 16.44,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 150.0,
+"r": 9.1
+},
 "86313|reverse holofoil": {
 "cp": 35.93,
 "cv": "Non-Holo",
@@ -1090,14 +4075,14 @@
 "86327|holofoil": {
 "cp": 75.97,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 253.33,
 "r": 3.3
 },
 "86327|reverse holofoil": {
 "cp": 75.97,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 253.0,
 "r": 3.3
 },
@@ -1143,26 +4128,33 @@
 "p": 109.99,
 "r": 5.9
 },
+"86445|reverse holofoil": {
+"cp": 13.16,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 170.0,
+"r": 12.9
+},
 "86505|1st edition holofoil": {
-"cp": 39.01,
+"cp": 38.32,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 144.73,
-"r": 3.7
+"d": "2026-11-09",
+"p": 148.54,
+"r": 3.9
 },
 "86547|reverse holofoil": {
 "cp": 1.25,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 219.0,
 "r": 175.2
 },
 "86548|reverse holofoil": {
-"cp": 26.64,
+"cp": 29.31,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 100.0,
-"r": 3.8
+"r": 3.4
 },
 "86555|holofoil": {
 "cp": 57.65,
@@ -1179,18 +4171,18 @@
 "r": 4.6
 },
 "86657|reverse holofoil": {
-"cp": 21.98,
+"cp": 22.1,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 118.65,
 "r": 5.4
 },
 "86671|reverse holofoil": {
-"cp": 21.73,
+"cp": 21.68,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 499.99,
-"r": 23.0
+"r": 23.1
 },
 "86735|1st edition holofoil": {
 "cp": 37.7,
@@ -1235,53 +4227,60 @@
 "r": 3.7
 },
 "86906|reverse holofoil": {
-"cp": 30.9,
+"cp": 26.39,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 400.0,
-"r": 12.9
+"r": 15.2
+},
+"87003|reverse holofoil": {
+"cp": 3.33,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 122.49,
+"r": 36.8
 },
 "87024|reverse holofoil": {
-"cp": 35.95,
+"cp": 36.42,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 158.82,
-"r": 4.4
+"d": "2026-11-09",
+"p": 156.59,
+"r": 4.3
 },
 "87026|reverse holofoil": {
-"cp": 7.53,
+"cp": 7.6,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 209.99,
-"r": 27.9
+"r": 27.6
 },
 "87027|reverse holofoil": {
-"cp": 9.59,
+"cp": 9.55,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 256.35,
-"r": 26.7
-},
-"87028|reverse holofoil": {
-"cp": 9.69,
-"cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 259.99,
 "r": 26.8
 },
-"87038|reverse holofoil": {
-"cp": 5.22,
+"87028|reverse holofoil": {
+"cp": 9.54,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 184.23,
-"r": 35.3
+"d": "2026-11-09",
+"p": 259.99,
+"r": 27.3
+},
+"87038|reverse holofoil": {
+"cp": 5.38,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 202.08,
+"r": 37.6
 },
 "87045|reverse holofoil": {
-"cp": 4.75,
+"cp": 4.66,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 139.99,
-"r": 29.5
+"r": 30.0
 },
 "87172|reverse holofoil": {
 "cp": 28.13,
@@ -1298,23 +4297,23 @@
 "r": 6.8
 },
 "87235|reverse holofoil": {
-"cp": 1.82,
+"cp": 1.73,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 150.0,
-"r": 82.4
+"r": 86.7
 },
 "87337|reverse holofoil": {
 "cp": 15.5,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 141.11,
 "r": 9.1
 },
 "87396|holofoil": {
 "cp": 249.99,
 "cv": "Reverse Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 790.0,
 "r": 3.2
 },
@@ -1328,42 +4327,42 @@
 "87426|reverse holofoil": {
 "cp": 55.39,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 287.5,
 "r": 5.2
 },
 "87453|reverse holofoil": {
 "cp": 27.58,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 108.0,
 "r": 3.9
 },
 "87460|holofoil": {
 "cp": 249.0,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 799.99,
 "r": 3.2
 },
 "87463|reverse holofoil": {
-"cp": 15.87,
+"cp": 15.84,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 115.66,
 "r": 7.3
 },
 "87482|reverse holofoil": {
-"cp": 32.93,
+"cp": 32.78,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 128.41,
-"r": 3.9
+"d": "2026-11-09",
+"p": 125.28,
+"r": 3.8
 },
 "87484|reverse holofoil": {
-"cp": 13.26,
+"cp": 13.2,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 142.75,
 "r": 10.8
 },
@@ -1375,25 +4374,32 @@
 "r": 3.6
 },
 "87599|normal": {
-"cp": 99.54,
+"cp": 105.14,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 427.37,
-"r": 4.3
+"r": 4.1
 },
 "87606|reverse holofoil": {
-"cp": 3.03,
+"cp": 3.11,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 129.54,
-"r": 42.8
+"r": 41.7
 },
 "87610|reverse holofoil": {
-"cp": 9.64,
+"cp": 9.18,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 132.72,
-"r": 13.8
+"r": 14.5
+},
+"87611|reverse holofoil": {
+"cp": 3.56,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 107.7,
+"r": 30.3
 },
 "87704|reverse holofoil": {
 "cp": 30.32,
@@ -1403,25 +4409,25 @@
 "r": 3.9
 },
 "87769|reverse holofoil": {
-"cp": 11.46,
+"cp": 11.65,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 100.0,
-"r": 8.7
+"r": 8.6
 },
 "87770|reverse holofoil": {
-"cp": 10.16,
+"cp": 10.27,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 167.66,
-"r": 16.5
+"r": 16.3
 },
 "87771|reverse holofoil": {
-"cp": 16.93,
+"cp": 17.24,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 166.64,
-"r": 9.8
+"r": 9.7
 },
 "87790|reverse holofoil": {
 "cp": 18.45,
@@ -1445,11 +4451,11 @@
 "r": 4.8
 },
 "87858|reverse holofoil": {
-"cp": 20.01,
+"cp": 19.72,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 159.74,
-"r": 8.0
+"d": "2026-11-09",
+"p": 161.49,
+"r": 8.2
 },
 "87887|reverse holofoil": {
 "cp": 26.98,
@@ -1459,11 +4465,11 @@
 "r": 7.7
 },
 "87976|reverse holofoil": {
-"cp": 10.19,
+"cp": 10.17,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 149.0,
-"r": 14.6
+"r": 14.7
 },
 "87982|reverse holofoil": {
 "cp": 22.3,
@@ -1475,23 +4481,23 @@
 "87989|reverse holofoil": {
 "cp": 5.33,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 129.99,
 "r": 24.4
 },
 "88016|reverse holofoil": {
-"cp": 8.06,
+"cp": 8.18,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 162.49,
-"r": 20.2
+"r": 19.9
 },
 "88017|reverse holofoil": {
-"cp": 15.01,
+"cp": 15.29,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 128.82,
-"r": 8.6
+"r": 8.4
 },
 "88018|reverse holofoil": {
 "cp": 31.01,
@@ -1501,46 +4507,53 @@
 "r": 3.5
 },
 "88023|reverse holofoil": {
-"cp": 7.04,
+"cp": 7.0,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 149.99,
-"r": 21.3
+"r": 21.4
+},
+"88047|reverse holofoil": {
+"cp": 11.38,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 144.97,
+"r": 12.7
 },
 "88073|reverse holofoil": {
-"cp": 17.23,
+"cp": 16.61,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 212.99,
-"r": 12.4
+"r": 12.8
 },
 "88077|reverse holofoil": {
-"cp": 32.98,
+"cp": 33.43,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 348.84,
-"r": 10.6
+"r": 10.4
 },
 "88078|reverse holofoil": {
 "cp": 12.94,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 248.24,
 "r": 19.2
 },
 "88080|reverse holofoil": {
-"cp": 15.95,
+"cp": 15.89,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 599.99,
-"r": 37.6
+"r": 37.8
 },
 "88082|reverse holofoil": {
-"cp": 12.04,
+"cp": 12.13,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 315.82,
-"r": 26.2
+"r": 26.0
 },
 "88083|holofoil": {
 "cp": 43.59,
@@ -1550,11 +4563,11 @@
 "r": 8.3
 },
 "88084|reverse holofoil": {
-"cp": 20.34,
+"cp": 20.94,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 177.4,
-"r": 8.7
+"d": "2026-11-09",
+"p": 198.05,
+"r": 9.5
 },
 "88085|holofoil": {
 "cp": 88.55,
@@ -1580,30 +4593,30 @@
 "88108|reverse holofoil": {
 "cp": 14.9,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 140.0,
 "r": 9.4
 },
 "88162|reverse holofoil": {
-"cp": 40.76,
+"cp": 40.88,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 209.99,
-"r": 5.2
+"r": 5.1
 },
 "88164|reverse holofoil": {
-"cp": 8.81,
+"cp": 8.75,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 194.83,
-"r": 22.1
+"r": 22.3
 },
 "88165|reverse holofoil": {
-"cp": 5.56,
+"cp": 5.7,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 100.0,
-"r": 18.0
+"r": 17.5
 },
 "88255|reverse holofoil": {
 "cp": 31.76,
@@ -1622,9 +4635,9 @@
 "88277|reverse holofoil": {
 "cp": 39.94,
 "cv": "Holo",
-"d": "2026-11-02",
-"p": 128.74,
-"r": 3.2
+"d": "2026-11-09",
+"p": 133.99,
+"r": 3.4
 },
 "88306|reverse holofoil": {
 "cp": 7.53,
@@ -1648,25 +4661,25 @@
 "r": 3.4
 },
 "88432|reverse holofoil": {
-"cp": 19.12,
+"cp": 19.1,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 165.23,
-"r": 8.6
+"d": "2026-11-09",
+"p": 166.25,
+"r": 8.7
 },
 "88436|reverse holofoil": {
-"cp": 32.25,
+"cp": 32.75,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 262.49,
-"r": 8.1
+"r": 8.0
 },
 "88437|reverse holofoil": {
-"cp": 30.22,
+"cp": 29.96,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 299.99,
-"r": 9.9
+"r": 10.0
 },
 "88439|reverse holofoil": {
 "cp": 24.84,
@@ -1690,32 +4703,32 @@
 "r": 6.9
 },
 "88443|reverse holofoil": {
-"cp": 27.09,
+"cp": 26.6,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 300.0,
-"r": 11.1
+"r": 11.3
 },
 "88470|reverse holofoil": {
-"cp": 9.75,
+"cp": 9.64,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 142.24,
-"r": 14.6
+"r": 14.8
 },
 "88484|reverse holofoil": {
-"cp": 1.63,
+"cp": 1.64,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 101.0,
-"r": 62.0
+"r": 61.6
 },
 "88625|reverse holofoil": {
-"cp": 51.3,
+"cp": 53.91,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 1196.5,
-"r": 23.3
+"r": 22.2
 },
 "88627|holofoil": {
 "cp": 111.65,
@@ -1727,28 +4740,28 @@
 "88635|reverse holofoil": {
 "cp": 107.17,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 1200.0,
 "r": 11.2
 },
 "88643|holofoil": {
 "cp": 85.09,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 436.84,
 "r": 5.1
 },
 "88767|reverse holofoil": {
-"cp": 21.96,
+"cp": 21.79,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 100.81,
 "r": 4.6
 },
 "88775|reverse holofoil": {
 "cp": 20.19,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 398.95,
 "r": 19.8
 },
@@ -1769,14 +4782,14 @@
 "88797|normal": {
 "cp": 249.95,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 1199.0,
 "r": 4.8
 },
 "88799|reverse holofoil": {
 "cp": 8.03,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 199.98,
 "r": 24.9
 },
@@ -1790,23 +4803,30 @@
 "88801|holofoil": {
 "cp": 219.0,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 1079.99,
 "r": 4.9
 },
 "88848|reverse holofoil": {
 "cp": 49.23,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 224.48,
-"r": 4.6
+"d": "2026-11-09",
+"p": 273.36,
+"r": 5.6
 },
 "88866|1st edition holofoil": {
 "cp": 81.3,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
-"p": 312.13,
-"r": 3.8
+"d": "2026-11-09",
+"p": 327.28,
+"r": 4.0
+},
+"88875|1st edition": {
+"cp": 212.52,
+"cv": "Unlimited",
+"d": "2026-11-09",
+"p": 670.0,
+"r": 3.2
 },
 "88895|holofoil": {
 "cp": 73.99,
@@ -1816,9 +4836,9 @@
 "r": 4.4
 },
 "88902|reverse holofoil": {
-"cp": 66.69,
+"cp": 66.71,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 300.0,
 "r": 4.5
 },
@@ -1832,7 +4852,7 @@
 "88999|reverse holofoil": {
 "cp": 7.65,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 137.95,
 "r": 18.0
 },
@@ -1844,11 +4864,11 @@
 "r": 5.3
 },
 "89064|reverse holofoil": {
-"cp": 4.73,
+"cp": 4.82,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 150.0,
-"r": 31.7
+"r": 31.1
 },
 "89163|unlimited holofoil": {
 "cp": 132.75,
@@ -1892,12 +4912,26 @@
 "p": 127.47,
 "r": 3.7
 },
+"89234|holofoil": {
+"cp": 48.99,
+"cv": "Reverse Holo",
+"d": "2026-11-09",
+"p": 195.94,
+"r": 4.0
+},
 "89254|reverse holofoil": {
 "cp": 28.71,
 "cv": "Non-Holo",
 "d": "2026-11-05",
 "p": 109.99,
 "r": 3.8
+},
+"89315|reverse holofoil": {
+"cp": 6.78,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 103.99,
+"r": 15.3
 },
 "89325|reverse holofoil": {
 "cp": 36.36,
@@ -1907,32 +4941,32 @@
 "r": 12.4
 },
 "89327|reverse holofoil": {
-"cp": 20.03,
+"cp": 20.47,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 142.49,
-"r": 7.1
+"r": 7.0
 },
 "89328|reverse holofoil": {
-"cp": 8.46,
+"cp": 8.47,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 175.74,
-"r": 20.8
+"r": 20.7
 },
 "89329|reverse holofoil": {
-"cp": 3.73,
+"cp": 3.92,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 115.0,
-"r": 30.8
+"r": 29.3
 },
 "89331|reverse holofoil": {
-"cp": 8.94,
+"cp": 9.15,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 125.0,
-"r": 14.0
+"d": "2026-11-09",
+"p": 150.0,
+"r": 16.4
 },
 "89342|reverse holofoil": {
 "cp": 2.63,
@@ -1944,7 +4978,7 @@
 "89361|reverse holofoil": {
 "cp": 20.32,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 115.0,
 "r": 5.7
 },
@@ -1965,30 +4999,44 @@
 "89487|reverse holofoil": {
 "cp": 47.88,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 458.24,
 "r": 9.6
 },
 "89488|reverse holofoil": {
-"cp": 39.88,
+"cp": 39.52,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 367.49,
-"r": 9.2
+"r": 9.3
 },
 "89489|reverse holofoil": {
 "cp": 14.72,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 249.99,
 "r": 17.0
 },
 "89490|reverse holofoil": {
 "cp": 49.7,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 300.0,
 "r": 6.0
+},
+"89491|reverse holofoil": {
+"cp": 3.51,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 113.78,
+"r": 32.4
+},
+"89492|reverse holofoil": {
+"cp": 9.07,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 107.67,
+"r": 11.9
 },
 "89555|1st edition holofoil": {
 "cp": 53.7,
@@ -2012,16 +5060,16 @@
 "r": 4.6
 },
 "89932|reverse holofoil": {
-"cp": 3.2,
+"cp": 3.29,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 108.44,
-"r": 33.9
+"r": 33.0
 },
 "89933|reverse holofoil": {
 "cp": 17.56,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 225.0,
 "r": 12.8
 },
@@ -2042,23 +5090,23 @@
 "89942|reverse holofoil": {
 "cp": 87.7,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 299.99,
 "r": 3.4
 },
 "89955|reverse holofoil": {
-"cp": 0.93,
+"cp": 0.94,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 160.99,
-"r": 173.1
+"r": 171.3
 },
 "90037|reverse holofoil": {
-"cp": 1.03,
+"cp": 1.1,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 126.6,
-"r": 122.9
+"r": 115.1
 },
 "90099|1st edition holofoil": {
 "cp": 185.11,
@@ -2077,7 +5125,7 @@
 "90138|reverse holofoil": {
 "cp": 48.81,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 200.0,
 "r": 4.1
 },
@@ -2117,10 +5165,10 @@
 "r": 4.3
 },
 "90278|reverse holofoil": {
-"cp": 21.24,
+"cp": 21.14,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 127.48,
+"d": "2026-11-09",
+"p": 126.64,
 "r": 6.0
 },
 "90306|reverse holofoil": {
@@ -2133,16 +5181,23 @@
 "90315|reverse holofoil": {
 "cp": 37.53,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 120.66,
-"r": 3.2
+"d": "2026-11-09",
+"p": 115.99,
+"r": 3.1
 },
 "90316|reverse holofoil": {
-"cp": 32.49,
+"cp": 33.85,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 120.0,
-"r": 3.7
+"r": 3.5
+},
+"90318|reverse holofoil": {
+"cp": 17.16,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 113.5,
+"r": 6.6
 },
 "90435|reverse holofoil": {
 "cp": 12.83,
@@ -2151,12 +5206,19 @@
 "p": 112.99,
 "r": 8.8
 },
-"90485|reverse holofoil": {
-"cp": 27.68,
+"90436|reverse holofoil": {
+"cp": 29.23,
 "cv": "Non-Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
+"p": 119.99,
+"r": 4.1
+},
+"90485|reverse holofoil": {
+"cp": 30.18,
+"cv": "Non-Holo",
+"d": "2026-11-09",
 "p": 149.99,
-"r": 5.4
+"r": 5.0
 },
 "90540|reverse holofoil": {
 "cp": 42.23,
@@ -2186,12 +5248,19 @@
 "p": 191.8,
 "r": 3.2
 },
-"90639|reverse holofoil": {
-"cp": 13.15,
+"90634|reverse holofoil": {
+"cp": 5.26,
 "cv": "Non-Holo",
-"d": "2026-11-02",
-"p": 135.51,
-"r": 10.3
+"d": "2026-11-09",
+"p": 116.55,
+"r": 22.2
+},
+"90639|reverse holofoil": {
+"cp": 12.69,
+"cv": "Non-Holo",
+"d": "2026-11-09",
+"p": 127.61,
+"r": 10.1
 },
 "90680|1st edition holofoil": {
 "cp": 26.78,
@@ -2210,7 +5279,7 @@
 "97730|reverse holofoil": {
 "cp": 46.18,
 "cv": "Holo",
-"d": "2026-11-02",
+"d": "2026-11-09",
 "p": 200.0,
 "r": 4.3
 }
