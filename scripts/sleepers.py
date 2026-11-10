@@ -323,6 +323,15 @@ def sales_of(v):
         return None
     s = dict(s)
     s["at"] = (s.get("at") or v.get("checked") or "")[:10]
+    # "Market lags sales": each condition's median sale (odd sales thrown out) with how many sales and the
+    # newest, so the site can compare it with TCGplayer's market price: {cond: [median, sales, date]}
+    m = {}
+    for c, e in (v.get("prices") or {}).items():
+        hit = re.match(r"TCGplayer sales: median of (\d+) sale", str((e or {}).get("src") or ""))
+        if hit and isinstance(e.get("price"), (int, float)) and not e.get("est"):
+            m[c] = [round(e["price"], 2), int(hit.group(1)), str(e.get("date") or "")[:10]]
+    if m:
+        s["m"] = m
     return s
 
 

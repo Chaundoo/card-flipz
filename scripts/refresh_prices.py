@@ -576,8 +576,21 @@ def main():
         for c in ("nm", "lp", "mp", "dmg"):
             if c in prices:   # no price for a condition: keep the old one
                 new_raw[c] = raw_entry(c, prices[c], when, fixes)
+        # TCGplayer's own market price, before checked sales replace it: kept as card["mkt"] for the conditions
+        # where a checked price wins, so the site can flag cards whose real sales run well above market
+        market = {c: new_raw[c]["price"] for c in ("nm", "lp", "mp", "dmg")
+                  if c in prices and not new_raw[c].get("est")}
         overlay_verified(card, new_raw, verified)   # fresh TCGplayer-checked prices win
         changed = False
+        mk = {c: p for c, p in market.items() if (new_raw.get(c) or {}).get("price") != p}
+        if mk:
+            mk["d"] = when
+        if (mk or None) != card.get("mkt"):
+            if mk:
+                card["mkt"] = mk
+            else:
+                card.pop("mkt", None)
+            changed = True
         for c in ("nm", "lp", "mp", "dmg"):
             old, new = raw.get(c) or {}, new_raw.get(c)
             if new is None or old == new:
