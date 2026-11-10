@@ -857,6 +857,7 @@ body.phone .tabs{grid-template-columns:repeat(3,1fr)}
 .adm-bot-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .adm-bot small{color:var(--muted);font-size:12px}
 .adm-bot p{margin:4px 0 0;font-size:13.5px;line-height:1.45}
+.adm-bot .warn-t{display:inline-block;margin-top:4px;color:var(--gold-ink);font-size:12.5px}
 .adm-dot{font-weight:800}
 .adm-bot.ok .adm-dot{color:var(--pos)} .adm-bot.warn .adm-dot{color:var(--gold-ink)} .adm-bot.fail .adm-dot{color:var(--neg)}
 .adm-feed{display:flex;flex-direction:column;gap:8px}
@@ -3810,6 +3811,31 @@ var BOTINFO = {
   versions:{name:"Update versions.json", wf:"versions.yml", when:"After uploads"},
   pages:   {name:"Website publish", wf:"pages-build-deployment", when:"After every change"}
 };
+/* older Graded Slabs entries said "checked 0 slabs (0 with PSA sales)" although the bot only rebuilds the list
+   from CardPrice now (PokemonPriceTracker is off); show what it actually did */
+function admHead(e){ var h = e.headline||"";
+  return e.bot==="graded" ? h.replace(/checked 0 slabs \(0 with PSA sales\)/, "rebuilt the list from CardPrice’s prices") : h; }
+/* CardPrice runs 4x a day (cardprice.yml crons, UTC). A run counts as late when it starts more than an hour
+   after a slot and isn't just an early start of the next one. */
+var CP_SLOTS_UTC = [[13,47],[18,23],[23,11],[4,37]];
+function cpLate(r){
+  var d = new Date(r.created_at), m = d.getUTCHours()*60+d.getUTCMinutes(), prev = 1e9, next = 1e9;
+  CP_SLOTS_UTC.forEach(function(x){ var sm = x[0]*60+x[1]; prev = Math.min(prev, (m-sm+1440)%1440); next = Math.min(next, (sm-m+1440)%1440); });
+  return prev > 60 && next > 150 ? prev : 0;
+}
+function cpSlabs(x){ var m = /looked up ([\d,]+) slab/.exec(x.headline||""); return m ? +m[1].replace(/,/g,"") : 0; }
+function cpCardText(feed){
+  var runs = feed.filter(function(x){ return x.bot==="cardprice" && !x.dry && !x.generic && x.event==="schedule"; });
+  var t = new Date(), y = new Date(); y.setDate(t.getDate()-1);
+  function day(d, lab){ var r = runs.filter(function(x){ return dayKey(x.d)===dayKey(d); }); if(!r.length) return "";
+    var n = r.reduce(function(a,x){ return a+cpSlabs(x); }, 0);
+    return '<b>'+lab+':</b> '+fmtN(n)+' slab'+(n!==1?'s':'')+' over '+r.length+' run'+(r.length!==1?'s':'')+' (finished '+r.slice().reverse().map(function(x){ return clock(x.d)+' '+fmtN(cpSlabs(x)); }).join(" · ")+'). '; }
+  var h = day(t, "Today") + day(y, "Yesterday");
+  var late = (ADM.runs||[]).filter(function(r){ return botOfRun(r)==="cardprice" && r.event==="schedule" && Date.now()-new Date(r.created_at) < 7*86400000 && cpLate(r); });
+  if(late.length){ var l = late.sort(function(a,b){ return new Date(b.created_at)-new Date(a.created_at); })[0], d = new Date(l.created_at), hrs = Math.round(cpLate(l)/30)/2;
+    h += '<br><span class="warn-t">⚠ '+late.length+' run'+(late.length!==1?'s':'')+' started late this week. Latest: '+esc(whenText(d))+', about '+hrs+' h after the nearest scheduled time (GitHub held it back). Runs now split the slabs evenly, so a late one doesn’t take the whole day’s share.</span>'; }
+  return h;
+}
 function adminOpen(){ return load(ALOCK_KEY, "") === ALOCK_HASH; }
 function botOfRun(r){ var p = String(r.path||""); for(var k in BOTINFO){ if(p.indexOf(BOTINFO[k].wf)>=0) return k; } return /pages/i.test(r.name||"") ? "pages" : null; }
 function runIdOf(url){ var m = /actions\/runs\/(\d+)/.exec(url||""); return m ? m[1] : ""; }
@@ -3837,7 +3863,7 @@ var ADM_OFF = ["pa","ta","ppt"];
 function adminFeed(){
   var log = (ADM.log || []).filter(function(e){ return ADM_OFF.indexOf(e.bot)<0; }), runs = ADM.runs || [], byRun = {}, feed = [], cut = Date.now()-7*86400000;
   log.forEach(function(e){ var id = runIdOf(e.run); if(id) byRun[id] = e;
-    var d = new Date(e.t); if(d.getTime() >= cut) feed.push({d:d, bot:e.bot, name:e.name||(BOTINFO[e.bot]||{}).name||e.bot, level:e.level, headline:e.headline, facts:e.facts||[], details:e.details||"", url:e.run, dry:e.dry, event:e.event}); });
+    var d = new Date(e.t); if(d.getTime() >= cut) feed.push({d:d, bot:e.bot, name:e.name||(BOTINFO[e.bot]||{}).name||e.bot, level:e.level, headline:admHead(e), facts:e.facts||[], details:e.details||"", url:e.run, dry:e.dry, event:e.event}); });
   var quiet = {pages:{ok:0}, versions:{ok:0}};
   runs.forEach(function(r){
     if(byRun[String(r.id)] || r.conclusion==="skipped") return;
@@ -3935,7 +3961,7 @@ function renderAdmin(){
     var last = feed.filter(function(x){ return x.bot===k && x.level!=="run" && !x.dry; })[0], n = feed.filter(function(x){ return x.bot===k && !x.dry; }).length;
     return '<div class="adm-bot '+(last?last.level:'none')+'"><div class="adm-bot-top"><b>'+esc(BOTINFO[k].name)+'</b><span class="adm-dot" aria-hidden="true">'+(last?LVL[last.level][0]:'·')+'</span></div>'+
       '<small>'+esc(BOTINFO[k].when)+' · '+n+' run'+(n!==1?'s':'')+' this week</small>'+
-      '<p>'+(last ? '<b>Last: '+esc(whenText(last.d))+'.</b> '+esc(last.headline) : 'No runs this week.')+'</p></div>';
+      '<p>'+(k==="cardprice" && cpCardText(feed) ? cpCardText(feed) : last ? '<b>Last: '+esc(whenText(last.d))+'.</b> '+esc(last.headline) : 'No runs this week.')+'</p></div>';
   }).join("")+'</div>'+
   '<p class="note">Website published '+fq.quiet.pages.ok+' time'+(fq.quiet.pages.ok!==1?'s':'')+' and the file list updated '+fq.quiet.versions.ok+' time'+(fq.quiet.versions.ok!==1?'s':'')+' this week without problems'+(CMETA.generated?' · Flip Finder list from '+fmtDate(CMETA.generated)+' ('+CANDS.length+' cards)':'')+'.</p></section>';
   /* feed */
