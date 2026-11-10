@@ -5309,6 +5309,806 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:vaporeon",
+"set:EX Sandstorm",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:slowbro",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:kingdra",
+"set:EX Dragon Frontiers",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blaziken",
+"set:EX Ruby and Sapphire",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:jolteon",
+"set:EX Sandstorm",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:sabrina's gengar",
+"set:Gym Challenge",
+"kind:other",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:altaria",
+"set:EX Deoxys",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:swampert",
+"set:EX Team Magma vs Team Aqua",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:pikachu",
+"set:Diamond and Pearl Promos",
+"kind:promo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:altaria",
+"set:EX Emerald",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:ninetales",
+"set:EX Dragon Frontiers",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:tyranitar",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:raichu",
+"set:EX Sandstorm",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blaine's moltres",
+"set:Gym Heroes",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:magikarp",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:deoxys",
+"set:EX Emerald",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:dark steelix",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:feraligatr",
+"set:EX Dragon Frontiers",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blastoise",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:mewtwo",
+"set:EX Holon Phantoms",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:flareon",
+"set:EX Unseen Forces",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:latias",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:milotic",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:gardevoir",
+"set:EX Dragon Frontiers",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:tyranitar",
+"set:EX Unseen Forces",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:raichu",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:arcanine",
+"set:EX Legend Maker",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:milotic",
+"set:EX Emerald",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:latios",
+"set:EX Dragon",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:rocket's entei",
+"set:EX Team Rocket Returns",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:erika's venusaur",
+"set:Gym Challenge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:lapras",
+"set:Fossil",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:vaporeon",
+"set:EX Delta Species",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:mew",
+"set:EX Holon Phantoms",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:tyranitar",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:entei",
+"set:EX Team Magma vs Team Aqua",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:charizard",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:cubone",
+"set:Expedition",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:venusaur",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blaziken",
+"set:EX Emerald",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:mewtwo",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:sabrina's alakazam",
+"set:Gym Challenge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:gengar",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:flygon",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:feraligatr",
+"set:Expedition",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:giovanni's machamp",
+"set:Gym Challenge",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:rayquaza",
+"set:EX Delta Species",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:deoxys",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:dark tyranitar",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:moltres",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:rocket's hitmonchan",
+"set:EX Team Rocket Returns",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blaine's arcanine",
+"set:Gym Challenge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:alakazam",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:misty's gyarados",
+"set:Gym Challenge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:wartortle",
+"set:Expedition",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:latios",
+"set:EX Dragon Frontiers",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:sceptile",
+"set:EX Team Magma vs Team Aqua",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:aerodactyl",
+"set:EX Legend Maker",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:mewtwo",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:ditto",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:rayquaza",
+"set:EX Dragon Frontiers",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:rocket's raikou",
+"set:EX Deoxys",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:milotic",
+"set:EX Dragon Frontiers",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:kingdra",
+"set:EX Team Rocket Returns",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:snorlax",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:gyarados",
+"set:EX Deoxys",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:tyranitar",
+"set:EX Delta Species",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:vaporeon",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:blastoise",
+"set:EX Crystal Guardians",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:steelix",
+"set:EX Unseen Forces",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:charizard",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:dragonite",
+"set:Fossil",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:absol",
+"set:EX Team Magma vs Team Aqua",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:pikachu",
+"set:Expedition",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:gengar",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:zapdos",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:mew",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:gyarados",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:dragonite",
+"set:Expedition",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-09",
+"f": [
+"pokemon:raichu",
+"set:Fossil",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }
