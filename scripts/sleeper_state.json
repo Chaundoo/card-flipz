@@ -1,6 +1,154 @@
 {
 "about": "Written by scripts/discover_candidates.py (sleeper list + hidden printings it saw while scanning sets) and scripts/approve_candidates.py (picked sleepers come off). sleepers.json is built from this.",
-"cands": [],
+"cands": [
+{
+"era": "wotc",
+"found": "2026-11-10",
+"hid": {
+"cp": 89.63,
+"cv": "Unlimited Holo",
+"r": 3.9
+},
+"id": "slp-rocket-s-scyther-013-132-88788-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/f050799bfa7c5cf7.webp",
+"low": null,
+"name": "Rocket's Scyther",
+"number": "013/132",
+"pkey": "019c9779-11c7-7377-9c8f-3c7720d8f33d",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-10",
+"est": false,
+"price": 106.97,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-10",
+"est": false,
+"price": 244.59,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-10",
+"est": false,
+"price": 174.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-10",
+"est": false,
+"price": 349.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 42.4,
+"set": "Gym Heroes",
+"setSlug": "pokemon--gym-heroes",
+"tcgId": 88788,
+"tcgVariant": "1st Edition Holofoil",
+"updated": "2026-11-10",
+"variant": "1st Edition Holo"
+},
+{
+"era": "dp-hgss",
+"found": "2026-11-10",
+"hid": {
+"cp": 33.45,
+"cv": "Non-Holo",
+"r": 3.7
+},
+"id": "slp-dragonite-fb-56-84920-reverse-ho",
+"image": "https://cdn.tcgpricelookup.com/cards/3cdda163e562e2b8.webp",
+"low": null,
+"name": "Dragonite FB",
+"number": "56",
+"pkey": "019c9761-98ce-77b1-b48b-bccae977def7",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-09",
+"est": false,
+"price": 9.32,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-09",
+"est": false,
+"price": 35.92,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-09",
+"est": false,
+"price": 20.43,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-09",
+"est": false,
+"price": 125.0,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 39.5,
+"set": "Supreme Victors",
+"setSlug": "pokemon--supreme-victors",
+"tcgId": 84920,
+"tcgVariant": "Reverse Holofoil",
+"updated": "2026-11-10",
+"variant": "Reverse Holo"
+},
+{
+"era": "wotc",
+"found": "2026-11-10",
+"hid": {
+"cp": 57.82,
+"cv": "Unlimited",
+"r": 3.3
+},
+"id": "slp-rocket-s-snorlax-033-132-88795-1st-editio",
+"image": "https://cdn.tcgpricelookup.com/cards/ce3d2ff960f6f710.webp",
+"low": null,
+"name": "Rocket's Snorlax",
+"number": "033/132",
+"pkey": "019c9779-11d3-7c7d-8d46-34a0f3685a4e",
+"pop": true,
+"raw": {
+"dmg": {
+"date": "2026-11-10",
+"est": false,
+"price": 31.57,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"lp": {
+"date": "2026-11-10",
+"est": false,
+"price": 132.99,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"mp": {
+"date": "2026-11-10",
+"est": false,
+"price": 87.68,
+"src": "TCGplayer market (via TCG Price Lookup)"
+},
+"nm": {
+"date": "2026-11-10",
+"est": false,
+"price": 190.17,
+"src": "TCGplayer market (via TCG Price Lookup)"
+}
+},
+"score": 38.6,
+"set": "Gym Heroes",
+"setSlug": "pokemon--gym-heroes",
+"tcgId": 88795,
+"tcgVariant": "1st Edition",
+"updated": "2026-11-10",
+"variant": "1st Edition"
+}
+],
 "hidden": {
 "106520|1st edition holofoil": {
 "cp": 185.03,
@@ -185,60 +333,60 @@
 "r": 5.6
 },
 "45120|1st edition holofoil": {
-"cp": 37.2,
+"cp": 37.55,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 144.3,
-"r": 3.9
+"d": "2026-11-10",
+"p": 149.15,
+"r": 4.0
 },
 "45121|1st edition holofoil": {
-"cp": 54.16,
+"cp": 54.56,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 175.85,
 "r": 3.2
 },
 "45122|1st edition holofoil": {
-"cp": 166.81,
+"cp": 173.71,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 514.82,
-"r": 3.1
+"d": "2026-11-10",
+"p": 567.79,
+"r": 3.3
 },
 "45123|1st edition holofoil": {
-"cp": 59.55,
+"cp": 55.3,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 252.99,
-"r": 4.2
+"d": "2026-11-10",
+"p": 312.49,
+"r": 5.7
 },
 "45129|1st edition holofoil": {
-"cp": 91.66,
+"cp": 98.65,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 341.66,
-"r": 3.7
+"r": 3.5
 },
 "45132|1st edition holofoil": {
-"cp": 38.47,
+"cp": 37.93,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 165.34,
-"r": 4.3
+"r": 4.4
 },
 "45133|1st edition holofoil": {
-"cp": 39.61,
+"cp": 39.76,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 124.59,
-"r": 3.1
+"d": "2026-11-10",
+"p": 120.49,
+"r": 3.0
 },
 "83444|reverse holofoil": {
-"cp": 29.74,
+"cp": 29.62,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 145.55,
-"r": 4.9
+"d": "2026-11-10",
+"p": 300.0,
+"r": 10.1
 },
 "83451|reverse holofoil": {
 "cp": 14.98,
@@ -290,11 +438,11 @@
 "r": 6.3
 },
 "83678|1st edition holofoil": {
-"cp": 29.57,
+"cp": 30.0,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 128.95,
-"r": 4.4
+"r": 4.3
 },
 "83858|1st edition holofoil": {
 "cp": 35.9,
@@ -381,11 +529,11 @@
 "r": 3.1
 },
 "83978|1st edition holofoil": {
-"cp": 41.21,
+"cp": 42.1,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 136.15,
-"r": 3.3
+"r": 3.2
 },
 "84026|reverse holofoil": {
 "cp": 43.52,
@@ -430,16 +578,16 @@
 "r": 12.3
 },
 "84035|reverse holofoil": {
-"cp": 4.19,
+"cp": 4.83,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 149.0,
-"r": 35.6
+"r": 30.8
 },
 "84186|reverse holofoil": {
 "cp": 1500.0,
 "cv": "Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 14999.95,
 "r": 10.0
 },
@@ -502,14 +650,14 @@
 "84484|reverse holofoil": {
 "cp": 54.18,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 209.99,
 "r": 3.9
 },
 "84485|holofoil": {
 "cp": 294.25,
 "cv": "Reverse Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 1228.07,
 "r": 4.2
 },
@@ -558,7 +706,7 @@
 "84561|unlimited holofoil": {
 "cp": 51.99,
 "cv": "1st Edition Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 156.36,
 "r": 3.0
 },
@@ -591,9 +739,9 @@
 "r": 8.4
 },
 "84579|1st edition holofoil": {
-"cp": 55.66,
+"cp": 55.86,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 216.98,
 "r": 3.9
 },
@@ -628,7 +776,7 @@
 "84592|unlimited holofoil": {
 "cp": 200.0,
 "cv": "1st Edition Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 649.99,
 "r": 3.2
 },
@@ -691,14 +839,14 @@
 "84652|1st edition holofoil": {
 "cp": 190.76,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 593.99,
 "r": 3.1
 },
 "84659|1st edition holofoil": {
-"cp": 96.11,
+"cp": 94.49,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 296.99,
 "r": 3.1
 },
@@ -717,11 +865,11 @@
 "r": 13.3
 },
 "84746|reverse holofoil": {
-"cp": 24.38,
+"cp": 24.95,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 116.33,
-"r": 4.8
+"r": 4.7
 },
 "84747|reverse holofoil": {
 "cp": 17.85,
@@ -752,11 +900,11 @@
 "r": 4.2
 },
 "84765|holofoil": {
-"cp": 52.83,
+"cp": 47.11,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 350.0,
-"r": 6.6
+"r": 7.4
 },
 "84770|holofoil": {
 "cp": 30.0,
@@ -775,23 +923,23 @@
 "84774|normal": {
 "cp": 0.26,
 "cv": "Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 299.0,
 "r": 1150.0
 },
 "84825|normal": {
 "cp": 26.63,
 "cv": "Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 129.46,
 "r": 4.9
 },
 "84830|reverse holofoil": {
-"cp": 92.03,
+"cp": 98.68,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 299.0,
-"r": 3.2
+"r": 3.0
 },
 "84832|reverse holofoil": {
 "cp": 75.52,
@@ -845,7 +993,7 @@
 "84843|reverse holofoil": {
 "cp": 24.53,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 112.33,
 "r": 4.6
 },
@@ -862,6 +1010,13 @@
 "d": "2026-11-09",
 "p": 115.0,
 "r": 5.0
+},
+"84920|reverse holofoil": {
+"cp": 33.45,
+"cv": "Non-Holo",
+"d": "2026-11-10",
+"p": 125.0,
+"r": 3.7
 },
 "84933|reverse holofoil": {
 "cp": 3.94,
@@ -880,14 +1035,14 @@
 "84999|reverse holofoil": {
 "cp": 37.4,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 149.99,
 "r": 4.0
 },
 "85006|reverse holofoil": {
 "cp": 43.45,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 214.99,
 "r": 4.9
 },
@@ -927,18 +1082,18 @@
 "r": 15.3
 },
 "85152|reverse holofoil": {
-"cp": 18.81,
+"cp": 19.42,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 124.5,
-"r": 6.6
+"r": 6.4
 },
 "85290|1st edition holofoil": {
-"cp": 122.81,
+"cp": 120.25,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 381.27,
-"r": 3.1
+"r": 3.2
 },
 "85307|1st edition holofoil": {
 "cp": 178.32,
@@ -948,18 +1103,25 @@
 "r": 4.4
 },
 "85320|1st edition": {
-"cp": 32.41,
+"cp": 33.24,
 "cv": "Unlimited",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 169.99,
-"r": 5.2
+"r": 5.1
 },
 "85321|reverse holofoil": {
-"cp": 15.72,
+"cp": 15.41,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 125.0,
-"r": 8.0
+"r": 8.1
+},
+"85413|1st edition holofoil": {
+"cp": 135.93,
+"cv": "Unlimited Holo",
+"d": "2026-11-10",
+"p": 503.94,
+"r": 3.7
 },
 "85417|reverse holofoil": {
 "cp": 125.99,
@@ -992,7 +1154,7 @@
 "85646|reverse holofoil": {
 "cp": 46.81,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 175.0,
 "r": 3.7
 },
@@ -1006,7 +1168,7 @@
 "85676|reverse holofoil": {
 "cp": 69.71,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 292.66,
 "r": 4.2
 },
@@ -1076,7 +1238,7 @@
 "85950|reverse holofoil": {
 "cp": 34.05,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 150.0,
 "r": 4.4
 },
@@ -1090,7 +1252,7 @@
 "85988|reverse holofoil": {
 "cp": 197.08,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 999.75,
 "r": 5.1
 },
@@ -1102,11 +1264,11 @@
 "r": 6.7
 },
 "86023|reverse holofoil": {
-"cp": 86.08,
+"cp": 90.92,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 345.0,
-"r": 4.0
+"r": 3.8
 },
 "86024|reverse holofoil": {
 "cp": 18.33,
@@ -1130,30 +1292,30 @@
 "r": 17.3
 },
 "86059|1st edition holofoil": {
-"cp": 63.24,
+"cp": 63.16,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 281.06,
+"d": "2026-11-10",
+"p": 275.72,
 "r": 4.4
 },
 "86061|reverse holofoil": {
-"cp": 23.59,
+"cp": 24.16,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 217.47,
-"r": 9.2
+"d": "2026-11-10",
+"p": 231.74,
+"r": 9.6
 },
 "86110|1st edition holofoil": {
-"cp": 20.95,
+"cp": 20.62,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 161.44,
-"r": 7.7
+"r": 7.8
 },
 "86119|1st edition": {
 "cp": 31.0,
 "cv": "Unlimited",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 124.95,
 "r": 4.0
 },
@@ -1165,25 +1327,25 @@
 "r": 31.8
 },
 "86170|reverse holofoil": {
-"cp": 19.0,
+"cp": 18.92,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 174.53,
 "r": 9.2
 },
 "86220|reverse holofoil": {
 "cp": 40.55,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 125.0,
 "r": 3.1
 },
 "86258|reverse holofoil": {
-"cp": 60.7,
+"cp": 71.1,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 250.0,
-"r": 4.1
+"r": 3.5
 },
 "86300|reverse holofoil": {
 "cp": 16.44,
@@ -1193,11 +1355,11 @@
 "r": 9.1
 },
 "86313|reverse holofoil": {
-"cp": 35.93,
+"cp": 37.2,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 299.99,
-"r": 8.3
+"r": 8.1
 },
 "86327|holofoil": {
 "cp": 75.97,
@@ -1221,16 +1383,16 @@
 "r": 3.0
 },
 "86379|reverse holofoil": {
-"cp": 28.25,
+"cp": 29.6,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 101.91,
-"r": 3.6
+"r": 3.4
 },
 "86396|holofoil": {
 "cp": 225.0,
 "cv": "Reverse Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 1000.0,
 "r": 4.4
 },
@@ -1242,11 +1404,11 @@
 "r": 14.8
 },
 "86440|1st edition holofoil": {
-"cp": 20.37,
+"cp": 20.7,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 124.0,
-"r": 6.1
+"d": "2026-11-10",
+"p": 143.66,
+"r": 6.9
 },
 "86443|reverse holofoil": {
 "cp": 18.57,
@@ -1293,7 +1455,7 @@
 "86616|reverse holofoil": {
 "cp": 33.43,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 152.88,
 "r": 4.6
 },
@@ -1312,11 +1474,11 @@
 "r": 23.1
 },
 "86735|1st edition holofoil": {
-"cp": 37.7,
+"cp": 37.96,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 152.97,
-"r": 4.1
+"r": 4.0
 },
 "86741|1st edition": {
 "cp": 85.47,
@@ -1328,23 +1490,23 @@
 "86750|1st edition holofoil": {
 "cp": 80.0,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 350.0,
 "r": 4.4
 },
 "86854|1st edition holofoil": {
-"cp": 41.55,
+"cp": 42.11,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 200.0,
-"r": 4.8
+"r": 4.7
 },
 "86858|1st edition holofoil": {
-"cp": 26.53,
+"cp": 26.71,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 104.86,
-"r": 4.0
+"r": 3.9
 },
 "86904|1st edition": {
 "cp": 69.47,
@@ -1417,11 +1579,11 @@
 "r": 5.9
 },
 "87181|reverse holofoil": {
-"cp": 17.85,
+"cp": 18.09,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 120.66,
-"r": 6.8
+"r": 6.7
 },
 "87235|reverse holofoil": {
 "cp": 1.73,
@@ -1447,7 +1609,7 @@
 "87421|holofoil": {
 "cp": 50.78,
 "cv": "Reverse Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 186.74,
 "r": 3.7
 },
@@ -1494,11 +1656,11 @@
 "r": 10.8
 },
 "87541|1st edition holofoil": {
-"cp": 39.22,
+"cp": 39.35,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 139.56,
-"r": 3.6
+"r": 3.5
 },
 "87599|normal": {
 "cp": 105.14,
@@ -1531,7 +1693,7 @@
 "87704|reverse holofoil": {
 "cp": 30.32,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 119.05,
 "r": 3.9
 },
@@ -1559,7 +1721,7 @@
 "87790|reverse holofoil": {
 "cp": 18.45,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 149.99,
 "r": 8.1
 },
@@ -1573,7 +1735,7 @@
 "87853|reverse holofoil": {
 "cp": 28.99,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 139.99,
 "r": 4.8
 },
@@ -1585,11 +1747,11 @@
 "r": 8.2
 },
 "87887|reverse holofoil": {
-"cp": 26.98,
+"cp": 27.38,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 208.33,
-"r": 7.7
+"r": 7.6
 },
 "87976|reverse holofoil": {
 "cp": 10.17,
@@ -1601,7 +1763,7 @@
 "87982|reverse holofoil": {
 "cp": 22.3,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 129.99,
 "r": 5.8
 },
@@ -1627,11 +1789,11 @@
 "r": 8.4
 },
 "88018|reverse holofoil": {
-"cp": 31.01,
+"cp": 31.51,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 110.0,
-"r": 3.5
+"d": "2026-11-10",
+"p": 125.0,
+"r": 4.0
 },
 "88023|reverse holofoil": {
 "cp": 7.0,
@@ -1683,11 +1845,11 @@
 "r": 26.0
 },
 "88083|holofoil": {
-"cp": 43.59,
+"cp": 46.31,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 359.82,
-"r": 8.3
+"d": "2026-11-10",
+"p": 369.63,
+"r": 8.0
 },
 "88084|reverse holofoil": {
 "cp": 20.94,
@@ -1697,18 +1859,18 @@
 "r": 9.5
 },
 "88085|holofoil": {
-"cp": 88.55,
+"cp": 90.67,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 434.84,
-"r": 4.9
+"r": 4.8
 },
 "88090|reverse holofoil": {
-"cp": 10.15,
+"cp": 10.07,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 105.74,
-"r": 10.4
+"d": "2026-11-10",
+"p": 113.42,
+"r": 11.3
 },
 "88097|reverse holofoil": {
 "cp": 11.65,
@@ -1748,16 +1910,23 @@
 "88255|reverse holofoil": {
 "cp": 31.76,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 156.09,
 "r": 4.9
 },
 "88263|reverse holofoil": {
 "cp": 48.42,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 179.99,
 "r": 3.7
+},
+"88269|1st edition holofoil": {
+"cp": 35.63,
+"cv": "Unlimited Holo",
+"d": "2026-11-10",
+"p": 155.97,
+"r": 4.4
 },
 "88277|reverse holofoil": {
 "cp": 39.94,
@@ -1781,9 +1950,9 @@
 "r": 10.7
 },
 "88322|1st edition holofoil": {
-"cp": 49.52,
+"cp": 49.47,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 170.0,
 "r": 3.4
 },
@@ -1809,11 +1978,11 @@
 "r": 10.0
 },
 "88439|reverse holofoil": {
-"cp": 24.84,
+"cp": 24.2,
 "cv": "Non-Holo",
-"d": "2026-11-03",
-"p": 149.99,
-"r": 6.0
+"d": "2026-11-10",
+"p": 350.0,
+"r": 14.5
 },
 "88440|reverse holofoil": {
 "cp": 15.48,
@@ -1860,9 +2029,9 @@
 "88627|holofoil": {
 "cp": 111.65,
 "cv": "Reverse Holo",
-"d": "2026-11-03",
-"p": 386.99,
-"r": 3.5
+"d": "2026-11-10",
+"p": 447.5,
+"r": 4.0
 },
 "88635|reverse holofoil": {
 "cp": 107.17,
@@ -1893,17 +2062,17 @@
 "r": 19.8
 },
 "88788|1st edition holofoil": {
-"cp": 89.55,
+"cp": 89.63,
 "cv": "Unlimited Holo",
-"d": "2026-11-02",
+"d": "2026-11-10",
 "p": 349.99,
 "r": 3.9
 },
 "88795|1st edition": {
-"cp": 57.32,
+"cp": 57.82,
 "cv": "Unlimited",
-"d": "2026-11-02",
-"p": 188.65,
+"d": "2026-11-10",
+"p": 190.17,
 "r": 3.3
 },
 "88797|normal": {
@@ -1986,7 +2155,7 @@
 "89050|reverse holofoil": {
 "cp": 42.46,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 225.0,
 "r": 5.3
 },
@@ -2000,42 +2169,42 @@
 "89163|unlimited holofoil": {
 "cp": 132.75,
 "cv": "1st Edition Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 3998.99,
 "r": 30.1
 },
 "89164|1st edition holofoil": {
 "cp": 602.77,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 2105.26,
 "r": 3.5
 },
 "89167|1st edition holofoil": {
 "cp": 998.0,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 3000.0,
 "r": 3.0
 },
 "89169|1st edition holofoil": {
 "cp": 595.0,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 2105.26,
 "r": 3.5
 },
 "89189|reverse holofoil": {
-"cp": 30.43,
+"cp": 31.24,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 103.49,
-"r": 3.4
+"r": 3.3
 },
 "89232|1st edition holofoil": {
 "cp": 34.83,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 127.47,
 "r": 3.7
 },
@@ -2094,6 +2263,13 @@
 "d": "2026-11-09",
 "p": 150.0,
 "r": 16.4
+},
+"89339|reverse holofoil": {
+"cp": 26.21,
+"cv": "Non-Holo",
+"d": "2026-11-10",
+"p": 132.71,
+"r": 5.1
 },
 "89342|reverse holofoil": {
 "cp": 2.63,
@@ -2166,16 +2342,16 @@
 "r": 11.9
 },
 "89555|1st edition holofoil": {
-"cp": 53.7,
+"cp": 53.82,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 198.5,
 "r": 3.7
 },
 "89856|reverse holofoil": {
 "cp": 20.43,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 100.0,
 "r": 4.9
 },
@@ -2201,10 +2377,10 @@
 "r": 12.8
 },
 "89939|1st edition holofoil": {
-"cp": 46.22,
+"cp": 46.33,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 147.35,
+"d": "2026-11-10",
+"p": 148.23,
 "r": 3.2
 },
 "89941|reverse holofoil": {
@@ -2236,16 +2412,16 @@
 "r": 115.1
 },
 "90099|1st edition holofoil": {
-"cp": 185.11,
+"cp": 189.61,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
-"p": 699.99,
-"r": 3.8
+"d": "2026-11-10",
+"p": 599.99,
+"r": 3.2
 },
 "90113|1st edition holofoil": {
 "cp": 148.99,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 450.0,
 "r": 3.0
 },
@@ -2257,11 +2433,11 @@
 "r": 4.1
 },
 "90142|1st edition": {
-"cp": 118.14,
+"cp": 119.91,
 "cv": "Unlimited",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 399.99,
-"r": 3.4
+"r": 3.3
 },
 "90149|reverse holofoil": {
 "cp": 18.92,
@@ -2271,25 +2447,25 @@
 "r": 6.2
 },
 "90196|1st edition holofoil": {
-"cp": 20.04,
+"cp": 20.55,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 117.49,
-"r": 5.9
+"r": 5.7
 },
 "90249|1st edition holofoil": {
-"cp": 46.22,
+"cp": 46.17,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 154.99,
 "r": 3.4
 },
 "90251|reverse holofoil": {
-"cp": 25.57,
+"cp": 25.89,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 110.0,
-"r": 4.3
+"r": 4.2
 },
 "90278|reverse holofoil": {
 "cp": 21.14,
@@ -2299,11 +2475,11 @@
 "r": 6.0
 },
 "90306|reverse holofoil": {
-"cp": 25.63,
+"cp": 27.08,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 162.47,
-"r": 6.3
+"r": 6.0
 },
 "90315|reverse holofoil": {
 "cp": 37.53,
@@ -2350,23 +2526,23 @@
 "90540|reverse holofoil": {
 "cp": 42.23,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 129.98,
 "r": 3.1
 },
 "90612|1st edition holofoil": {
-"cp": 41.06,
+"cp": 42.75,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 248.67,
-"r": 6.1
+"r": 5.8
 },
 "90615|reverse holofoil": {
-"cp": 20.51,
+"cp": 19.6,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 149.99,
-"r": 7.3
+"r": 7.7
 },
 "90633|reverse holofoil": {
 "cp": 60.5,
@@ -2390,16 +2566,16 @@
 "r": 10.1
 },
 "90680|1st edition holofoil": {
-"cp": 26.78,
+"cp": 26.88,
 "cv": "Unlimited Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 169.99,
 "r": 6.3
 },
 "90769|reverse holofoil": {
 "cp": 39.06,
 "cv": "Non-Holo",
-"d": "2026-11-03",
+"d": "2026-11-10",
 "p": 147.5,
 "r": 3.8
 },

@@ -1513,10 +1513,10 @@
 "sleepers": 5
 },
 "pokemon--gym-heroes": {
-"found": 1,
+"found": 0,
 "name": "Gym Heroes",
 "records": 273,
-"scanned": "2026-11-02",
+"scanned": "2026-11-10",
 "sleepers": 2
 },
 "pokemon--heartgold-soulsilver": {
@@ -1540,11 +1540,11 @@
 "scanned": "2026-10-28"
 },
 "pokemon--jungle": {
-"found": 2,
+"found": 0,
 "name": "Jungle",
 "records": 135,
-"scanned": "2026-11-03",
-"sleepers": 2
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--kids-wb-promos": {
 "found": 0,
@@ -1561,53 +1561,53 @@
 "sleepers": 0
 },
 "pokemon--legends-awakened": {
-"found": 1,
+"found": 0,
 "name": "Legends Awakened",
 "records": 288,
-"scanned": "2026-11-03",
-"sleepers": 1
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--majestic-dawn": {
 "found": 0,
 "name": "Majestic Dawn",
 "records": 200,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--mysterious-treasures": {
 "found": 0,
 "name": "Mysterious Treasures",
 "records": 248,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--neo-destiny": {
-"found": 12,
+"found": 2,
 "name": "Neo Destiny",
 "records": 232,
-"scanned": "2026-11-03",
-"sleepers": 6
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--neo-discovery": {
-"found": 5,
+"found": 0,
 "name": "Neo Discovery",
 "records": 155,
-"scanned": "2026-11-03",
-"sleepers": 3
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--neo-genesis": {
-"found": 5,
+"found": 0,
 "name": "Neo Genesis",
 "records": 229,
-"scanned": "2026-11-03",
-"sleepers": 3
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--neo-revelation": {
-"found": 9,
+"found": 0,
 "name": "Neo Revelation",
 "records": 136,
-"scanned": "2026-11-03",
-"sleepers": 2
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--next-destinies": {
 "found": 1,
@@ -1652,94 +1652,94 @@
 "sleepers": 1
 },
 "pokemon--platinum": {
-"found": 1,
+"found": 0,
 "name": "Platinum",
 "records": 262,
-"scanned": "2026-11-03",
-"sleepers": 1
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--pop-series-1": {
 "found": 0,
 "name": "POP Series 1",
 "records": 25,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-2": {
 "found": 0,
 "name": "POP Series 2",
 "records": 25,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-3": {
 "found": 0,
 "name": "POP Series 3",
 "records": 25,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-4": {
-"found": 2,
+"found": 0,
 "name": "POP Series 4",
 "records": 26,
-"scanned": "2026-11-03",
-"sleepers": 1
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--pop-series-5": {
-"found": 2,
+"found": 0,
 "name": "POP Series 5",
 "records": 25,
-"scanned": "2026-11-03",
-"sleepers": 1
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--pop-series-6": {
-"found": 1,
+"found": 0,
 "name": "POP Series 6",
 "records": 26,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-7": {
 "found": 0,
 "name": "POP Series 7",
 "records": 24,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-8": {
 "found": 0,
 "name": "POP Series 8",
 "records": 31,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--pop-series-9": {
 "found": 0,
 "name": "POP Series 9",
 "records": 24,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--rising-rivals": {
-"found": 4,
+"found": 0,
 "name": "Rising Rivals",
 "records": 224,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--rumble": {
-"found": 5,
+"found": 1,
 "name": "Rumble",
 "records": 17,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--secret-wonders": {
-"found": 2,
+"found": 0,
 "name": "Secret Wonders",
 "records": 264,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--shining-legends": {
@@ -1749,11 +1749,11 @@
 "scanned": "2026-10-28"
 },
 "pokemon--skyridge": {
-"found": 22,
+"found": 2,
 "name": "Skyridge",
 "records": 335,
-"scanned": "2026-11-03",
-"sleepers": 11
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--sm-promos": {
 "found": 5,
@@ -1765,28 +1765,28 @@
 "found": 0,
 "name": "Southern Islands",
 "records": 19,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--stormfront": {
 "found": 0,
 "name": "Stormfront",
 "records": 203,
-"scanned": "2026-11-03",
-"sleepers": 1
+"scanned": "2026-11-10",
+"sleepers": 0
 },
 "pokemon--supreme-victors": {
 "found": 1,
 "name": "Supreme Victors",
 "records": 297,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 1
 },
 "pokemon--team-rocket": {
-"found": 3,
+"found": 0,
 "name": "Team Rocket",
 "records": 174,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--triumphant": {
@@ -1814,7 +1814,7 @@
 "found": 0,
 "name": "WoTC Promo",
 "records": 72,
-"scanned": "2026-11-03",
+"scanned": "2026-11-10",
 "sleepers": 0
 },
 "pokemon--xy-ancient-origins": {
