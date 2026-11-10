@@ -3104,8 +3104,9 @@ function goHeat(){ state.view = "heat"; state.selecting = false; selected = []; 
 function htFit(c){
   var b = htBudget(), gr = GS ? GS.grades : ["psa10","psa9"], mn = GS ? Number(GS.min_psa10_price)||0 : 0;
   if(c.p10 && c.p10 < mn && !c.p9) return null;
-  if(gr.indexOf("psa10")>=0 && c.p10 && c.p10 >= mn && (!b || c.p10 <= b)) return {g:"PSA 10", p:c.p10};
-  if(gr.indexOf("psa9")>=0 && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
+  var v = HT.grades==="psa10"||HT.grades==="psa9" ? HT.grades : "both";   /* the Grade filter on the page */
+  if(v!=="psa9" && gr.indexOf("psa10")>=0 && c.p10 && c.p10 >= mn && (!b || c.p10 <= b)) return {g:"PSA 10", p:c.p10};
+  if(v!=="psa10" && gr.indexOf("psa9")>=0 && c.p9 && (!b || c.p9 <= b)) return {g:"PSA 9", p:c.p9};
   return null;
 }
 function htVerge(c){ return c.stage==="breaking" || c.stage==="warming"; }
@@ -3311,6 +3312,7 @@ function renderHeat(){
     '<input type="range" id="ht-budget" min="0" max="'+(HBSTEPS.length-1)+'" step="1" value="'+hbIndex(htBudget())+'" aria-label="Your budget per slab"></label></div>'+
     '<div class="bg-opts-wrap"><div class="bg-opts" style="margin-top:0">'+
       '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
+      '<div class="bg-opt"><span class="lbl">Grade</span>'+seg("hg", [["both","PSA 10 + 9"],["psa10","PSA 10 only"],["psa9","PSA 9 only"]], (HT.grades==="psa10"||HT.grades==="psa9")?HT.grades:"both")+'</div>'+
       '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option><option value="pop">Lowest PSA 10 pop</option></select>'+
         '<label class="search" style="flex:1 1 160px;min-width:0;margin:0"><input id="ht-q" type="search" placeholder="Pokémon or set" aria-label="Filter by Pokémon or set" value="'+esc(HT.q)+'"></label></div>'+
     '</div></div></div>';
@@ -3325,7 +3327,7 @@ function renderHeat(){
   bi.addEventListener("input", function(){ bo.textContent = hbLabel(HBSTEPS[+bi.value]); });
   bi.addEventListener("change", function(){ HT.budget = HBSTEPS[+bi.value]; bo.textContent = hbLabel(HT.budget); refresh(); });
   gsBind(redraw);
-  [["hs","show"]].forEach(function(p){ root.querySelectorAll("[data-"+p[0]+"]").forEach(function(b){ b.addEventListener("click", function(){ HT[p[1]] = b.getAttribute("data-"+p[0]); redraw(); }); }); });
+  [["hs","show"],["hg","grades"]].forEach(function(p){ root.querySelectorAll("[data-"+p[0]+"]").forEach(function(b){ b.addEventListener("click", function(){ HT[p[1]] = b.getAttribute("data-"+p[0]); redraw(); }); }); });
   so.addEventListener("change", function(){ HT.sort = so.value; refresh(); });
   var qi = document.getElementById("ht-q"), qt = null;
   qi.addEventListener("input", function(){ clearTimeout(qt); qt = setTimeout(function(){ HT.q = qi.value; refresh(); }, 200); });
@@ -3392,7 +3394,7 @@ function htResults(){
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
   var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
     '. Prices are CardPrice’s current prices (from recent sales); a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
-  if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, turning on PSA 9 or more eras under “What to look for”, or “All”.</div>';
+  if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, '+(HT.grades==="psa10"||HT.grades==="psa9"?'Grade “PSA 10 + 9”, ':'')+'turning on PSA 9 or more eras under “What to look for”, or “All”.</div>';
   var out = '', lastG = null;
   shown.forEach(function(x){
     if(HT.sort==="prio"){ var g = htGroup(x.c); if(g!==lastG){ out += '<h3 class="bg-h">'+(g===0?'★ Your Pokémon on the verge':g===1?'Other Pokémon on the verge':'Everything else')+'</h3>'; lastG = g; } }
