@@ -1156,7 +1156,10 @@ def main():
         elif stop and not checked:
             head = f"{test}Graded Slabs: {stop}."
         else:
-            head = (f"{test}Graded Slabs checked {checked} slabs ({got} with PSA sales). "
+            # PokemonPriceTracker off ("sources_off"): nothing is "checked" here, the list is rebuilt from CardPrice
+            did = (f"checked {checked} slabs ({got} with PSA sales)" if checked or use_ppt
+                   else "rebuilt the list from CardPrice's prices")
+            head = (f"{test}Graded Slabs {did}. "
                     f"{len(final)} on the list, {len(hot)} heating up.")
         botlog.summary(head, {"OK": "ok", "PARTIAL": "warn"}.get(status, "fail"),
                        [f"{ppt.used} PokemonPriceTracker calls", f"{scan_used} TCG Price Lookup requests"])

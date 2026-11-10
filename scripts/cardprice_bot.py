@@ -68,20 +68,25 @@ def save_lines(path, data):
         f.write(body + (',' if head else '') + '"cards":{\n' + ",\n".join(parts) + "\n}}\n")
 
 
-def runs_left_today(slots):
-    """How many of today's scheduled CardPrice runs (Pacific times, including this one) are still to come.
-    Each run takes its share of the slabs not checked yet today, so the last run of the day finishes the pool."""
-    now = datetime.datetime.now(PT)
+def runs_left_today(slots, now=None):
+    """How many CardPrice runs are left today, counting this one: this run plus every scheduled slot (Pacific
+    times) still more than an hour away. Each run takes its share of the slabs not checked yet today, so the
+    last run of the day finishes the pool.
+    GitHub often starts scheduled runs late (sometimes hours late, sometimes early). The old version counted
+    only slots at or after this run's own time, so a run that started hours late thought it was the last one
+    and took almost everything, leaving the next run with ~1 slab (Nov 9 2026: the 10:23 am run started at
+    5:40 pm and took 615 of 616). Counting this run + the slots still ahead keeps the split even."""
+    now = now or datetime.datetime.now(PT)
     mins = now.hour * 60 + now.minute
-    left = 0
+    ahead = 0
     for s in slots:
         try:
             h, m = (int(x) for x in s.split(":"))
         except ValueError:
             continue
-        if h * 60 + m >= mins - 45:              # this run counts itself (GitHub often starts a few minutes late)
-            left += 1
-    return max(1, left)
+        if h * 60 + m > mins + 60:               # a slot more than an hour away is a separate run still to come
+            ahead += 1
+    return 1 + ahead
 
 
 class Stop(Exception):
