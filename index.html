@@ -3947,7 +3947,10 @@ function renderAdmin(){
   var h = header();
   h += '<div class="pair-intro"><div><h2>Admin log</h2><p class="sub">What every bot did this week, in plain English. Problems show at the top. Tap <b>Copy for Claude</b> on a problem and paste it into a chat to get it fixed.</p></div>'+
     '<div class="bk-acts"><button class="btn" id="adm-refresh"'+(ADM.loading?' disabled':'')+'>'+(ADM.loading?'Checking…':'Refresh')+'</button><button class="btn ghost" id="adm-lock">Lock</button></div></div>';
-  if(!ADM.log){ h += '<div class="empty">Checking the bots…</div>'; root.innerHTML = h; bindHeader(); loadAdmin().then(function(){ if(state.view==="admin") render(); }); return; }
+  if(!ADM.log){ h += '<div class="empty">Checking the bots…</div>'; root.innerHTML = h; bindHeader();
+    /* only wait on a load this call starts: while one is already running, loadAdmin() resolves at once, and
+       re-rendering on that looped forever and froze the page (opening #admin directly or reloading on it) */
+    if(!ADM.loading) loadAdmin().then(function(){ if(state.view==="admin") render(); }); return; }
   save(ASEEN_KEY, Date.now());
   var issues = adminIssues(), fq = adminFeed(), feed = fq.feed, today = dayKey(new Date());
   /* status banner */
