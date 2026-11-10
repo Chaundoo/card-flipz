@@ -572,6 +572,7 @@ body.phone .tab{padding:8px 4px;font-size:14px}
 .ffs-legend{font-size:12.5px;color:var(--muted);margin:4px 0 0}
 /* Sleepers + Low sales flags */
 .pill.lowp{background:var(--slp-soft);color:var(--slp)}
+.pill.lagp{background:var(--gold-soft);color:var(--gold-ink);border:1px solid var(--gold)}
 .pill.vlowp{background:var(--slp);color:#fff}
 .pill.hidp{background:var(--surface);color:var(--ink);border:1px dashed var(--muted);padding:2px 7px}
 .pill.movp{background:var(--est);color:var(--muted)}
@@ -762,6 +763,9 @@ body.phone .pc-legend{justify-content:flex-start}
 .ht-pop .popbar{height:10px}
 .ht-why{margin:0;padding:0 0 0 18px;font-size:13.5px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .ht-why li::marker{color:var(--gold)}
+.pill.roomp{background:var(--pos-soft);color:var(--pos);border:1px solid var(--pos)}
+.ht-room{background:var(--surface-2);border-radius:10px;padding:8px 12px;margin:2px 0 4px}
+.ht-room b{font-size:13px}
 .ht-row .qc-head,body.phone .ht-row .qc-head{flex-direction:row;align-items:flex-start}
 .ht-row .qc-name{flex:1}
 .pill.fitp{background:var(--surface-2);color:var(--ink)}
@@ -1263,6 +1267,10 @@ function filteredList(){
       return state.sort==="profit" ? pb.net-pa.net : pb.roi-pa.roi;
     }
     if(state.sort==="updated") return String(b.updated).localeCompare(String(a.updated));
+    if(state.sort==="lag"){ var la = lagOf(a), lb = lagOf(b);
+      if(!la && !lb) return title(a).localeCompare(title(b));
+      if(!la) return 1; if(!lb) return -1;
+      return (lb.med-lb.mk)-(la.med-la.mk) || lb.gap-la.gap; }
     if(state.sort==="sales"){ var fa = slFlag(a), fb = slFlag(b);
       if(!fa && !fb) return title(a).localeCompare(title(b));
       if(!fa) return 1; if(!fb) return -1;
@@ -1292,7 +1300,7 @@ function renderList(){
     '<label class="search"><span class="sub">Search</span><input id="q" type="search" placeholder="Card, set or number" value="'+esc(state.q)+'"></label>'+
     (ERAS.length ? '<select id="eraf" aria-label="Filter by era"><option value="">All eras</option>'+ERAS.map(function(e){ var n = cards.filter(function(c){return c.era===e.id;}).length; return n ? '<option value="'+esc(e.id)+'"'+(e.id===state.era?' selected':'')+'>'+esc(e.name)+' ('+n+')</option>' : ''; }).join("")+'</select>' : '')+
     '<select id="setf" aria-label="Filter by set"><option value="">All sets</option>'+sets.map(function(s){return '<option'+(s===state.set?' selected':'')+'>'+esc(s)+'</option>';}).join("")+'</select>'+
-    '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="sales">Low sales first</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
+    '<select id="sortf" aria-label="Sort"><option value="gap">Best flip profit ($)</option><option value="fliproi">Best flip return (%)</option><option value="raw">Raw NM price</option><option value="sales">Low sales first</option><option value="lag">Market lags sales</option><option value="updated">Recently updated</option><option value="name">A–Z</option>'+
       (ADV ? '<optgroup label="Advanced: grading"><option value="profit">Grading profit ($)</option><option value="roi">Grading return (%)</option><option value="psa10">PSA 10 price</option><option value="breakeven">Lowest break-even grade</option></optgroup>' : '')+'</select>'+
     '<select id="exitf" aria-label="Sell to"><option value="vendor"'+(state.exit==="vendor"?' selected':'')+'>Sell to a vendor ('+S.vendor+'%)</option><option value="ebay"'+(state.exit==="ebay"?' selected':'')+'>Sell on eBay</option></select>'+
     (ADV && (state.sort==="profit"||state.sort==="roi") ? '<select id="basisf" aria-label="Profit at grade">'+BASIS.map(function(b){return '<option value="'+b[0]+'"'+(b[0]===state.basis?' selected':'')+'>Profit at '+b[1]+'</option>';}).join("")+'</select>' : '')+
@@ -1331,6 +1339,7 @@ function resultsHTML(){
   var h = '';
   if(state.sort==="profit"||state.sort==="roi"){ h += '<p class="note" style="margin:-6px 0 12px">'+(state.sort==="profit"?'Ranked by dollar profit':'Ranked by profit ÷ total cost (raw NM buy + grading fee)')+' if the card grades '+esc((BASIS.find(function(b){return b[0]===state.basis;})||BASIS[0])[1])+' and you sell '+(state.exit==="vendor"?'to a vendor at '+S.vendor+'%':'on eBay after the '+S.ebay+'% fee')+'. This assumes that grade; most copies grade lower.</p>'; }
   if(state.sort==="gap"||state.sort==="fliproi"){ h += '<p class="note" style="margin:-6px 0 12px">Each card shows its best flip: buy one condition and resell it one step up (DMG → MP, MP → LP or LP → NM), '+exitText()+'. Ranked by '+(state.sort==="gap"?'dollar profit':'return on what you paid')+'. Look for copies listed below their true condition, and check them in hand before relisting.</p>'; }
+  if(state.sort==="lag"){ var nlg = cards.filter(function(c){ return lagOf(c); }).length; h += '<p class="note" style="margin:-6px 0 12px">Cards whose real TCGplayer sales run '+Math.round(LAG.min_gap*100)+'%+ above TCGplayer’s market price come first ('+nlg+' flagged), biggest dollar gap first. Vendors pricing off market may sell these under what they actually sell for. Needs '+LAG.min_sales+'+ recent sales; sales come from the weekly TCGplayer sales check (about 150 cards a week), so only cards it has looked at can show up.</p>'; }
   if(state.sort==="sales"){ var nfl = cards.filter(function(c){ return slFlag(c); }).length; h += '<p class="note" style="margin:-6px 0 12px">Older cards ('+esc(SLS.eras.map(fsEraName).join(", "))+' and older promos) priced '+slMoneyStop(SLS.min_price)+'+ that barely sell on TCGplayer come first ('+nfl+' flagged), quietest first. Sales are counted by the weekly TCGplayer sales check, a few dozen older cards at a time.</p>'; }
   if(state.sort==="breakeven"){ h += '<p class="note" style="margin:-6px 0 12px">Ranked by the lowest PSA grade that still makes money after the eBay fee ('+S.ebay+'%), the PSA fee ($'+S.psa+') and the raw NM buy. Ties go to the bigger profit at that grade. Cards that lose money at every grade are last.</p>'; }
   if(lastFuzzy && list.length) h += '<p class="note" style="margin:-6px 0 12px">No exact match for “'+esc(state.q.trim())+'”. Showing close matches.</p>';
@@ -2876,7 +2885,36 @@ function slPill(f){ var n = f.s.n||0;
   return '<span class="pill '+(f.lv==="very"?'vlowp':'lowp')+'" title="'+esc(slWhy(f))+'">'+(f.lv==="very"?'Very low sales':'Low sales')+' · '+n+' in 90d</span>'; }
 function slRatio(r){ return r>=100 ? Math.round(r) : r>=10 ? Math.round(r) : (Math.round(r*10)/10); }
 function slHidPill(h){ return '<span class="pill hidp" title="TCGplayer opens this card on the '+esc(h.cv)+' printing ('+money(h.cp,2)+'). This printing only shows after you pick it under Printing.">Hidden printing · '+slRatio(h.r)+'×</span>'; }
-function slFlagsHtml(c){ var f = slFlag(c); if(!f) return ''; return '<div class="slflags">'+slPill(f)+(f.h?slHidPill(f.h):'')+'</div>'; }
+function slFlagsHtml(c){ var f = slFlag(c), g = lagOf(c); if(!f && !g) return ''; return '<div class="slflags">'+(g?lagPill(g):'')+(f?slPill(f)+(f.h?slHidPill(f.h):''):'')+'</div>'; }
+/* ---------- Market lags sales ----------
+   TCGplayer's Market Price moves slowly on cards that rarely sell, so real sales can run well above it (Arceus
+   Gengar: market ~$100 while NM copies sold $140-200). Vendors who price off TCGplayer market sell those cheap.
+   Compares, per condition, TCGplayer's market price (the daily price update; card.mkt keeps it when a checked
+   sales price replaced it on the card) with the median of real sales from the weekly TCGplayer sales check
+   (sleepers.json sales[..].m = {cond: [median, sales, newest sale date]}). Flagged: 2+ sales, market $10+,
+   median 30%+ above market, newest sale in the last 90 days. */
+var LAG = {min_gap:0.30, min_sales:2, min_market:10, max_days:90};
+function lagMarket(c, k){
+  if(c.mkt && Number(c.mkt[k]) > 0) return Number(c.mkt[k]);
+  var x = c.raw && c.raw[k];
+  return x && !x.est && /TCGplayer market/i.test(x.src||"") && Number(x.price) > 0 ? Number(x.price) : 0;
+}
+function lagOf(c){
+  var s = slSales(c), m = s && s.m; if(!m) return null;
+  var best = null;
+  ["nm","lp","mp"].forEach(function(k){
+    var e = m[k], mk = lagMarket(c, k); if(!e || !mk) return;
+    var med = Number(e[0]), n = Number(e[1])||0, d = e[2] || "";
+    if(n < LAG.min_sales || mk < LAG.min_market || !(med > 0)) return;
+    if(d && (Date.now() - new Date(d+"T12:00:00").getTime())/864e5 > LAG.max_days) return;
+    var gap = med/mk - 1;
+    if(gap >= LAG.min_gap && (!best || gap > best.gap)) best = {k:k, mk:mk, med:med, n:n, d:d, gap:gap, at:s.at};
+  });
+  return best;
+}
+function lagWhy(g){ return g.k.toUpperCase()+': TCGplayer market '+money(g.mk,2)+', but the median of '+g.n+' real sales is '+money(g.med,2)+
+  (g.d?' (newest '+fmtDate(g.d)+')':'')+'. Vendors who price off market may sell under what it actually sells for. Check the sales list on TCGplayer (pick the right printing) before buying; one hot week can fade.'; }
+function lagPill(g){ return '<span class="pill lagp" title="'+esc(lagWhy(g))+'">Market lags sales · '+g.k.toUpperCase()+' +'+Math.round(g.gap*100)+'%</span>'; }
 /* ---- links: TCGplayer (that printing), PriceCharting (its eBay sold list), eBay sold (raw copies) */
 function slPrinting(c){ var p = c.tcgVariant || (slHid(c) ? pkeyOf(c).split("|")[1] : ""); return String(p||"").replace(/\b[a-z]/g, function(x){ return x.toUpperCase(); }); }
 function slBase(c){ return String(c.name||"").split(/\s+-\s+|\s*[\(\[]/)[0].trim(); }
@@ -3120,10 +3158,85 @@ function htConf(c){
   return '';
 }
 /* your priority Pokémon on the verge first, then other Pokémon on the verge, then the rest */
+/* ---------- Room to grow: slabs that look cheap next to similar slabs, before they move ----------
+   Scored 0-100 from what the Graded Slabs list already has (CardPrice prices, PSA pop, price history):
+   * Cheap for its rarity (up to 35): the PSA 10's multiple over the raw price, compared with what similar slabs
+     get (a fit over every slab: era, popularity tier, PSA 10 pop and gem rate). Below the fit = cheap.
+   * Small 10-vs-9 gap (up to 20): gem rate at or below its era's typical, yet the PSA 10 sells for a smaller
+     multiple of the PSA 9 than that era's typical.
+   * Same Pokémon rising (up to 15): its other slabs are up 10%+ in 4 weeks while this one is flat.
+   * Older and low pop (up to 15): WotC/EX/DP-HGSS (B&W/XY a bit less), PSA 10 pop of 25 or less (100 or less).
+   * Steady (12): the price chart is flat to gently rising, not spiked or cooling.
+   Slabs whose price the bots couldn't confirm (Verify price / conflicting sources), and spiked or cooling ones,
+   are left out. A PSA 10 barely above the 9 can be a pricing error as much as a bargain: those get a note. */
+var ROOM = {ver:null, by:null, min:55};
+var ROOM_OLD = {wotc:8, ex:8, "dp-hgss":8, bw:4, xy:4};
+function roomGem(c){ var p = c.pop||{}, t = Math.max(Number(p.psaTotal)||0, Number(p.psa10)||0, 1); return (Number(p.psa10)||0)/t; }
+function roomMed(a){ if(!a.length) return null; var b = a.slice().sort(function(x,y){ return x-y; }), m = b.length>>1; return b.length%2 ? b[m] : (b[m-1]+b[m])/2; }
+function roomSolve(A, y){   /* least squares by the normal equations (a tiny ridge keeps it stable) */
+  var k = A[0].length, M = [], v = [], i, j, r;
+  for(i=0;i<k;i++){ M.push(new Array(k).fill(0)); v.push(0); }
+  A.forEach(function(row, n){ for(var i=0;i<k;i++){ v[i] += row[i]*y[n]; for(var j=0;j<k;j++) M[i][j] += row[i]*row[j]; } });
+  for(i=0;i<k;i++) M[i][i] += 1e-6;
+  for(var c=0;c<k;c++){
+    var p = c; for(r=c+1;r<k;r++) if(Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+    var t = M[c]; M[c] = M[p]; M[p] = t; t = v[c]; v[c] = v[p]; v[p] = t;
+    if(!M[c][c]) continue;
+    for(r=0;r<k;r++){ if(r===c) continue; var f = M[r][c]/M[c][c]; if(!f) continue; for(j=c;j<k;j++) M[r][j] -= f*M[c][j]; v[r] -= f*v[c]; }
+  }
+  return v.map(function(x, i){ return M[i][i] ? x/M[i][i] : 0; });
+}
+function roomAll(){
+  var D = HEAT.data; if(!D) return {};
+  var ver = (D.version||"")+"|"+(D.generated||"")+"|"+((D.cards||[]).length);
+  if(ROOM.ver === ver && ROOM.by) return ROOM.by;
+  var cs = D.cards || [], by = {};
+  function ok(c){ return c.p10 > 0 && c.raw > 0 && c.pop && c.pop.psa10 > 0 && ["verify","conflict","spiked","cooling"].indexOf(c.stage) < 0; }
+  var rows = cs.filter(ok), eras = [];
+  rows.forEach(function(c){ if(eras.indexOf(c.era)<0) eras.push(c.era); }); eras.sort();
+  function X(c){ return [1].concat(eras.slice(1).map(function(e){ return c.era===e ? 1 : 0; }), [c.tier===2 ? 1 : 0, Math.log(c.pop.psa10+1), Math.log(roomGem(c)+0.005)]); }
+  var b = rows.length > 40 ? roomSolve(rows.map(X), rows.map(function(c){ return Math.log(c.p10/c.raw); })) : null;
+  var prem = {}, gems = {}, sib = {};
+  rows.forEach(function(c){ (gems[c.era] = gems[c.era]||[]).push(roomGem(c)); if(c.p9 > 0) (prem[c.era] = prem[c.era]||[]).push(c.p10/c.p9); });
+  cs.forEach(function(c){ if(c.ch!=null && c.sp && ["verify","conflict"].indexOf(c.stage)<0) (sib[c.sp] = sib[c.sp]||[]).push([c.id, c.ch]); });
+  var pm = {}, gm = {};
+  Object.keys(prem).forEach(function(e){ pm[e] = roomMed(prem[e]); });
+  Object.keys(gems).forEach(function(e){ gm[e] = roomMed(gems[e]); });
+  function one(x){ return Math.round(x*10)/10; }
+  rows.forEach(function(c){
+    var s = 0, why = [], warn = "", g = roomGem(c), a;
+    if(b){
+      var x = X(c), fit = 0; for(var i=0;i<x.length;i++) fit += x[i]*b[i];
+      var r = Math.log(c.p10/c.raw) - fit;
+      if(r < 0){ a = Math.min(35, Math.round(-r*35)); s += a;
+        why.push("PSA 10 is about "+one(Math.exp(-r))+"× cheaper (vs the raw price) than similar slabs with this pop and gem rate"); }
+    }
+    if(c.p9 > 0 && pm[c.era] && g <= gm[c.era]){
+      var q = (c.p10/c.p9)/pm[c.era];
+      if(q < 1){ a = Math.min(20, Math.round((1-q)*40)); s += a;
+        why.push("The 10 sells for only "+one(c.p10/c.p9)+"× the 9 (this era usually "+one(pm[c.era])+"×), though only "+one(g*100)+"% of PSA copies get a 10"); }
+    }
+    if(c.p9 > 0 && c.p10/c.p9 < 1.3) warn = "The PSA 10 is barely above the PSA 9. That can be a pricing error as much as a bargain, so check recent PSA 10 sales first.";
+    var o = (sib[c.sp]||[]).filter(function(z){ return z[0]!==c.id; }).map(function(z){ return z[1]; }), om = roomMed(o);
+    if(o.length >= 2 && om >= 10 && (c.ch||0) <= 5){ s += om >= 25 ? 15 : 10;
+      why.push((c.sp||"This Pokémon")+"’s other slabs are up "+Math.round(om)+"% in 4 weeks while this one is "+(c.ch==null ? "flat" : (c.ch>=0?"+":"")+Math.round(c.ch)+"%")); }
+    var ol = (ROOM_OLD[c.era]||0) + (c.pop.psa10 <= 25 ? 7 : c.pop.psa10 <= 100 ? 4 : 0); s += ol;
+    if(ol) why.push((ROOM_OLD[c.era] ? eraName(c.era)+" era, " : "")+"PSA 10 pop "+fmtN(c.pop.psa10));
+    var sp = c.spark || [];
+    if(sp.length >= 12){
+      var f = (sp[0]+sp[1]+sp[2]+sp[3]+sp[4]+sp[5])/6, l = sp.slice(-6).reduce(function(t,z){ return t+z; }, 0)/6;
+      if(f > 0){ var chg = l/f - 1; if(chg >= -0.1 && chg <= 0.25){ s += 12; why.push("Price has been steady ("+(chg>=0?"+":"")+Math.round(chg*100)+"% across its chart), not spiked"); } }
+    }
+    by[c.id] = {score:Math.min(100, s), why:why, warn:warn};
+  });
+  ROOM.ver = ver; ROOM.by = by; return by;
+}
+function roomOf(c){ return roomAll()[c.id] || null; }
 function htGroup(c){ return htVerge(c) ? (c.prio!=null ? 0 : 1) : 2; }
 function htRows(){
   var list = ((HEAT.data && HEAT.data.cards) || []).map(function(c){ return {c:c, fit:htFit(c)}; }).filter(function(x){ return x.fit; });
   if(HT.show==="bets") list = list.filter(function(x){ return x.c.stage!=="spiked" && x.c.stage!=="cooling"; });
+  else if(HT.show==="room") list = list.filter(function(x){ var r = roomOf(x.c); return r && r.score >= ROOM.min; });
   else if(HT.show==="spiked") list = list.filter(function(x){ return x.c.stage==="spiked"; });
   if(GS) list = list.filter(function(x){ return GS.eras.indexOf(x.c.era||"other")>=0; });
   var q = sFold(HT.q).trim();
@@ -3134,6 +3247,7 @@ function htRows(){
     if(s==="rise") return (b.c.ch==null?-999:b.c.ch)-(a.c.ch==null?-999:a.c.ch);
     if(s==="sales") return (b.c.n10||0)-(a.c.n10||0);
     if(s==="pop") return ((a.c.pop||{}).psa10||1e12)-((b.c.pop||{}).psa10||1e12);
+    if(s==="room" || (s==="prio" && HT.show==="room")) return ((roomOf(b.c)||{}).score||0)-((roomOf(a.c)||{}).score||0) || (b.c.heat||0)-(a.c.heat||0);
     if(s==="prio") return htGroup(a.c)-htGroup(b.c) || (b.c.heat||0)-(a.c.heat||0);
     return (b.c.heat||0)-(a.c.heat||0);
   });
@@ -3279,11 +3393,12 @@ function htRow(x){
   }
   var img = c.image ? '<img data-hsrc="'+esc(c.image)+'" alt="">' : '<span class="noimg"><b>#'+esc(String(c.number||"").split("/")[0])+'</b></span>';
   var pop = '';
-  var open = !!HTOPEN[c.id];
+  var open = !!HTOPEN[c.id], rm = roomOf(c);
   return '<div class="qc-row ht-row" data-hrow="'+esc(c.id)+'"><button type="button" class="qc-art" data-slab="'+esc(c.id)+'" aria-label="Open '+esc(title(c))+'">'+img+'</button><div class="qc-main">'+
     '<div class="qc-head"><button type="button" class="qc-name" data-slab="'+esc(c.id)+'"><b>'+esc(title(c))+'</b><span class="sub">'+esc(c.set)+' · #'+esc(c.number)+' · '+esc(eraName(c.era))+'</span></button>'+
     '<div class="ht-score '+lvl+'" title="Heat score 0–100: how much points to this slab moving up soon"><b>'+c.heat+'</b><small>heat</small></div></div>'+
-    '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span>'+htConf(c)+'<span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+'</div>'+
+    '<div class="fflags">'+(c.prio!=null?'<span class="pill prio" title="On your priority list">★ #'+(c.prio+1)+' '+esc(c.sp||"")+'</span>':'')+'<span class="pill '+st[1]+'" title="'+esc(st[2])+'">'+st[0]+'</span>'+htConf(c)+'<span class="pill fitp">'+esc(f.g)+' fits: '+money(f.p)+'</span>'+(c.cat&&c.cat.length?'<span class="pill newp" title="'+esc(c.cat.join(" · "))+'">Set catalyst</span>':'')+(rm && rm.score>=ROOM.min?'<span class="pill roomp" title="Room to grow score 0–100: looks cheap next to similar slabs. Choose Show → Room to grow to see why.">Room to grow · '+rm.score+'</span>':'')+'</div>'+
+    (rm && rm.score>=ROOM.min && HT.show==="room" ? '<div class="ht-room"><b>Why it may have room to grow</b><ul class="ht-why">'+rm.why.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join("")+'</ul>'+(rm.warn?'<p class="note" style="margin:4px 0 0">⚠ '+esc(rm.warn)+'</p>':'')+'</div>' : '')+
     htSpark(c)+
     '<div class="tbl-wrap"><table class="qc-tbl"><tr><th>Grade</th><th>Now</th><th>Change</th>'+(c.med10||c.n10!=null?'<th>Median</th><th>Sold 7d</th>':'')+'</tr>'+
       gr("PSA 10", c.p10, c.ch, c.med10, c.n10)+gr("PSA 9", c.p9, c.ch9, c.med9, c.n9)+'</table></div>'+
@@ -3312,9 +3427,9 @@ function renderHeat(){
   h += '<div class="bg-form"><div class="ffs-sl ht-budget"><label for="ht-budget"><span>Your budget per slab<output id="ht-budget-v">'+hbLabel(htBudget())+'</output></span>'+
     '<input type="range" id="ht-budget" min="0" max="'+(HBSTEPS.length-1)+'" step="1" value="'+hbIndex(htBudget())+'" aria-label="Your budget per slab"></label></div>'+
     '<div class="bg-opts-wrap"><div class="bg-opts" style="margin-top:0">'+
-      '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
+      '<div class="bg-opt"><span class="lbl">Show</span>'+seg("hs", [["bets","Best bets"],["room","Room to grow"],["all","All"],["spiked","Already spiked"]], HT.show)+'</div>'+
       '<div class="bg-opt"><span class="lbl">Grade</span>'+seg("hg", [["both","PSA 10 + 9"],["psa10","PSA 10 only"],["psa9","PSA 9 only"]], (HT.grades==="psa10"||HT.grades==="psa9")?HT.grades:"both")+'</div>'+
-      '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option><option value="pop">Lowest PSA 10 pop</option></select>'+
+      '<div class="bg-opt"><span class="lbl">Sort</span><select id="ht-sort" aria-label="Sort slabs"><option value="prio">Your Pokémon first</option><option value="heat">Heat score</option><option value="rise">Biggest rise</option><option value="cheap">Cheapest</option><option value="sales">Most sold this week</option><option value="pop">Lowest PSA 10 pop</option><option value="room">Room to grow</option></select>'+
         '<label class="search" style="flex:1 1 160px;min-width:0;margin:0"><input id="ht-q" type="search" placeholder="Pokémon or set" aria-label="Filter by Pokémon or set" value="'+esc(HT.q)+'"></label></div>'+
     '</div></div></div>';
   h += '<div id="ht-results">'+htResults()+'</div>';
@@ -3394,11 +3509,12 @@ function htResults(){
   var rows = htRows(), shown = rows.slice(0, 60), b = htBudget();
   var hot = rows.filter(function(x){ return htVerge(x.c); }).length, mine = rows.filter(function(x){ return htVerge(x.c) && x.c.prio!=null; }).length;
   var h = '<p class="note" style="margin:-4px 0 12px"><b>'+rows.length+'</b> slab'+(rows.length!==1?'s':'')+(b?' fit '+money(b):'')+(hot?' · '+hot+' heating up ('+mine+' of your Pokémon)':'')+
+    (HT.show==="room" ? '. <b>Room to grow</b>: slabs scoring '+ROOM.min+'+ for looking cheap next to similar slabs (PSA 10 vs raw for its pop and gem rate, a small 10-vs-9 gap, the same Pokémon rising elsewhere, older and low pop, a steady price), highest score first. It’s a shortlist to research, not a prediction' : '')+
     '. Prices are CardPrice’s current prices (from recent sales); a highlighted row is the grade that fits your budget. This is a watchlist, not a sure thing: hype can reverse fast, so check the sold listings before you buy.</p>';
   if(!rows.length) return h+'<div class="empty">No slabs match. Try a higher budget, '+(HT.grades==="psa10"||HT.grades==="psa9"?'Grade “PSA 10 + 9”, ':'')+'turning on PSA 9 or more eras under “What to look for”, or “All”.</div>';
   var out = '', lastG = null;
   shown.forEach(function(x){
-    if(HT.sort==="prio"){ var g = htGroup(x.c); if(g!==lastG){ out += '<h3 class="bg-h">'+(g===0?'★ Your Pokémon on the verge':g===1?'Other Pokémon on the verge':'Everything else')+'</h3>'; lastG = g; } }
+    if(HT.sort==="prio" && HT.show!=="room"){ var g = htGroup(x.c); if(g!==lastG){ out += '<h3 class="bg-h">'+(g===0?'★ Your Pokémon on the verge':g===1?'Other Pokémon on the verge':'Everything else')+'</h3>'; lastG = g; } }
     out += htRow(x);
   });
   return h+'<div class="qc-list">'+out+'</div>'+(rows.length>shown.length?'<p class="note">Showing the top '+shown.length+'. Narrow it with the filters above.</p>':'');
