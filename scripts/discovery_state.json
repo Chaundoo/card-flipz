@@ -6469,6 +6469,36 @@
 "price:$50-100"
 ],
 "v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:rocket's scyther",
+"set:Gym Heroes",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:dragonite fb",
+"set:Supreme Victors",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:rocket's snorlax",
+"set:Gym Heroes",
+"kind:other",
+"price:$50-100"
+],
+"v": 1
 }
 ]
 }

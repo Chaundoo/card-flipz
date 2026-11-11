@@ -2979,6 +2979,11 @@
 "synced": "2026-11-10",
 "variant": "Normal"
 },
+"dragonite-fb-56-84920-reverse-ho": {
+"id": "019c9761-98ce-77b1-b48b-bccae977def7",
+"synced": "2026-11-11",
+"variant": "Reverse Holofoil"
+},
 "dragonite-gx-sm156-sm156-178692": {
 "id": "019c96ad-4fa8-72b7-93df-de1205e902ad",
 "synced": "2026-11-10",
@@ -9338,10 +9343,20 @@
 "synced": "2026-11-10",
 "variant": "Holofoil"
 },
+"rocket-s-scyther-013-132-88788-1st-editio": {
+"id": "019c9779-11c7-7377-9c8f-3c7720d8f33d",
+"synced": "2026-11-11",
+"variant": "1st Edition Holofoil"
+},
 "rocket-s-scyther-013-132-88788-unlimi": {
 "id": "019c9779-11c9-7204-b94f-9620a570bdd4",
 "synced": "2026-11-10",
 "variant": "Unlimited Holofoil"
+},
+"rocket-s-snorlax-033-132-88795-1st-editio": {
+"id": "019c9779-11d3-7c7d-8d46-34a0f3685a4e",
+"synced": "2026-11-11",
+"variant": "1st Edition"
 },
 "rocket-s-snorlax-033-132-88795-unlimi": {
 "id": "019c9779-11d4-722a-b5f4-40486f222ace",
