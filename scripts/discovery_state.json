@@ -6499,6 +6499,56 @@
 "price:$50-100"
 ],
 "v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:raikou",
+"set:Skyridge",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:gengar",
+"set:Skyridge",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:shining mewtwo",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:lucario",
+"set:Rumble",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-11",
+"f": [
+"pokemon:shining raichu",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }

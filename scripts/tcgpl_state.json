@@ -3959,6 +3959,11 @@
 "synced": "2026-11-10",
 "variant": "Reverse Holofoil"
 },
+"gengar-10-010-144-85669-normal": {
+"id": "019c9765-da9a-7579-a957-68c259408e09",
+"synced": "2026-11-11",
+"variant": "Normal"
+},
 "gengar-13-013-165-85671": {
 "id": "019c9765-da9f-7d99-ae62-55c8edc70a29",
 "synced": "2026-11-10",
@@ -6106,6 +6111,11 @@
 "id": "019c96b3-58d6-720f-a0e3-548762af87cb",
 "synced": "2026-11-10",
 "variant": "Reverse Holofoil"
+},
+"lucario-12-86879": {
+"id": "019c9792-4e0f-7b32-a6fc-fdf28eba23c8",
+"synced": "2026-11-11",
+"variant": "Normal"
 },
 "lucario-14-95-86881-holofo": {
 "id": "019c976e-bc55-706b-ac66-8162d72f343b",
@@ -8883,6 +8893,11 @@
 "synced": "2026-11-10",
 "variant": "Holofoil"
 },
+"raikou-028-144-88532": {
+"id": "019c9776-f834-7f4f-b44c-595684a68a70",
+"synced": "2026-11-11",
+"variant": "Reverse Holofoil"
+},
 "raikou-13-13-64-88529": {
 "id": "019c9794-5123-7168-a999-6d4528c397e3",
 "synced": "2026-11-10",
@@ -9828,10 +9843,20 @@
 "synced": "2026-11-10",
 "variant": "Holofoil"
 },
+"shining-mewtwo-109-105-89167": {
+"id": "019c977b-20a8-7a4e-8b5f-e96bdaf18c24",
+"synced": "2026-11-11",
+"variant": "Unlimited Holofoil"
+},
 "shining-mewtwo-109-105-89167-1st-editio": {
 "id": "019c977b-20a6-7a32-ab9d-36210087f961",
 "synced": "2026-11-10",
 "variant": "1st Edition Holofoil"
+},
+"shining-raichu-111-105-89169": {
+"id": "019c977b-20ac-72ee-8b76-f63edcf7862e",
+"synced": "2026-11-11",
+"variant": "Unlimited Holofoil"
 },
 "shining-raichu-111-105-89169-1st-editio": {
 "id": "019ed2ea-41cb-7b58-add8-a2290218b2a3",
