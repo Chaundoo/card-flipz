@@ -2,6 +2,44 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-11
+
+- Cards refreshed: **2339** of 2351 in 1m 26s · all matched cards are up to date
+- API requests used: **25** (prices 25, matching new cards 0, set list 0; max 60) · API says **68** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **437**
+- ➖ Checked, prices unchanged: 1902
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **9**
+
+**Biggest NM moves (15%+):**
+- Raichu BREAK (Holo) — BREAKthrough 50/162: $17.58 → $32.94
+- Charizard (6) (Holo) — Expedition 006/165: $875.00 → $174.40
+- Giratina (Promo · Holo) — XY Promos XY184: $23.67 → $11.79
+- Pikachu EX (Promo · Holo) — XY Promos XY124: $499.82 → $599.50
+- Mewtwo EX (Promo · Holo) — XY Promos XY125: $164.93 → $193.63
+
+**Outlier prices fixed (297):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $202.36 → $92.54
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.08
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $33.38
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.46
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.83 → $17.79
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.63
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.69 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $74.18 → $41.87
+- Koga's Pidgeotto (1st Edition) — Gym Challenge 027/132: DMG $10.00 → $9.67
+- Diglett (Non-Holo) — Skyridge 050/144: MP $38.46 → $23.38
+- …and 282 more
+
 ## ✅ OK — price update 2026-11-10
 
 - Cards refreshed: **2339** of 2343 in 1m 22s · all matched cards are up to date
@@ -1114,19 +1152,3 @@ TCGplayer let the requests through.
 - ❔ No price history on TCGplayer: 0
 - ❔ Couldn't match the printing: 0
 - cards.json saved: **yes**
-
-## ✅ OK — price refresh 2026-10-08
-
-TCGplayer let the requests through.
-
-- Cards checked: **25** of 25 (limited to first 25) in 0m 7s
-- ✅ Prices updated: **25**
-- ➖ Reached, but no sales in 90 days (kept old prices): 0
-- ❌ Blocked by TCGplayer: **0**
-- ⚠️ Other errors (timeouts, server errors): 0
-- ❔ No price history on TCGplayer: 0
-- ❔ Couldn't match the printing: 0
-- cards.json saved: **yes**
-
-**Biggest NM moves (15%+):**
-- Gyarados (Cosmos Holo) — Ancient Origins 21/98: $128.07 → $184.14
