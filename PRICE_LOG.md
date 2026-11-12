@@ -2,6 +2,47 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — TCGplayer sales check 2026-11-12
+
+- Cards looked up on TCGplayer: **196** in 21m 12s (another 180 waited for next week)
+- ✅ Prices checked against real sales: **174**
+- ➖ No sales in 90 days (kept old prices): 20
+- ❌ Blocked by TCGplayer: **0**
+- ⚠️ Errors: 0 · no history: 0 · printing unclear: 2
+- 🐢 Sales counted for sleepers / Low sales flags: **194** cards (46 were picked just for that)
+
+**Prices that moved 15%+ after checking real sales (65):**
+- Shining Mewtwo (1st Edition Holo) — Neo Destiny 109/105 [estimate, top flip]: DMG $365.55 → $1,200.00
+- Mewtwo Star (Holo) — EX Holon Phantoms 103/110 [estimate, top flip]: NM $1,547.92 → $9,200.00
+- Rayquaza (Holo) — Call of Legends 20/95 [estimate, top flip]: LP $153.62 → $199.99, MP $153.62 → $199.99 est.
+- Kyogre - SM129 (Prerelease) [Staff] (Holo) — SM Promos SM129 [estimate, top flip]: NM $363.00 → $499.00, DMG $40.15 → $124.64
+- Snorlax (Reverse Holo) — Call of Legends 33/95 [estimate, top flip]: NM $299.99 → $226.66, DMG $45.33 → $21.59
+- Torchic (Reverse Holo) — EX Emerald 69/106 [estimate, top flip]: DMG $27.91 → $32.50
+- Deoxys (Shiny) (Holo) — Call of Legends SL1 [top flip]: NM $850.00 → $500.00
+- Dark Gengar (Unlimited Holo) — Neo Destiny 006/105 [top flip]: MP $514.98 → $419.99
+- Rayquaza (Reverse Holo) — EX Deoxys 22/107 [top flip]: LP $636.42 → $799.95
+- Lt. Surge's Raichu (1st Edition Holo) — Gym Challenge 011/132 [top flip]: NM $171.00 → $230.50
+- Growlithe (Reverse Holo) — EX Legend Maker 55/92 [top flip]: MP $68.58 → $85.00
+- Vaporeon (Reverse Holo) — EX Sandstorm 25/100 [top flip]: MP $67.48 → $79.99
+- Slowbro (Reverse Holo) — EX FireRed & LeafGreen 14/112 [top flip]: MP $87.49 → $31.35, DMG $22.81 → $31.35 est.
+- Emboar (Holo) — Next Destinies 100/99 [Flip Finder]: DMG $62.08 → $73.28
+- Shining Mewtwo (Unlimited Holo) — Neo Destiny 109/105 [estimate]: DMG $238.50 → $613.50 est.
+- Dragonite (9) (Reverse Holo) — Expedition 009/165 [estimate]: LP $314.57 → $265.50
+- Gengar (Prime) (Holo) — Triumphant 94/102 [estimate]: LP $623.74 → $790.00, MP $422.68 → $499.99
+- Dark Charizard (4) (1st Edition Holo) — Team Rocket 04/82 [estimate]: NM $557.06 → $1,250.43 est.
+- Dark Dragonite (Reverse Holo) — EX Team Rocket Returns 15/109 [estimate]: LP $459.35 → $1,999.99, DMG $234.98 → $299.95
+- Gengar (10) (Reverse Holo) — Skyridge 010/144 [estimate]: NM $502.58 → $2,000.00
+- Pikachu (Red Cheeks) (1st Edition) — Base Set (Shadowless) 058/102 [estimate]: DMG $162.03 → $199.99
+- Empoleon (117 Secret Rare) (Holo) — Plasma Freeze 117/116 [estimate]: LP $350.00 → $786.16 est., DMG $350.00 → $84.99
+- Mewtwo (20) (Holo) — Expedition 020/165 [estimate]: DMG $163.30 → $224.99
+- Pikachu (Holo) — POP Series 5 012/017 [estimate]: LP $427.86 → $747.44 est., DMG $250.00 → $86.70
+- Lucario (Non-Holo) — Rumble 12 [estimate]: NM $415.93 → $279.99, LP $242.07 → $285.01
+- …and 40 more
+
+**Problem cards (2):**
+- printing: Shining Gyarados (1st Edition Holo) — Neo Revelation 65/64 — couldn't tell which TCGplayer printing this card is
+- printing: Shining Raichu (1st Edition Holo) — Neo Destiny 111/105 — couldn't tell which TCGplayer printing this card is
+
 ## ✅ OK — price update 2026-11-12
 
 - Cards refreshed: **2351** of 2351 in 2m 39s · all matched cards are up to date
@@ -1170,21 +1211,3 @@ Stopped early: daily request budget used.
 
 **Problem cards (1):**
 - nomatch: Pikachu (Reverse Holo · Diamond & Pearl) — Burger King Promos 094/123 — couldn't find this card on TCG Price Lookup
-
-## ✅ OK — price update 2026-10-09
-
-- Cards checked today: **277** (daily share 266 of 1860) in 3m 42s
-- API requests used: **37** of 90 (API says 57 left today)
-- ✅ Prices changed: **277**
-- ➖ Checked, prices unchanged: 0
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match the card (retried in 7 days): 0
-- ⚠️ Errors: 0
-- Cards never synced yet: **1583** · oldest sync: 2026-10-09
-- Era files saved: **1**
-
-**Biggest NM moves (15%+):**
-- Umbreon (Unlimited Holo) — Neo Discovery 13/75: $499.20 → $817.16
-- Hitmontop (1st Edition Holo) — Neo Discovery 03/75: $253.81 → $161.44
-- Dark Raichu (Unlimited Secret Holo) — Team Rocket 83/82: $115.77 → $141.06
-- Charizard (Holo Rare) — Base Set 2 4/130: $495.50 → $415.48
