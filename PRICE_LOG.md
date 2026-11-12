@@ -2,6 +2,55 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-12
+
+- Cards refreshed: **2351** of 2351 in 2m 39s · all matched cards are up to date
+- API requests used: **38** (prices 24, matching new cards 12, set list 2; max 60) · API says **54** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **1870**
+- ➖ Checked, prices unchanged: 477
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 4
+- ⚠️ Errors: 0
+- Era files saved: **10**
+
+**Biggest NM moves (15%+):**
+- Garchomp LV.X (Holo) — Majestic Dawn 97/100: $102.66 → $343.50
+- Piplup (Reverse Holo) — Supreme Victors 121: $19.95 → $40.30
+- Victini Prism Star (Holo) — Dragon Majesty 7/70: $24.71 → $49.43
+- Litten (Promo · Holo) — McDonald's Promos 2017 003/012: $7.49 → $13.64
+- Mew (Promo · Holo) — Black and White Promos BW98: $300.00 → $497.49
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: $87.74 → $43.44
+- Latias (Holo · HGSS10 (Cracked Ice Holo) — HGSS Promos HGSS10: $99.85 → $138.49
+- Mew EX (120 Full Art) (Holo) — Dragons Exalted 120/124: $423.51 → $515.67
+- Slowbro (Holo) — EX Unseen Forces 13/115: $47.78 → $57.62
+- Walrein ex (Holo) — EX Power Keepers 99/108: $69.26 → $83.19
+
+**Outlier prices fixed (311):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $199.04 → $92.58
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.08
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $33.38
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.46
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $89.22 → $43.44
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.18
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.83 → $17.79
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.56
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.69 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $74.18 → $41.87
+- …and 296 more
+
+**Problem cards (4):**
+- nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup
+- nomatch: Gyarados (Cosmos Holo) — Ancient Origins 21/98 — couldn't find this card on TCG Price Lookup
+
 ## ✅ OK — price update 2026-11-11
 
 - Cards refreshed: **2339** of 2351 in 1m 26s · all matched cards are up to date
@@ -1139,16 +1188,3 @@ Stopped early: daily request budget used.
 - Hitmontop (1st Edition Holo) — Neo Discovery 03/75: $253.81 → $161.44
 - Dark Raichu (Unlimited Secret Holo) — Team Rocket 83/82: $115.77 → $141.06
 - Charizard (Holo Rare) — Base Set 2 4/130: $495.50 → $415.48
-
-## ✅ OK — price refresh 2026-10-08
-
-TCGplayer let the requests through.
-
-- Cards checked: **25** of 25 (limited to first 25) in 0m 6s
-- ✅ Prices updated: **25**
-- ➖ Reached, but no sales in 90 days (kept old prices): 0
-- ❌ Blocked by TCGplayer: **0**
-- ⚠️ Other errors (timeouts, server errors): 0
-- ❔ No price history on TCGplayer: 0
-- ❔ Couldn't match the printing: 0
-- cards.json saved: **yes**
