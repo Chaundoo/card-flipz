@@ -2,6 +2,40 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-13
+
+- Cards refreshed: **2349** of 2353 in 1m 22s · all matched cards are up to date
+- API requests used: **24** (prices 24, matching new cards 0, set list 0; max 60) · API says **76** left today
+- Kept free for adding cards: 70 requests (show day: matching new cards waits until Monday)
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **467**
+- ➖ Checked, prices unchanged: 1882
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **9**
+
+**Biggest NM moves (15%+):**
+- Mewtwo - SM77 (Holo) — SM Promos SM77: $32.16 → $42.47
+
+**Outlier prices fixed (314):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $199.04 → $92.58
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.27
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $33.35
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.55
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $89.22 → $43.44
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.17
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.83 → $17.79
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.69 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $74.18 → $41.69
+- …and 299 more
+
 ## ✅ OK — TCGplayer sales check 2026-11-12
 
 - Cards looked up on TCGplayer: **196** in 21m 12s (another 180 waited for next week)
@@ -1184,30 +1218,3 @@ Stopped early: daily request budget used.
 - nomatch: Tyranitar (Delta Species · Reverse Holo) — EX Delta Species 16/113 — couldn't find this card on TCG Price Lookup
 - nomatch: Metagross (Delta Species · Holo) — EX Delta Species 11/113 — couldn't find this card on TCG Price Lookup
 - nomatch: Mew (Holo · Delta Species) — POP Series 5 003/017 — couldn't find this card on TCG Price Lookup
-
-## ✅ OK — price update 2026-10-10
-
-- Cards checked today: **279** (daily share 266 of 1861) in 5m 20s
-- API requests used: **54** of 80 (API says 45 left today)
-- ✅ Prices changed: **278**
-- ➖ Checked, prices unchanged: 0
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match the card (retried in 7 days): 1
-- ⚠️ Errors: 0
-- Cards never synced yet: **1305** · oldest sync: 2026-10-09
-- Era files saved: **2**
-
-**Biggest NM moves (15%+):**
-- Grovyle (Reverse Holo · Delta Species) — EX Crystal Guardians 19/100: $42.66 → $59.99
-- Gengar (Holo) — Legendary Collection 011/110: $216.66 → $289.99
-- Dark Steelix (Holo) — EX Team Rocket Returns 10/109: $87.78 → $113.33
-- Delibird (Reverse Holo) — EX Team Rocket Returns 21/109: $122.35 → $149.00
-- Gardevoir (Holo) — EX Ruby and Sapphire 7/109: $87.70 → $106.30
-- Kabutops (Holo) — EX Power Keepers 10/108: $17.92 → $21.56
-- Jirachi ex (Holo) — EX Crystal Guardians 94/100: $243.46 → $195.49
-- Hitmonchan ex (Holo) — EX Ruby and Sapphire 98/109: $104.92 → $125.32
-- Dark Espeon (Unlimited Holofoil) — Neo Destiny 004/105: $549.99 → $649.99
-- Mewtwo ex (Holo) — EX Ruby and Sapphire 101/109: $478.31 → $554.98
-
-**Problem cards (1):**
-- nomatch: Pikachu (Reverse Holo · Diamond & Pearl) — Burger King Promos 094/123 — couldn't find this card on TCG Price Lookup
