@@ -1,6 +1,6 @@
 {
  "files": {
-  "candidates.json": "6523706fc0b2",
+  "candidates.json": "2586bc628327",
   "eras/bw/bw.json": "ded8805c929d",
   "eras/dp-hgss/dp-hgss.json": "f9a139eac3df",
   "eras/eras.json": "69305f4aa2b7",
@@ -10,12 +10,12 @@
   "eras/sm/sm.json": "e1d7a7c00c86",
   "eras/sv/sv.json": "2b51b9d0e81d",
   "eras/swsh/swsh.json": "2c0ff66418bd",
-  "eras/wotc/wotc.json": "9a48328dd7d0",
+  "eras/wotc/wotc.json": "966de689d950",
   "eras/xy/xy.json": "e9fa44e76c16",
   "graded/charts.json": "1922d14cb963",
   "graded/heat.json": "41d92b2564a1",
   "pairings.json": "07e5d8a7892e",
   "profitlog.json": "fa15af46f88c",
-  "sleepers.json": "094b337a3c88"
+  "sleepers.json": "c015f11c8c9c"
  }
 }
