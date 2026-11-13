@@ -1,7 +1,7 @@
 {
  "files": {
-  "candidates.json": "2586bc628327",
-  "eras/bw/bw.json": "ded8805c929d",
+  "candidates.json": "6e4b1b9f73a8",
+  "eras/bw/bw.json": "50ec06802534",
   "eras/dp-hgss/dp-hgss.json": "f9a139eac3df",
   "eras/eras.json": "69305f4aa2b7",
   "eras/ex/ex.json": "c234d4c8e0f5",
@@ -16,6 +16,6 @@
   "graded/heat.json": "41d92b2564a1",
   "pairings.json": "07e5d8a7892e",
   "profitlog.json": "fa15af46f88c",
-  "sleepers.json": "c015f11c8c9c"
+  "sleepers.json": "eae82c422804"
  }
 }
