@@ -2,6 +2,49 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-16
+
+- Cards refreshed: **2349** of 2353 in 1m 25s · all matched cards are up to date
+- API requests used: **25** (prices 25, matching new cards 0, set list 0; max 60) · API says **70** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **2346**
+- ➖ Checked, prices unchanged: 3
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **10**
+
+**Biggest NM moves (15%+):**
+- Charizard (6) (Holo) — Expedition 006/165: $174.40 → $875.00
+- Zapdos EX (Team Plasma) (Holo) — Plasma Storm 48/135: $13.30 → $32.14
+- Gliscor (Holo) — Undaunted 4/90: $12.27 → $27.02
+- Scizor (Reverse Holo) — Undaunted 7/90: $49.99 → $101.99
+- Raichu (25) (Holo) — Expedition 025/165: $174.99 → $312.99
+- Entei & Raikou Legend (Holo · bottom) — Unleashed 91/95: $166.87 → $264.99
+- Dragonite FB (Non-Holo) — Supreme Victors 56/147: $33.45 → $16.34
+- Mewtwo (Holo) — Base Set 2 010/130: $163.42 → $80.29
+- Latios (Holo) — Dragon Vault 10/20: $21.38 → $10.55
+- Piplup (Reverse Holo) — Supreme Victors 121: $40.30 → $19.95
+
+**Outlier prices fixed (325):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Mewtwo (Holo) — Base Set 2 010/130: NM $164.62 → $80.29
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $210.58 → $92.23
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.27
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $33.90
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.55
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $89.14 → $43.44
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.17
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.83 → $17.62
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.36 → $62.50
+- …and 310 more
+
 ## ✅ OK — price update 2026-11-13
 
 - Cards refreshed: **2349** of 2353 in 1m 22s · all matched cards are up to date
@@ -1186,35 +1229,3 @@ Stopped early: daily request budget used.
 - Lugia (Promo · Holo) — HGSS Promos HGSS02: $296.33 → $435.28
 - Groudon (Reverse Holo) — Legends Awakened 29/146: $60.81 → $83.11
 - Gliscor (Holo) — Undaunted 4/90: $13.16 → $17.56
-
-## ✅ OK — price update 2026-10-11
-
-- Cards checked today: **273** (daily share 266 of 1862) in 6m 31s
-- API requests used: **67** of 80 (API says 33 left today)
-- ✅ Prices changed: **267**
-- ➖ Checked, prices unchanged: 0
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match the card (retried in 7 days): 6
-- ⚠️ Errors: 0
-- Cards never synced yet: **1038** · oldest sync: 2026-10-09
-- Era files saved: **2**
-
-**Biggest NM moves (15%+):**
-- Mudkip (Reverse Holo) — EX Dragon 65/97: $77.99 → $178.66
-- Gengar LV.X (Holo Rare) — Arceus 97/99: $389.58 → $707.08
-- Haunter (Reverse Holo) — EX Legend Maker 35/92: $227.18 → $121.54
-- Pikachu (Holo) — POP Series 4 013/017: $253.03 → $369.63
-- Dustox ex (Holo) — EX Legend Maker 86/92: $57.50 → $82.50
-- Mewtwo (Holo · Delta Species) — EX Delta Species 12/113: $531.84 → $746.84
-- Latios (Delta Species · Reverse Holo) — EX Holon Phantoms 22/110: $369.99 → $499.99
-- Garchomp C Lv.X (Holo) — Supreme Victors 145: $161.01 → $217.12
-- Deoxys (Holo · Delta Species) — POP Series 4 002/017: $267.00 → $350.00
-- Machamp LV.X (Holo) — Stormfront 98/100: $147.23 → $187.84
-
-**Problem cards (6):**
-- nomatch: Deoxys (Delta Species · Holo) — EX Holon Phantoms 5/110 — couldn't find this card on TCG Price Lookup
-- nomatch: Kabutops (Delta Species · Holo) — EX Holon Phantoms 9/110 — couldn't find this card on TCG Price Lookup
-- nomatch: Latios (Delta Species · Holo) — EX Delta Species 9/113 — couldn't find this card on TCG Price Lookup
-- nomatch: Tyranitar (Delta Species · Reverse Holo) — EX Delta Species 16/113 — couldn't find this card on TCG Price Lookup
-- nomatch: Metagross (Delta Species · Holo) — EX Delta Species 11/113 — couldn't find this card on TCG Price Lookup
-- nomatch: Mew (Holo · Delta Species) — POP Series 5 003/017 — couldn't find this card on TCG Price Lookup
