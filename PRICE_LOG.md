@@ -2,6 +2,49 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-17
+
+- Cards refreshed: **2349** of 2366 in 1m 22s · all matched cards are up to date
+- API requests used: **24** (prices 24, matching new cards 0, set list 0; max 60) · API says **68** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **1012**
+- ➖ Checked, prices unchanged: 1337
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **9**
+
+**Biggest NM moves (15%+):**
+- Charizard (1st Edition Holo) — Base Set (Shadowless) 004/102: $1,000.00 → $10,000.00
+- Deoxys (Holo · Delta Species) — POP Series 4 002/017: $100.66 → $350.00
+- Mewtwo LV.X (Promo · Holo) — Diamond and Pearl Promos DP28: $110.00 → $346.97
+- Metagross (Reverse Holo) — EX Deoxys 11/107: $58.48 → $141.11
+- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: $43.44 → $84.60
+- Magikarp (Reverse Holo) — EX Team Rocket Returns 65/109: $599.99 → $251.07
+- Pikachu (Reverse Holo · [Platinum]) — Burger King Promos 070/100: $55.28 → $79.95
+- Gyarados (Reverse Holo) — Call of Legends 7/95: $250.00 → $142.50
+- Lugia (Holo) — Call of Legends 15/95: $188.32 → $268.48
+- Gyarados (Holo) — HeartGold SoulSilver 4/123: $97.49 → $57.34
+
+**Outlier prices fixed (326):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Mewtwo (Holo) — Base Set 2 010/130: NM $164.80 → $80.65
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $210.58 → $92.11
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.08
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $34.16
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.46
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.18
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.83 → $17.62
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.36 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $85.58 → $41.58
+- …and 311 more
+
 ## ✅ OK — price update 2026-11-16
 
 - Cards refreshed: **2349** of 2353 in 1m 25s · all matched cards are up to date
@@ -1205,27 +1248,3 @@ Stopped early: daily request budget used.
 - nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
 - nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
 - nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup
-
-## ✅ OK — price update 2026-10-12
-
-- Cards checked today: **285** (daily share 267 of 1865) in 4m 17s
-- API requests used: **45** of 80 (API says 55 left today)
-- ✅ Prices changed: **285**
-- ➖ Checked, prices unchanged: 0
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match the card (retried in 7 days): 0
-- ⚠️ Errors: 0
-- Cards never synced yet: **753** · oldest sync: 2026-10-09
-- Era files saved: **1**
-
-**Biggest NM moves (15%+):**
-- Sceptile (Reverse Holo) — Great Encounters 8/106: $7.47 → $21.96
-- Minun (Holo) — HGSS Promos HGSS17: $36.50 → $79.95
-- Arceus LV.X (Promo · Holo) — Diamond and Pearl Promos DP53: $262.50 → $557.50
-- Lucario (Reverse Holo) — Platinum 53/127: $13.82 → $23.53
-- Zapdos (Reverse Holo) — Majestic Dawn 14/100: $104.20 → $166.92
-- Mewtwo LV.X (Promo · Holo) — Diamond and Pearl Promos DP28: $155.03 → $245.09
-- Snorlax (Reverse Holo) — Call of Legends 33/95: $123.33 → $190.00
-- Lugia (Promo · Holo) — HGSS Promos HGSS02: $296.33 → $435.28
-- Groudon (Reverse Holo) — Legends Awakened 29/146: $60.81 → $83.11
-- Gliscor (Holo) — Undaunted 4/90: $13.16 → $17.56
