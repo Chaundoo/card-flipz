@@ -6704,6 +6704,46 @@
 "price:$20-50"
 ],
 "v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:typhlosion",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:blastoise",
+"set:Expedition",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:hitmonlee",
+"set:Fossil",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:shining celebi",
+"set:Neo Destiny",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }
