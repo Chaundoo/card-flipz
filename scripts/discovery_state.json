@@ -6694,6 +6694,16 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:raichu",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
