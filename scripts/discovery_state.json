@@ -6574,6 +6574,126 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:eevee",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:aerodactyl",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:marowak",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:kingdra",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:raichu",
+"set:EX Holon Phantoms",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:meganium",
+"set:EX Unseen Forces",
+"kind:holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:slowbro",
+"set:EX FireRed & LeafGreen",
+"kind:holo",
+"price:$20-50"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:mewtwo",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:ditto",
+"set:EX Delta Species",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:snorlax",
+"set:EX FireRed & LeafGreen",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:rocket's scizor",
+"set:EX Team Rocket Returns",
+"kind:holo",
+"price:$100+"
+],
+"v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:snorlax",
+"set:EX Dragon Frontiers",
+"kind:reverse holo",
+"price:$100+"
+],
+"v": 1
 }
 ]
 }
