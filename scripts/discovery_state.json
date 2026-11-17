@@ -6744,6 +6744,16 @@
 "price:$100+"
 ],
 "v": 1
+},
+{
+"d": "2026-11-17",
+"f": [
+"pokemon:psyduck",
+"set:Secret Wonders",
+"kind:secret rare",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
