@@ -2,6 +2,47 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — TCGplayer sales check 2026-11-17
+
+- Cards looked up on TCGplayer: **209** in 23m 40s (another 197 waited for next week)
+- ✅ Prices checked against real sales: **187**
+- ➖ No sales in 90 days (kept old prices): 20
+- ❌ Blocked by TCGplayer: **0**
+- ⚠️ Errors: 0 · no history: 0 · printing unclear: 2
+- 🐢 Sales counted for sleepers / Low sales flags: **207** cards (59 were picked just for that)
+
+**Prices that moved 15%+ after checking real sales (70):**
+- Sabrina's Gengar (1st Edition) — Gym Challenge 029/132 [estimate, top flip]: NM $1,054.99 → $149.55 est., LP $244.41 → $149.55 est.
+- Pikachu (Holo) — POP Series 5 012/017 [estimate, top flip]: DMG $86.70 → $250.00
+- Eevee - 069/113 (Reverse Holo) — EX Delta Species 69/113 [estimate, top flip]: LP $110.87 → $130.00, MP $80.58 → $67.50, DMG $15.00 → $38.54 est.
+- Solosis (Illustration Rare) — Black Bolt 118/086 [estimate, top flip]: MP $5.00 → $12.82
+- Dark Dragonite (Reverse Holo) — EX Team Rocket Returns 15/109 [top flip]: LP $1,999.99 → $1,149.99
+- Mewtwo (20) (Reverse Holo) — Expedition 020/165 [top flip]: LP $749.99 → $424.99
+- Mewtwo (Delta Species) (Reverse Holo) — EX Delta Species 12/113 [top flip]: NM $1,049.99 → $739.02 est., LP $499.00 → $599.00, DMG $193.02 → $143.37
+- Cubone (Reverse Holo) — EX Delta Species 60/113 [top flip]: NM $114.70 → $149.99
+- Cubone (Reverse Holo) — EX FireRed & LeafGreen 60/112 [top flip]: LP $127.62 → $161.22, MP $82.41 → $52.25
+- Ho-Oh (Holo · Cosmos Holo) — Deck Exclusives 027/115 [top flip]: NM $65.21 → $97.99
+- Shining Celebi (Unlimited Holo) — Neo Destiny 106/105 [estimate]: NM $749.99 → $949.99, MP $298.28 → $385.34
+- Blastoise (4) (Holo) — Expedition 004/165 [estimate]: NM $646.99 → $1,111.67 est., DMG $191.92 → $150.00
+- Deoxys (Delta Species - Normal Forme) (Reverse Holo) — EX Holon Phantoms 5/110 [estimate]: LP $175.00 → $295.00, MP $123.83 → $189.93, DMG $38.13 → $51.25
+- Crobat (H5) (Holo) — Skyridge H05/H32 [estimate]: LP $281.47 → $191.20, MP $281.47 → $191.20 est.
+- Suicune (H25) (Holo) — Aquapolis H25/H32 [estimate]: MP $225.00 → $280.98
+- Houndoom (1st Edition Holo) — Neo Revelation 08/64 [estimate]: NM $539.99 → $700.00, LP $447.70 → $600.00
+- Mew ex (Holo) — EX Holon Phantoms 100/110 [estimate]: LP $347.83 → $700.00
+- Suicune (14) (1st Edition Holo) — Neo Revelation 14/64 [estimate]: MP $167.90 → $399.95
+- Empoleon (117 Secret Rare) (Holo) — Plasma Freeze 117/116 [estimate]: LP $786.16 → $1,050.00 est.
+- Snorlax (Delta Species) (Reverse Holo) — EX Dragon Frontiers 10/101 [estimate]: NM $496.33 → $999.97, LP $282.91 → $333.61, MP $201.15 → $240.25
+- Mew (Delta Species) (Non-Holo) — POP Series 5 003/017 [estimate]: DMG $153.14 → $309.94 est.
+- Gengar (Reverse Holo) — Stormfront 18/100 [estimate]: MP $63.40 → $123.33, DMG $63.40 → $79.99
+- Tyranitar (29) (Holo) — Expedition 029/165 [estimate]: MP $199.77 → $311.00 est.
+- Alakazam E4 Lv.X (Holo) — Rising Rivals 103/111 [estimate]: DMG $93.00 → $75.00
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110 [estimate]: MP $140.57 → $275.99
+- …and 45 more
+
+**Problem cards (2):**
+- printing: Shining Gyarados (1st Edition Holo) — Neo Revelation 65/64 — couldn't tell which TCGplayer printing this card is
+- printing: Shining Raichu (1st Edition Holo) — Neo Destiny 111/105 — couldn't tell which TCGplayer printing this card is
+
 ## ✅ OK — price update 2026-11-17
 
 - Cards refreshed: **2349** of 2366 in 1m 22s · all matched cards are up to date
@@ -1217,34 +1258,3 @@ Stopped early: request budget for this run used (the rest is kept free).
 - Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $186.27 → $179.45
 - Clefable (1st Edition Holofoil · 1) — Jungle 01/64: LP $119.61 → $119.10
 - …and 81 more
-
-## ✅ OK — price update 2026-10-13
-
-Stopped early: daily request budget used.
-
-- Cards checked today: **186** (daily share 267 of 1865) in 7m 43s
-- API requests used: **80** of 80 (API says 20 left today)
-- ✅ Prices changed: **183**
-- ➖ Checked, prices unchanged: 0
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match the card (retried in 7 days): 3
-- ⚠️ Errors: 0
-- Cards never synced yet: **570** · oldest sync: 2026-10-09
-- Era files saved: **3**
-
-**Biggest NM moves (15%+):**
-- Empoleon (Reverse Holo) — Legendary Treasures 35/113: $8.98 → $31.29
-- Reshiram EX (Full Art) — Next Destinies 95/99: $209.99 → $444.99
-- Lugia EX (Full Art) — Plasma Storm 134/135: $796.17 → $1,344.24
-- Lugia EX (Team Plasma · Holo) — Plasma Storm 108/135: $89.56 → $146.13
-- Moltres EX (Team Plasma) — Plasma Storm 14/135: $12.87 → $18.89
-- Articuno EX (Team Plasma · Holo) — Plasma Storm 25/135: $24.05 → $30.53
-- Lugia EX (Promo · Team Plasma · Holo) — Black and White Promos BW83: $52.80 → $65.91
-- Glaceon (Holo) — Black and White Promos BW90: $77.75 → $91.64
-- Dialga EX (Team Plasma · Full Art · Holo) — Plasma Blast 99/101: $372.63 → $431.01
-- Arcanine (Reverse Holo) — Secret Wonders 22/132: $36.83 → $42.40
-
-**Problem cards (3):**
-- nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
-- nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
-- nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup

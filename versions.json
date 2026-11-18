@@ -1,21 +1,21 @@
 {
  "files": {
   "candidates.json": "12bd23511f57",
-  "eras/bw/bw.json": "e125a92ae53b",
-  "eras/dp-hgss/dp-hgss.json": "18eb0888a9af",
+  "eras/bw/bw.json": "560009680fde",
+  "eras/dp-hgss/dp-hgss.json": "9a5982791a48",
   "eras/eras.json": "69305f4aa2b7",
-  "eras/ex/ex.json": "a162d0928aa8",
+  "eras/ex/ex.json": "fd4ea5a561ee",
   "eras/me/me.json": "0950b3126f13",
-  "eras/other/other.json": "889952c9ee1c",
-  "eras/sm/sm.json": "413669f2f3fc",
-  "eras/sv/sv.json": "afbefdd85eb7",
-  "eras/swsh/swsh.json": "10d6c15d0e4b",
-  "eras/wotc/wotc.json": "e1f1448cff7a",
-  "eras/xy/xy.json": "f99700abae54",
+  "eras/other/other.json": "18b8b7f6287d",
+  "eras/sm/sm.json": "36e52a3a8234",
+  "eras/sv/sv.json": "a757651d01ca",
+  "eras/swsh/swsh.json": "5e9615d80292",
+  "eras/wotc/wotc.json": "6d55abd5d1e1",
+  "eras/xy/xy.json": "09bea7d0e47f",
   "graded/charts.json": "1a7147e570c7",
   "graded/heat.json": "4df1348cf338",
   "pairings.json": "07e5d8a7892e",
   "profitlog.json": "9581871652db",
-  "sleepers.json": "79a0c52ee464"
+  "sleepers.json": "c2347230f843"
  }
 }
