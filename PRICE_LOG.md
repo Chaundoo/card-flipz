@@ -2,6 +2,52 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-19
+
+- Cards refreshed: **2372** of 2372 in 2m 16s · all matched cards are up to date
+- API requests used: **39** (prices 26, matching new cards 13, set list 0; max 60) · API says **56** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **1178**
+- ➖ Checked, prices unchanged: 1190
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 4
+- ⚠️ Errors: 0
+- Era files saved: **10**
+
+**Biggest NM moves (15%+):**
+- Garchomp (Holo · Cracked Ice Holo) — Deck Exclusives 005/147: $49.83 → $118.95
+- Hippowdon Lv.X (Holo) — Rising Rivals 107/111: $90.00 → $135.00
+- Sylveon (Holo · Cracked Ice Holo) — Deck Exclusives 072/111: $55.29 → $71.29
+- Sylveon (Promo · Holo) — XY Promos XY04: $59.84 → $71.44
+- Gyarados (Delta Species · Holo) — EX Holon Phantoms 8/110: $316.32 → $371.93
+- Eevee - 069/113 (Reverse Holo) — EX Delta Species 69/113: $110.87 → $130.00
+- Gardevoir (Holo · Delta Species) — EX Delta Species 6/113: $121.74 → $101.99
+
+**Outlier prices fixed (333):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Mewtwo (Holo) — Base Set 2 010/130: NM $164.96 → $80.51
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $210.58 → $91.99
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.27
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $34.10
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.66
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $37.33 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.22
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.76 → $17.50
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.36 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $85.58 → $41.59
+- …and 318 more
+
+**Problem cards (4):**
+- nomatch: Charizard (Cosmos Holo) — Legendary Treasures 19/113 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Radiant Collection) — Legendary Treasures RC7/RC25 — couldn't find this card on TCG Price Lookup
+- nomatch: Pikachu (Full Art) — Generations RC29/RC32 — couldn't find this card on TCG Price Lookup
+- nomatch: Gyarados (Cosmos Holo) — Ancient Origins 21/98 — couldn't find this card on TCG Price Lookup
+
 ## ✅ OK — price update 2026-11-18
 
 - Cards refreshed: **2367** of 2371 in 1m 25s · all matched cards are up to date
@@ -1210,48 +1256,3 @@ Stopped early: request budget for this run used (the rest is kept free).
 - Deoxys (Holo · Delta Species) — POP Series 4 002/017 [top flip]: MP $51.96 → $68.50
 - Rayquaza (Holo) — EX Emerald 9/106 [top flip]: MP $146.49 → $206.66
 - …and 78 more
-
-## ✅ OK — price update 2026-10-15
-
-Stopped early: request budget for this run used (the rest is kept free).
-
-- Cards refreshed: **1644** of 1879 in 3m 28s · all matched cards are up to date
-- API requests used: **60** (prices 17, matching new cards 43, set list 0; max 60) · API says **42** left today
-- Kept free for adding cards: 10 requests
-- 🔗 Newly matched cards: **144** · still unmatched: 235
-- ✅ Prices changed: **911**
-- ➖ Checked, prices unchanged: 733
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match (tried again in 7 days): 0
-- ⚠️ Errors: 0
-- Era files saved: **6**
-
-**Biggest NM moves (15%+):**
-- Beedrill (Reverse Holo) — Legendary Collection 020/110: $149.99 → $299.99
-- Rayquaza (Holo) — Call of Legends 20/95: $1,013.27 → $218.38
-- Arceus LV.X (Promo · Holo) — Diamond and Pearl Promos DP53: $557.50 → $134.56
-- Typhlosion (Holo) — EX Unseen Forces 17/115: $539.90 → $131.87
-- Rayquaza (Reverse Holo) — Call of Legends 20/95: $511.92 → $160.97
-- Jirachi (Reverse Holo) — Legends Awakened 31/146: $127.50 → $40.33
-- Deoxys Normal Forme (Holo) — Legends Awakened 1/146: $58.61 → $97.26
-- Dialga G LV.X (Holo) — Platinum 122/127: $297.87 → $102.49
-- Lugia (Promo · Holo) — HGSS Promos HGSS02: $548.79 → $191.54
-- Deoxys (Reverse Holo · Delta Species - Attack Forme) — EX Holon Phantoms 3/110: $752.00 → $266.63
-
-**Outlier prices fixed (134):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
-- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $101.42 → $68.16
-- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $31.91
-- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $32.61
-- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.14 → $12.14
-- Wooper (1st Edition) — Neo Discovery 71/75: MP $8.00 → $7.01
-- Ninetales (Reverse Holo) — Aquapolis 025/147: DMG $39.99 → $23.03
-- Dugtrio (1st Edition) — Base Set (Shadowless) 019/102: LP $131.44 → $128.59
-- Primeape (Non-Holo) — Aquapolis 029/147: DMG $34.99 → $19.36
-- Ampharos (Non-Holo) — Aquapolis 001/147: LP $34.61 → $31.72
-- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $205.22 → $179.45
-- Clefable (1st Edition Holofoil · 1) — Jungle 01/64: LP $119.61 → $119.10
-- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
-- Cubone (1st Edition) — Jungle 50/64: DMG $2.22 → $2.09
-- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.77 → $16.42
-- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $6.20 → $3.64
-- …and 119 more
