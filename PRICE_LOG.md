@@ -2,6 +2,40 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-20
+
+- Cards refreshed: **2368** of 2372 in 1m 22s · all matched cards are up to date
+- API requests used: **24** (prices 24, matching new cards 0, set list 0; max 60) · API says **76** left today
+- Kept free for adding cards: 70 requests (show day: matching new cards waits until Monday)
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **257**
+- ➖ Checked, prices unchanged: 2111
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **6**
+
+**Biggest NM moves (15%+):**
+- Dugtrio (Non-Holo) — Base Set 019/102: $13.65 → $10.53
+
+**Outlier prices fixed (332):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Mewtwo (Holo) — Base Set 2 010/130: NM $164.96 → $80.51
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $210.58 → $91.99
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.27
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $34.10
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.66
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $37.33 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.22
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.76 → $17.50
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.36 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $85.58 → $41.59
+- …and 317 more
+
 ## ✅ OK — price update 2026-11-19
 
 - Cards refreshed: **2372** of 2372 in 2m 16s · all matched cards are up to date
@@ -1220,39 +1254,3 @@ Stopped early: request budget for this run used (the rest is kept free).
 - Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $85.53 → $40.73
 - Cubone (1st Edition) — Jungle 50/64: DMG $2.22 → $2.01
 - …and 143 more
-
-## ✅ OK — TCGplayer sales check 2026-10-15
-
-- Cards looked up on TCGplayer: **150** in 16m 30s (another 137 waited for next week)
-- ✅ Prices checked against real sales: **150**
-- ➖ No sales in 90 days (kept old prices): 0
-- ❌ Blocked by TCGplayer: **0**
-- ⚠️ Errors: 0 · no history: 0 · printing unclear: 0
-
-**Prices that moved 15%+ after checking real sales (103):**
-- Ho-Oh (Holo · Shiny) — Call of Legends SL5 [estimate, top flip]: MP $248.04 → $299.99
-- Kyogre - SM129 (Prerelease) [Staff] (Holo) — SM Promos SM129 [estimate, top flip]: NM $363.00 → $499.00, DMG $40.15 → $124.64
-- Rayquaza (Holo) — Call of Legends 20/95 [estimate, top flip]: NM $218.38 → $1,251.39, LP $126.44 → $153.62, MP $110.93 → $153.62 est.
-- Mudkip (Reverse Holo · 010 (e-League) — Nintendo Promos 010 [estimate, top flip]: LP $54.18 → $75.00, MP $54.18 → $75.00 est.
-- Ninetales (Reverse Holo) — Aquapolis 025/147 [estimate, top flip]: MP $29.02 → $39.99
-- Dark Tyranitar (Holo · EX Team Rocket Returns) — Deck Exclusives 020/109 [estimate, top flip]: LP $39.52 → $57.23 est.
-- Rayquaza (Reverse Holo · Delta Species) — EX Holon Phantoms 16/110 [top flip]: DMG $143.89 → $180.58
-- Raikou (Shiny · Holo) — Call of Legends SL9 [top flip]: MP $117.88 → $100.00
-- Rayquaza ex (Holo · 039 (EX Collector's Tin) — Nintendo Promos 039 [top flip]: LP $696.71 → $500.00, MP $245.10 → $300.00
-- Rayquaza (Holo) — Dragons Exalted 128/124 [top flip]: LP $749.95 → $999.95
-- Rayquaza C LV.X (Promo · Holo) — Diamond and Pearl Promos DP47 [top flip]: NM $628.77 → $502.50, LP $201.44 → $238.00
-- Gardevoir (Holo) — Dark Explorers 109/108 [top flip]: NM $946.32 → $1,198.99
-- Rayquaza & Deoxys Legend (Holo · Bottom) — Undaunted 90/90 [top flip]: LP $223.39 → $272.65, MP $162.45 → $215.00, DMG $64.14 → $77.39
-- Darkrai EX (Full Art) — Dark Explorers 107/108 [top flip]: DMG $146.53 → $299.98
-- Mewtwo ex (Holo) — EX Ruby and Sapphire 101/109 [top flip]: NM $677.43 → $899.99, LP $295.22 → $350.00, MP $172.46 → $238.99
-- M Rayquaza EX (Secret Rare (Shiny)) — Ancient Origins 98/98 [top flip]: NM $1,147.27 → $1,749.99
-- Lugia EX (Full Art) — Plasma Storm 134/135 [top flip]: LP $880.01 → $1,151.99 est., MP $558.29 → $348.43, DMG $276.36 → $199.85
-- Gengar LV.X (Holo Rare) — Arceus 97/99 [top flip]: NM $730.50 → $999.99, MP $256.92 → $295.90
-- Latios (Delta Species · Reverse Holo) — EX Holon Phantoms 22/110 [top flip]: DMG $46.67 → $54.92
-- Groudon (Shiny) (Holo) — Call of Legends SL4 [top flip]: NM $514.16 → $630.00, LP $478.18 → $630.00 est., DMG $135.41 → $179.67
-- Dragonite (Holo · 9) — Expedition 009/165 [top flip]: NM $949.79 → $1,250.00, DMG $207.42 → $247.00
-- Umbreon (Unlimited Holo) — Neo Discovery 13/75 [top flip]: NM $817.16 → $945.99, LP $489.12 → $675.00
-- Lugia (Holo) — Secret Wonders 14/132 [top flip]: NM $376.20 → $297.62, LP $120.29 → $89.50, DMG $26.98 → $33.35
-- Deoxys (Holo · Delta Species) — POP Series 4 002/017 [top flip]: MP $51.96 → $68.50
-- Rayquaza (Holo) — EX Emerald 9/106 [top flip]: MP $146.49 → $206.66
-- …and 78 more
