@@ -2035,6 +2035,27 @@ function loadLog(){
   return {shows:shows, lastBackup:last};
 }
 function saveLog(){ syncSave(); mountBar(); }
+/* ---------- entries logged from Chaundoo Card Scan ----------
+   Card Scan (same site, so same phone storage) drops sales in "cfz.inbox". They join the log here as
+   unsaved changes, then go to GitHub with the usual Save to GitHub button. */
+function importScanInbox(){
+  if(logLocked()) return 0;
+  var box = load("cfz.inbox", []); if(!Array.isArray(box) || !box.length) return 0;
+  var have = {}; LOG.shows.forEach(function(sh){ sh.sales.forEach(function(r){ have[r.id] = 1; }); });
+  var n = 0;
+  box.forEach(function(it){
+    if(!it || !it.sale || have[it.sale.id]) return;
+    var sh = it.showId ? showById(it.showId) : null;
+    if(!sh) sh = LOG.shows.filter(function(x){ return x.name===(it.showName||"Card show") && x.date===it.date; })[0] || null;
+    if(!sh){ sh = newShow(it.showName||"Card show"); if(/^\d{4}-\d{2}-\d{2}$/.test(it.date||"")) sh.date = it.date; }
+    sh.sales.push(normSale(it.sale)); have[it.sale.id] = 1; n++;
+  });
+  try{ localStorage.removeItem("cfz.inbox"); }catch(e){}
+  if(n){ saveLog(); state.pairMsg = n+" sale"+(n===1?"":"s")+" added from Card Scan. Tap Save to GitHub to save "+(n===1?"it":"them")+" for good."; render(); }
+  return n;
+}
+setTimeout(importScanInbox, 0);
+document.addEventListener("visibilitychange", function(){ if(!document.hidden) importScanInbox(); });
 function todayStr(){ var d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function uid(p){ return p+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36); }
 function showById(id){ for(var i=0;i<LOG.shows.length;i++) if(LOG.shows[i].id===id) return LOG.shows[i]; return null; }
