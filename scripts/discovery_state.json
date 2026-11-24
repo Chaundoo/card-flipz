@@ -1319,14 +1319,14 @@
 "found": 0,
 "name": "Diamond and Pearl",
 "records": 261,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--diamond-and-pearl-promos": {
 "found": 0,
 "name": "Diamond and Pearl Promos",
 "records": 66,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--double-crisis": {
@@ -1367,119 +1367,119 @@
 "found": 0,
 "name": "EX Battle Stadium",
 "records": 52,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-crystal-guardians": {
 "found": 0,
 "name": "EX Crystal Guardians",
 "records": 191,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-delta-species": {
-"found": 3,
+"found": 0,
 "name": "EX Delta Species",
 "records": 225,
-"scanned": "2026-11-16",
-"sleepers": 1
+"scanned": "2026-11-23",
+"sleepers": 0
 },
 "pokemon--ex-deoxys": {
-"found": 0,
+"found": 1,
 "name": "EX Deoxys",
 "records": 230,
-"scanned": "2026-11-16",
-"sleepers": 0
+"scanned": "2026-11-23",
+"sleepers": 1
 },
 "pokemon--ex-dragon": {
 "found": 0,
 "name": "EX Dragon",
 "records": 191,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-dragon-frontiers": {
-"found": 1,
+"found": 0,
 "name": "EX Dragon Frontiers",
 "records": 193,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-emerald": {
 "found": 0,
 "name": "EX Emerald",
 "records": 226,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-firered-and-leafgreen": {
-"found": 3,
+"found": 0,
 "name": "EX FireRed & LeafGreen",
 "records": 252,
-"scanned": "2026-11-16",
-"sleepers": 1
+"scanned": "2026-11-23",
+"sleepers": 0
 },
 "pokemon--ex-hidden-legends": {
 "found": 0,
 "name": "EX Hidden Legends",
 "records": 199,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-holon-phantoms": {
-"found": 3,
+"found": 0,
 "name": "EX Holon Phantoms",
 "records": 213,
-"scanned": "2026-11-16",
-"sleepers": 2
+"scanned": "2026-11-23",
+"sleepers": 0
 },
 "pokemon--ex-legend-maker": {
 "found": 0,
 "name": "EX Legend Maker",
 "records": 177,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-power-keepers": {
 "found": 0,
 "name": "EX Power Keepers",
 "records": 203,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-ruby-and-sapphire": {
-"found": 0,
+"found": 1,
 "name": "EX Ruby and Sapphire",
 "records": 213,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-sandstorm": {
 "found": 0,
 "name": "EX Sandstorm",
 "records": 196,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-team-magma-vs-team-aqua": {
 "found": 0,
 "name": "EX Team Magma vs Team Aqua",
 "records": 190,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-team-rocket-returns": {
-"found": 1,
+"found": 0,
 "name": "EX Team Rocket Returns",
 "records": 234,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--ex-unseen-forces": {
-"found": 1,
+"found": 0,
 "name": "EX Unseen Forces",
 "records": 249,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--expedition": {
@@ -1555,7 +1555,7 @@
 "found": 0,
 "name": "Kids WB Promos",
 "records": 6,
-"scanned": "2026-11-12",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--legendary-treasures": {
@@ -1625,7 +1625,7 @@
 "found": 0,
 "name": "Nintendo Promos",
 "records": 101,
-"scanned": "2026-11-12",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--noble-victories": {
@@ -1653,7 +1653,7 @@
 "found": 0,
 "name": "Plasma Storm",
 "records": 265,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--platinum": {
@@ -1798,21 +1798,21 @@
 "found": 0,
 "name": "Triumphant",
 "records": 196,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--undaunted": {
 "found": 0,
 "name": "Undaunted",
 "records": 173,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--unleashed": {
 "found": 0,
 "name": "Unleashed",
 "records": 181,
-"scanned": "2026-11-16",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--wotc-promo": {
@@ -1833,7 +1833,7 @@
 "found": 0,
 "name": "XY Base Set",
 "records": 321,
-"scanned": "2026-11-12",
+"scanned": "2026-11-23",
 "sleepers": 0
 },
 "pokemon--xy-breakpoint": {
@@ -1910,7 +1910,7 @@
 "found": 0,
 "name": "XY - Steam Siege",
 "records": 253,
-"scanned": "2026-11-12",
+"scanned": "2026-11-23",
 "sleepers": 0
 }
 },
