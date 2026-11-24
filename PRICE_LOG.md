@@ -2,6 +2,37 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — price update 2026-11-23
+
+- Cards refreshed: **2368** of 2372 in 1m 22s · all matched cards are up to date
+- API requests used: **24** (prices 24, matching new cards 0, set list 0; max 60) · API says **76** left today
+- Kept free for adding cards: 10 requests
+- 🔗 Newly matched cards: **0** · still unmatched: 4
+- ✅ Prices changed: **45**
+- ➖ Checked, prices unchanged: 2323
+- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
+- ❔ Couldn't match (tried again in 7 days): 0
+- ⚠️ Errors: 0
+- Era files saved: **8**
+
+**Outlier prices fixed (328):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
+- Mewtwo (Holo) — Base Set 2 010/130: NM $164.96 → $80.51
+- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $210.58 → $91.99
+- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $107.65 → $74.27
+- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $34.10
+- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $34.66
+- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.20 → $23.92
+- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $146.55 → $140.57
+- Ampharos (Non-Holo) — Aquapolis 001/147: LP $38.41 → $28.30
+- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $213.27 → $179.45
+- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
+- Porygon (1st Edition) — Neo Destiny 078/105: DMG $6.37 → $2.22
+- Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.76 → $17.50
+- Sneasel (1st Edition) — Neo Revelation 24/64: DMG $8.05 → $3.54
+- Feraligatr (Reverse Holo · 46) — Expedition 046/165: LP $63.36 → $62.50
+- Beedrill (Reverse Holo) — Legendary Collection 020/110: DMG $85.58 → $41.59
+- …and 313 more
+
 ## ✅ OK — price update 2026-11-20
 
 - Cards refreshed: **2368** of 2372 in 1m 22s · all matched cards are up to date
@@ -1209,48 +1240,3 @@ Stopped early: request budget for this run used (the rest is kept free).
 - Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $85.53 → $40.73
 - Cubone (1st Edition) — Jungle 50/64: DMG $2.22 → $2.01
 - …and 150 more
-
-## ✅ OK — price update 2026-10-19
-
-Stopped early: request budget for this run used (the rest is kept free).
-
-- Cards refreshed: **1766** of 1900 in 3m 30s · all matched cards are up to date
-- API requests used: **60** (prices 17, matching new cards 43, set list 0; max 60) · API says **40** left today
-- Kept free for adding cards: 10 requests
-- 🔗 Newly matched cards: **101** · still unmatched: 134
-- ✅ Prices changed: **1686**
-- ➖ Checked, prices unchanged: 80
-- ❔ No TCGplayer price on TCG Price Lookup (kept old prices): 0
-- ❔ Couldn't match (tried again in 7 days): 0
-- ⚠️ Errors: 0
-- Era files saved: **10**
-
-**Biggest NM moves (15%+):**
-- Rayquaza (Reverse Holo · Delta Species) — EX Holon Phantoms 26/110: $356.93 → $1,200.00
-- Dialga (Holo) — Call of Legends 3/95: $19.40 → $40.40
-- Darkrai (Promo · Holo) — Diamond and Pearl Promos DP24: $38.36 → $78.54
-- Gliscor (Holo) — Legends Awakened 5/146: $11.87 → $23.99
-- Inkay (Promo · Holo) — McDonald's Promos 2014 006/012: $19.82 → $7.46
-- Honedge (Promo · Holo) — McDonald's Promos 2014 007/012: $19.04 → $7.27
-- Typhlosion (Unlimited Holo) — Neo Genesis 17/111: $201.51 → $316.64
-- Blaziken (Holo) — POP Series 1 001/017: $23.29 → $35.69
-- Zoroark (Promo · Holo) — Black and White Promos BW19: $12.09 → $18.51
-- Zapdos (Reverse Holo) — Majestic Dawn 14/100: $63.14 → $31.94
-
-**Outlier prices fixed (158):** a lower condition was priced above a higher one, or NM sat far above LP (usually one odd sale), so that price was replaced with an estimate marked "est." on the site. The weekly TCGplayer sales check replaces these estimates with real sales.
-- Dark Typhlosion (Unlimited Holo) — Neo Destiny 010/105: NM $193.95 → $93.40
-- Light Togetic (Unlimited Holo) — Neo Destiny 015/105: LP $104.39 → $67.95
-- Togepi (1st Edition) — Neo Destiny 056/105: MP $42.12 → $32.05
-- Donphan (Reverse Holo) — Aquapolis 007/147: LP $46.63 → $32.63
-- Jigglypuff (1st Edition) — Neo Destiny 044/105: MP $25.16 → $23.92
-- Dark Slowbro (Reverse Holo) — Legendary Collection 008/110: DMG $149.99 → $140.57
-- Wooper (1st Edition) — Neo Discovery 71/75: MP $7.29 → $6.90
-- Ninetales (Reverse Holo) — Aquapolis 025/147: DMG $39.99 → $22.89
-- Dugtrio (1st Edition) — Base Set (Shadowless) 019/102: LP $131.44 → $127.36
-- Primeape (Non-Holo) — Aquapolis 029/147: DMG $34.99 → $19.24
-- Ampharos (Non-Holo) — Aquapolis 001/147: LP $36.05 → $28.30
-- Gyarados (Reverse Holo) — Legendary Collection 012/110: LP $299.99 → $179.45, MP $522.89 → $179.45, DMG $205.22 → $179.45
-- Sneasel (Reverse Holo) — Aquapolis 110/147: DMG $17.65 → $17.32
-- Giratina (Reverse Holo · [Platinum]) — Burger King Promos 004/146: NM $85.53 → $40.73
-- Cubone (1st Edition) — Jungle 50/64: DMG $2.22 → $2.01
-- …and 143 more
