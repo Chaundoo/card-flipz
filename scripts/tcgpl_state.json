@@ -2484,6 +2484,11 @@
 "synced": "2026-11-23",
 "variant": "Reverse Holofoil"
 },
+"deoxys-defense-forme-18-107-84761": {
+"id": "019c975f-7974-7e8f-8cc1-35ec7ee9ab97",
+"synced": "2026-11-25",
+"variant": "Reverse Holofoil"
+},
 "deoxys-defense-forme-25-146-84769-normal": {
 "id": "019c9761-976d-7344-91b1-d404f8b68bf0",
 "synced": "2026-11-23",
@@ -10516,6 +10521,11 @@
 "swampert-11-106-97731-revers": {
 "id": "019c979b-21fa-7c88-8860-a463f5fe441a",
 "synced": "2026-11-23",
+"variant": "Reverse Holofoil"
+},
+"swampert-13-109-13-109-89675": {
+"id": "019c977f-822b-779c-9d86-83520679d365",
+"synced": "2026-11-25",
 "variant": "Reverse Holofoil"
 },
 "swampert-13-109-89675": {

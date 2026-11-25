@@ -6764,6 +6764,26 @@
 "price:$20-50"
 ],
 "v": 1
+},
+{
+"d": "2026-11-25",
+"f": [
+"pokemon:deoxys",
+"set:EX Deoxys",
+"kind:reverse holo",
+"price:$50-100"
+],
+"v": 1
+},
+{
+"d": "2026-11-25",
+"f": [
+"pokemon:swampert",
+"set:EX Ruby and Sapphire",
+"kind:reverse holo",
+"price:$20-50"
+],
+"v": 1
 }
 ]
 }
