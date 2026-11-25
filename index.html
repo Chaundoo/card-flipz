@@ -2373,6 +2373,7 @@ function logAccuracy(){
 function renderLog(){
   var t = logStats(), h = header(), tab = state.logTab || load("cfz.logtab", "overview");
   h += '<div class="pair-intro"><div><h2>Profit Log</h2><p class="sub">Log each card show: what you paid, what you sold for, and how long you were there. Changes save on your phone right away; tap <b>Save to GitHub</b> to keep them on the site. The log is locked with your passcode: on GitHub it’s saved scrambled, so only someone with the passcode can read it.</p></div><button class="btn primary" id="newshow">+ Log a card show</button></div>';
+  h += '<p class="notice"><b>Your Profit Log now lives in <a href="/card-scan/">Chaundoo Card Scan</a></b> (Profit tab). Log new card shows there; changes made here won\u2019t show up in Card Scan.</p>';
   if(!logStorageOk) h += '<p class="notice">This browser is blocking storage for the site, so unsaved changes are lost if you close it. Tap Save to GitHub before leaving.</p>';
   if(state.notice) h += '<p class="notice" role="status">'+esc(state.notice)+'</p>';
   h += backupPanelHtml();
