@@ -1483,18 +1483,18 @@
 "sleepers": 0
 },
 "pokemon--expedition": {
-"found": 2,
+"found": 1,
 "name": "Expedition",
 "records": 327,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--fossil": {
-"found": 1,
+"found": 0,
 "name": "Fossil",
 "records": 131,
-"scanned": "2026-11-17",
-"sleepers": 1
+"scanned": "2026-11-25",
+"sleepers": 0
 },
 "pokemon--generations": {
 "found": 0,
@@ -1507,21 +1507,21 @@
 "found": 0,
 "name": "Great Encounters",
 "records": 210,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--gym-challenge": {
 "found": 0,
 "name": "Gym Challenge",
 "records": 274,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--gym-heroes": {
 "found": 0,
 "name": "Gym Heroes",
 "records": 273,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--heartgold-soulsilver": {
@@ -1548,7 +1548,7 @@
 "found": 0,
 "name": "Jungle",
 "records": 135,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--kids-wb-promos": {
@@ -1569,49 +1569,49 @@
 "found": 0,
 "name": "Legends Awakened",
 "records": 288,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--majestic-dawn": {
 "found": 0,
 "name": "Majestic Dawn",
 "records": 200,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--mysterious-treasures": {
 "found": 0,
 "name": "Mysterious Treasures",
 "records": 248,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--neo-destiny": {
-"found": 1,
+"found": 0,
 "name": "Neo Destiny",
 "records": 232,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--neo-discovery": {
 "found": 0,
 "name": "Neo Discovery",
 "records": 155,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--neo-genesis": {
 "found": 0,
 "name": "Neo Genesis",
 "records": 229,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--neo-revelation": {
 "found": 0,
 "name": "Neo Revelation",
 "records": 136,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--next-destinies": {
@@ -1660,92 +1660,92 @@
 "found": 0,
 "name": "Platinum",
 "records": 262,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-1": {
 "found": 0,
 "name": "POP Series 1",
 "records": 25,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-2": {
 "found": 0,
 "name": "POP Series 2",
 "records": 25,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-3": {
 "found": 0,
 "name": "POP Series 3",
 "records": 25,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-4": {
 "found": 0,
 "name": "POP Series 4",
 "records": 26,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-5": {
 "found": 0,
 "name": "POP Series 5",
 "records": 25,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-6": {
 "found": 0,
 "name": "POP Series 6",
 "records": 26,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-7": {
 "found": 0,
 "name": "POP Series 7",
 "records": 24,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-8": {
 "found": 0,
 "name": "POP Series 8",
 "records": 31,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--pop-series-9": {
 "found": 0,
 "name": "POP Series 9",
 "records": 24,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--rising-rivals": {
 "found": 0,
 "name": "Rising Rivals",
 "records": 224,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--rumble": {
 "found": 0,
 "name": "Rumble",
 "records": 17,
-"scanned": "2026-11-17",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--secret-wonders": {
 "found": 0,
 "name": "Secret Wonders",
 "records": 264,
-"scanned": "2026-11-17",
-"sleepers": 1
+"scanned": "2026-11-25",
+"sleepers": 0
 },
 "pokemon--shining-legends": {
 "found": 0,
@@ -1896,7 +1896,7 @@
 "found": 0,
 "name": "XY Promos",
 "records": 272,
-"scanned": "2026-11-16",
+"scanned": "2026-11-25",
 "sleepers": 0
 },
 "pokemon--xy-roaring-skies": {
