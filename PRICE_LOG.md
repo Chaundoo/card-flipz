@@ -2,6 +2,47 @@
 
 Newest first. Written automatically by the daily GitHub job.
 
+## ✅ OK — TCGplayer sales check 2026-11-26
+
+- Cards looked up on TCGplayer: **210** in 23m 6s (another 199 waited for next week)
+- ✅ Prices checked against real sales: **184**
+- ➖ No sales in 90 days (kept old prices): 24
+- ❌ Blocked by TCGplayer: **0**
+- ⚠️ Errors: 0 · no history: 0 · printing unclear: 2
+- 🐢 Sales counted for sleepers / Low sales flags: **208** cards (60 were picked just for that)
+
+**Prices that moved 15%+ after checking real sales (71):**
+- Gengar (10) (Reverse Holo) — Skyridge 010/144 [estimate, top flip]: DMG $292.50 → $439.99
+- Rayquaza (Holo) — Call of Legends 20/95 [estimate, top flip]: DMG $28.39 → $40.97
+- Kyogre - SM129 (Prerelease) [Staff] (Holo) — SM Promos SM129 [estimate, top flip]: NM $363.00 → $499.00, DMG $40.15 → $124.64
+- Salamence - 10/97 (Holo) — EX Dragon 10/97 [estimate, top flip]: NM $200.84 → $299.00, DMG $22.11 → $56.02 est.
+- Meganium (Reverse Holo) — EX Unseen Forces 9/115 [estimate, top flip]: MP $19.93 → $31.99
+- Lugia EX (Full Art) — Plasma Storm 134/135 [top flip]: LP $944.49 → $1,849.99, MP $919.21 → $1,499.99
+- Rayquaza (Reverse Holo) — Call of Legends 20/95 [top flip]: MP $99.99 → $148.00
+- Gengar LV.X (Holo Rare) — Arceus 97/99 [top flip]: LP $370.99 → $575.00
+- Dragonite (9) (Reverse Holo) — Expedition 009/165 [top flip]: NM $799.95 → $2,801.02 est.
+- Rayquaza (Reverse Holo) — EX Deoxys 22/107 [top flip]: LP $636.42 → $799.95
+- Dark Gengar (Unlimited Holo) — Neo Destiny 006/105 [top flip]: MP $514.98 → $419.99
+- Arcanine (Promo · Prerelease · Holo) — Black and White Promos 12/99 [top flip]: MP $30.00 → $35.00, DMG $5.95 → $20.00
+- Treecko (Reverse Holo) — EX Emerald 70/106 [top flip]: DMG $16.25 → $20.00
+- Deoxys (Shiny) (Holo) — Call of Legends SL1 [estimate]: NM $850.00 → $1,200.00, LP $393.74 → $512.50
+- Ho-Oh (Holo · Shiny) — Call of Legends SL5 [estimate]: NM $749.98 → $874.99, MP $258.60 → $299.99
+- Mewtwo (Delta Species) (Reverse Holo) — EX Delta Species 12/113 [estimate]: NM $739.02 → $1,999.99, DMG $143.37 → $164.88
+- Rayquaza ex (Holo) — EX Dragon 97/97 [estimate]: LP $700.00 → $850.00
+- Pikachu (Red Cheeks) (1st Edition) — Base Set (Shadowless) 058/102 [estimate]: DMG $199.99 → $129.99
+- Rayquaza ex (Holo) — EX Deoxys 102/107 [estimate]: NM $427.10 → $843.00
+- Lucario (Non-Holo) — Rumble 12 [estimate]: NM $414.34 → $279.99
+- Latios (Delta Species) (Reverse Holo) — EX Delta Species 9/113 [estimate]: NM $385.93 → $240.00, DMG $42.26 → $149.99 est.
+- Tyranitar (29) (Holo) — Expedition 029/165 [estimate]: LP $311.00 → $385.00
+- Gyarados (Delta Species) (Reverse Holo) — EX Holon Phantoms 8/110 [estimate]: MP $251.32 → $299.99
+- Rayquaza ex (Delta Species) (Holo) — EX Dragon Frontiers 97/101 [estimate]: LP $330.00 → $380.00
+- Blastoise (36) (Reverse Holo) — Expedition 036/165 [estimate]: NM $300.17 → $165.00
+- …and 46 more
+
+**Problem cards (2):**
+- printing: Shining Gyarados (1st Edition Holo) — Neo Revelation 65/64 — couldn't tell which TCGplayer printing this card is
+- printing: Shining Raichu (1st Edition Holo) — Neo Destiny 111/105 — couldn't tell which TCGplayer printing this card is
+
 ## ✅ OK — price update 2026-11-26
 
 - Cards refreshed: **2374** of 2374 in 2m 11s · all matched cards are up to date
@@ -1177,39 +1218,3 @@ Stopped early: request budget for this run used (the rest is kept free).
 - Cubone (1st Edition) — Jungle 50/64: DMG $2.22 → $2.03
 - Erika's Clefairy (1st Edition) — Gym Heroes 025/132: MP $17.77 → $16.42
 - …and 158 more
-
-## ✅ OK — TCGplayer sales check 2026-10-22
-
-- Cards looked up on TCGplayer: **150** in 15m 55s (another 97 waited for next week)
-- ✅ Prices checked against real sales: **150**
-- ➖ No sales in 90 days (kept old prices): 0
-- ❌ Blocked by TCGplayer: **0**
-- ⚠️ Errors: 0 · no history: 0 · printing unclear: 0
-
-**Prices that moved 15%+ after checking real sales (62):**
-- Lugia EX (Full Art) — Plasma Storm 134/135 [estimate, top flip]: NM $1,151.99 → $725.00, LP $1,151.99 → $725.00 est., MP $348.43 → $725.00 est.
-- Lugia (Holo · Shiny) — Call of Legends SL7 [estimate, top flip]: LP $500.37 → $650.00
-- Dialga (Holo) — Call of Legends 3/95 [estimate, top flip]: MP $12.04 → $8.46, DMG $7.09 → $8.46 est.
-- Ampharos (Non-Holo) — Aquapolis 001/147 [estimate, top flip]: NM $28.61 → $33.67, LP $28.61 → $33.67 est.
-- Gallade (Non-Holo) — POP Series 7 002/017 [estimate, top flip]: MP $5.60 → $8.52
-- Black Kyurem EX (145 Full Art) (Holo) — Boundaries Crossed 145/149 [top flip]: NM $900.96 → $400.00
-- Raikou (Shiny · Holo) — Call of Legends SL9 [top flip]: LP $225.00 → $262.50, MP $100.00 → $150.00
-- Gyarados (Red) (Reverse Holo) — HeartGold SoulSilver 123/123 [top flip]: DMG $52.66 → $71.75
-- Mewtwo LV.X (Promo · Holo) — Diamond and Pearl Promos DP28 [top flip]: LP $80.00 → $104.67
-- Arcanine (Promo · Prerelease · Holo) — Black and White Promos 12/99 [top flip]: MP $37.49 → $30.00
-- Kabutops (Holo) — EX Legend Maker 7/92 [top flip]: DMG $6.70 → $7.86
-- Turtwig (Holo) — POP Series 6 017/017 [top flip]: LP $7.19 → $20.56
-- Torchic (Promo · Holo) — McDonald's Promos 2015 003/012 [top flip]: NM $32.23 → $12.57 est.
-- Glaceon (Holo) — Majestic Dawn 5/100 [top flip]: NM $294.79 → $145.31
-- Latias (Holo) — POP Series 7 003/017 [top flip]: NM $65.29 → $55.00, LP $18.72 → $27.65
-- Lugia V (Holo) — SWSH: Sword & Shield Promo Cards SWSH301 [top flip]: NM $40.43 → $19.12, LP $11.64 → $9.65
-- Darkrai (Promo · Holo) — Diamond and Pearl Promos DP24 [top flip]: DMG $4.87 → $3.95
-- Flareon (Reverse Holo) — Call of Legends 44/95 [top flip]: DMG $3.92 → $2.95
-- Lugia (Holo · XY Fates Collide) — Deck Exclusives 078/124 [top flip]: NM $32.35 → $18.99, LP $23.17 → $12.34, MP $6.89 → $4.50
-- Swampert (Reverse Holo) — EX Emerald 11/106 [top flip]: DMG $36.16 → $30.00
-- Raichu BREAK (Holo) — BREAKthrough 50/162 [top flip]: NM $27.95 → $15.56
-- Deoxys Normal Forme (Holo) — Legends Awakened 1/146 [top flip]: NM $105.19 → $79.98, LP $32.21 → $37.49, MP $21.93 → $17.84, DMG $6.75 → $5.52
-- Reshiram - BW23 (Holo) — Black and White Promos BW23 [Flip Finder]: NM $17.86 → $7.55
-- Garchomp Spirit Link (Non-Holo) — XY Promos XY169 [Flip Finder]: LP $20.41 → $36.48
-- Marowak (Reverse Holo) — Triumphant 44/102 [Flip Finder]: NM $25.00 → $17.73
-- …and 37 more
